@@ -1,0 +1,38 @@
+;; Dedekind, Stetigkeit und irrationale Zahlen (1872), the cut of sqrt 2,
+;; told step by step. Quotations verbatim from W. W. Beman's translation,
+;; Essays on the Theory of Numbers (Open Court, 1901; Project Gutenberg
+;; #21016). Each step is a claim, its reason, and the :stage a medium shows
+;; (alexandria.dedekind.cuts-scenes). The German of the key word, Schnitt,
+;; is Beman's own bracket.
+{:dedekind/preface
+ {:source "Beman 1901, Preface (Braunschweig, March 20, 1872)"
+  :passages
+  ["My attention was first directed toward the considerations which form the subject of this pamphlet in the autumn of 1858. As professor in the Polytechnic School in Zürich I found myself for the first time obliged to lecture upon the elements of the differential calculus and felt more keenly than ever before the lack of a really scientific foundation for arithmetic."
+   "For myself this feeling of dissatisfaction was so overpowering that I made the fixed resolve to keep meditating on the question till I should find a purely arithmetic and perfectly rigorous foundation for the principles of infinitesimal analysis."
+   "I succeeded Nov. 24, 1858, and a few days afterward I communicated the results of my meditations to my dear friend Durège with whom I had a long and lively discussion."]}
+
+ :dedekind/eudoxus
+ {:source "Beman 1901, preface to Was sind und was sollen die Zahlen? (Harzburg, October 5, 1887)"
+  :euclid "Magnitudes are said to be in the same ratio, the first to the second and the third to the fourth, when, if any equimultiples whatever be taken of the first and third, and any equimultiples whatever of the second and fourth, the former equimultiples alike exceed, are alike equal to, or alike fall short of, the latter equimultiples respectively taken in corresponding order."
+  :euclid-source "Euclid, Elements V, Definition 5, tr. T. L. Heath (1908)"
+  :passage "If, as Bertrand does exclusively in his book, ... one regards the irrational number as the ratio of two measurable quantities, then is this manner of determining it already set forth in the clearest possible way in the celebrated definition which Euclid gives of the equality of two ratios (Elements, V., 5). This same most ancient conviction has been the source of my theory as well as that of Bertrand and many other more or less complete attempts to lay the foundations for the introduction of irrational numbers into arithmetic."}
+
+ :dedekind/cut-sqrt-2
+ {:source "Beman 1901, Sections II-IV"
+  :steps
+  [{:stage :line :why "Section II"
+    :claim "Every rational number a is a point of the straight line. Of every two different points one lies to the left of the other."}
+   {:stage :gap :why "Section II"
+    :claim "\"The straight line L is infinitely richer in point-individuals than the domain R of rational numbers in number-individuals.\" The diagonal of the unit square, laid off from 0, ends at a point no rational number reaches."}
+   {:stage :cut :why "definition, Section IV"
+    :claim "\"Any separation of the system R into two classes A1, A2 ... which possesses only this characteristic property that every number a1 in A1 is less than every number a2 in A2 ... we shall call ... a cut [Schnitt] and designate it by (A1, A2).\" For sqrt 2: A2 the positive rationals r with r^2 > 2, A1 all others, that is r <= 0 or r^2 < 2."}
+   {:stage :no-square :why "least u, Section IV"
+    :claim "No rational number has square 2. If t^2 - 2u^2 = 0 with u least, then 1u < t < 2u; put u' = t - u and t' = 2u - t. Then t'^2 - 2u'^2 = (1 - 2)(t^2 - 2u^2) = 0 with 0 < u' < u, contrary to the choice of u."}
+   {:stage :no-greatest :why "Dedekind's map y, Section IV"
+    :claim "Put y = x(x^2 + 3D)/(3x^2 + D). Then y - x = 2x(D - x^2)/(3x^2 + D) and y^2 - D = (x^2 - D)^3/(3x^2 + D)^2. So a positive x in A1 is beaten by a larger y in A1, and an x in A2 by a smaller y in A2: \"there is neither in the class A1 a greatest, nor in the class A2 a least number.\""}
+   {:stage :create :why "creation, Section IV"
+    :claim "\"Whenever, then, we have to do with a cut (A1, A2) produced by no rational number, we create a new, an irrational number α, which we regard as completely defined by this cut.\""}
+   {:stage :eudoxus :why "the pattern, Elements V Def. 5"
+    :claim "Eudoxus' test is the same cut. Diagonal : side and m : n give the same verdict for every pair of equimultiples: n diagonal > m side exactly when m/n is in A1. The 2200-year-old definition already sorts every rational to one side."}
+   {:stage :complete :why "Section V, theorem iv"
+    :claim "The new domain has no gaps: a cut of the real numbers gives a cut (A1, A2) of the rationals, the number α it defines lies between any two numbers of the two classes, and \"α is one and obviously the only number by which this separation is produced.\""}]}}

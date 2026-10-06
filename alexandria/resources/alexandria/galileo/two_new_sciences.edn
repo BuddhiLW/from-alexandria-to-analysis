@@ -1,0 +1,63 @@
+;; Galileo Galilei, Discorsi e dimostrazioni matematiche intorno a due nuove
+;; scienze (Leiden: Elzevir, 1638). Statements from the translation of Henry
+;; Crew and Alfonso de Salvio, Dialogues Concerning Two New Sciences
+;; (New York: Macmillan, 1914), public domain; archive.org
+;; dialoguesconcern00galiuoft. Pages are the 1914 pages; [n] is the page of
+;; the Edizione Nazionale, vol. VIII, which Crew and de Salvio print in the
+;; margin.
+;;
+;; Each proposition is a desargues construction board whose checks are
+;; vocabulary claims (alexandria.vocab): `length` of segments between the
+;; board's points, so the shelf gate holds. The full symbolic proofs, with
+;; time and speed as Emmy symbols, are in alexandria.galileo.motion.
+{:tradition {:id :galileo/two-new-sciences
+             :author "Galileo Galilei"
+             :work "Dialogues Concerning Two New Sciences"
+             :date "1638"
+             :source "H. Crew and A. de Salvio, Dialogues Concerning Two New Sciences, Macmillan, 1914"}
+ :propositions
+ [{:id :galileo/third-day-1
+   :title "Third Day, Theorem I, Proposition I: the mean speed"
+   :statement "The time in which any space is traversed by a body starting from rest and uniformly accelerated is equal to the time in which that same space would be traversed by the same body moving at a uniform speed whose value is the mean of the highest speed and the speed just before acceleration began."
+   :source "Crew and de Salvio 1914, pp. 173-174 [208-209]"
+   :construction
+   {:id :galileo-third-day-1
+    :kind :construction
+    :window {:x [-0.5 4.5] :y [-0.5 3.5] :n 1 :sweep [0 1]}
+    :params [{:id T :min 1 :max 4 :init 4 :label "time AB"}
+             {:id v :min 1 :max 3 :init 3 :label "final speed EB"}]
+    :points [{:id :A :op :expr :x 0 :y 0}
+             {:id :B :op :expr :x T :y 0}
+             {:id :E :op :expr :x T :y v}
+             {:id :F :op :expr :x T :y (/ v 2)}
+             {:id :G :op :expr :x 0 :y (/ v 2)}
+             {:id :I :op :expr :x (/ T 2) :y (/ v 2)}]
+    :draw [[:polygon [:A :B :E] {:color :yellow :fill-opacity 0.2}]
+           [:polygon [:A :B :F :G] {:color :blue :fill-opacity 0.15}]
+           [:point :A {:label "A"}] [:point :B {:label "B"}] [:point :E {:label "E"}]
+           [:point :F {:label "F"}] [:point :G {:label "G"}] [:point :I {:label "I"}]]
+    :checks [{:claim (= (area A B E) (+ (area A B F) (area A F G))) :label "triangle AEB = parallelogram AGFB"}
+             {:claim (= (area A G I) (area I E F)) :label "triangle AGI = triangle IEF"}
+             {:claim (= (* 2 (length B F)) (length B E)) :label "F bisects EB"}]}}
+
+  {:id :galileo/third-day-2
+   :title "Third Day, Theorem II, Proposition II: distances as the squares of the times"
+   :statement "The spaces described by a body falling from rest with a uniformly accelerated motion are to each other as the squares of the time-intervals employed in traversing these distances."
+   :source "Crew and de Salvio 1914, pp. 174-175 [209-210]"
+   :construction
+   {:id :galileo-third-day-2
+    :kind :construction
+    :window {:x [-0.5 4.5] :y [-0.5 4.5] :n 1 :sweep [0 1]}
+    :params [{:id s :min 1 :max 4 :init 2 :label "time AE"}]
+    :points [{:id :A :op :expr :x 0 :y 0}
+             {:id :D :op :expr :x 1 :y 0}
+             {:id :E :op :expr :x s :y 0}
+             {:id :O :op :expr :x 1 :y 1}
+             {:id :P :op :expr :x s :y s}]
+    :draw [[:polygon [:A :E :P] {:color :yellow :fill-opacity 0.2}]
+           [:polygon [:A :D :O] {:color :blue :fill-opacity 0.2}]
+           [:point :A {:label "A"}] [:point :D {:label "D"}] [:point :E {:label "E"}]
+           [:point :O {:label "O"}] [:point :P {:label "P"}]]
+    :checks [{:claim (= (* (area A E P) (length A D) (length A D))
+                        (* (area A D O) (length A E) (length A E)))
+              :label "distance AEP : distance ADO = AE^2 : AD^2"}]}}]}

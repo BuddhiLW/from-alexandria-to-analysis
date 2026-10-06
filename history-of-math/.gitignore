@@ -1,0 +1,7 @@
+target/
+.cpcache/
+.clerk/
+public/
+.clj-kondo/
+.lsp/
+node_modules/

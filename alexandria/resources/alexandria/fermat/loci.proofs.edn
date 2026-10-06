@@ -1,0 +1,40 @@
+;; Fermat, Ad locos planos et solidos isagoge. :latin is quoted from Oeuvres
+;; de Fermat, ed. P. Tannery and C. Henry, vol. I (Paris 1891), pp. 91-100,
+;; in the proofread Wikisource text (corpus 10-fermat/text/
+;; oeuvres-t1-wikisource.txt); :french from the translation by P. Tannery,
+;; Oeuvres vol. III (Paris 1896), pp. 85-92 (corpus 10-fermat/text/
+;; oeuvres-t3-1896-french-tr.txt). :claim is the series' own English
+;; rendering. :stage names what alexandria.fermat.loci-scenes draws.
+{:fermat/loci
+ {:source "Tannery and Henry 1891, vol. I, pp. 91-100; French tr. vol. III, 1896, pp. 85-92"
+  :passage "Quoties in ultima æqualitate duæ quantitates ignotæ reperiuntur, fit locus loco et terminus alterius ex illis describit lineam rectam aut curvam."
+  :french "Toutes les fois que dans une équation finale on trouve deux quantités inconnues, on a un lieu, l'extrémité de l'une d'elles décrivant une ligne droite ou courbe."
+  :steps
+  [{:stage :setup :why "two unknowns at a given angle"
+    :claim "Let NZM be a line given in position, N a given point on it. NZ is equal to the unknown A, and the line ZI, raised at the given angle NZI, is equal to the other unknown E."
+    :latin "Recta data positione sit NZM, cujus punctum datum N; NZ æquetur quantitati ignotæ A, et ad angulum datum NZI elevata recta ZI sit æqualis alteri quantitati ignotæ E."
+    :page "p. 92"}
+   {:stage :line :why "the first degree"
+    :claim "If D times A equals B times E, the point I is on a line given in position. For as B is to D, so is A to E; the ratio of A to E is given, and so is the angle at N."
+    :latin "D in A æquetur B in E: punctum I erit ad lineam rectam positione datam."
+    :page "p. 92"}
+   {:stage :hyperbola :why "the rectangle of the unknowns"
+    :claim "The second degree of such equations is when A times E equals a given plane; in that case the point I is on a hyperbola."
+    :latin "Secundus hujusmodi æqualitatum gradus est, quando A in E eq. Zpl., quo casu punctum I est ad hyperbolen."
+    :french "Le second degré des équations de cette sorte se présente si ae = z², auquel cas le point I est sur une hyperbole."
+    :page "p. 93"}
+   {:stage :parabola :why "a square equal to a rectangle"
+    :claim "If the square of A equals D times E, the point I is on a parabola: the one with diameter NP parallel to ZI and latus rectum D."
+    :latin "Si Aq. æquatur D in E, punctum I est ad parabolen."
+    :page "p. 96"}
+   {:stage :circle :why "squares of both unknowns"
+    :claim "If the square of B minus the square of A equals the square of E, the point I is on a circle given in position, when the angle NZI is right. Take NM equal to B; the circle about N with radius NM does it."
+    :latin "Bq. - Aq. æquetur Eq.: punctum I est ad circulum positione datum, quando angulus NZI est rectus."
+    :french "Le point I sera sur un cercle donné de position, si l'angle NZI est droit."
+    :page "p. 98"}
+   {:stage :ellipse :why "the squares in a given ratio"
+    :claim "But if the square of B minus the square of A has a given ratio to the square of E, the point I is on an ellipse, with vertex M, diameter NM and centre N."
+    :latin "Bq. - Aq. ad Eq. habeat rationem datam, punctum I erit ad ellipsin."
+    :page "pp. 99-100"}
+   {:stage :descartes :why "the same idea, independently"
+    :claim "Every equation of the first degree in A and E is a line, every one of the second degree a conic. Descartes' Book II says the same of x and y; Descartes' ellipse x^2 = ry - (r/q)y^2 is Fermat's ellipse with B = q/2."}]}}

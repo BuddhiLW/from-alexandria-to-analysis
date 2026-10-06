@@ -1,0 +1,23 @@
+;; Cantor's two papers on countability. No public-domain English translation
+;; of either exists, so the statement is the series' own rendering of the
+;; German, which is quoted verbatim in mengenlehre.proofs.edn (Crelle 77
+;; from archive.org sim_journal-fuer-die-reine-und-angewandte-mathematik_1874_77;
+;; Jahresbericht DMV 1 from archive.org jahresberichtder1218deut).
+{:tradition {:id :cantor/mengenlehre
+             :author "Georg Cantor"
+             :work "Ueber eine Eigenschaft des Inbegriffes aller reellen algebraischen Zahlen (1874); Ueber eine elementare Frage der Mannigfaltigkeitslehre (1891)"
+             :date "1874, 1891"
+             :source "Journal für die reine und angewandte Mathematik 77 (1874), 258-262; Jahresbericht der DMV 1 (1890-91), 75-78; English rendering of this series"}
+ :propositions
+ [{:id :cantor/algebraic-countable
+   :title "1874, §1: the real algebraic numbers can be counted"
+   :statement "The totality (ω) of all real algebraic numbers can be correlated one-to-one with the totality (ν) of all positive whole numbers, so that it can be thought of as an infinite lawful sequence ω1, ω2, ..., ων, ... in which every individual of (ω) occurs, each at a definite place. (Series' rendering of Crelle 77, p. 258.)"
+   :source "Crelle 77 (1874), pp. 258-260"}
+  {:id :cantor/interval-not-countable
+   :title "1874, §2: no sequence exhausts an interval"
+   :statement "If an infinite sequence of distinct real numbers ω1, ω2, ..., ων, ... is given by any law, then in every given interval (α ... β) a number η (and hence infinitely many such numbers) can be determined which does not occur in the sequence. (Series' rendering of Crelle 77, p. 260.)"
+   :source "Crelle 77 (1874), pp. 260-261"}
+  {:id :cantor/diagonal
+   :title "1891: the diagonal argument"
+   :statement "If E1, E2, ..., Eν, ... is any simply infinite sequence of elements of the manifold M, then there is always an element E0 of M which agrees with no Eν. (Series' rendering of Jahresbericht DMV 1, p. 76.)"
+   :source "Jahresbericht DMV 1 (1891), pp. 75-77"}]}

@@ -1,0 +1,3 @@
+{:traditions
+ [{:id :fixture/tradition
+   :resource "alexandria/fixture_tradition.edn"}]}

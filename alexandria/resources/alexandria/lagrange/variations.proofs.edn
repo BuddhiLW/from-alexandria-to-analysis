@@ -1,0 +1,31 @@
+;; From Euler's Methodus inveniendi (1744) to Lagrange's delta (letter to
+;; Euler, Turin, 12 August 1755; Oeuvres de Lagrange t. XIV, Paris 1892,
+;; pp. 138-144; the year is the editor's, the letter carries day and month).
+;; Each step: claim, reason, :stage for alexandria.lagrange.variations-scenes.
+{:lagrange/delta-1755
+ {:source "Oeuvres de Lagrange, t. XIV, pp. 138-144"
+  :euler
+  {:original "Cum enim mundi universi fabrica sit perfectissima atque a Creatore sapientissimo absoluta, nihil omnino in mundo contingit, in quo non maximi minimive ratio quaepiam eluceat."
+   :english "Since the fabric of the whole world is most perfect and the work of a most wise Creator, nothing at all happens in the world in which some rule of maximum or minimum does not shine forth."
+   :english-by "this series"
+   :source "Euler, Methodus inveniendi, 1744, Additamentum I, p. 245"}
+  :lagrange
+  {:original "Differentiale ipsius y quatenus hic differentiatur, x manente, pro habendo maximo, minimove formulae datae valore, ad distinctionem aliarum ejusdem y differentiarum, quae in illa jam ingrediuntur, denotabo per δ; sic et δdy est differentia ipsius dy, dum y crescunt quantitate δy."
+   :english "The differential of y, insofar as it is differentiated here, x staying fixed, in order to obtain the maximum or minimum value of the given formula, I shall denote by δ, to distinguish it from the other differentials of the same y which already enter it; so δdy is the difference of dy while the y grow by the quantity δy."
+   :english-by "this series"}
+  :euler-reply
+  {:original "Statim autem perspexi analysin tuam, qua meas hujusmodi problematum solutiones per sola analyseos praecepta elicuisse, multo latius patere mea methodo ideis geometricis innixa."
+   :english "I saw at once that your analysis, by which you drew my solutions of such problems from the rules of analysis alone, reaches much further than my method, which rests on geometric ideas."
+   :english-by "this series"
+   :source "Euler to Lagrange, Berlin, 6 September 1755; Oeuvres t. XIV, p. 144"}
+  :steps
+  [{:stage :euler-polygon :why "Euler, 1744"
+    :claim "Euler replaces the curve by a polygon and moves one vertex by a small amount, then asks that the change of the integral vanish. His rule: N - dP/dx = 0 for an integral of Z(x, y, p), with N = dZ/dy and P = dZ/dp."}
+   {:stage :delta :why "Lagrange, 1755"
+    :claim "Lagrange, nineteen, in Turin, writes to Euler: vary the whole curve at once. y becomes y + δy, with δy any function vanishing at the ends; δ is a new differential that commutes with d."}
+   {:stage :first-variation :why "Emmy, proved"
+    :claim "Emmy computes δ of L(t, q, q') along a varied path q + εη as the derivative in ε at 0, and checks it equals d/dt(η ∂L/∂q') - η (d/dt ∂L/∂q' - ∂L/∂q) for every L, q and η."}
+   {:stage :integrate :why "integration by parts"
+    :claim "Integrate between the ends: the first term is η ∂L/∂q' at the ends, which is zero. What is left is the integral of η times the Euler-Lagrange expression."}
+   {:stage :equation :why "η is arbitrary"
+    :claim "For that integral to vanish for every η the expression itself must vanish: d/dt ∂L/∂q' - ∂L/∂q = 0. Euler's rule, now without the polygon. Euler named the method the calculus of variations and dropped his own."}]}}

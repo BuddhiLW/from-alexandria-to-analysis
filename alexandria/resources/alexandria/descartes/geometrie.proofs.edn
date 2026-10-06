@@ -1,0 +1,172 @@
+;; Descartes, La Geometrie (Leiden 1637), told step by step. French quoted
+;; verbatim from the edition of A. Hermann (Paris 1886), Project Gutenberg
+;; eBook #26400 (public domain), modern spelling of that edition; :claim is
+;; the series' own English rendering, :french the original it renders.
+;; :stage names what alexandria.descartes.geometrie-scenes draws.
+{:descartes/unit
+ {:source "Hermann 1886, pp. 1-2"
+  :passage "Et comme toute l'arithmétique n'est composée que de quatre ou cinq opérations, qui sont, l'addition, la soustraction, la multiplication, la division, et l'extraction des racines, qu'on peut prendre pour une espèce de division, ainsi n'a-t-on autre chose à faire en géométrie touchant les lignes qu'on cherche pour les préparer à être connues, que leur en ajouter d'autres, ou en ôter; ou bien en ayant une, que je nommerai l'unité pour la rapporter d'autant mieux aux nombres, et qui peut ordinairement être prise à discrétion, puis en ayant encore deux autres, en trouver une quatrième qui soit à l'une de ces deux comme l'autre est à l'unité, ce qui est le même que la multiplication."
+  :steps
+  [{:stage :unit :why "the unit"
+    :claim "Take one line, the unit, which may be chosen at will; call it AB."
+    :french "en ayant une, que je nommerai l'unité pour la rapporter d'autant mieux aux nombres, et qui peut ordinairement être prise à discrétion"}
+   {:stage :multiply :why "Euclid VI.2, VI.4"
+    :claim "Let AB be the unit, and let BD be multiplied by BC: join A and C, draw DE parallel to CA, and BE is the product."
+    :french "Soit, par exemple, AB l'unité, et qu'il faille multiplier BD par BC, je n'ai qu'à joindre les points A et C, puis tirer DE parallèle à CA, et BE est le produit de cette multiplication."}
+   {:stage :similar :why "similar triangles"
+    :claim "The triangles BAC and BDE are similar, so BE : BD = BC : BA. With BA = 1, BE = BD x BC: a fourth line, to one as the other is to the unit."}
+   {:stage :divide :why "the same figure read backwards"
+    :claim "Or, to divide BE by BD: join E and D, draw AC parallel to DE, and BC is the quotient."
+    :french "Ou bien, s'il faut diviser BE par BD, ayant joint les points E et D, je tire AC parallèle à DE, et BC est le produit de cette division."}
+   {:stage :root :why "Euclid VI.13"
+    :claim "To take the square root of GH, add FG, the unit, in a straight line; bisect FH at K, draw the circle FIH about K, raise GI at right angles to FH at G: GI is the root sought."
+    :french "Ou s'il faut tirer la racine carrée de GH, je lui ajoute en ligne droite FG, qui est l'unité, et divisant FH en deux parties égales au point K, du centre K je tire le cercle FIH, puis élevant du point G une ligne droite jusques à I à angles droits sur FH, c'est GI la racine cherchée."}
+   {:stage :mean :why "the mean proportional"
+    :claim "GI is the mean proportional between FG and GH (Euclid VI.13): GI x GI = FG x GH = GH. A product of two lines is a line again, not an area: the homogeneity the Greeks required is gone."}]}
+
+ :descartes/plane
+ {:source "Hermann 1886, pp. 5-7, figs. 3 and 4; 1637 Leiden edition pp. 302-304 (corpus 11-descartes-geometrie/text/geometrie-1637-wikisource.txt)"
+  :passage "il n'y restera tout au plus qu'un carré inconnu, égal à ce qui se produit de l'addition ou soustraction de sa racine multipliée par quelque quantité connue, et de quelque autre quantité aussi connue."
+  :steps
+  [{:stage :plane :why "what a plane problem is"
+    :claim "If the problem can be solved by ordinary geometry, with straight lines and circles only, then at the end there will remain at most an unknown square equal to its root times some known quantity, plus or minus another known quantity."
+    :french "il n'y restera tout au plus qu'un carré inconnu, égal à ce qui se produit de l'addition ou soustraction de sa racine multipliée par quelque quantité connue, et de quelque autre quantité aussi connue."}
+   {:stage :triangle :why "fig. 3: the right triangle"
+    :claim "If I have z^2 = az + b^2, I make the right triangle NLM, whose side LM is equal to b, the square root of the known quantity b^2, and the other side LN is a/2, half the other known quantity."
+    :french "je fais le triangle rectangle NLM (fig. 3), dont le côté LM est égal à b, racine carrée de la quantité connue b², et l'autre LN est ½a"}
+   {:stage :produce :why "fig. 3: produce the base"
+    :claim "Producing MN, the base of this triangle, to O, so that NO is equal to NL, the whole OM is z, the line sought: z = a/2 + sqrt(a^2/4 + b^2)."
+    :french "puis prolongeant MN, la base de ce triangle, jusques à O, en sorte que NO soit égale à NL, la toute OM est z, la ligne cherchée"}
+   {:stage :subtract :why "fig. 3 again, for -ay"
+    :claim "If I have y^2 = -ay + b^2, I make the same right triangle NLM, and from its base MN I take NP equal to NL; the rest PM is y, the root sought: y = -a/2 + sqrt(a^2/4 + b^2)."
+    :french "je fais le même triangle rectangle NLM, et de sa base MN j'ôte NP égale à NL, et le reste PM est y, la racine cherchée."}
+   {:stage :square :why "the same figure, one degree up"
+    :claim "And in the same way, if I had x^4 = -ax^2 + b^2, PM would be x^2, and x its square root, which Book I already draws with the unit."
+    :french "Et tout de même si j'avois x⁴ = -ax² + b², PM seroit x², et j'aurois"}
+   {:stage :chord :why "fig. 4: two roots"
+    :claim "Finally, if I have z^2 = az - b^2, I make NM equal to a/2 and LM equal to b; then I draw LQR parallel to MN, and about the centre N through M I describe a circle cutting it at Q and R: z is LQ, or else LR, for here it has two values."
+    :french "la ligne cherchée z est LQ, ou bien LR; car en ce cas elle s'exprime en deux façons"}
+   {:stage :none :why "fig. 4: no root"
+    :claim "And if the circle about N through M neither cuts nor touches the straight line LQR, there is no root in the equation, so that one may be sure the construction of the proposed problem is impossible."
+    :french "il n'y a aucune racine en l'équation, de façon qu'on peut assurer que la construction du problème proposé est impossible."}]}
+
+ :descartes/pappus
+ {:source "Hermann 1886, pp. 8-14, 24-28"
+  :steps
+  [{:stage :lines :why "Pappus, Collection VII"
+    :claim "Given three or four straight lines in position, find a point from which lines drawn to each at given angles make the rectangle of two have a given ratio to the rectangle of the other two."
+    :french "Ayant trois ou quatre, ou plus grand nombre de lignes droites données par position; premièrement on demande un point duquel on puisse tirer autant d'autres lignes droites, une sur chacune des données, qui fassent avec elles des angles donnés, et que le rectangle contenu en deux de celles qui seront ainsi tirées d'un même point, ait la proportion donnée avec le carré de la troisième, s'il n'y en a que trois; ou bien avec le rectangle des deux autres, s'il y en a quatre."}
+   {:stage :history :why "what Pappus says"
+    :claim "Pappus says that with three or four lines the point lies on one of the three conic sections, but he does not undertake to determine or describe it."
+    :french "Et Pappus dit que lorsqu'il n'y a que trois ou quatre lignes droites données, c'est en une des trois sections coniques; mais il n'entreprend point de la déterminer ni de la décrire."}
+   {:stage :distances :why "each distance is of the first degree"
+    :claim "Name the unknown point by two lines, x and y. Each line drawn from it at its given angle is then x and y taken once, with known quantities: of the first degree."}
+   {:stage :equation :why "two factors of the first degree"
+    :claim "So the rectangle of two such lines, and the rectangle of the other two, are each of the second degree in x and y; their given ratio is an equation that rises no higher than the square."}
+   {:stage :locus :why "Descartes' answer"
+    :claim "With three or four lines given, the points sought all lie not only on one of the three conic sections, but sometimes also on a circle or a straight line."
+    :french "Puis j'ai trouvé aussi que lorsqu'il n'y a que trois ou quatre lignes données, les points cherchés se rencontrent tous, non seulement en l'une des trois sections coniques, mais quelquefois aussi en la circonférence d'un cercle ou en une ligne droite."}
+   {:stage :classify :why "the sign of the square term"
+    :claim "If the term in x squared is zero, this conic section is a parabola; if it is marked with the sign +, a hyperbola; and if with the sign -, an ellipse."
+    :french "à savoir si le terme (p/m)x² est nul, cette section conique est une parabole; et s'il est marqué du signe +, c'est une hyperbole; et enfin s'il est marqué du signe -, c'est une ellipse"}
+   {:stage :ratio :why "the ratio varies"
+    :claim "As the given ratio changes, the same four lines carry ellipses, two parabolas, and hyperbolas: the sign of the discriminant decides which."}]}
+
+ :descartes/normal
+ {:source "Hermann 1886, pp. 32-38"
+  :passage "Et j'ose dire que c'est ceci le problème le plus utile et le plus général, non seulement que je sache, mais même que j'aie jamais désiré de savoir en géométrie."
+  :steps
+  [{:stage :curve :why "the problem"
+    :claim "To draw a straight line that falls at right angles on the curve at a chosen point C: the most useful and most general problem I know."
+    :french "lorsque j'aurai généralement donné la façon de tirer des lignes droites qui tombent à angles droits sur tels de leurs points qu'on voudra choisir."}
+   {:stage :cutting :why "a circle through C"
+    :claim "Take P on the axis and the circle about P through C. If P is a little nearer or farther than it should be, the circle cuts the curve not only at C but also at some other point E."
+    :french "mais que si ce point P est tant soit peu plus proche ou plus éloigné du point A qu'il ne doit, ce cercle coupera la courbe, non seulement au point C, mais aussi nécessairement en quelque autre."}
+   {:stage :two-roots :why "two unequal roots"
+    :claim "Then the equation for x has two unequal roots, one CM and the other EQ."}
+   {:stage :touching :why "the roots meet"
+    :claim "The closer C and E are, the less the two roots differ; they are entirely equal when the two points are joined in one, that is, when the circle through C touches the curve without cutting it."
+    :french "mais plus ces deux points C et E sont proches l'un de l'autre, moins il y a de différence entre ces deux racines; et enfin elles sont entièrement égales, s'ils sont tous deux joints en un, c'est-à-dire si le cercle qui passe par C y touche la courbe CE sans la couper."}
+   {:stage :normal :why "a double root"
+    :claim "Ask the equation to have the form (x - x0)^2 times the rest; that fixes P, and PC is the normal. For the parabola y^2 = r x, P lies r/2 beyond the foot of C."}]}
+
+ :descartes/ellipse
+ {:source "Hermann 1886, pp. 33-38, figs. 12 and 15; 1637 Leiden edition pp. 341-346 (corpus 11-descartes-geometrie/text/geometrie-1637-wikisource.txt)"
+  :passage "Et j'ose dire que c'est ceci le problème le plus utile et le plus général, non seulement que je sache, mais même que j'aie jamais désiré de savoir en géométrie."
+  :steps
+  [{:stage :names :why "the names of fig. 12"
+    :claim "I suppose the thing done, and that the line sought is CP. Making CM, or BA, = x and CB = y... I make PC = s and PA = v, so PM = v - y."
+    :french "puis je fais PC = s, et PA = v, ou PM = v - y"}
+   {:stage :circle :why "the right triangle PMC"
+    :claim "Because of the right triangle PMC, I have s^2, the square of the base, equal to x^2 + v^2 - 2vy + y^2, the squares of the two sides."
+    :french "et à cause du triangle rectangle PMC, j'ai s², qui est le carré de la base, égal à x² + v² - 2vy + y², qui sont les carrés des deux côtés"}
+   {:stage :ellipse :why "Apollonius I.13"
+    :claim "If CE is an ellipse, MA the segment of its diameter to which CM is applied in order, with r its latus rectum and q its transverse side, then by the thirteenth theorem of Apollonius' first book x^2 = ry - (r/q)y^2."
+    :french "on a, par le treizième théorème du premier livre d'Apollonius, x² = ry - (r/q)y²"}
+   {:stage :eliminate :why "take x away"
+    :claim "Taking x^2 away, there remains s^2 - v^2 + 2vy - y^2 = ry - (r/q)y^2, or y^2 + (qry - 2qvy + qv^2 - qs^2)/(q - r) = 0."
+    :french "d'où ôtant x², il reste s² - v² + 2vy - y² = ry - (r/q)y²"}
+   {:stage :cut :why "fig. 15: two roots"
+    :claim "If P is a little nearer or farther than it should be, the circle about P through C cuts the curve again at E; the same equation then has two unequal roots, MA and QA."
+    :french "il y aura deux racines inégales entre elles, et dont l'une sera CM, l'autre EQ, si c'est x qu'on cherche, ou bien l'une sera MA et l'autre QA, si c'est y"}
+   {:stage :touch :why "the roots meet"
+    :claim "The closer C and E are, the less the roots differ; they are entirely equal when the circle through C touches the curve CE without cutting it."
+    :french "et enfin elles sont entièrement égales, s'ils sont tous deux joints en un, c'est-à-dire si le cercle qui passe par C y touche la courbe CE sans la couper."}
+   {:stage :compare :why "the form of a double root"
+    :claim "When an equation has two equal roots it has the same form as the unknown less the known quantity equal to it, multiplied by itself: here y^2 - 2ey + e^2, with e equal to y."
+    :french "doit avoir la même forme que celle qui se produit en faisant e égal à y, et multipliant y - e par soi-même, d'où il vient y² - 2ey + e²"}
+   {:stage :solve :why "the second terms"
+    :claim "The second term, (qry - 2qvy)/(q - r) in the one, equals -2ey in the other; whence v = e - (r/q)e + r/2. The third term would give s, but v alone fixes P, the only point sought."
+    :french "d'où cherchant la quantité v qui est la ligne PA, on a v = e - (r/q)e + ½r"}]}
+
+ :descartes/signs
+ {:source "Hermann 1886, pp. 56-57"
+  :steps
+  [{:stage :build :why "multiply the binomials"
+    :claim "Multiply x - 2 = 0, x - 3 = 0, x - 4 = 0: x^3 - 9x^2 + 26x - 24 = 0 has the three values 2, 3, 4."}
+   {:stage :false-root :why "a root less than nothing"
+    :claim "If x also designates the defect of a quantity which is 5, we have x + 5 = 0, which multiplied by the cubic makes x^4 - 4x^3 - 19x^2 + 106x - 120 = 0: four roots, three true, 2, 3, 4, and one false, 5."
+    :french "on a x + 5 = 0, qui, étant multiplié par x³-9x²+26x-24=0 fait x⁴ - 4x³ - 19x² + 106x - 120 = 0 pour une équation en laquelle il y a quatre racines, à savoir trois vraies qui sont 2, 3, 4, et une fausse qui est 5."}
+   {:stage :rule :why "the rule"
+    :claim "There can be as many true roots as the signs + and - change, and as many false as there are times two + signs or two - signs follow one another."
+    :french "à savoir il y en peut avoir autant de vraies que les signes + et - s'y trouvent de fois être changés, et autant de fausses qu'il s'y trouve de fois deux signes + ou deux signes - qui s'entre-suivent."}
+   {:stage :count :why "Descartes' own count"
+    :claim "In the last: + x^4 then - 4x^3 is one change, - 19x^2 then + 106x and + 106x then - 120 are two more: three true roots; and one false, because the two - signs of 4x^3 and 19x^2 follow one another."}]}
+
+ :descartes/construction
+ {:source "Hermann 1886, pp. 72-76, figs. 27, 28 and 30; 1637 Leiden edition pp. 389-397 (corpus 11-descartes-geometrie/text/geometrie-1637-wikisource.txt)"
+  :passage "Mais je me contenterai ici de donner une règle générale pour les trouver toutes par le moyen d'une parabole, à cause qu'elle est en quelque façon la plus simple."
+  :steps
+  [{:stage :reduce :why "the form of the equation"
+    :claim "First take away the second term of the proposed equation, and so reduce it to z^4 = * pz^2 * qz * r, taking a for the unit (the stars stand for the signs + or -)."
+    :french "Premièrement, il faut ôter le second terme de l'équation proposée, s'il n'est déjà nul"}
+   {:stage :parabola :why "fig. 27: the parabola"
+    :claim "Suppose the parabola FAG already described, with axis ACDKL and latus rectum a, or 1, of which AC is the half, A the vertex."
+    :french "supposant que la parabole FAG est déjà décrite, et que son essieu est ACDKL, et que son côté droit est a ou 1 dont AC est la moitié"}
+   {:stage :centre :why "fig. 27: the centre E"
+    :claim "Make CD = p/2, on the same side as A if there is + p; from D raise a perpendicular up to E equal to q/2."
+    :french "il faut faire CD = ½p ... Et du point D ... il faut élever une ligne à angles droits jusques à E, en sorte qu'elle soit égale à ½q."}
+   {:stage :radius :why "fig. 27: the radius through H"
+    :claim "With + r, take AR = r and AS = 1 on AE produced, describe a circle on RS, and erect AH at right angles to AE: the circle FG about E passes through H."
+    :french "il faut faire AH perpendiculaire sur AE, laquelle AH rencontre ce cercle RHS au point H qui est celui par où l'autre cercle FHG doit passer."}
+   {:stage :roots :why "fig. 27: the meetings"
+    :claim "This circle FG can cut or touch the parabola in one, two, three or four points, and the perpendiculars drawn from them to the axis give all the roots of the equation, true as well as false."
+    :french "Or ce cercle FG peut couper ou toucher la parabole en un, ou deux, ou trois, ou quatre points, desquels tirant des perpendiculaires sur l'essieu, on a toutes les racines de l'équation tant vraies que fausses."}
+   {:stage :parabola-sq :why "the demonstration, first square"
+    :claim "If GK is named z, AK is z^2, since GK is the mean proportional between AK and the latus rectum 1; taking away AC = 1/2 and CD = p/2 leaves DK, or EM, = z^2 - p/2 - 1/2."
+    :french "si la ligne GK, trouvée par cette construction, se nomme z, AK sera z², à cause de la parabole"}
+   {:stage :pythagoras :why "the demonstration, the right triangle EMG"
+    :claim "GM is z + q/2; adding the two squares gives z^4 - pz^2 + qz + q^2/4 + p^2/4 + p/2 + 1/4 for the square of GE, the base of the right triangle EMG."
+    :french "et assemblant ces deux carrés on a ... pour le carré de la ligne GE, à cause qu'elle est la base du triangle rectangle EMG."}
+   {:stage :equate :why "the demonstration, the radius again"
+    :claim "But GE is also the radius HE, whose square is AE^2 + AH^2 = q^2/4 + p^2/4 + p/2 + 1/4 + r. Equating the two sums is the same as z^4 = pz^2 - qz + r."
+    :french "si bien qu'il y a équation entre cette somme et la précédente, ce qui est le même que z⁴ = pz² - qz + r"}
+   {:stage :means :why "fig. 28: two mean proportionals"
+    :claim "To find two mean proportionals between a and q: as a is to z, so z to z^2/a, and z^2/a to z^3/a^2, so z^3 = a^2 q; raise CE = q/2 from C, and the circle about E through A gives FL and LA, the two means sought."
+    :french "on trouve FL et LA pour les deux moyennes cherchées."}
+   {:stage :trisect :why "fig. 30: the angle in three"
+    :claim "To divide the arc NQPT in three, with NO = 1, NP = q the chord of the given arc and NQ = z the chord of its third, the equation is z^3 = 3z - q."
+    :french "faisant NO = 1 pour le rayon du cercle, et NP = q pour la subtendue de l'arc donné, et NQ = z pour la subtendue du tiers de cet arc, l'équation vient z³ = 3z - q."}
+   {:stage :three :why "fig. 30: three roots"
+    :claim "Taking CD = 3/2 and DE = q/2, the circle about E through A cuts the parabola at F, g and G: gk and GK are true roots, FL false. The smaller, gk, is NQ; GK is the chord of a third of the rest of the circle; and FL equals QN and NV together."
+    :french "Et la fausse FL est égale à ces deux ensembles QN et NV, ainsi qu'il est aisé à voir par le calcul."}]}}

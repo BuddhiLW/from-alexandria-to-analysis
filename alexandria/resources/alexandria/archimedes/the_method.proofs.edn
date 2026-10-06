@@ -1,0 +1,35 @@
+;; Archimedes, The Method, treating of mechanical problems, to Eratosthenes.
+;; T. L. Heath, The Method of Archimedes recently discovered by Heiberg
+;; (Cambridge, 1912), pp. 12-18. Each step is a claim, its reason, and the
+;; :stage a medium shows while the step is read
+;; (alexandria.archimedes.method-scenes).
+{:archimedes/method-1
+ {:source "Heath 1912, pp. 13-18"
+  :letter
+  {:from "Archimedes" :to "Eratosthenes" :source "Heath 1912, pp. 12-14"
+   :passages
+   ["Archimedes to Eratosthenes greeting."
+    "Seeing moreover in you, as I say, an earnest student, a man of considerable eminence in philosophy, and an admirer [of mathematical inquiry], I thought fit to write out for you and explain in detail in the same book the peculiarity of a certain method, by which it will be possible for you to get a start to enable you to investigate some of the problems in mathematics by means of mechanics."
+    "This procedure is, I am persuaded, no less useful even for the proof of the theorems themselves; for certain things first became clear to me by a mechanical method, although they had to be demonstrated by geometry afterwards because their investigation by the said method did not furnish an actual demonstration. But it is of course easier, when we have previously acquired, by the method, some knowledge of the questions, to supply the proof than it is to find it without any previous knowledge."
+    "I apprehend that some, either of my contemporaries or of my successors, will, by means of the method when once established, be able to discover other theorems in addition, which have not yet occurred to me."]}
+  :statement "Any segment of a section of a right-angled cone (i.e. a parabola) is four-thirds of the triangle which has the same base and equal height."
+  :disclaimer "Now the fact here stated is not actually demonstrated by the argument used; but that argument has given a sort of indication that the conclusion is true. Seeing then that the theorem is not demonstrated, but at the same time suspecting that the conclusion is true, we shall have recourse to the geometrical demonstration which I myself discovered and have already published."
+  :steps
+  [{:stage :segment :why "set-up"
+    :claim "Let ABC be a segment of a parabola bounded by the straight line AC and the parabola ABC, and let D be the middle point of AC. Draw DBE parallel to the axis and join AB, BC."}
+   {:stage :construct :why "construction"
+    :claim "From A draw AKF parallel to DE, let the tangent at C meet DB in E and AKF in F, produce CB to meet AF in K, and produce CK to H, making KH equal to CK."}
+   {:stage :balance :why "mechanics"
+    :claim "Consider CH as the bar of a balance, K being its middle point."}
+   {:stage :slice :why "property of the parabola"
+    :claim "Let MO be any straight line parallel to ED, meeting CF, CK, AC in M, N, O and the curve in P. Then MN = NO, and MO : OP = CA : AO = CK : KN = HK : KN."}
+   {:stage :weigh :why "law of the lever"
+    :claim "Take TG equal to OP and place it with its centre of gravity at H. Since MO : TG = HK : KN, TG at H and MO at N are in equilibrium about K."}
+   {:stage :all-slices :why "every line"
+    :claim "So for every such line: the triangle CFA, made up of all the lines MO in place, is in equilibrium about K with the segment CBA, made up of all the lines PO, placed with its centre of gravity at H."}
+   {:stage :centres :why "centre of gravity"
+    :claim "Divide KC at W so that CK = 3 KW: W is the centre of gravity of the triangle ACF. The triangle acts as if it hung at W, the segment at H."}
+   {:stage :ratio :why "the balance read"
+    :claim "Therefore triangle ACF : segment ABC = HK : KW = 3 : 1, and the segment is a third of ACF. But ACF is four times ABC, made of four triangles equal to it."}
+   {:stage :conclusion :why "a sort of indication"
+    :claim "Therefore the segment ABC is four-thirds of the triangle ABC. Not yet a proof: the geometrical demonstration is the one in Quadrature of the Parabola."}]}}

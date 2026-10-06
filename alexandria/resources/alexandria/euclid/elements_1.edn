@@ -1,0 +1,194 @@
+;; Euclid, Elements, Book I: the first propositions, as desargues construction boards.
+{:tradition {:id :euclid/elements-1
+             :author "Euclid"
+             :work "Elements, Book I"
+             :date "c. 300 BC"
+             :source "T. L. Heath, The Thirteen Books of Euclid's Elements, 1908"}
+ :propositions
+ [{:id :euclid/I.1
+   :title "I.1"
+   :statement "On a given finite straight line to construct an equilateral triangle."
+   :source "Heath 1908, vol. 1, p. 241"
+   :construction
+   {:id :euclid-I-1
+    :kind :construction
+    :window {:x [-2 2] :y [-1 2] :n 1 :sweep [0 1]}
+    :points [{:id :A :at [-0.5 0.0] :fixed? true}
+             {:id :B :at [0.5 0.0] :fixed? true}
+             {:id :C :op :circles :circles [[:A :B] [:B :A]] :side 0}]
+    :draw [[:segment :A :B]
+           [:segment :A :C]
+           [:segment :B :C]]
+    :checks [{:distance [:A :B] :against {:distance [:A :C]}}
+             {:equal-lengths [[:A :B] [:A :C] [:B :C]]}]}}
+
+  {:id :euclid/I.2
+   :title "I.2"
+   :statement "To place at a given point A a straight line equal to a given straight line BC."
+   :source "Heath 1908, vol. 1, p. 244"
+   :construction
+   {:id :euclid-I-2
+    :kind :construction
+    :window {:x [-1 4] :y [-1 4] :n 1 :sweep [0 1]}
+    :points [{:id :A :at [0.0 0.0] :fixed? true}
+             {:id :B :at [1.6 0.0] :fixed? true}
+             {:id :C :at [2.25 0.65] :fixed? true}
+             {:id :D :op :circles :circles [[:A :B] [:B :A]] :side 0}
+             {:id :E :op :line-circle :line [:D :B] :circle [:B :C] :beyond? true}
+             {:id :F :op :line-circle :line [:D :A] :circle [:D :E] :beyond? true}]
+    :draw [[:circle :A :B]
+           [:circle :B :A]
+           [:circle :B :C]
+           [:circle :D :E]
+           [:segment :A :B]
+           [:segment :A :D]
+           [:segment :B :D]
+           [:segment :D :E]
+           [:segment :D :F]
+           [:segment :A :F]]
+    :checks [{:equal-lengths [[:A :F] [:B :C]]}]}}
+
+  {:id :euclid/I.3
+   :title "I.3"
+   :statement "Given two unequal straight lines AB and CG (AB the greater), to cut off from AB a part equal to CG."
+   :source "Heath 1908, vol. 1, p. 247"
+   :construction
+   {:id :euclid-I-3
+    :kind :construction
+    :window {:x [-1 4] :y [-1 4] :n 1 :sweep [0 1]}
+    :points [{:id :A :at [0.0 0.0] :fixed? true}
+             {:id :B :at [3.0 0.0] :fixed? true}
+             {:id :C :at [0.85 1.0] :fixed? true}
+             {:id :G :at [1.45 1.0] :fixed? true}
+             {:id :D :op :circles :circles [[:A :C] [:C :A]] :side 0}
+             {:id :H :op :line-circle :line [:D :C] :circle [:C :G] :beyond? true}
+             {:id :F :op :line-circle :line [:D :A] :circle [:D :H] :beyond? true}
+             {:id :E :op :cut :segment [:A :B] :circle [:A :F] :which :second}]
+    :draw [[:circle :A :C]
+           [:circle :C :A]
+           [:circle :C :G]
+           [:circle :D :H]
+           [:circle :A :F]
+           [:segment :A :B]
+           [:segment :C :G]
+           [:segment :A :D]
+           [:segment :C :D]
+           [:segment :D :H]
+           [:segment :D :F]
+           [:segment :A :F]
+           [:segment :A :E]]
+    :checks [{:equal-lengths [[:A :F] [:C :G]]}
+             {:collinear [:A :E :B]}
+             {:equal-lengths [[:A :E] [:C :G]]}]}}
+
+  {:id :euclid/I.4
+   :title "I.4"
+   :statement "If two triangles have the two sides equal to two sides respectively, and have the angles contained by the equal straight lines equal, they will also have the base equal to the base, the triangle will be equal to the triangle, and the remaining angles will be equal to the remaining angles respectively, namely those which the equal sides subtend."
+   :source "Heath 1908, vol. 1, p. 247"
+   :construction
+   {:id :euclid-I-4
+    :kind :construction
+    :window {:x [-1 4] :y [-1 3] :n 1 :sweep [0 1]}
+    :points [{:id :A :at [0.0 0.0] :fixed? true}
+             {:id :B :at [1.0 0.0] :fixed? true}
+             {:id :C :at [0.3 0.8] :fixed? true}
+             {:id :D :at [2.0 0.0] :fixed? true}
+             {:id :P :at [3.0 0.4] :fixed? true}
+             {:id :E :op :on-ray :from :D :through :P :length [:A :B]}
+             {:id :F :op :copy-angle :angle [:B :A :C] :at [:E :D] :length [:A :C]}]
+    :draw [[:segment :A :B] [:segment :A :C] [:segment :B :C]
+           [:segment :D :E] [:segment :D :F] [:segment :E :F]]
+    :checks [{:equal-lengths [[:B :C] [:E :F]]}
+             {:claim (= (area A B C) (area D E F))}
+             {:equal-angles [[:A :B :C] [:D :E :F]]}
+             {:equal-angles [[:A :C :B] [:D :F :E]]}]}}
+
+  {:id :euclid/I.5
+   :title "I.5"
+   :statement "In isosceles triangles the angles at the base are equal to one another, and, if the equal straight lines be produced further, the angles under the base will be equal to one another."
+   :source "Heath 1908, vol. 1, p. 251"
+   :construction
+   {:id :euclid-I-5
+    :kind :construction
+    :window {:x [-2 2] :y [-1.5 1.5] :n 1 :sweep [0 1]}
+    :points [{:id :A :at [0.0 1.0] :fixed? true}
+             {:id :B :at [-0.5 0.0] :fixed? true}
+             {:id :X :at [0.1 -0.3] :fixed? true}
+             {:id :C :op :reflect :of :B :in [:A :X]}
+             {:id :F :op :on :line [:A :B] :s 1.5 :fixed? true}
+             {:id :G :op :on-ray :from :A :through :C :length [:A :F]}]
+    :draw [[:segment :A :F] [:segment :A :G] [:segment :B :C]
+           [:segment :F :C] [:segment :G :B]]
+    :checks [{:equal-lengths [[:A :B] [:A :C]]}
+             {:equal-lengths [[:F :C] [:G :B]]}
+             {:equal-angles [[:A :B :C] [:A :C :B]]}
+             {:equal-angles [[:F :B :C] [:G :C :B]]}]}}
+
+  {:id :euclid/I.6
+   :title "I.6"
+   :statement "If in a triangle two angles be equal to one another, the sides which subtend the equal angles will also be equal to one another."
+   :source "Heath 1908, vol. 1, p. 255"
+   :construction
+   {:id :euclid-I-6
+    :kind :construction
+    :window {:x [-1 2] :y [-1 2] :n 1 :sweep [0 1]}
+    :points [{:id :B :at [0.0 0.0] :fixed? true}
+             {:id :C :at [1.0 0.0] :fixed? true}
+             {:id :P :op :rotate :of :C :about :B :by 0.9}
+             {:id :Q :op :rotate :of :B :about :C :by -0.9}
+             {:id :A :op :meet :lines [[:B :P] [:C :Q]]}]
+    :draw [[:segment :A :B] [:segment :A :C] [:segment :B :C]]
+    :checks [{:angle [:A :B :C] :against {:angle [:A :C :B]}}
+             {:claim (= (square (length A B)) (square (length A C)))}]}}
+
+  {:id :euclid/I.47
+   :title "I.47"
+   :statement "In right-angled triangles the square on the side subtending the right angle is equal to the squares on the sides containing the right angle."
+   :source "Heath 1908, vol. 1, p. 349"
+   :construction
+   {:id :euclid-I-47
+    :kind :construction
+    :window {:x [-1.5 3.5] :y [-2.5 2.5] :n 1 :sweep [0 1]}
+    :points [{:id :B :at [0.0 0.0] :fixed? true}
+             {:id :A :at [0.72 0.96] :fixed? true}
+             {:id :R :op :square-corner :side [:A :B] :turn :left :corner 1}
+             {:id :C :op :on :line [:A :R] :s 4/3 :fixed? true}
+             {:id :D :op :square-corner :side [:B :C] :turn :right :corner 1}
+             {:id :E :op :square-corner :side [:B :C] :turn :right :corner 0}
+             {:id :F :op :square-corner :side [:A :B] :turn :right :corner 0}
+             {:id :G :op :square-corner :side [:A :B] :turn :right :corner 1}
+             {:id :K :op :square-corner :side [:A :C] :turn :left :corner 0}
+             {:id :H :op :square-corner :side [:A :C] :turn :left :corner 1}
+             {:id :M :op :foot :of :A :on [:B :C]}
+             {:id :L :op :translate :of :M :by [:B :D]}]
+    :draw [[:segment :A :B] [:segment :A :C] [:segment :B :C]
+           [:path [:B :D :E :C :B]] [:path [:A :G :F :B]] [:path [:A :H :K :C]]
+           [:segment :A :L] [:segment :A :D] [:segment :F :C]]
+    :checks [{:collinear [:G :A :C]}
+             {:claim (= (area A B D) (area F B C))}
+             {:claim (= (area B D L M) (* 2 (area A B D)))}
+             {:claim (= (area A G F B) (* 2 (area F B C)))}
+             {:claim (= (area B D L M) (area A G F B))}
+             {:claim (= (area M L E C) (area A C K H))}
+             {:claim (= (area B D E C) (+ (area A G F B) (area A C K H)))}]}}
+
+  {:id :euclid/I.48
+   :title "I.48"
+   :statement "If in a triangle the square on one of the sides be equal to the squares on the remaining two sides of the triangle, the angle contained by the remaining two sides of the triangle is right."
+   :source "Heath 1908, vol. 1, p. 368"
+   :construction
+   {:id :euclid-I-48
+    :kind :construction
+    :window {:x [-1.5 2.5] :y [-1.5 2] :n 1 :sweep [0 1]}
+    :params [{:id t :min 0.2 :max 2.9 :init 1.1 :label "where A stands on the semicircle"}]
+    :points [{:id :B :at [0.0 0.0] :fixed? true}
+             {:id :C :at [2.0 0.0] :fixed? true}
+             {:id :O :op :mid :of [:B :C]}
+             {:id :A :op :around :center :O :through :B :angle t :fixed? true}
+             {:id :R :op :square-corner :side [:A :C] :turn :left :corner 1}
+             {:id :D :op :on-ray :from :A :through :R :length [:A :B]}]
+    :draw [[:segment :A :B] [:segment :A :C] [:segment :B :C]
+           [:segment :A :D] [:segment :D :C]]
+    :checks [{:claim (= (square (length B C)) (+ (square (length A B)) (square (length A C))))}
+             {:equal-lengths [[:D :C] [:B :C]]}
+             {:perpendicular [[:A :B] [:A :C]]}]}}]}

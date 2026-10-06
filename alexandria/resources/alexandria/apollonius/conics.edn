@@ -1,0 +1,65 @@
+;; Apollonius of Perga, Conics: the sections of the cone and their focal
+;; properties. Statements from T. L. Heath, Apollonius of Perga: Treatise on
+;; Conic Sections (Cambridge, 1896; archive.org treatiseonconics00apolrich),
+;; whose Propositions 1-3 and 69-73 render Conics I.11-13 and III.45-52.
+;;
+;; Each :claims entry is a vocabulary claim realized on the figure named by
+;; :env in alexandria.apollonius.conics/envs, all built from one cone and one
+;; cutting plane: k the cone's slope, theta the plane's tilt, h the height of
+;; the vertex P, x the abscissa; p the parameter, d the transverse diameter,
+;; c the excess (y^2 = p x + c x^2). The focal claims are on the central conic
+;; of semi-axis a and eccentricity e. Lengths that are roots of sums are
+;; compared squared (alexandria.apollonius.conics/envs explains why).
+{:tradition {:id :apollonius/conics
+             :author "Apollonius of Perga"
+             :work "Conics"
+             :date "c. 200 BC"
+             :source "T. L. Heath, Apollonius of Perga: Treatise on Conic Sections, Cambridge 1896"}
+ :propositions
+ [{:id :apollonius/I.11-13
+   :title "I.11-13: the symptoma of the three sections"
+   :statement "It follows that the square on any ordinate to the fixed diameter PM is equal to a rectangle applied to the fixed straight line PL drawn at right angles to PM with altitude equal to the corresponding abscissa PV. Hence the section is called a Parabola. [...] the square on the ordinate is equal to a rectangle whose height is equal to the abscissa and whose base lies along the fixed straight line PL but overlaps it by a length equal to the difference between VR and PL. Hence the section is called a Hyperbola. [...] falls short of it by a length equal to the difference between VR and PL. The section is therefore called an Ellipse."
+   :source "Heath 1896, pp. 8-12 (Props. 1-3)"
+   :claims
+   [{:env :circle :label "the circle through V parallel to the base: QV^2 = HV.VK"
+     :claim (= (square (length Q V)) (* (length H V) (length V K)))}
+    {:env :plane :label "the parameter PL is p"
+     :claim (= (square (length P L)) (square p))}
+    {:env :plane :label "the symptoma, one equation for all three: QV^2 = HV.VK = p x + c x^2"
+     :claim (= (* (length H V) (length V K)) (+ (* p (length P X)) (* c (square (length P X)))))}
+    {:env :plane :label "c = -p/d: the excess is the figure on the transverse diameter"
+     :claim (= (* (length H V) (length V K)) (- (* p (length P X)) (* (ratio p d) (square (length P X)))))}
+    {:env :plane :label "the rectangle applied to PL with breadth PX, and the square on PX by which it exceeds or falls short"
+     :claim (= (* (length H V) (length V K)) (+ (* 2 (area P X L)) (* c (square (length P X)))))}
+    {:env :axial :label "Apollonius' ratio in the axial triangle: BF.FC : AF^2 = c"
+     :claim (= (* (length B F) (length F C)) (* c (square (length A F))))}]}
+
+  {:id :apollonius/III.45
+   :title "III.45: the points arising out of the application (the foci)"
+   :statement "if there be applied along the axis in each direction [a rectangle] equal to one-fourth part of the figure, in the case of the hyperbola and opposite branches exceeding, and in the case of the ellipse falling short, by a square figure. This determines two points, which are accordingly the points arising out of the application."
+   :source "Heath 1896, pp. 113-114"
+   :claims
+   [{:env :focal :label "AS.SA' is a fourth of the figure, b^2 = (1 - e^2) a^2"
+     :claim (= (square (* (length A S) (length S A'))) (square (* (- 1 (square e)) (square a))))}
+    {:env :focal :label "AS'.S'A' is the same"
+     :claim (= (square (* (length A S') (length S' A'))) (square (* (- 1 (square e)) (square a))))}]}
+
+  {:id :apollonius/III.48
+   :title "III.48: the focal distances make equal angles with the tangent"
+   :statement "The focal distances of P make equal angles with the tangent at that point."
+   :source "Heath 1896, p. 116 (Prop. 71)"
+   :claims
+   [{:env :focal :label "sin SPT = sin S'PT, as heights of the triangles over the tangent"
+     :claim (= (* (square (area S P T)) (square (length S' P))) (* (square (area S' P T)) (square (length S P))))}]}
+
+  {:id :apollonius/III.51-52
+   :title "III.51-52: sum and difference of the focal distances"
+   :statement "In an ellipse the sum, and in a hyperbola the difference, of the focal distances of any point is equal to the axis AA'."
+   :source "Heath 1896, p. 118 (Prop. 73)"
+   :claims
+   [{:env :focal :label "SP = a - e x"
+     :claim (= (square (length S P)) (square (- a (* e x))))}
+    {:env :focal :label "S'P = a + e x"
+     :claim (= (square (length S' P)) (square (+ a (* e x))))}
+    {:env :focal :label "so S'P + SP = 2a = AA' (e < 1), S'P - SP = 2a = AA' (e > 1, P on the near branch)"
+     :claim (= (square (length A A')) (square (+ (- a (* e x)) (+ a (* e x)))))}]}]}

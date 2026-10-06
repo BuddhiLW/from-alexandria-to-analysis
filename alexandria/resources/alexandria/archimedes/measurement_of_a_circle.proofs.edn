@@ -1,0 +1,84 @@
+;; Archimedes, Measurement of a Circle: the proofs, step by step.
+;; Each step is a claim, its reason, and the :stage a medium shows while the
+;; step is read (alexandria.archimedes.circle-view). Heath 1897, pp. 91-98.
+{:archimedes/circle-1
+ {:excess 0.05
+  :steps
+  [{:stage :unroll :why "set-up"
+    :claim "Let K be the right-angled triangle whose sides about the right angle are the radius r and the circumference C: roll the circle out along the ground and the arc it rolls over is C."}
+   {:stage :suppose-greater :why "reductio"
+    :claim "Suppose first that the circle is greater than K, by some excess ε."}
+   {:stage :bisect-in :why "exhaustion"
+    :claim "Inscribe a square, bisect the arcs, bisect them again, and so on, until the segments left between polygon and circle are together less than ε."}
+   {:stage :polygon-greater :why "subtraction"
+    :claim "The polygon is the circle less the segments, so it is greater than the circle less ε, that is, greater than K."}
+   {:stage :row-in :why "polygon area"
+    :claim "Cut the polygon at the centre into triangles and stand them in a row: together they equal one triangle whose base is the perimeter, less than C, and whose height is the perpendicular from the centre, less than r. So the polygon is less than K."}
+   {:stage :contradiction-in :why "reductio"
+    :claim "The polygon cannot be both greater and less than K: the circle is not greater than K."}
+   {:stage :suppose-less :why "reductio"
+    :claim "Suppose next that the circle is less than K, by some defect ε."}
+   {:stage :bisect-out :why "exhaustion"
+    :claim "Circumscribe a square, bisect the arcs and draw the tangents at the points of bisection, and so on, until the polygon exceeds the circle by less than ε."}
+   {:stage :polygon-less :why "subtraction"
+    :claim "Then the polygon is less than the circle plus ε, that is, less than K."}
+   {:stage :row-out :why "polygon area"
+    :claim "Its triangles stand in a row as one triangle whose base, the perimeter, is greater than C, and whose height is the radius r. So the polygon is greater than K."}
+   {:stage :qed :why "double reductio"
+    :claim "The circle is neither greater nor less than K: it is equal to K."}]}
+
+ :archimedes/circle-2
+ {:steps
+  [{:stage :triangle :why "Prop. 1"
+    :claim "The circle is equal to the triangle K with sides r and C about the right angle."}
+   {:stage :stretch :why "Prop. 3"
+    :claim "C is less than 3 1/7 diameters, that is, 22/7 of 2r: lengthen the side C to 44/7 r and the triangle grows."}
+   {:stage :fold :why "Elements I.41"
+    :claim "Cut the triangle at half its height and turn the top over: a rectangle r/2 by 44/7 r, equal to it."}
+   {:stage :stack :why "rearrangement"
+    :claim "Cut the rectangle into four and stack the pieces: 11/7 r wide and 2r high, eleven strips of width r/7."}
+   {:stage :compare :why "ratio"
+    :claim "The square on the diameter is fourteen such strips. So the circle is to the square on the diameter as 11 to 14, at most."}]}
+
+ :archimedes/circle-3
+ {:steps
+  [{:stage [:upper 0] :why "√3 > 265/153"
+    :claim "About the circle, half a side of the hexagon: in the right triangle OAC with the angle at O a third of a right angle, OA : AC > 265 : 153 and OC : CA = 306 : 153."}
+   {:stage [:upper 1] :why "Elements VI.3"
+    :claim "Bisect the angle AOC by OD. Then CO : OA = CD : DA, so OA : AD = (CO + OA) : CA > 571 : 153; and OD : DA > 591 1/8 : 153."}
+   {:stage [:upper 2] :why "bisect again"
+    :claim "Bisect AOD by OE: OA : AE > 1162 1/8 : 153, OE : EA > 1172 1/8 : 153."}
+   {:stage [:upper 3] :why "and again"
+    :claim "Bisect AOE by OF: OA : AF > 2334 1/4 : 153, OF : FA > 2339 1/4 : 153."}
+   {:stage [:upper 4] :why "96 sides"
+    :claim "Bisect AOF by OG: OA : AG > 4673 1/2 : 153. AG is half a side of the circumscribed 96-gon, so its perimeter is to the diameter as 14688 to 4673 1/2, less than 3 1/7."}
+   {:stage [:lower 0] :why "√3 < 1351/780"
+    :claim "In the circle, AB the diameter and BC the side of the hexagon: AC : CB < 1351 : 780 and AB : BC = 1560 : 780."}
+   {:stage [:lower 1] :why "Elements VI.3"
+    :claim "Bisect the angle BAC by Ad: Ad : dB < 2911 : 780 and AB : Bd < 3013 3/4 : 780."}
+   {:stage [:lower 2] :why "bisect again"
+    :claim "Bisect BAd by Ae: Ae : eB < 1823 : 240 and AB : Be < 1838 9/11 : 240."}
+   {:stage [:lower 3] :why "and again"
+    :claim "Bisect BAe by Af: Af : fB < 1007 : 66 and AB : Bf < 1009 1/6 : 66."}
+   {:stage [:lower 4] :why "96 sides"
+    :claim "Bisect BAf by Ag: AB : Bg < 2017 1/4 : 66. Bg is a side of the inscribed 96-gon, so its perimeter is to the diameter as 6336 to 2017 1/4, greater than 3 10/71."}
+   {:stage :squeeze :why "the bounds"
+    :claim "Therefore 3 10/71 < C/d < 3 1/7."}]}
+ :archimedes/circle-rings {:note "Not Archimedes' text: the rings are a later argument (Abraham bar Hiyya, 12th century), told here beside Proposition 1 because it reaches the same triangle K by Archimedes' two habits: seeing a figure as made of its lines, and proving by a squeeze."
+                           :steps
+                           [{:stage :rings :why "set-up"
+                             :claim "Cut the circle into n rings of equal width e = r/n, like the rings of an onion, and cut them all along one radius."}
+                            {:stage :one-ring :why "straighten"
+                             :claim "Straighten the outer ring, keeping the length of every circle inside it: its outer edge stays 2πr, its inner edge 2π(r − e), its width e. It becomes an isosceles trapezoid."}
+                            {:stage :stretch :why "not rigid"
+                             :claim "The straightening is not a rigid motion. Each concentric circle keeps its length, but the cut, of length e, becomes a slanted side of length e√(1 + π²)."}
+                            {:stage :stack :why "every ring"
+                             :claim "Straighten every ring. Each trapezoid's top edge is the next one's bottom edge, so they stack without gaps into a triangle with base the circumference C and height r."}
+                            {:stage :lean :why "Elements I.38"
+                             :claim "Slide its apex sideways to stand over one end of the base: triangles on the same base and of the same height are equal, so this is Archimedes' triangle K."}
+                            {:stage :squeeze :why "the bound"
+                             :claim "Each ring lies between two rectangles of width e: one as long as its inner edge, one as long as its outer edge. So does each slab of the triangle. Circle and triangle sit between the same two sums."}
+                            {:stage :limit :why "exhaustion"
+                             :claim "The two sums differ by n · 2πe · e = C · e. Make e as small as you like by taking n large: the circle and the triangle differ by less than any given area, so they are equal."}
+                            {:stage :lines :why "The Method"
+                             :claim "Archimedes' way of seeing it: the circle is made of its circles, the triangle of its lines, and each circle of radius ρ is exactly as long as the line at height r − ρ. Seeing comes first; the squeeze is the proof."}]}}

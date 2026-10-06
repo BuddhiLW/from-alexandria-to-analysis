@@ -1,0 +1,64 @@
+;; Notebooks "From Alexandria to Analysis" (slug: history-of-math): a series of
+;; Clerk notebooks on the history of mathematics, from Euclid's Elements to
+;; Lebesgue's integral. Each notebook narrates one work and mounts the figures,
+;; proof players and graded checks that alexandria hosts; no mathematics lives
+;; here.
+;;
+;;   alexandria        ../alexandria        shelves, figures (Emmy), grades,
+;;                                          the :series palette
+;;   alexandria-media  ../alexandria/media  proof players, raster kernels, scenes
+;;   Clerk             0.18.1158            the static build
+;;
+;; A notebook declares itself by the metadata of its ns form:
+;;
+;;   (ns euclid-elements
+;;     {:history/year -300 :history/title "Euclid, Elements" :history/era "Greek geometry"})
+;;
+;; and history-of-math.build discovers it (notebooks/*.clj; index.clj is the
+;; hub, drawn from resources/history_of_math/timeline.edn):
+;;
+;;   clojure -J-Xmx2g -X:notebooks :out-path '"<dist>/history-of-math"'
+;;
+;; writes <out-path>/index.html and <out-path>/<id>/index.html per notebook;
+;; every page loads the bundle history-of-math.build releases into
+;; <out-path>/_data (shadow-cljs via mentat.clerk-utils; npm install here first).
+{:paths ["src" "resources"]
+
+ :deps {org.clojure/clojure {:mvn/version "1.12.6"}
+        metosin/malli {:mvn/version "0.20.2"}
+        io.github.hive-agi/hive-dsl {:mvn/version "0.5.34"}
+        borkdude/edamame {:mvn/version "1.4.28"}
+        io.github.buddhilw/alexandria {:local/root "../alexandria"}}
+
+ :aliases
+ {;; the build. alexandria's notebooks/ root carries euclid_i1_surfaces
+  ;; (alexandria.notebooks.euclid-i1-surfaces) until it moves into its src.
+  ;; edamame 1.4.28 is pinned against malli's 1.6.x (Clerk's read-ns-decl
+  ;; throws "Duplicate key: null" for every :require-cljs ns under 1.6);
+  ;; hive-dsl mvn 0.5.34 against desargues' git pin. raster's compiler needs
+  ;; the vector module.
+  ;; The bundle (history-of-math.sci-extensions) is compiled by shadow-cljs
+  ;; through mentat.clerk-utils (from emmy-viewers): it needs Clerk's render
+  ;; sources and their cljs deps at the same release (v0.18.1158 = a46ea50),
+  ;; and the shadow-cljs of that render, matching package.json.
+  :notebooks {:extra-paths ["notebooks" "../alexandria/notebooks"]
+              :extra-deps {io.github.nextjournal/clerk {:mvn/version "0.18.1158"}
+                           io.github.nextjournal/clerk.render {:git/url "https://github.com/nextjournal/clerk"
+                                                               :git/sha "a46ea503eb71a63c85006807928a9eea52d7d07a"
+                                                               :deps/root "render"}
+                           thheller/shadow-cljs {:mvn/version "3.2.0"}
+                           io.github.buddhilw/alexandria {:local/root "../alexandria"}
+                           io.github.buddhilw/alexandria-media {:local/root "../alexandria/media"}
+                           io.github.hive-agi/hive-dsl {:mvn/version "0.5.34"}
+                           borkdude/edamame {:mvn/version "1.4.28"}}
+              :exec-fn history-of-math.build/build!
+              :exec-args {:out-path "public/history-of-math"}
+              :jvm-opts ["--add-modules=jdk.incubator.vector"]}
+
+  ;; the scaffold's own tests: discovery, metadata, timeline. Notebooks are
+  ;; read as text, never loaded, so neither Clerk nor the media is needed.
+  :test {:extra-paths ["test"]
+         :jvm-opts ["--add-modules=jdk.incubator.vector"]
+         :extra-deps {io.github.cognitect-labs/test-runner {:git/tag "v0.5.1" :git/sha "dfb30dd"}
+                      io.github.hive-agi/hive-test {:git/tag "v0.4.11" :git/sha "4d20774cf592966c9ac54fa7fe7a1e2f7d6ae68d"}}
+         :main-opts ["-m" "cognitect.test-runner"]}}}

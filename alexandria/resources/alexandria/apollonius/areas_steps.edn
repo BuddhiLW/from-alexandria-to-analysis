@@ -1,0 +1,53 @@
+;; The application of areas, from Euclid I.44 and VI.27-29 to the three
+;; names of Apollonius' sections, drawn step by step: one sentence per step
+;; (its Markdown: **term**, *Greek word*, $TeX$). :introduces names what the
+;; drawing adds at that step, exactly (alexandria.apollonius.areas-steps/
+;; schedule draws those and no more). :quote is the source, verbatim (Heath
+;; 1908 for Euclid and Proclus, Heath 1896 for Apollonius), :cite its place.
+{:title "Applying an area to a line: from Euclid to the three names"
+ :source "Euclid, Elements I.44, VI.27-29 (Heath 1908); Apollonius, Conics (Heath 1896, p. lxxx)"
+ :steps
+ [{:id "A1"
+   :text "**Exact application (I.44).** On a given line $AB = a$ lay a rectangle equal to a given area $S$, the triangle $C$: its height must be $S/a$."
+   :quote "To a given straight line to apply, in a given rectilineal angle, a parallelogram equal to a given triangle."
+   :cite "Euclid I.44, Heath 1908, vol. 1, p. 341"
+   :introduces [:AB :A :B :a :tri :C :S :rect44 :h44]}
+  {:id "A2"
+   :text "**The problem of VI.28.** Choose a height $y$ and stand the full strip on $AB$: its area is $a \\cdot y$."
+   :quote "To a given straight line to apply a parallelogram equal to a given rectilineal figure and deficient by a parallelogrammic figure similar to a given one."
+   :cite "Euclid VI.28, Heath 1908, vol. 2, p. 260"
+   :introduces [:strip :y-left]}
+  {:id "A3"
+   :text "The problem demands that the piece left over at the $B$ end be a **square**, so its width equals its height: cut the square $y \\times y$ off the end, and $XB = y$."
+   :introduces [:square :X :y-top :y-side]}
+  {:id "A4"
+   :text "So the rectangle actually applied stands on $AX = a - y$, its area is $(a - y)\\,y$, and the problem says that area is $S$: $(a - y)\\,y = S$, that is $S + y^2 = a\\,y$: the applied rectangle and the square make up the strip."
+   :introduces [:applied :ax :eq28]}
+  {:id "A5"
+   :text "Move $y$ or $S$, tied by $(a - y)\\,y = S$: with $a = 10$ and $S = 21$ both $y = 3$ and $y = 7$ fit, and $y = 5$ gives the most, $25 = (a/2)^2$. Why: by **II.5** the applied rectangle and the small square on $a/2 - y$ make up the square on the half, $(a - y)\\,y + (a/2 - y)^2 = (a/2)^2$, so $S \\le (a/2)^2$."
+   :quote "that parallelogram is greatest which is applied to the half of the straight line and is similar to the defect"
+   :cite "Euclid VI.27, Heath 1908, vol. 2, p. 257"
+   :introduces [:graph :curve28 :S-line :roots :top :M :half-sq :small-sq]}
+  {:id "A6"
+   :text "**Excess (VI.29).** Let the rectangle run past $B$ instead, the overhang being the square: $(a + y)\\,y = S$, and now every $S$ has exactly one $y$."
+   :quote "To a given straight line to apply a parallelogram equal to a given rectilineal figure and exceeding by a parallelogrammic figure similar to a given one."
+   :cite "Euclid VI.29, Heath 1908, vol. 2, p. 265"
+   :introduces [:rect29 :over29 :X' :y29 :root29 :eq29]}
+  {:id "A7"
+   :text "**The conic.** The given line becomes the parameter $p$, the given area becomes the square $y^2$ on the ordinate, and the height of the rectangle becomes the abscissa $x$."
+   :quote "y² is equal to a rectangle of breadth x and \"applied\" to the perpendicular of length p"
+   :cite "Heath 1896, Introduction, p. lxxx"
+   :introduces [:pline :p :xstrip :x :axis :Q :ordinate :ysq]}
+  {:id "A8"
+   :text "Applied exactly, nothing is left over: $y^2 = p\\,x$, the **parabola** (*parabolē*, application)."
+   :introduces [:par-curve :eq-par]}
+  {:id "A9"
+   :text "Now the leftover is no longer a square but a rectangle shaped like $d \\times p$, $x$ high and $\\tfrac{p}{d}\\,x$ wide; falling short by it, $y^2 = p\\,x - \\tfrac{p}{d}\\,x^2$, the **ellipse** (*elleipsis*, falling short)."
+   :quote "but falling short (or exceeding) by a rectangle similar and similarly situated to that contained by p and d"
+   :cite "Heath 1896, Introduction, p. lxxx"
+   :introduces [:defect :defect-w :ell-curve :eq-ell]}
+  {:id "A10"
+   :text "Running past by the same rectangle, $y^2 = p\\,x + \\tfrac{p}{d}\\,x^2$, the **hyperbola** (*hyperbolē*, excess)."
+   :quote "It was from the Pythagoreans that later geometers [i.e. Apollonius] took the names, which they again transferred to the so-called conic lines, designating one of these a parabola (application), another a hyperbola (exceeding) and another an ellipse (falling-short)"
+   :cite "Proclus on Euclid I.44, after Eudemus, Heath 1908, vol. 1, p. 343"
+   :introduces [:excess :hyp-curve :eq-hyp]}]}

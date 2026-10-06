@@ -1,0 +1,37 @@
+;; Leonhard Euler: four results from the Opera Omnia, one shelf.
+;; Statements are this series' own English renderings of Euler's Latin;
+;; the Latin itself, quoted verbatim, is in opera.proofs.edn under :latin.
+;; E-numbers are Enestroem's, as in the Euler Archive.
+{:tradition {:id :euler/opera
+             :author "Leonhard Euler"
+             :work "Opera Omnia"
+             :date "1734-1758"
+             :source "Leonhard Euler, Opera Omnia; Euler Archive (scholarlycommons.pacific.edu/euler)"}
+ :propositions
+ [{:id :euler/basel
+   :title "E41: the sum of the reciprocals of the squares"
+   :work "De summis serierum reciprocarum (E41)"
+   :date "1734/35, printed 1740"
+   :statement "The sum 1 + 1/4 + 1/9 + 1/16 + ... multiplied by 6 equals the square of the circumference of the circle whose diameter is 1; the sum of the reciprocals of the fourth powers multiplied by 90 equals its fourth power. (English rendering by this series.)"
+   :source "Commentarii academiae scientiarum Petropolitanae 7 (1740), pp. 123-134, par. 11-12; Opera Omnia I.14, pp. 73-86"}
+
+  {:id :euler/koenigsberg
+   :title "E53: the seven bridges of Koenigsberg"
+   :work "Solutio problematis ad geometriam situs pertinentis (E53)"
+   :date "1736, printed 1741"
+   :statement "If more than two regions have an odd number of bridges leading to them, no walk crosses every bridge exactly once. If exactly two do, such a walk exists and starts in one of them. If none does, it exists from any region. At Koenigsberg all four regions have an odd number, so the walk is impossible. (English rendering by this series.)"
+   :source "Commentarii academiae scientiarum Petropolitanae 8 (1741), pp. 128-140, par. 9 and 20; Opera Omnia I.7, pp. 1-10"}
+
+  {:id :euler/exponential
+   :title "E101, par. 138: imaginary exponentials as sines and cosines"
+   :work "Introductio in analysin infinitorum, vol. 1 (E101)"
+   :date "1748"
+   :statement "e^{+v sqrt(-1)} = cos v + sqrt(-1) sin v and e^{-v sqrt(-1)} = cos v - sqrt(-1) sin v: imaginary exponential quantities reduce to sines and cosines of real arcs. (English rendering by this series.)"
+   :source "Introductio in analysin infinitorum, Lausanne 1748, vol. 1, cap. VIII, par. 138; Opera Omnia I.8"}
+
+  {:id :euler/polyhedra
+   :title "E230, par. 33: solid angles and faces exceed edges by two"
+   :work "Elementa doctrinae solidorum (E230); Demonstratio nonnullarum insignium proprietatum (E231)"
+   :date "written 1750, printed 1758"
+   :statement "In every solid enclosed by plane faces, the number of solid angles together with the number of faces exceeds the number of edges by two: S + H = A + 2. (English rendering by this series.)"
+   :source "Novi commentarii academiae scientiarum Petropolitanae 4 (1758), E230 pp. 109-140 (par. 33 at p. 119), E231 pp. 140-160; Opera Omnia I.26, pp. 71-108"}]}

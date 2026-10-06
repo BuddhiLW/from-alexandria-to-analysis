@@ -1,0 +1,38 @@
+;; Newton, Philosophiae Naturalis Principia Mathematica (London, 1687),
+;; Book I. Statements from Andrew Motte's translation, The Mathematical
+;; Principles of Natural Philosophy (London, 1729), vol. I, as transcribed
+;; on Wikisource; page numbers are the 1729 edition's.
+;;
+;; Prop. I's checks are vocabulary claims over Newton's impulse step (S, A,
+;; B, c, C), each an Euclid I.37/I.38 equality of triangles.
+{:tradition {:id :newton/principia
+             :author "Isaac Newton"
+             :work "Philosophiae Naturalis Principia Mathematica, Book I"
+             :date "1687"
+             :source "A. Motte, The Mathematical Principles of Natural Philosophy, London, 1729"}
+ :propositions
+ [{:id :newton/lemma-1
+   :title "Book I, Lemma I: first and last ratios"
+   :statement "Quantities, and the ratio's of quantities, which in any finite time converge continually to equality, and before the end of that time approach nearer the one to the other than by any given difference, become ultimately equal."
+   :source "Motte 1729, vol. I, pp. 41-42"
+   :construction {:id :newton/lemma-1 :kind :construction :points [] :checks []}}
+  {:id :newton/prop-1
+   :title "Book I, Proposition I, Theorem I: areas proportional to the times"
+   :statement "The areas, which revolving bodies describe by radii drawn to an immoveable centre of force, do lie in the same immovable planes, and are proportional to the times in which they are described."
+   :source "Motte 1729, vol. I, pp. 57-58"
+   :construction {:id :newton/prop-1 :kind :construction
+                  :points [{:id :S :at [0 0] :fixed? true}
+                           {:id :A :at [a1 a2]} {:id :B :at [b1 b2]}
+                           {:id :c :at [(- (* 2 b1) a1) (- (* 2 b2) a2)]}
+                           {:id :C :at [(- (- (* 2 b1) a1) (* k b1)) (- (- (* 2 b2) a2) (* k b2))]}]}
+   :claims [{:claim (= (area S A B) (area S B c))
+                            :label "equal bases AB, Bc, one vertex S: Euclid I.38"}
+                           {:claim (= (area S B c) (area S B C))
+                            :label "one base SB between the parallels SB, cC: Euclid I.37"}
+                           {:claim (= (area S A B) (area S B C))
+                            :label "equal areas in equal times"}]}
+  {:id :newton/prop-11
+   :title "Book I, Proposition XI, Problem VI: the ellipse about a focus"
+   :statement "If a body revolves in a ellipsis: it is required to find the law of centripetal force tending to the focus of the ellipsis."
+   :source "Motte 1729, vol. I, pp. 80-81"
+   :construction {:id :newton/prop-11 :kind :construction :points [] :checks []}}]}

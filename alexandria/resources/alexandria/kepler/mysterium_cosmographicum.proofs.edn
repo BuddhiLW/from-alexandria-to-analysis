@@ -1,0 +1,37 @@
+;; Kepler, Mysterium Cosmographicum (1596): the argument, step by step.
+;; Quotations verbatim from J. L. E. Dreyer, History of the Planetary
+;; Systems from Thales to Kepler (Cambridge, 1906), pp. 374-376 (public
+;; domain; archive.org historyofplaneta0000unse), Euclid XIII.18 from Heath's
+;; Elements (1908), Plato's Timaeus from Jowett's translation (Project
+;; Gutenberg #1572). Each step is a claim, its reason, and the :stage a
+;; medium shows while it is read (alexandria.kepler.mysterium-scenes).
+{:kepler/mysterium
+ {:source "Dreyer 1906, pp. 374-376"
+  :passages
+  [{:source "Dreyer 1906, p. 374"
+    :text "While describing in the course of a lecture (on the 9/19 July, 1595) the cycles of the great conjunctions of planets and how the conjunctions pass from one \"trigon\" of the zodiac to another, the diagram he had drawn to illustrate this brought the five regular solids to his mind, and it struck him that these and not plane figures would be properly belonging to the orbs of space (inter solidos orbes)."}
+   {:source "Plato, Timaeus 55c, tr. Jowett (Gutenberg #1572)"
+    :text "There was yet a fifth combination which God used in the delineation of the universe."}
+   {:source "Dreyer 1906, p. 376"
+    :text "The agreement between the computed values and those of Copernicus is fairly satisfactory except in the case of Jupiter, \"at which nobody will wonder, considering the great distance.\""}]
+  :steps
+  [{:stage :spheres :why "Copernicus"
+    :claim "Six planets go round the Sun: Saturn, Jupiter, Mars, Earth, Venus, Mercury. In the Copernican system the relative sizes of their spheres are determinate quantities, fixed by observation."}
+   {:stage :five :why "Euclid XIII.18"
+    :claim "Between the six planetary spheres there are five intervals, and there are exactly five regular solids: Euclid closes the Elements by proving that no other figure besides these five is contained by equal regular faces."}
+   {:stage :cube :why "first shell"
+    :claim "The sphere of Saturn is circumscribed to a cube in which the sphere of Jupiter is inscribed. The cube's inscribed sphere is 1/sqrt 3 of its circumscribed one."}
+   {:stage :tetrahedron :why "second shell"
+    :claim "The sphere of Jupiter is circumscribed to the tetrahedron, in which the sphere of Mars is inscribed: ratio 1/3."}
+   {:stage :dodecahedron :why "third shell"
+    :claim "Between Mars and the Earth, the dodecahedron; between the Earth and Venus, the icosahedron. These two are duals and have the same ratio, sqrt((5 + 2 sqrt 5)/15), built from the golden ratio."}
+   {:stage :icosahedron :why "fourth shell"
+    :claim "The icosahedron sits in the Earth's sphere and holds the sphere of Venus."}
+   {:stage :octahedron :why "fifth shell"
+    :claim "Between Venus and Mercury, the octahedron: ratio 1/sqrt 3 again."}
+   {:stage :table :why "Kepler's table, cap. XIV"
+    :claim "Kepler computed each ratio x 1000 and set it beside Copernicus: Saturn-Jupiter 577 against 635, Jupiter-Mars 333 against 333, Mars-Earth 795 against 757, Earth-Venus 795 against 794, Venus-Mercury 577 against 723."}
+   {:stage :mercury :why "the midsphere"
+    :claim "Mercury misses by a fifth. Kepler put Mercury on the circle inscribed in the square formed by the four middle sides of the octahedron, 707 instead of 577: the sphere touching the edges. Jupiter still misses by a tenth."}
+   {:stage :verdict :why "the record"
+    :claim "Kepler judged the agreement too close to be accident and spent the rest of his life sharpening the distances, first with Tycho's observations of Mars. The solids did not survive; the laws found on the way did."}]}}

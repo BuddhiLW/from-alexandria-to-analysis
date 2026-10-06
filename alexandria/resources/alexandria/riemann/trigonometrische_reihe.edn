@@ -1,0 +1,35 @@
+;; Riemann, Ueber die Darstellbarkeit einer Function durch eine
+;; trigonometrische Reihe (Habilitationsschrift, Goettingen 1854; printed by
+;; Dedekind in the Abhandlungen der Koeniglichen Gesellschaft der
+;; Wissenschaften zu Goettingen 13, 1868), sections 4 to 6.
+;;
+;; :statement-de is Riemann's German, verbatim from the Gesammelte
+;; Mathematische Werke text transcribed by D. R. Wilkins (EMIS,
+;; https://www.maths.tcd.ie/EMIS/classics/Riemann/Trig.tex). :statement is
+;; this series' own English rendering (the English translations in print are
+;; not public domain).
+{:tradition {:id :riemann/trigonometrische-reihe
+             :author "Bernhard Riemann"
+             :work "Ueber die Darstellbarkeit einer Function durch eine trigonometrische Reihe"
+             :date "1854 (printed 1868)"
+             :source "Riemann, Gesammelte Mathematische Werke, 2nd ed. (1892), pp. 227-271; EMIS transcription by D. R. Wilkins"
+             :translation "the series' own English rendering"}
+ :propositions
+ [{:id :riemann/integral-4
+   :title "Section 4: what is the definite integral?"
+   :number "4"
+   :statement-de "Also zuerst: Was hat man unter \u222b_a^b f(x) dx zu verstehen? Um dieses festzusetzen, nehmen wir zwischen a und b der Gr\u00f6sse nach auf einander folgend, eine Reihe von Werthen x_1, x_2, ..., x_{n-1} an und bezeichnen der K\u00fcrze wegen x_1 - a durch \u03b4_1, x_2 - x_1 durch \u03b4_2, ..., b - x_{n-1} durch \u03b4_n und durch \u03b5 einen positiven \u00e4chten Bruch. Es wird alsdann der Werth der Summe S = \u03b4_1 f(a + \u03b5_1 \u03b4_1) + \u03b4_2 f(x_1 + \u03b5_2 \u03b4_2) + \u03b4_3 f(x_2 + \u03b5_3 \u03b4_3) + ... + \u03b4_n f(x_{n-1} + \u03b5_n \u03b4_n) von der Wahl der Intervalle \u03b4 und der Gr\u00f6ssen \u03b5 abh\u00e4ngen. Hat sie nun die Eigenschaft, wie auch \u03b4 und \u03b5 gew\u00e4hlt werden m\u00f6gen, sich einer festen Grenze A unendlich zu n\u00e4hern, sobald s\u00e4mmtliche \u03b4 unendlich klein werden, so heisst dieser Werth \u222b_a^b f(x) dx. Hat sie diese Eigenschaft nicht, so hat \u222b_a^b f(x) dx keine Bedeutung."
+   :statement "First, then: what is to be understood by the integral of f(x) from a to b? To fix this, take between a and b a sequence of values x_1, x_2, ..., x_{n-1}, increasing, and write for short delta_1 for x_1 - a, delta_2 for x_2 - x_1, ..., delta_n for b - x_{n-1}, and epsilon for a positive proper fraction. The value of the sum S = delta_1 f(a + epsilon_1 delta_1) + delta_2 f(x_1 + epsilon_2 delta_2) + ... + delta_n f(x_{n-1} + epsilon_n delta_n) will then depend on the choice of the intervals delta and of the quantities epsilon. If it has the property that, however delta and epsilon are chosen, it comes indefinitely near a fixed limit A as soon as all the delta become infinitely small, this value is called the integral of f(x) from a to b. If it does not have this property, the integral has no meaning."
+   :source "Riemann 1868, section 4 (Werke 2nd ed. p. 239)"}
+  {:id :riemann/integral-5
+   :title "Section 5: when does a function admit integration?"
+   :number "5"
+   :statement-de "Damit die Summe S, wenn s\u00e4mmtliche \u03b4 unendlich klein werden, convergirt, ist ausser der Endlichkeit der Function f(x) noch erforderlich, dass die Gesammtgr\u00f6sse der Intervalle, in welchen die Schwankungen > \u03c3 sind, was auch \u03c3 sei, durch geeignete Wahl von d beliebig klein gemacht werden kann."
+   :statement "For the sum S to converge when all the delta become infinitely small, it is necessary, besides the function f(x) being finite, that the total size of the intervals in which the oscillations exceed sigma, whatever sigma may be, can be made as small as we please by a suitable choice of d. Riemann proves the converse too: the two conditions are necessary and sufficient."
+   :source "Riemann 1868, section 5 (Werke 2nd ed. pp. 240-241)"}
+  {:id :riemann/integral-6
+   :title "Section 6: a function discontinuous in every interval, yet integrable"
+   :number "6"
+   :statement-de "Man bezeichne der K\u00fcrze wegen durch (x) den Ueberschuss von x \u00fcber die n\u00e4chste ganze Zahl, oder, wenn x zwischen zweien in der Mitte liegt und diese Bestimmung zweideutig wird, den Mittelwerth aus den beiden Werthen 1/2 und -1/2, also die Null [...] und bilde alsdann die Reihe f(x) = (x)/1 + (2x)/4 + (3x)/9 + ... = \u03a3 (nx)/nn [...] Diese Function ist also f\u00fcr jeden rationalen Werth von x, der in den kleinsten Zahlen ausgedr\u00fcckt ein Bruch mit geradem Nenner ist, unstetig, also zwischen je zwei noch so engen Grenzen unendlich oft, so jedoch, dass die Zahl der Spr\u00fcnge, welche gr\u00f6sser als eine gegebene Gr\u00f6sse sind, immer endlich ist. Sie l\u00e4sst durchgehends eine Integration zu."
+   :statement "Write for short (x) for the excess of x over the nearest whole number or, when x lies half way between two and this is ambiguous, for the mean of the two values 1/2 and -1/2, that is zero; and form the series f(x) = (x)/1 + (2x)/4 + (3x)/9 + ... = sum (nx)/n^2. This function is discontinuous at every rational value of x which, in lowest terms, is a fraction with an even denominator; so it is discontinuous infinitely often between any two limits however close, yet in such a way that the number of jumps greater than a given quantity is always finite. It admits integration throughout."
+   :source "Riemann 1868, section 6 (Werke 2nd ed. pp. 242-243)"}]}

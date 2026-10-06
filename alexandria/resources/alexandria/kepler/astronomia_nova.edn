@@ -1,0 +1,35 @@
+;; Kepler, Astronomia Nova (Prague, 1609) and Harmonices Mundi (Linz, 1619):
+;; the three laws of planetary motion. Neither book has a public-domain
+;; English translation; statements follow J. L. E. Dreyer, History of the
+;; Planetary Systems from Thales to Kepler (Cambridge, 1906), ch. XV,
+;; pp. 392 and 407 (archive.org historyofplaneta0000unse), and Newton,
+;; Principia, Book III, Phaenomena IV-V (Motte's translation, Chittenden's
+;; American edition 1846, Project Gutenberg #76404), whose table gives the
+;; periods and Kepler's mean distances.
+;; Claims speak the vocabulary: (ellipse a e) and (sector orbit E0 E1) are
+;; realized by alexandria.kepler.orbit; E is the eccentric anomaly.
+{:tradition {:id :kepler/astronomia-nova
+             :author "Johannes Kepler"
+             :work "Astronomia Nova; Harmonices Mundi"
+             :date "1609; 1619"
+             :source "J. L. E. Dreyer, History of the Planetary Systems from Thales to Kepler, 1906"}
+ :propositions
+ [{:id :kepler/first-law
+   :title "First law: the ellipse, the Sun in a focus"
+   :statement "Mars describes an ellipse, in one of the foci of which the sun is situated."
+   :source "Dreyer 1906, p. 392 (Astronomia Nova, caps. LVIII-LX)"
+   :claims [{:claim (= (sector (ellipse a e) 0 (* 2 pi)) (* 2 (sector (ellipse a e) 0 pi)))}]}
+  {:id :kepler/second-law
+   :title "Second law: equal areas in equal times"
+   :statement "The radius vector of the planet sweeps over equal areas in equal times."
+   :source "Dreyer 1906, p. 392 (Astronomia Nova, caps. XL, LIX)"
+   :claims [{:claim (= (+ (sector (ellipse a e) E0 E1) (sector (ellipse a e) E1 E2))
+                       (sector (ellipse a e) E0 E2))}]}
+  {:id :kepler/third-law
+   :title "Third law: the squares of the periods as the cubes of the distances"
+   :statement "The squares of the periods of revolution of any two planets are proportional to the cubes of their mean distances from the sun."
+   :source "Dreyer 1906, p. 407 (Harmonices Mundi V.3, found 15 May 1618); Newton, Principia III, Phaenomenon IV (Gutenberg #76404, pp. 388-389)"
+   :periods-days {:saturn 10759.275 :jupiter 4332.514 :mars 686.9785 :earth 365.2565
+                  :venus 224.6176 :mercury 87.9692}
+   :distances-kepler {:saturn 951000 :jupiter 519650 :mars 152350 :earth 100000
+                      :venus 72400 :mercury 38806}}]}

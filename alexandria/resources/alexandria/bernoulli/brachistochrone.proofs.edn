@@ -1,0 +1,26 @@
+;; Johann Bernoulli's challenge (Acta Eruditorum, June 1696) and its answer,
+;; the cycloid; with Huygens' tautochrone (1673) as the same curve.
+;; Each step is a claim, its reason, and the :stage the media shows
+;; (alexandria.lagrange.variations-scenes). Original Latin quoted verbatim;
+;; English renderings are this series' own and marked as such.
+{:bernoulli/brachistochrone
+ {:source "Acta Eruditorum, June 1696, p. 269"
+  :challenge
+  {:original "Problema novum, ad cujus solutionem mathematici invitantur. Datis in plano verticali duobus punctis A et B assignare mobili M viam AMB, per quam gravitate sua descendens et moveri incipiens a puncto A, brevissimo tempore perveniat ad alterum punctum B."
+   :english "A new problem, which mathematicians are invited to solve. Given two points A and B in a vertical plane, to assign to a moving body M the path AMB by which, descending under its own weight and starting from the point A, it reaches the other point B in the shortest time."
+   :english-by "this series"}
+  :steps
+  [{:stage :challenge :why "the problem, 1696"
+    :claim "Bernoulli asks for the path of quickest descent from A to B. The straight line is the shortest path, but not the quickest."}
+   {:stage :tracks :why "Galileo, 1638"
+    :claim "Galileo had shown that a bead reaches B sooner along a circle arc than along the chord. Something faster than the straight line exists."}
+   {:stage :refraction :why "Johann Bernoulli, 1697"
+    :claim "Bernoulli's own solution: cut the plane into thin layers in which the speed is sqrt(2 g y). Light crossing them takes the quickest path, so sin of the angle to the vertical over the speed is the same in every layer."}
+   {:stage :cycloid :why "the curve"
+    :claim "The curve with sin(angle) / sqrt(y) constant is the cycloid: the path of a point on the rim of a wheel rolling under the line through A."}
+   {:stage :euler-lagrange :why "Emmy, proved"
+    :claim "In Lagrange's language: the time is the integral of ds / sqrt(2 g y). Emmy's Lagrange-equations of that integrand vanish identically along the cycloid x = a(t - sin t), y = a(1 - cos t)."}
+   {:stage :race :why "Emmy, numeric"
+    :claim "Race three beads from A to B = (pi a, 2a). Emmy's quadrature gives about 1.003 s on the cycloid, 1.028 s on the circle arc and 1.189 s on the straight line, for a = 1 m."}
+   {:stage :tautochrone :why "the pattern"
+    :claim "Turn the cycloid over into a bowl. In the arc length s from the bottom its height is s^2 / 8a, so its Lagrangian is the harmonic oscillator's with k = mg/4a: the bead reaches the bottom in the same time from any height. This is Huygens' tautochrone of 1673, the same curve."}]}}

@@ -1,0 +1,24 @@
+;; Eudoxus' theory as Euclid gives it, step by step. T. L. Heath, The
+;; Thirteen Books of Euclid's Elements (1908): vol. 2, pp. 114-120 (Book V
+;; definitions), vol. 3, pp. 371-378 (XII.2); the side and diagonal from
+;; Aristotle's report (Prior Analytics I.23) as Heath gives it, vol. 3, p. 2.
+;; :stage is what the medium shows (alexandria.eudoxus.exhaustion-scenes).
+{:eudoxus/side-diagonal
+ {:source "Heath 1908, vol. 3, p. 2"
+  :steps
+  [{:claim "Suppose the diagonal and side of a square are commensurable: d : s = p : q, p and q whole numbers in lowest terms." :why "assumption" :stage :given}
+   {:claim "By I.47, d^2 = 2 s^2, so p^2 = 2 q^2 and p^2 is even." :why "I.47" :stage :given}
+   {:claim "An odd number squared is odd, so p is even; write p = 2r." :why "parity" :stage :given}
+   {:claim "Then 4 r^2 = 2 q^2, that is q^2 = 2 r^2, and q is even as well." :why "parity" :stage :given}
+   {:claim "So p and q share the factor 2, against lowest terms: the diagonal is incommensurable with the side." :why "reductio" :stage :given}]}
+
+ :eudoxus/XII.2
+ {:statement "Circles are to one another as the squares on the diameters."
+  :source "Heath 1908, vol. 3, pp. 371-378"
+  :steps
+  [{:claim "Inscribe the square in the circle: it is greater than half the circle, being half the square about it." :why "XII.2" :stage [:polygon 2]}
+   {:claim "Bisect the arcs and join: each triangle added is greater than half the segment of the circle about it." :why "III.30, X.1" :stage [:polygon 3]}
+   {:claim "Doing this again and again, the segments left become less than any given area." :why "X.1" :stage [:polygon 5]}
+   {:claim "Similar polygons inscribed in circles are to one another as the squares on the diameters." :why "XII.1" :stage :ratio}
+   {:claim "If the square on BD were to the square on FH as circle ABCD to an area S less than circle EFGH, inscribe in EFGH a polygon greater than S; the ratios then give the polygon in ABCD greater than the circle containing it, which is impossible." :why "V, Def. 5; reductio" :stage :ratio}
+   {:claim "In the same way S is not greater than circle EFGH; so the circles are as the squares on the diameters." :why "double reductio" :stage :ratio}]}}

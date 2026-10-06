@@ -1,0 +1,61 @@
+;; Leibniz's calculus told step by step. Quotations in English are from
+;; J. M. Child, The Early Mathematical Manuscripts of Leibniz (Chicago and
+;; London: Open Court, 1920; archive.org earlymathematic00gerhgoog), which
+;; translates Leibniz's own Historia et origo calculi differentialis and the
+;; London account of the arithmetical quadrature. The Latin of 1684 is quoted
+;; from Dutens, Leibnitii Opera Omnia, vol. III (Geneva, 1768), pp. 167-169
+;; (archive.org gothofrediguille03leib), a reprint of the Acta; where no
+;; public-domain English exists the series gives its own rendering, marked
+;; [Series rendering]. Each step's :stage names what the medium shows
+;; (alexandria.leibniz.calculus-scenes).
+{:leibniz/transmutation
+ {:source "Child 1920, pp. 188-190, 216-218"
+  :passages
+  ["Incidentally Pascal gave a proof of the dimension of the spherical surface proved by Archimedes, that is the moment of a circular curve round the axis, and showed that the radius applied to the axis produced this moment. I, having examined the demonstration with care, observed that, with the aid of the infinitely small characteristic triangle, it was possible to prove the following general proposition for any curve."
+   "Meanwhile having once opened the door provided by the characteristic triangle, I very easily discovered innumerable theorems with which at that time I filled innumerable sheets."
+   "Thus while others only consider parallel ordinates, and have broken up their figures into parallelograms ..., in the way that Cavalieri does, I employ converging lines and resolve the given figure into triangles ..., and at once draw another figure of which the ordinates ... are proportional to these triangles."]
+  :steps
+  [{:stage :curve :why "set-up"
+    :claim "Take a curve and a point P on it, with abscissa x and ordinate y. Let x grow by a small step dx; the ordinate grows by dy and the body of the curve reaches Q."}
+   {:stage :triangle :why "the characteristic triangle"
+    :claim "The little triangle with sides dx, dy and the arc PQ is the characteristic triangle. However small it becomes, it keeps the shape of the triangle cut off by the tangent at P."}
+   {:stage :shrink :why "infinitely small"
+    :claim "Let dx shrink. The chord PQ falls onto the tangent: in the limit the characteristic triangle is a triangle of the tangent."}
+   {:stage :sector :why "converging lines"
+    :claim "Join P and Q to the origin O. Leibniz cuts the figure not into parallel strips, as Cavalieri does, but into triangles OPQ that all meet at O."}
+   {:stage :z :why "similar triangles"
+    :claim "Let the tangent at P meet the axis of ordinates at the height z = y - x dy/dx. The triangle OPQ has base PQ and height the distance from O to the tangent; by similar triangles its area is z dx / 2."}
+   {:stage :strips :why "the transmutation"
+    :claim "So every triangle OPQ is half of a strip of width dx and height z. The figure of the z's has twice the area of the sector swept from O: any figure is converted into another of equivalent area."}
+   {:stage :rational :why "the circle made rational"
+    :claim "For the circle of diameter 2, z^2 = x/(2 - x), so x = 2 z^2/(1 + z^2). The transmuted figure is rational: its ordinate is a ratio of polynomials in z."}
+   {:stage :series :why "Mercator's division"
+    :claim "Divide as Mercator did for the hyperbola: 1/(1 + z^2) = 1 - z^2 + z^4 - z^6 + ... while z is less than 1. Summing each power, the area gives the square on the diameter to the circle as 1 to 1 - 1/3 + 1/5 - 1/7 + etc."}]}
+
+ :leibniz/arithmetical-quadrature
+ {:source "Child 1920, pp. 189-190"
+  :steps
+  [{:stage :sums :why "the series, term by term"
+    :claim "From which, by the help of ordinary geometry, it can be easily deduced that the square on the diameter is to the area of the circle as 1 is to 1/1 - 1/3 + 1/5 - 1/7 + etc."}
+   {:stage :bound :why "an alternating series"
+    :claim "The partial sums fall alternately above and below pi/4, and each misses it by less than the first term left out, 1/(2n + 1)."}]}
+
+ :leibniz/nova-methodus
+ {:source "Acta Eruditorum 1684, pp. 467-469 (Dutens III, pp. 167-168)"
+  :title-latin "Nova methodus pro maximis et minimis, itemque tangentibus, quae nec fractas, nec irrationales quantitates moratur, et singulare pro illis calculi genus."
+  :title-english "[Series rendering] A new method for maxima and minima, and for tangents, which is hindered neither by fractional nor by irrational quantities, and a singular kind of calculus for them."
+  :steps
+  [{:stage :definition :why "the definition of dx"
+    :claim "Jam recta aliqua pro arbitrio assumta vocetur dx, et recta quae sit ad dx, ut v est ad VB, vocetur dv, sive differentia ipsarum v. [Series rendering: Now let some straight line taken at will be called dx, and let the line that is to dx as v is to VB (the subtangent) be called dv, the difference of the v's.]"}
+   {:stage :constant :why "constants"
+    :claim "Sit a quantitas data constans, erit da aequalis 0, et d ax erit aequ. a dx. [Series rendering: Let a be a given constant quantity; then da is equal to 0, and d(ax) is equal to a dx.]"}
+   {:stage :addition :why "addition and subtraction"
+    :claim "Jam Additio et Subtractio: si sit z - y + w + x aequ. v, erit d z - y + w + x seu dv, aequ. dz - dy + dw + dx. [Series rendering: Addition and subtraction: if z - y + w + x equals v, then d(z - y + w + x), that is dv, equals dz - dy + dw + dx.]"}
+   {:stage :product :why "multiplication"
+    :claim "Multiplicatio, d xv aequ. x dv + v dx, seu posito y aequ. xv, fiet dy aequ. x dv + v dx. [Series rendering: Multiplication: d(xv) equals x dv + v dx; or, putting y equal to xv, dy equals x dv + v dx.]"}
+   {:stage :quotient :why "division"
+    :claim "Porro Divisio, d v/y vel (posito z aequ. v/y) dz aequ. (±v dy ∓ y dv)/yy. [Series rendering: Next, division: d(v/y), or, putting z equal to v/y, dz equals (±v dy ∓ y dv)/yy.]"}
+   {:stage :power :why "powers"
+    :claim "Potentia d x^a = a x^(a-1) dx, exempli gratia d x^3 = 3 x^2 dx. [Series rendering: Power: d(x^a) = a x^(a-1) dx; for example d(x^3) = 3 x^2 dx.]"}
+   {:stage :maximum :why "maxima and minima"
+    :claim "Fit dv aequ. 0, ubi nihil refert quantitas sitne affirmativa an negativa: eoque in loco ipsa v, nempe ordinata LM, est maxima. [Series rendering: dv becomes 0, where it does not matter whether the quantity is positive or negative; and at that place v, the ordinate LM, is a maximum.]"}]}}

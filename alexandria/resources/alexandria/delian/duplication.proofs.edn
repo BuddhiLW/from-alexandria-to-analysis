@@ -1,0 +1,72 @@
+;; The doubling of the cube, step by step, in the order of the sources.
+;; Eutocius, commentary on Archimedes' Sphere and Cylinder II.1, ed.
+;; Heiberg, Archimedis opera omnia III (Teubner 1881; corpus
+;; 02-archimedes-works/text/heiberg-opera-v3-1881-eutocius.txt; the Latin
+;; of the 1915 second edition in heiberg-opera-v3-1915-eutocius.txt);
+;; English from T. L. Heath, Apollonius of Perga (1896), pp. xvii-xxiii, where
+;; Heath gives it; elsewhere the series' own rendering, marked "[series]".
+;; :stage is what the medium shows (alexandria.delian.duplication-scenes).
+{:delian/hippocrates
+ {:source "Eratosthenes' letter in Eutocius, Heiberg III p. 102-104; Heath 1896, pp. xvii-xviii"
+  :steps
+  [{:claim "Minos, in an old tragedy, finds Glaucus' tomb a hundred feet every way too small: 'Let it be double; ... haste to double every side.'" :why "Heath 1896, p. xvii" :stage :cube}
+   {:claim "'But he was clearly in error; for, when the sides are doubled, the area becomes four times as great, and the solid content eight times as great.'" :why "Heath 1896, p. xviii" :stage :eight}
+   {:claim "A square doubles easily: the square on its diagonal is twice it (Meno 84d-85b, Elements I.47). The cube has no such diagonal." :why "series" :stage :square}
+   {:claim "Hippocrates of Chios: if two mean proportionals in continued proportion are found between two lines, the greater double the less, the cube is doubled." :why "Heath 1896, p. xviii" :stage :means}
+   {:claim "a : x = x : y = y : 2a, so (a : x)^3 = a : 2a, and x^3 = 2 a^3: the cube on x is double the cube on a." :why "series" :stage :means}
+   {:claim "'He turned the difficulty in the original problem into another difficulty no less than the former.'" :why "Heath 1896, p. xviii" :stage :means}]}
+
+ :delian/menaechmus
+ {:source "Eutocius, 'Ὡς Μέναιχμος', Heiberg III (1881) pp. 92-98; Heath 1896, pp. xix-xxi"
+  :steps
+  [{:claim "Let the two given straight lines be A, E; two mean proportionals between A and E must be found. Suppose it done, and let them be B, G. [series]" :why "Heiberg III p. 92" :stage :given}
+   {:claim "Lay down a straight line DH, ending at D, given in position; at D set DZ equal to G, draw ZTheta at right angles and make ZTheta equal to B. [series]" :why "the analysis" :stage :lines}
+   {:claim "Since A, B, G are proportional, A . G = B^2: the rectangle under the given A and DZ equals the square on ZTheta, so Theta is on a parabola through D. [series]" :why "Eutocius; Apollonius I.11" :stage :parabola}
+   {:claim "Draw ThetaK, DK parallel. Since B . G = A . E is given, the rectangle KTheta . ThetaZ is given, and Theta is on a hyperbola in the asymptotes KD, DZ. [series]" :why "Eutocius; Apollonius II.12" :stage :hyperbola}
+   {:claim "So Theta is given, and with it Z: the curves meet in one point, and DZ, ZTheta are the means G, B." :why "Heath 1896, p. xx" :stage :meet}
+   {:claim "Second way: the parabola of parameter E about the other axis passes through the same Theta, since E . B = G^2; the two parabolas alone find the means." :why "Heath 1896, p. xxi" :stage :second}
+   {:claim "With E = 2A, the first mean is the side of the double cube: DZ^3 = A^2 E = 2 A^3." :why "Hippocrates' reduction" :stage :cube-root}]}
+
+ :delian/archytas
+ {:source "Eutocius, 'Ἡ Ἀρχύτου εὕρησις, ὡς Εὔδημος ἱστορεῖ', Heiberg III (1881) pp. 98-102; Heath 1896, pp. xxii-xxiii (note)"
+  :steps
+  [{:claim "Let AD, G be the given lines (AD the greater). On AD describe the circle ABDZ; place the chord AB equal to G; produce it to meet the tangent at D in P. [series, after the Latin of Heiberg 1915]" :why "Heiberg III p. 98" :stage :circle}
+   {:claim "On the semicircle ABD erect a right half-cylinder; on AD a semicircle at right angles to the circle, turning about A from D toward B: it cuts the cylinder in a certain curve." :why "Heath 1896, p. xxii" :stage :torus}
+   {:claim "The triangle ADP turning the opposite way about AD makes a cone; AP meets the curve on the cylinder in a point K, and B describes a semicircle BMZ on the cone." :why "Heath 1896, p. xxii" :stage :cone}
+   {:claim "Drop KI perpendicular to the circle's plane (K is on the cylinder, so I is on the circle); join AI, and let it meet BZ in Theta; let AK meet the semicircle BMZ in M." :why "Eutocius" :stage :meet}
+   {:claim "Both semicircles stand at right angles to the plane ABD, so their common section MTheta does too: MTheta^2 = BTheta . ThetaZ = ATheta . ThetaI, and AMI is a right angle." :why "Heath 1896, p. xxiii (note)" :stage :right}
+   {:claim "The angle AKD is right as well (K on the semicircle on AD), so MI is parallel to KD, and by similar triangles DA : AK = AK : AI = AI : AM." :why "Heath 1896, p. xxiii (note)" :stage :proportion}
+   {:claim "AM = AB = G, so AD, AK, AI, G are in continued proportion: AK and AI are the two means." :why "Eutocius" :stage :proportion}]}
+
+ :delian/mesolabe
+ {:source "Eratosthenes' letter in Eutocius, Heiberg III (1881) pp. 104-112 (Latin of Heiberg 1915, pp. 90-96)"
+  :steps
+  [{:claim "Let the given unequal lines be AE, DTheta. On a straight line ETheta stand three equal frames, AZ, ZI, ITheta, side by side, each with its diagonal. [series]" :why "Heiberg III p. 106" :stage :frames}
+   {:claim "The first frame stays; the second slides under it, the third under the second, until A, B, G, D lie on one straight line: B where the second frame's diagonal crosses the first frame's edge, G likewise. [series]" :why "Eratosthenes" :stage :slide}
+   {:claim "Produce AD to meet ETheta in K. In the parallels AE, BZ: AK : KB = EK : KZ; in the parallels AZ, BH: AK : KB = ZK : KH. [series]" :why "Elements VI.2, VI.4" :stage :line}
+   {:claim "So EK : KZ = ZK : KH, and in the same way ZK : KH = HK : KTheta. [series]" :why "Eratosthenes" :stage :line}
+   {:claim "But EK : KZ = AE : BZ, ZK : KH = BZ : GH, HK : KTheta = GH : DTheta: so AE : BZ = BZ : GH = GH : DTheta, and BZ, GH are the means. [series]" :why "Eratosthenes" :stage :means}
+   {:claim "The epigram: 'Seek not to do the difficult business of the cylinders of Archytas, or to cut the cone in the triads of Menaechmus.'" :why "Heath 1896, p. xviii" :stage :means}]}
+
+ :delian/conchoid
+ {:source "Eutocius, 'Ὡς Νικομήδης ἐν τῷ περὶ κογχοειδῶν γραμμῶν', Heiberg III (1881) pp. 114-118"
+  :steps
+  [{:claim "A ruler, a pole E off it, and an interval: on every line through the pole, mark the point at the interval's distance beyond the ruler. The marks trace the first conchoid. [series]" :why "Nicomedes' instrument" :stage :trace}
+   {:claim "So the conchoid inserts, between the ruler and any line, a segment of the given length pointing at the pole: a neusis done by a curve. [series]" :why "Nicomedes" :stage :neusis}
+   {:claim "Nicomedes reduces the two means to one such neusis, and the conchoid performs it. [series]" :why "Eutocius" :stage :neusis}]}
+
+ :delian/cissoid
+ {:source "Eutocius, 'Ὡς Διοκλῆς ἐν τῷ περὶ πυρίων', Heiberg III (1881) pp. 78-84"
+  :steps
+  [{:claim "In a circle cut off equal arcs on either side of the end of a diameter; from the end of one arc drop the perpendicular, and join the other end to the diameter's far end. Where they cross is a point of the curve, later called the cissoid. [series]" :why "Diocles" :stage :trace}
+   {:claim "With u the distance from the vertex, h the circle's ordinate and y the curve's: (2r - u) : h = h : u = u : y. [series]" :why "Elements VI.8, similar triangles" :stage :proportion}
+   {:claim "So the curve gives two means between 2r - u and y; a line from the centre scales them to any two given lines. [series]" :why "Diocles" :stage :proportion}]}
+
+ :delian/wantzel
+ {:source "P.-L. Wantzel, J. math. pures appl. 2 (1837), pp. 366-372 (corpus 24-wantzel-1837)"
+  :steps
+  [{:claim "A ruler-and-compass construction intersects lines and circles; its unknown is found by a chain of equations of the second degree, each with coefficients rational in the data and the earlier roots." :why "Wantzel I, p. 366" :stage :tower}
+   {:claim "The equation of degree 2^n that gives every solution of such a problem is irreducible: a rational equation that admits one of its roots admits them all." :why "Wantzel III, p. 368" :stage :tower}
+   {:claim "'Tout problème qui conduit à une équation irréductible dont le degré n'est pas une puissance de 2, ne peut être résolu avec la ligne droite et le cercle.'" :why "Wantzel IV, p. 369" :stage :degree}
+   {:claim "x^3 - 2a^3 = 0 is irreducible: with a = 1, a rational root would be an integer dividing 2, and 1, -1, 2, -2 give -1, -3, 6, -10." :why "rational root test" :stage :degree}
+   {:claim "Its degree, 3, is no power of 2: 'la duplication du cube ... ne peut être obtenue par la Géométrie élémentaire.'" :why "Wantzel IV, p. 369" :stage :degree}]}}

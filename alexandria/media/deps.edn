@@ -1,0 +1,38 @@
+;; alexandria/media: Alexandria's figures on interactive media.
+;;
+;; The core library (..) stays free of viewers. This source root adds
+;; emmy-viewers, whose raster backend compiles a figure (an Emmy function) to
+;; a WebAssembly kernel, and the ClojureScript players that animate the steps
+;; of a proof in a Clerk notebook. A notebook depends on this directory:
+;;
+;;   {:deps {io.github.buddhilw/alexandria-media {:local/root "<...>/alexandria/media"}}}
+;;
+;; and mounts a player with clerk/with-viewer (see alexandria.archimedes.circle-view).
+{:paths ["src"]
+
+ :deps {io.github.buddhilw/alexandria {:local/root ".."}
+        ;; the Kernel contract and the raster backend (mentat-collective/emmy-viewers#83):
+        ;; the PR's branch feat/raster-backend on the BuddhiLW fork, pinned by
+        ;; sha so the published source builds on any machine. To work against a
+        ;; local checkout, swap in {:local/root "<path>/emmy-viewers"}.
+        ;; Emmy comes from the core's fork pin, not emmy-viewers' release
+        org.mentat/emmy-viewers {:git/url "https://github.com/BuddhiLW/emmy-viewers.git"
+                                 :git/sha "e11c10747dbbc71be70738b40425f0643e3c4ff5"
+                                 :exclusions [org.mentat/emmy]}
+        ;; emmy-viewers' :raster alias, which a dependent does not inherit
+        ;; (raster itself comes from the core at the same tag)
+        io.github.replikativ/raster {:git/tag "v0.2.258" :git/sha "d0fb8f7"}
+        org.typedclojure/typed.clj.runtime {:mvn/version "1.4.0"}
+        org.clojure/test.check {:mvn/version "1.1.1"}
+        ;; desargues' git hive-dsl pin conflicts with the core's; Clerk 0.18.1158 breaks on edamame 1.6.x
+        io.github.hive-agi/hive-dsl {:mvn/version "0.5.34"}
+        borkdude/edamame {:mvn/version "1.4.28"}
+        io.github.nextjournal/clerk {:mvn/version "0.18.1158"}}
+
+ :aliases
+ {;; raster's compiler needs the vector module
+  :dev {:jvm-opts ["--add-modules=jdk.incubator.vector"]}
+  :test {:extra-paths ["test"]
+         :jvm-opts ["--add-modules=jdk.incubator.vector"]
+         :extra-deps {io.github.cognitect-labs/test-runner {:git/tag "v0.5.1" :git/sha "dfb30dd"}}
+         :main-opts ["-m" "cognitect.test-runner"]}}}

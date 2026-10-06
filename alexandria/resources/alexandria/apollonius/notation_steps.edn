@@ -1,0 +1,32 @@
+;; Apollonius, Conics I.11-13: the notation passage of the history-of-math
+;; notebook apollonius_conics.clj ("Notation, fixed once"), one sentence per
+;; step, quoted verbatim (its Markdown: **term**, $letters$, *Latin*).
+;; :introduces names what the drawing adds at that step, exactly
+;; (alexandria.apollonius.notation-steps/schedule draws those and no more).
+{:title "How a plane cuts a cone (I.11-13)"
+ :source "history-of-math/notebooks/apollonius_conics.clj, Notation, fixed once"
+ :steps
+ [{:id "S1"
+   :text "The cone is the surface traced by a line through a fixed point, the **apex**, as the line runs round a circle."
+   :introduces [:apex :circle :generator :cone]}
+  {:id "S2"
+   :text "Continued past the apex, it makes a **double cone** of two **nappes**."
+   :introduces [:generator2 :nappe2]}
+  {:id "S3"
+   :text "The **axial triangle** $ABC$ is the cut through the apex $A$ and a diameter $BC$ of the base circle."
+   :introduces [:axial :AB :AC :BC :A :B :C]}
+  {:id "S4"
+   :text "The cutting plane meets the axial triangle in a line $PM$, the **diameter** of the section. $P$ is its **vertex**."
+   :introduces [:plane :PM :P :M :section]}
+  {:id "S5"
+   :text "A chord of the section parallel to the base line $DE$ is bisected by $PM$. Half of it, $QV$, is an **ordinate**; we write $y = QV$."
+   :introduces [:DE :D :E :chord :V :QV :Q :y]}
+  {:id "S6"
+   :text "The piece $PV = x$ of the diameter is the **abscissa**."
+   :introduces [:PV :x]}
+  {:id "S7"
+   :text "$p$ is a length fixed by the cone and the plane, the **parameter** (Apollonius' \"upright side,\" Latin *latus rectum*)."
+   :introduces [:PL :L :p]}
+  {:id "S8"
+   :text "$d = PP'$ is the **transverse diameter**, when the plane meets the opposite side of the axial triangle again at $P'$."
+   :introduces [:AC' :PP' :P' :d]}]}

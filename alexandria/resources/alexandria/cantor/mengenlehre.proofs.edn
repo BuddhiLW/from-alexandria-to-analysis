@@ -1,0 +1,65 @@
+;; Cantor, 1874 and 1891, told step by step. :original is Cantor's German,
+;; verbatim (Crelle 77 from archive.org
+;; sim_journal-fuer-die-reine-und-angewandte-mathematik_1874_77; Jahresbericht
+;; DMV 1 from archive.org jahresberichtder1218deut; the OCR's errors corrected
+;; against the scan, Cantor's spelling kept: giebt, Werthe, definirt).
+;; :rendering is this series' English, marked as such. Cantor writes [a] for
+;; the absolute value of a. :stage is what alexandria.cantor.sets-scenes shows.
+{:cantor/zigzag
+ {:source "the counting of the positive rationals, the degree-one case of Crelle 77 §1"
+  :note "Cantor counts the rationals inside the algebraic numbers (height N of p/q in lowest terms is |q| + |p|). The walk along the diagonals of the table of fractions is the textbook picture of that count; its order is height by height, as his."
+  :steps
+  [{:stage :grid :why "the table"
+    :claim "Write every fraction p/q with p, q = 1, 2, 3, ... in a table: row q, column p. Every positive rational is in it, many times (1/1 = 2/2 = 3/3)."}
+   {:stage :walk :why "one diagonal at a time"
+    :claim "Walk the diagonals p + q = 2, 3, 4, ..., each to its end, turning at the edge. Diagonal p + q = s holds s - 1 cells, so the walk reaches every cell after finitely many steps."}
+   {:stage :skip :why "lowest terms"
+    :claim "Skip a cell whose fraction is not in lowest terms: its value was counted already. What is left is a list 1, 2, 1/2, 1/3, 3, 4, 3/2, 2/3, 1/4, ... in which every positive rational stands exactly once."}
+   {:stage :count :why "the numbering"
+    :claim "The n-th stop of the walk is the n-th rational. That numbering is a one-to-one correspondence between the positive rationals and the positive whole numbers: the rationals are countable, though between any two of them lie infinitely many more."}]}
+
+ :cantor/heights
+ {:source "Crelle 77 (1874), §1, pp. 258-260"
+  :passages
+  [{:original "Unter einer reellen algebraischen Zahl wird allgemein eine reelle Zahlgrösse ω verstanden, welche einer nicht identischen Gleichung von der Form genügt: (1.) a0 ωⁿ + a1 ωⁿ⁻¹ + ... + an = 0, wo n, a0, a1, ... an ganze Zahlen sind; wir können uns hierbei die Zahlen n und a0 positiv, die Coefficienten a0, a1, ... an ohne gemeinschaftlichen Theiler und die Gleichung (1.) irreductibel denken."
+    :rendering "By a real algebraic number one understands a real quantity ω that satisfies a non-identical equation of the form (1.) a0 ωⁿ + a1 ωⁿ⁻¹ + ... + an = 0, where n, a0, a1, ... an are whole numbers; we may take n and a0 positive, the coefficients without common divisor, and the equation (1.) irreducible."}
+   {:original "so möge die Summe der absoluten Beträge ihrer Coefficienten, vermehrt um die Zahl n − 1, wo n den Grad von ω angiebt, die Höhe der Zahl ω genannt und mit N bezeichnet werden; es ist also, unter Anwendung einer üblich gewordenen Bezeichnungsweise: (3.) N = n − 1 + [a0] + [a1] + ... + [an]."
+    :rendering "let the sum of the absolute values of its coefficients, increased by the number n − 1, where n is the degree of ω, be called the height of the number ω and denoted N; thus, in a notation that has become usual: (3.) N = n − 1 + [a0] + [a1] + ... + [an]."}
+   {:original "Die Höhe N ist darnach für jede reelle algebraische Zahl ω eine bestimmte positive ganze Zahl; umgekehrt giebt es zu jedem positiven ganzzahligen Werthe von N nur eine endliche Anzahl algebraischer reeller Zahlen mit der Höhe N; die Anzahl derselben sei φ(N); es ist beispielsweise φ(1) = 1; φ(2) = 2; φ(3) = 4."
+    :rendering "The height N is accordingly a definite positive whole number for every real algebraic number ω; conversely, for every positive whole value of N there are only finitely many real algebraic numbers of height N; let their number be φ(N); for example φ(1) = 1, φ(2) = 2, φ(3) = 4."}]
+  :steps
+  [{:stage :equation :why "(1.), normalized"
+    :claim "Every real algebraic number ω is a root of exactly one equation a0 ωⁿ + ... + an = 0 with n, a0 positive, coefficients without common divisor, irreducible."}
+   {:stage :height :why "(3.)"
+    :claim "Its height is N = n − 1 + |a0| + |a1| + ... + |an|, a positive whole number."}
+   {:stage :finite :why "finitely many equations"
+    :claim "A given N bounds the degree (n ≤ N) and every coefficient (|ai| ≤ N), so only finitely many equations have height N, each with at most n roots: φ(N) is finite."}
+   {:stage :first-heights :why "computed exactly"
+    :claim "N = 1: only ω = 0 (from ω = 0). N = 2: ω = −1, 1. N = 3: ω = −2, −1/2, 1/2, 2. So φ(1) = 1, φ(2) = 2, φ(3) = 4, as Cantor states."}
+   {:stage :list :why "height by height, by size"
+    :claim "List the numbers of height 1, then those of height 2 in increasing order, then height 3, and so on. Every real algebraic number gets a definite place ν: the real algebraic numbers are countable."}]}
+
+ :cantor/diagonal
+ {:source "Jahresbericht DMV 1 (1891), pp. 75-77"
+  :passages
+  [{:original "Es lässt sich aber von jenem Satze ein viel einfacherer Beweis liefern, der unabhängig von der Betrachtung der Irrationalzahlen ist."
+    :rendering "But a much simpler proof of that theorem can be given, one that does not depend on considering the irrational numbers."}
+   {:original "„Ist E1, E2, ..., Eν, ... irgend eine einfach unendliche Reihe von Elementen der Mannigfaltigkeit M, so giebt es stets ein Element E0 von M, welches mit keinem Eν übereinstimmt.“"
+    :rendering "\"If E1, E2, ..., Eν, ... is any simply infinite sequence of elements of the manifold M, then there is always an element E0 of M which agrees with no Eν.\""}
+   {:original "Es werde nun eine Reihe b1, b2, ..., bν, ... so definirt, dass bν auch nur gleich m oder w und von aν,ν verschieden sei. Ist also aν,ν = m, so ist bν = w, und ist aν,ν = w, so ist bν = m."
+    :rendering "Now let a sequence b1, b2, ..., bν, ... be defined so that bν is again only m or w, and different from aν,ν. So if aν,ν = m then bν = w, and if aν,ν = w then bν = m."}
+   {:original "so sieht man ohne weiteres, dass die Gleichung: E0 = Eμ für keinen positiven ganzzahligen Wert von μ erfüllt sein kann, da sonst für das betreffende μ und für alle ganzzahligen Werte von ν: bν = aμ,ν, also auch im besondern: bμ = aμ,μ wäre, was durch die Definition von bμ ausgeschlossen ist."
+    :rendering "one sees at once that the equation E0 = Eμ can hold for no positive whole value of μ, since otherwise for that μ and for all whole values of ν we would have bν = aμ,ν, and so in particular bμ = aμ,μ, which the definition of bμ excludes."}]
+  :steps
+  [{:stage :elements :why "the manifold M"
+    :claim "Let m and w be two characters that exclude each other. M is the totality of elements E = (x1, x2, ..., xν, ...), each coordinate m or w."}
+   {:stage :table :why "suppose a list"
+    :claim "Suppose E1, E2, ..., Eμ, ... is any list of elements of M. Write it as a table: row μ is Eμ = (aμ,1, aμ,2, ..., aμ,ν, ...)."}
+   {:stage :diagonal :why "read the diagonal"
+    :claim "Read the diagonal a1,1, a2,2, ..., aν,ν, ...: the ν-th character of the ν-th row."}
+   {:stage :flip :why "Cantor's b"
+    :claim "Flip every character: bν = w where aν,ν = m, and bν = m where aν,ν = w. E0 = (b1, b2, ..., bν, ...) is an element of M."}
+   {:stage :differs :why "bμ ≠ aμ,μ"
+    :claim "E0 differs from row μ at place μ, for every μ. So E0 is in no row: no list exhausts M. M does not have the power of the sequence 1, 2, 3, ..."}
+   {:stage :reals :why "binary digits"
+    :claim "Read m as 0 and w as 1 and an element of M is a binary expansion. Listing the numbers of an interval leaves one out: the continuum is not countable, and the proof uses no irrational numbers at all."}]}}

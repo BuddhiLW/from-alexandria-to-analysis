@@ -1,0 +1,88 @@
+;; Descartes, La Géométrie (appendix to the Discours de la methode, Leiden,
+;; 1637): propositions as desargues construction boards. Statements quote the
+;; French of the public-domain edition (A. Hermann, Paris 1886; Project
+;; Gutenberg eBook #26400, pages of that edition), then the series' own
+;; English rendering, marked as such. The points are exact instances of the
+;; figures in alexandria.descartes.geometrie; checks compose vocabulary only.
+{:tradition {:id :descartes/la-geometrie
+             :author "Rene Descartes"
+             :work "La Géométrie"
+             :date "1637"
+             :source "Descartes, La Géométrie (Leiden 1637), ed. A. Hermann, Paris 1886, Project Gutenberg #26400"}
+ :propositions
+ [{:id :descartes/multiplication
+   :title "Book I: multiplication by the unit"
+   :statement "Soit, par exemple, AB l'unité, et qu'il faille multiplier BD par BC, je n'ai qu'à joindre les points A et C, puis tirer DE parallèle a CA, et BE est le produit de cette multiplication. [Series' English rendering: Let AB be the unit, and let BD be multiplied by BC: join A and C, draw DE parallel to CA, and BE is the product.]"
+   :source "Hermann 1886, p. 2"
+   :construction
+   {:id :descartes-multiplication
+    :kind :construction
+    :window {:x [-0.5 4] :y [-0.5 3] :n 1 :sweep [0 1]}
+    :points [{:id :B :at [0 0] :fixed? true}
+             {:id :A :at [1 0] :fixed? true}
+             {:id :D :at [2 0] :fixed? true}
+             {:id :C :at [9/10 6/5] :fixed? true}
+             {:id :E :at [9/5 12/5] :fixed? true}]
+    :draw [[:segment :B :D] [:segment :B :E] [:segment :A :C] [:segment :D :E]]
+    :checks [{:claim (= (* (length B E) (length B A)) (* (length B D) (length B C)))}
+             {:claim (= (ratio (length B E) (length B D)) (ratio (length B C) (length B A)))}]}}
+
+  {:id :descartes/square-root
+   :title "Book I: the square root by the unit"
+   :statement "Ou s'il faut tirer la racine carrée de GH, je lui ajoute en ligne droite FG, qui est l'unité, et divisant FH en deux parties égales au point K, du centre K je tire le cercle FIH, puis élevant du point G une ligne droite jusques à I à angles droits sur FH, c'est GI la racine cherchée. [Series' English rendering: To take the square root of GH, add FG, the unit, in a straight line; bisect FH at K, draw the circle FIH about K, raise GI at right angles to FH: GI is the root.]"
+   :source "Hermann 1886, p. 2"
+   :construction
+   {:id :descartes-square-root
+    :kind :construction
+    :window {:x [-1.5 4.5] :y [-0.5 3] :n 1 :sweep [0 1]}
+    :points [{:id :F :at [-1 0] :fixed? true}
+             {:id :G :at [0 0] :fixed? true}
+             {:id :H :at [4 0] :fixed? true}
+             {:id :K :op :mid :of [:F :H]}
+             {:id :I :at [0 2] :fixed? true}]
+    :draw [[:segment :F :H] [:segment :G :I] [:circle :K :F]]
+    :checks [{:claim (= (* (length G I) (length G I)) (* (length F G) (length G H)))}
+             {:claim (= (length K I) (length K F))}]}}
+
+  {:id :descartes/pappus-four-lines
+   :title "Book I-II: Pappus' problem of four lines"
+   :statement "Ayant trois ou quatre, ou plus grand nombre de lignes droites données par position; premièrement on demande un point duquel on puisse tirer autant d'autres lignes droites, une sur chacune des données, qui fassent avec elles des angles donnés, et que le rectangle contenu en deux de celles qui seront ainsi tirées d'un même point, ait la proportion donnée avec le carré de la troisième, s'il n'y en a que trois; ou bien avec le rectangle des deux autres, s'il y en a quatre. [Series' English rendering: Given three or four straight lines in position, find a point from which lines drawn to each at given angles make the rectangle of two have a given ratio to the square of the third, or, with four, to the rectangle of the other two.]"
+   :source "Hermann 1886, p. 9"
+   :construction
+   {:id :descartes-pappus
+    :kind :construction
+    :window {:x [-1 5] :y [-1 4] :n 1 :sweep [0 1]}
+    :points [{:id :V1 :at [0 0] :fixed? true}
+             {:id :V2 :at [4 0] :fixed? true}
+             {:id :V3 :at [7/2 3] :fixed? true}
+             {:id :V4 :at [1/2 5/2] :fixed? true}
+             {:id :C :at [89/190 89/95] :fixed? true}
+             {:id :F1 :at [0 0] :fixed? true}
+             {:id :F2 :at [153/38 -3/19] :fixed? true}
+             {:id :F3 :at [37/38 49/19] :fixed? true}
+             {:id :F4 :at [445/1976 2225/1976] :fixed? true}]
+    :draw [[:segment :V1 :V2] [:segment :V2 :V3] [:segment :V3 :V4] [:segment :V4 :V1]
+           [:segment :C :F1] [:segment :C :F2] [:segment :C :F3] [:segment :C :F4]]
+    :checks [{:claim (= (* (length C F1) (length C F3) (length V2 V3) (length V4 V1))
+                        (* (length C F2) (length C F4) (length V1 V2) (length V3 V4)))}]}}
+
+  {:id :descartes/normal
+   :title "Book II: the normal by a circle touching the curve"
+   :statement "Si ce point P est tel qu'on le désire, le cercle dont il sera le centre, et qui passera par le point C, y touchera la ligne courbe CE sans la couper. [Series' English rendering: If P is the point sought, the circle about P through C touches the curve CE there without cutting it.]"
+   :source "Hermann 1886, p. 36"
+   :construction
+   {:id :descartes-normal
+    :kind :construction
+    :window {:x [-1.5 3] :y [-1.6 1.8] :n 1 :sweep [0 1]}
+    :points [{:id :A :at [0 0] :fixed? true}
+             {:id :C :at [1 1] :fixed? true}
+             {:id :P :at [3/2 0] :fixed? true}
+             {:id :T :at [-1 0] :fixed? true}]
+    :draw [[:segment :T :C] [:segment :C :P] [:circle :P :C]]
+    :checks [{:claim (= (+ (* (length T C) (length T C)) (* (length C P) (length C P)))
+                        (* (length T P) (length T P)))}]}}
+
+  {:id :descartes/rule-of-signs
+   :title "Book III: the rule of signs"
+   :statement "Il y en peut avoir autant de vraies que les signes + et - s'y trouvent de fois être changés, et autant de fausses qu'il s'y trouve de fois deux signes + ou deux signes - qui s'entre-suivent. [Series' English rendering: There can be as many true roots as the signs + and - change, and as many false roots as there are times two + signs or two - signs follow one another.]"
+   :source "Hermann 1886, p. 57"}]}

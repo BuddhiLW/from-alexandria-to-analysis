@@ -1,0 +1,36 @@
+;; hive-cljs manifest: browser check of the Euler notebook build.
+;;
+;;   cd history-of-math && clojure -J-Xmx2g -M:notebooks dev/build_euler.clj
+;;   python3 -m http.server -d target/hom-euler 8093
+;;   code {command: "cljs e2e run", directory: "<this dir>", tags: "euler"}
+{:hive.cljs/toolchain :browser
+
+ :hive.cljs/builds {:euler {:http-port 8093
+                            :command ["clojure" "-J-Xmx2g" "-M:notebooks" "dev/build_euler.clj"]}}
+
+ :hive.cljs/e2e
+ {:base-url   "http://localhost:8093"
+  :browser    :chromium
+  :headless   true
+  :timeout-ms 60000
+  :scenarios
+  [{:id    :euler-renders
+    :tags  [:euler :smoke]
+    :doc   "The notebook renders its sections, no badge reads FAILS, and the
+            four players mount their SVG scenes."
+    :steps [[:goto "/"]
+            [:wait-for "h1"]
+            [:wait-ms 6000]
+            [:expect-js "document.body.innerText.indexOf('Euler\\'s argument, paragraph by paragraph') >= 0"]
+            [:expect-js "document.body.innerText.indexOf('FAILS') < 0"]
+            [:expect-js "document.body.innerText.indexOf('Reading the original') >= 0"]
+            [:expect-js "document.querySelectorAll('svg').length >= 4"]]}
+
+   {:id    :euler-player-steps
+    :tags  [:euler]
+    :doc   "Clicking a later step of the Koenigsberg player draws a scene
+            (no 'no drawing for' fallback anywhere on the page)."
+    :steps [[:goto "/"]
+            [:wait-for "svg"]
+            [:wait-ms 6000]
+            [:expect-js "document.body.innerText.indexOf('no drawing for') < 0"]]}]}}

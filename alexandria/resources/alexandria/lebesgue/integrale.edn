@@ -1,0 +1,23 @@
+;; Lebesgue, Intégrale, longueur, aire (thesis, Paris; Annali di Matematica
+;; pura ed applicata, ser. 3, vol. 7, 1902). No public-domain English
+;; translation exists; the statements are this series' rendering of the
+;; French, quoted verbatim in integrale.proofs.edn (archive.org
+;; integralelongueu00lebe, the thesis as printed, pp. 1-129).
+{:tradition {:id :lebesgue/integrale
+             :author "Henri Lebesgue"
+             :work "Intégrale, longueur, aire"
+             :date "1902"
+             :source "H. Lebesgue, Intégrale, longueur, aire, Annali di Matematica (3) 7 (1902), 231-359; English rendering of this series"}
+ :propositions
+ [{:id :lebesgue/measure-problem
+   :title "Chapter I, §1: the problem of measure"
+   :statement "To attach to every bounded set a positive or zero number, its measure, such that some set has measure not zero, equal sets have equal measure, and the measure of the union of finitely or countably many sets without common points is the sum of their measures. (Series' rendering of Lebesgue 1902, §1.)"
+   :source "Lebesgue 1902, §1, p. 6"}
+  {:id :lebesgue/rationals-null
+   :title "The rationals of [0, 1] have measure zero"
+   :statement "Enclose the n-th rational of [0, 1] in an interval of length ε/2ⁿ; the intervals have total length at most ε, for every ε > 0; so the outer measure of the rationals, the lower limit of such sums (§3), is zero."
+   :source "Lebesgue 1902, §3, p. 7 (the outer measure); the enumeration is Cantor's (1874)"}
+  {:id :lebesgue/sommable
+   :title "Chapter II, §§17-19: the integral of a summable function"
+   :statement "If the set E under the graph of f is measurable, its measure is the definite integral of f, and f is called summable; a bounded f is summable exactly when, for all a and b, the set of x with a > f(x) > b is measurable, and the integral is then the common limit of the sums obtained by dividing the interval of variation of f. (Series' rendering of Lebesgue 1902, §§17-19.)"
+   :source "Lebesgue 1902, §§17-19, pp. 20-22"}]}

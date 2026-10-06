@@ -1,0 +1,72 @@
+;; Euclid, Elements, Book I: proofs told step by step.
+;; T. L. Heath, The Thirteen Books of Euclid's Elements (Cambridge, 1908),
+;; vol. 1 (archive.org thirteenbooksofe01eucl). Each step is a claim, its
+;; reason, and the :stage a medium shows while the step is read
+;; (alexandria.euclid.elements-scenes). Claims follow Heath's wording,
+;; shortened; the reasons are Heath's bracketed citations.
+{:euclid/I.1
+ {:source "Heath 1908, vol. 1, pp. 241-242"
+  :steps
+  [{:claim "Let AB be the given finite straight line." :why "given" :stage :given}
+   {:claim "With centre A and distance AB let the circle BCD be described." :why "Post. 3" :stage :circle-a}
+   {:claim "With centre B and distance BA let the circle ACE be described." :why "Post. 3" :stage :circle-b}
+   {:claim "From the point C, in which the circles cut one another, let the straight lines CA, CB be joined." :why "Post. 1" :stage :join}
+   {:claim "Since A is the centre of the circle CDB, AC is equal to AB; since B is the centre of the circle CAE, BC is equal to BA." :why "Def. 15" :stage :radii}
+   {:claim "Things equal to the same thing are equal to one another, so CA is equal to CB, and the three are equal." :why "C.N. 1" :stage :equal}
+   {:claim "Therefore the triangle ABC is equilateral, and it has been constructed on AB." :why "Def. 20" :stage :done}]}
+
+ :euclid/I.4
+ {:source "Heath 1908, vol. 1, pp. 247-248"
+  :steps
+  [{:claim "Let ABC, DEF be two triangles with AB equal to DE, AC equal to DF, and the angle BAC equal to the angle EDF." :why "hypothesis" :stage :given}
+   {:claim "Let the triangle ABC be applied to DEF, the point A on D and the straight line AB on DE." :why "superposition" :stage :apply}
+   {:claim "Then B coincides with E, because AB is equal to DE." :why "C.N. 4" :stage :apply}
+   {:claim "AC coincides with DF, because the angle BAC is equal to EDF; and C with F, because AC is equal to DF." :why "C.N. 4" :stage :apply}
+   {:claim "B is on E and C on F, so the base BC coincides with EF and is equal to it." :why "C.N. 4" :stage :done}
+   {:claim "The whole triangle coincides with the whole triangle, and the remaining angles with the remaining angles, and are equal to them." :why "C.N. 4" :stage :done}]}
+
+ :euclid/I.5
+ {:source "Heath 1908, vol. 1, pp. 251-252"
+  :steps
+  [{:claim "Let ABC be an isosceles triangle with AB equal to AC, and let BD, CE be produced further in a straight line with AB, AC." :why "Post. 2" :stage :given}
+   {:claim "Let F be taken at random on BD; from the greater AE let AG be cut off equal to the less AF." :why "I.3" :stage :cut}
+   {:claim "Let FC, GB be joined." :why "Post. 1" :stage :join}
+   {:claim "FA is equal to GA and AB to AC, about the common angle FAG; so FC is equal to GB, and the angles ACF, ABG, and AFC, AGB are equal." :why "I.4" :stage :outer}
+   {:claim "AF is equal to AG, and AB to AC; so the remainder BF is equal to the remainder CG." :why "C.N. 3" :stage :outer}
+   {:claim "In the triangles BFC, CGB, BF equals CG and FC equals GB, about equal angles; so the angles FBC, GCB are equal, and BCF, CBG." :why "I.4" :stage :inner}
+   {:claim "The whole angle ABG equals the whole ACF, and in them CBG equals BCF; so the remaining angle ABC equals the remaining angle ACB, and they are at the base." :why "C.N. 3" :stage :done}]}
+
+ :euclid/I.6
+ {:source "Heath 1908, vol. 1, pp. 255-256"
+  :steps
+  [{:claim "Let ABC be a triangle having the angle ABC equal to the angle ACB." :why "hypothesis" :stage :given}
+   {:claim "If AB is unequal to AC, one is the greater; let AB be greater, and from it let DB be cut off equal to AC the less." :why "I.3" :stage :suppose}
+   {:claim "Let DC be joined. DB equals AC and BC is common, about the equal angles DBC, ACB." :why "Post. 1" :stage :suppose}
+   {:claim "So the base DC equals AB, and the triangle DBC equals the triangle ACB, the less to the greater: which is absurd." :why "I.4, C.N. 5" :stage :absurd}
+   {:claim "Therefore AB is not unequal to AC; it is equal to it." :why "reductio" :stage :done}]}
+
+ :euclid/I.47
+ {:source "Heath 1908, vol. 1, pp. 349-350"
+  :steps
+  [{:claim "Let ABC be a right-angled triangle having the angle BAC right." :why "hypothesis" :stage :given}
+   {:claim "On BC let the square BDEC be described, and on BA, AC the squares GB, HC." :why "I.46" :stage :squares}
+   {:claim "Through A let AL be drawn parallel to either BD or CE, and let AD, FC be joined." :why "I.31, Post. 1" :stage :parallel}
+   {:claim "The angles BAC, BAG are right, so CA is in a straight line with AG; for the same reason BA is in a straight line with AH." :why "I.14" :stage :parallel}
+   {:claim "The angle DBC equals FBA, each being right; add the angle ABC to each, and the whole angle DBA equals the whole FBC." :why "C.N. 2" :stage :triangles}
+   {:claim "DB equals BC and FB equals BA, about equal angles; so the triangle ABD equals the triangle FBC." :why "I.4" :stage :triangles}
+   {:claim "The parallelogram BL is double of the triangle ABD, on the same base BD and in the same parallels BD, AL." :why "I.41" :stage :shear-left}
+   {:claim "The square GB is double of the triangle FBC, on the same base FB and in the same parallels FB, GC. So the parallelogram BL equals the square GB." :why "I.41, C.N. 1" :stage :shear-left}
+   {:claim "Similarly, if AE, BK be joined, the parallelogram CL is proved equal to the square HC." :why "I.4, I.41" :stage :shear-right}
+   {:claim "Therefore the whole square BDEC is equal to the two squares GB, HC." :why "C.N. 2" :stage :done}]}
+
+ :euclid/I.48
+ {:source "Heath 1908, vol. 1, p. 368"
+  :steps
+  [{:claim "In the triangle ABC let the square on BC be equal to the squares on BA, AC." :why "hypothesis" :stage :given}
+   {:claim "From A let AD be drawn at right angles to AC, let AD be made equal to BA, and let DC be joined." :why "I.11, I.3" :stage :construct}
+   {:claim "DA equals AB, so the square on DA equals the square on AB; add the square on AC to each." :why "C.N. 2" :stage :construct}
+   {:claim "The angle DAC is right, so the square on DC equals the squares on DA, AC; and the square on BC equals the squares on BA, AC." :why "I.47, hypothesis" :stage :squares}
+   {:claim "So the square on DC equals the square on BC, and the side DC equals BC." :why "C.N. 1" :stage :squares}
+   {:claim "DA equals AB, AC is common, and the base DC equals the base BC; so the angle DAC equals the angle BAC." :why "I.8" :stage :done}
+   {:claim "But DAC is right; therefore BAC is also right." :why "C.N. 1" :stage :done}]}
+}

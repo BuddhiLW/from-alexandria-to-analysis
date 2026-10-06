@@ -1,0 +1,21 @@
+;; Dedekind, Stetigkeit und irrationale Zahlen (Braunschweig, 1872).
+;; Statements from W. W. Beman's authorized translation, Essays on the Theory
+;; of Numbers (Open Court, 1901; Project Gutenberg #21016), cited by section.
+{:tradition {:id :dedekind/stetigkeit
+             :author "Richard Dedekind"
+             :work "Continuity and Irrational Numbers (Stetigkeit und irrationale Zahlen)"
+             :date "1872"
+             :source "R. Dedekind, Essays on the Theory of Numbers, tr. W. W. Beman, Open Court 1901"}
+ :propositions
+ [{:id :dedekind/continuity-of-the-line
+   :title "Section III: the essence of continuity"
+   :statement "If all points of the straight line fall into two classes such that every point of the first class lies to the left of every point of the second class, then there exists one and only one point which produces this division of all points into two classes, this severing of the straight line into two portions."
+   :source "Beman 1901, Section III"}
+  {:id :dedekind/cut-sqrt-d
+   :title "Section IV: a cut produced by no rational number"
+   :statement "If we assign to the second class A2, every positive rational number a2 whose square is > D, to the first class A1 all other rational numbers a1, this separation forms a cut (A1, A2) ... But this cut is produced by no rational number."
+   :source "Beman 1901, Section IV"}
+  {:id :dedekind/continuity-of-the-reals
+   :title "Section V, theorem iv: the domain of real numbers is continuous"
+   :statement "If the system R of all real numbers breaks up into two classes A1, A2 such that every number a1 of the class A1 is less than every number a2 of the class A2 then there exists one and only one number a by which this separation is produced."
+   :source "Beman 1901, Section V, iv"}]}

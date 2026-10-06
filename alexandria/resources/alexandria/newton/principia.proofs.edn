@@ -1,0 +1,49 @@
+;; Newton, Principia, Book I, told step by step. Quotations from Andrew
+;; Motte's translation, The Mathematical Principles of Natural Philosophy
+;; (London, 1729), vol. I, as transcribed on Wikisource
+;; (The_Mathematical_Principles_of_Natural_Philosophy_(1729)/Book_1); page
+;; numbers are the 1729 edition's. Each step's :stage names what the medium
+;; shows (alexandria.newton.principia-scenes).
+{:newton/lemma-1
+ {:source "Motte 1729, vol. I, pp. 41-42"
+  :statement "Quantities, and the ratio's of quantities, which in any finite time converge continually to equality, and before the end of that time approach nearer the one to the other than by any given difference, become ultimately equal."
+  :proof "If you deny it; suppose them to be ultimately unequal, and let D be their ultimate difference. Therefore they cannot approach nearer to equality than by that given difference D; which is against the supposition."
+  :steps
+  [{:stage :bars :why "Lemma II"
+    :claim "In any figure terminated by right lines and a curve, inscribe parallelograms on equal bases, and complete the circumscribed ones."}
+   {:stage :difference :why "one rectangle"
+    :claim "The difference of the inscribed and circumscribed figures is the sum of the little parallelograms, that is, one rectangle under one base and the whole altitude."}
+   {:stage :limit :why "Lemma I"
+    :claim "Let the breadth of those parallelograms be diminished and their number augmented in infinitum: that rectangle becomes less than any given difference D, so the inscribed, circumscribed and curvilinear figures become ultimately equal."}]}
+
+ :newton/prop-1
+ {:source "Motte 1729, vol. I, pp. 57-58"
+  :statement "The areas, which revolving bodies describe by radii drawn to an immoveable centre of force, do lie in the same immovable planes, and are proportional to the times in which they are described."
+  :steps
+  [{:stage :first-moment :why "Law I"
+    :claim "For suppose the time to be divided into equal parts, and in the first part of that time, let the body by its innate force describe the right line AB."}
+   {:stage :unhindered :why "Law I"
+    :claim "In the second part of that time, the same would, (by law 1.) if not hinder'd, proceed directly to c, along the line Bc equal to AB; so that by the radii AS, BS, cS drawn to the centre, the equal areas ASB, BSc, would be described."}
+   {:stage :impulse :why "Cor. 1 of the laws"
+    :claim "But when the body is arrived at B, suppose that a centripetal force act at once with a great impulse, and turning aside the body from the right line Bc, compells it afterwards to continue its motion along the right line BC. Draw cC parallel to BS meeting BC in C."}
+   {:stage :parallels :why "Euclid I.37, I.38"
+    :claim "Joyn SC, and, because SB and Cc are parallel, the triangle SBC will be equal to the triangle SBc, and therefore also to the triangle SAB."}
+   {:stage :polygon :why "the like argument"
+    :claim "By the like argument, if the centripetal force acts successively in C, D, E, &c. and makes the body in each single particle of time, to describe the right lines CD, DE, EF, &c. they will all lye in the same plane; and the triangle SCD will be equal to the triangle SBC, and SDE to SCD, and SEF to SDE."}
+   {:stage :limit :why "Lemmas I-V: the ultimate ratios"
+    :claim "Now let the number of those triangles be augmented, and their breadth dimnished in infinitum; and (by cor. 4. lem. 5.) their ultimate perimeter ADF will be a curve line: and therefore the centripetal force, by which the body is perpetually drawn back from the tangent of this curve, will act continually; and any describ'd areas SADS, SAFS, which are always proportional to the times of description, will, in this case also, be proportional to those times. Q. E. D."}]}
+
+ :newton/prop-11
+ {:source "Motte 1729, vol. I, pp. 80-81"
+  :statement "If a body revolves in a ellipsis: it is required to find the law of centripetal force tending to the focus of the ellipsis."
+  :steps
+  [{:stage :ellipse :why "set-up"
+    :claim "Let S be the focus of the ellipsis. Draw SP cutting the diameter DK of the ellipsis in E, and the ordinate Qv in x; and compleat the parallelogram QxPR."}
+   {:stage :focus :why "the foci"
+    :claim "EP is equal to the greater semi-axis AC: drawing HI from the other focus H parallel to EC, EP is the half sum of PS and PH, and PS + PH is the whole axis 2AC (the string property of the ellipse, Apollonius III.52)."}
+   {:stage :qr :why "Prop. VI, Cor. 1"
+    :claim "Draw QT perpendicular to SP, and let L be the principal latus rectum. Compounding the ratios of the conic, L x QR is to QT^2 as 2PC to Gv; and when the points Q and P coincide, 2PC and Gv are equal, so L x QR = QT^2."}
+   {:stage :force :why "Prop. VI, Cor. 5"
+    :claim "And therefore the centripetal force is reciprocally as L x SP^2, that is, reciprocally in the duplicate ratio of the distance SP. Q. E. I."}
+   {:stage :around :why "the orbit equation"
+    :claim "The same in the language of the calculus that followed: with u = 1/SP, a body sweeping equal areas about S is pulled toward S by h^2 u^2 (u'' + u), and on the ellipse u'' + u = 2/L is constant."}]}}

@@ -1,0 +1,23 @@
+;; Lagrange, Theorie des fonctions analytiques (Paris, an V = 1797), art. 52,
+;; p. 49; archive.org theoriedesfoncti00lagr. English renderings are this
+;; series' own. Steps for alexandria.lagrange.functions-scenes.
+{:lagrange/mean-value
+ {:source "Theorie des fonctions analytiques, 1797, art. 52-53, pp. 49-50"
+  :original "D'ou resulte enfin ce theoreme nouveau et remarquable par sa simplicite et sa generalite, qu'en designant par u une quantite inconnue, mais renfermee entre les limites 0 et x, on peut developper successivement toute fonction de x et d'autres quantites quelconques suivant les puissances de x"
+  :english "Hence finally this new theorem, remarkable for its simplicity and generality: denoting by u an unknown quantity, but enclosed between the limits 0 and x, one can develop successively any function of x and of any other quantities along the powers of x"
+  :english-by "this series"
+  :limits-original "la plus grande et la plus petite valeur de ce terme, relativement a toutes les valeurs de j depuis 0 jusqu'a i, seront les limites de la valeur du reste de la serie continuee a l'infini."
+  :limits-english "the greatest and the least value of this term, over all values of j from 0 to i, will be the limits of the value of the rest of the series continued to infinity."
+  :steps
+  [{:stage :secant :why "the first line, f(x) = f(0) + x f'(u)"
+    :claim "Join two points of a curve by a chord. Its slope is (f(b) - f(a)) / (b - a)."}
+   {:stage :parallel :why "Lagrange's u"
+    :claim "Slide a tangent along the curve: somewhere between a and b, at u, it is parallel to the chord, f'(u) = (f(b) - f(a)) / (b - a)."}
+   {:stage :cube :why "Emmy, proved"
+    :claim "For f = x³ the point is u = sqrt((a² + ab + b²)/3). Emmy checks f'(u) equals the chord's slope for every a, b, and that u² - a² and b² - u² are (b - a) times positives: u lies between a and b."}
+   {:stage :remainder :why "the next lines"
+    :claim "Repeat with f': f(x) = f(0) + x f'(0) + x²/2 f''(u), and so on. The rest of the series after n terms is xⁿ/n! times the n-th derivative at some u between 0 and x."}
+   {:stage :bounds :why "numeric"
+    :claim "So the largest and least values of that last term bound the error. For exp, Emmy finds the u of each remainder and it lies strictly between 0 and x."}
+   {:stage :cauchy :why "forward, 1823"
+    :claim "Lagrange wanted calculus without limits, from power series alone. Cauchy, in his Resume of 1823, proved the same theorem from limits and continuity, and that is the proof textbooks give."}]}}

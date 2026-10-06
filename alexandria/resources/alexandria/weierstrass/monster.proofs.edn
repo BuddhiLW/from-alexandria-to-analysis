@@ -1,0 +1,41 @@
+;; Weierstrass, told step by step: uniform convergence and the M-test (Zur
+;; Functionenlehre 1880, Werke II p. 202, the definition he had taught in
+;; Berlin since the 1860s) and the function without a derivative (address
+;; of 18 July 1872, Werke II pp. 71-74). Each step is a claim, its reason,
+;; and the :stage a medium shows (alexandria.weierstrass.monster-scenes).
+;; German quotations from the Werke; English is this series' own rendering.
+{:weierstrass/uniform
+ {:source "Weierstrass, Werke II, p. 202; Cauchy, Cours d'analyse (1821), I.6.1; Abel, Crelle 1 (1826)"
+  :steps
+  [{:stage :cauchy :why "Cauchy 1821, the sum theorem"
+    :claim "Cauchy's Cours d'analyse states: a convergent series of continuous functions has a continuous sum. His proof lets the remainder be small at each x, one x at a time."}
+   {:stage :abel :why "Abel 1826, the exception"
+    :claim "Abel's series sin x - sin 2x/2 + sin 3x/3 - ... converges at every x, to x/2 on (-pi, pi) and to 0 at pi. Every partial sum is continuous; the sum jumps at pi."}
+   {:stage :tube-abel :why "not uniform"
+    :claim "Draw a tube of half-width epsilon around x/2. However late the partial sum, near pi it overshoots and leaves the tube: no single N works for every x at once."}
+   {:stage :tube-geometric :why "uniform"
+    :claim "For 1 + x + x^2 + ... on [-1/2, 1/2] one N works for all x: from the N-th on, every partial sum lies inside the tube along its whole length. This is gleichmaessige Convergenz."}
+   {:stage :m-test :why "the M-test"
+    :claim "If |f_nu(x)| <= g_nu at every x of B and the numbers g_nu have a finite sum, the series converges uniformly in B: the tail after N is at most g_N + g_{N+1} + ..., the same bound for every x. Here g_nu = 2^-nu."}
+   {:stage :repaired :why "the repaired theorem"
+    :claim "A uniformly convergent series of continuous functions has a continuous sum: the epsilon/3 argument goes through because N no longer depends on x. Abel's series fails the hypothesis, not the theorem."}]}
+
+ :weierstrass/monster
+ {:source "Weierstrass, Werke II, pp. 71-74"
+  :riemann-de "Erst Riemann hat, wie ich von einigen seiner Zuh\u00f6rer erfahren, mit Bestimmtheit ausgesprochen (i. J. 1861, oder vielleicht auch schon fr\u00fcher), dass jene Annahme unzul\u00e4ssig sei und z. B. bei der durch die unendliche Reihe \u03a3 sin(n\u00b2x)/n\u00b2 dargestellten Function sich nicht bewahrheite."
+  :riemann "Only Riemann, as I have learned from some of his students, stated definitely (in 1861, or perhaps even earlier) that the assumption is inadmissible, and that it does not hold, for example, for the function represented by the infinite series sum sin(n^2 x)/n^2."
+  :steps
+  [{:stage :terms :why "the series"
+    :claim "f(x) = sum b^n cos(a^n x pi), a odd, 0 < b < 1. The n-th term is at most b^n: by the M-test the series converges uniformly and f is continuous."}
+   {:stage :zoom :why "no tangent at any scale"
+    :claim "Magnify the graph about any point. A differentiable curve straightens into its tangent; this one shows the same jagged shape at every magnification, because each term adds a wiggle a times finer and only b times lower."}
+   {:stage :points :why "the construction"
+    :claim "Fix x_0 and m. Let alpha_m be the whole number nearest a^m x_0, and put x' = (alpha_m - 1)/a^m, x'' = (alpha_m + 1)/a^m. Then x' < x_0 < x'', both within 3/(2 a^m) of x_0, and they close in on x_0 as m grows."}
+   {:stage :head :why "the first m terms"
+    :claim "With cos A - cos B = -2 sin((A+B)/2) sin((A-B)/2) and |sin u| <= |u|, the first m terms change the quotient by less than pi (ab)^m / (ab - 1)."}
+   {:stage :tail :why "a odd"
+    :claim "Since a is odd, cos(a^(m+n) x' pi) = -(-1)^alpha_m for every later term: the tail has one sign, and its first term alone gives at least (2/3)(ab)^m."}
+   {:stage :quotients :why "ab > 1 + 3 pi / 2"
+    :claim "So both difference quotients are at least (ab)^m (2/3 - pi/(ab - 1)) in size, with opposite signs. When ab > 1 + 3 pi/2 the bracket is positive, and both grow without bound as m grows."}
+   {:stage :no-derivative :why "conclusion"
+    :claim "Hence f has at x_0 neither a determinate finite nor a determinate infinite derivative; and x_0 was any point."}]}}

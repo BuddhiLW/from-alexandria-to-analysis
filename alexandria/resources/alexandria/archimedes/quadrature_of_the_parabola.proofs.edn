@@ -1,0 +1,40 @@
+;; Archimedes, Quadrature of the Parabola, Propositions 21-24.
+;; T. L. Heath, The Works of Archimedes (Cambridge, 1897), pp. 246-252
+;; (archive.org worksofarchimede00arch). Statements quoted from Heath;
+;; steps are Heath's argument, shortened. :stage n is the stage the
+;; player shows (alexandria.archimedes.quadrature-scenes).
+{:archimedes/parabola-21
+ {:statement "If a triangle be inscribed in a parabolic segment in the manner described, the remaining segments will together be less than half the whole segment."
+  :source "Heath 1897, p. 246"
+  :steps
+  [{:claim "Let the triangle ABV be inscribed with the same base AB and the same vertex V as the segment." :why "Prop. 18" :stage [:stage 0]}
+   {:claim "The triangle is half of the parallelogram on AB with sides through A and B parallel to the axis, and the segment lies inside that parallelogram." :why "construction" :stage [:stage 0]}
+   {:claim "So the triangle is more than half the segment, and the two segments left on AV and VB are together less than half." :why "C.N. 5" :stage [:stage 1]}]}
+
+ :archimedes/parabola-22
+ {:statement "If there be a series of areas A, B, C, D, ... each of which is four times the next in order, and if the largest, A, be equal to the triangle ABV inscribed in a parabolic segment ABV and having the same base with it and equal height, then (A + B + C + D + ...) < (area of segment ABV)."
+  :source "Heath 1897, pp. 249-250"
+  :steps
+  [{:claim "Inscribe in each remaining segment its own triangle: the two on AV and VB are together one fourth of ABV." :why "Prop. 21" :stage [:stage 1]}
+   {:claim "Do the same in the four segments left: their triangles are one fourth of the two before." :why "Prop. 21" :stage [:stage 2]}
+   {:claim "Every polygon so inscribed is the sum A + B + C + ... and lies inside the segment, so the sum is less than the segment." :why "C.N. 5" :stage [:stage 3]}]}
+
+ :archimedes/parabola-23
+ {:statement "Given a series of areas A, B, C, D, ... Z, of which A is the greatest, and each is equal to four times the next in order, then A + B + C + ... + Z + (1/3)Z = (4/3)A."
+  :source "Heath 1897, pp. 250-251"
+  :steps
+  [{:claim "Take b = B/3, c = C/3, and so on; then b + B = A/3, c + C = B/3, and so on, since each area is four times the next." :why "construction" :stage [:sum 0]}
+   {:claim "Adding, (B + C + ... + Z) + (b + c + ... + z) = (1/3)(A + B + ... + Y)." :why "C.N. 2" :stage [:sum 1]}
+   {:claim "But b + c + ... + y = (1/3)(B + C + ... + Y); taking these away leaves B + C + ... + Z + z = (1/3)A." :why "C.N. 3" :stage [:sum 2]}
+   {:claim "Adding A to both sides, A + B + ... + Z + (1/3)Z = (4/3)A." :why "C.N. 2" :stage [:sum 3]}]}
+
+ :archimedes/parabola-24
+ {:statement "Every segment bounded by a parabola and a chord Qq is equal to four-thirds of the triangle which has the same base as the segment and equal height."
+  :source "Heath 1897, pp. 251-252"
+  :steps
+  [{:claim "Let K be four thirds of the triangle ABV. Suppose first the segment is greater than K." :why "reductio" :stage [:stage 2]}
+   {:claim "Inscribe triangles stage after stage until what is left of the segment is less than the excess of the segment over K." :why "Prop. 20" :stage [:stage 4]}
+   {:claim "Then the inscribed polygon is greater than K; but by Prop. 23 it is less than K, which is impossible." :why "Prop. 23" :stage [:stage 4]}
+   {:claim "Suppose next the segment is less than K. Go on until the last area added is less than the excess of K over the segment." :why "Def. 4 of Book V" :stage [:stage 5]}
+   {:claim "By Prop. 23 the polygon then exceeds the segment, though it lies inside it, which is impossible." :why "Prop. 23, C.N. 5" :stage [:stage 5]}
+   {:claim "Since the segment is neither greater nor less than K, it is equal to K, four thirds of the triangle." :why "double reductio" :stage [:stage 6]}]}}

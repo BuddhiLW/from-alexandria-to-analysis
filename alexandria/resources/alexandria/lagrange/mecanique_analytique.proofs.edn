@@ -1,0 +1,47 @@
+;; Lagrange, Mechanique analitique (Paris, chez la Veuve Desaint, 1788),
+;; archive.org mecaniqueanalyti00jlla. Quotations verbatim in modern spelling
+;; (long s as s); English renderings are this series' own.
+;; Each step: claim, reason, :stage for alexandria.lagrange.mechanics-scenes.
+{:preface
+ {:source "Mechanique analitique, 1788, Avertissement, pp. v-vi"
+  :original "On ne trouvera point de Figures dans cet Ouvrage. Les methodes que j'y expose ne demandent ni constructions, ni raisonnemens geometriques ou mechaniques, mais seulement des operations algebriques, assujetties a une marche reguliere & uniforme. Ceux qui aiment l'Analyse, verront avec plaisir la Mechanique en devenir une nouvelle branche, & me sauront gre d'en avoir etendu ainsi le domaine."
+  :english "One will find no figures in this work. The methods I set out in it require neither constructions nor geometric or mechanical reasoning, but only algebraic operations, subject to a regular and uniform course. Those who love Analysis will see with pleasure Mechanics become a new branch of it, and will be grateful to me for having thus extended its domain."
+  :english-by "this series"
+  :plan-original "Je me suis propose de reduire la theorie de cette Science, & l'art de resoudre les problemes qui s'y rapportent, a des formules generales, dont le simple developpement donne toutes les equations necessaires pour la solution de chaque probleme."
+  :plan-english "I have set myself to reduce the theory of this science, and the art of solving the problems that belong to it, to general formulas whose mere development gives all the equations needed for the solution of each problem."}
+
+ :lagrange/virtual-velocities
+ {:source "Mechanique analitique, 1788, Premiere partie, Sect. I, pp. 10-11"
+  :steps
+  [{:stage :statics :why "Johann Bernoulli to Varignon, 1717"
+    :claim "In equilibrium, give the system any small motion compatible with its links. The work of all the powers, each times the small path of its point along its own direction, sums to zero."}
+   {:stage :dalembert :why "d'Alembert, 1743"
+    :claim "In motion, add to each force the reversed mass times acceleration, the force 'lost'. The system is then in equilibrium, so the virtual work of F - m a vanishes."}
+   {:stage :coordinates :why "Lagrange's step"
+    :claim "Express every position through independent coordinates q (for the double pendulum, the two angles). A virtual motion is any small change δq; dr/dq carries it to the points."}
+   {:stage :lagrange-form :why "Emmy, proved"
+    :claim "Emmy checks, for the double pendulum, that the virtual work of the lost forces along each δq is minus d/dt ∂L/∂q' + ∂L/∂q with L = T - V. Lagrange's equations are the principle of virtual velocities in coordinates."}]}
+
+ :lagrange/equations-of-motion
+ {:source "Mechanique analitique, 1788, Seconde partie"
+  :steps
+  [{:stage :pendulum :why "Emmy's L-pendulum"
+    :claim "The pendulum: one coordinate θ, L = m l² θ'²/2 + m g l cos θ. Emmy's Lagrange-equations give m l² (θ'' + (g/l) sin θ) = 0."}
+   {:stage :portrait :why "energy, proved; curves, integrated"
+    :claim "The energy m l² θ'²/2 - m g l cos θ is constant along the motion (Emmy, proved), so each motion is a level curve in the plane of θ and θ': closed ovals for swings, open waves for full turns, the separatrix between."}
+   {:stage :double :why "Emmy's F->C"
+    :claim "The double pendulum: two angles. Emmy pulls the Lagrangian of two free bobs back through Lagrange's coordinates and writes the two equations; no figure was needed to set them up."}
+   {:stage :double-run :why "numeric"
+    :claim "Emmy integrates them. The angles wander without repeating, while the energy stays constant to within 1e-5 of its value over the run."}]}
+
+ :lagrange/kepler
+ {:source "Mechanique analitique, 1788, Seconde partie"
+  :steps
+  [{:stage :lagrangian :why "the inverse-square law"
+    :claim "A body of mass m about a fixed centre of attraction GM: in polar coordinates L = m (r'² + r² φ'²)/2 + GM m / r (Emmy's L-Kepler-polar)."}
+   {:stage :cyclic :why "Emmy, proved"
+    :claim "φ does not appear in L: ∂L/∂φ = 0. So the φ-equation is d/dt (m r² φ') = 0."}
+   {:stage :areas :why "Kepler's second law"
+    :claim "m r² φ' is constant, and r² φ'/2 is the rate at which the radius sweeps area: equal areas in equal times, Kepler's 1609 law, Newton's Principia I.1 of 1687, here one line of algebra."}
+   {:stage :conic :why "Emmy, proved"
+    :claim "With h = r² φ', every conic r = p / (1 + e cos φ), p = h²/GM, satisfies both equations, for every eccentricity e: circle, ellipse, parabola, hyperbola."}]}}

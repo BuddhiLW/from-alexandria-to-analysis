@@ -1,0 +1,45 @@
+;; The doubling of the cube (the Delian problem): the ancient solutions as
+;; Eutocius collects them (commentary on Archimedes, Sphere and Cylinder
+;; II.1; Heiberg, Archimedis opera omnia III, Teubner 1881, corpus
+;; 02-archimedes-works/text/heiberg-opera-v3-1881-eutocius.txt), and
+;; Wantzel's impossibility proof (J. math. pures appl. 2, 1837, corpus
+;; 24-wantzel-1837). Statements quote the original short, then Heath's
+;; English (Apollonius of Perga, 1896) or the series' own rendering, marked.
+;; The claims are Emmy identities in alexandria.delian.duplication; the
+;; steps are duplication.proofs.edn.
+{:tradition {:id :delian/duplication
+             :author "Eutocius of Ascalon (collecting Hippocrates, Archytas, Menaechmus, Eratosthenes, Nicomedes, Diocles)"
+             :work "Commentary on Archimedes, Sphere and Cylinder II.1: the two mean proportionals"
+             :date "c. 500 AD (the solutions c. 430-180 BC)"
+             :source "Heiberg, Archimedis opera omnia III (1881), pp. 66-127; Heath, Apollonius of Perga (1896), pp. xvii-xxiii"}
+ :propositions
+ [{:id :delian/hippocrates
+   :title "Hippocrates' reduction (Eratosthenes' letter)"
+   :statement "πρῶτος Ἱπποκράτης ὁ Χῖος ἐπενόησεν, ὅτι, ἐὰν εὑρεθῇ δύο εὐθειῶν γραμμῶν, ὧν ἡ μείζων τῆς ἐλάσσονός ἐστι διπλασία, δύο μέσας ἀνάλογον λαβεῖν ἐν συνεχεῖ ἀναλογίᾳ, διπλασιασθήσεται ὁ κύβος. [Heath: Hippocrates of Chios was the first to observe that, if between two straight lines of which the greater is double of the less it were discovered how to find two mean proportionals in continued proportion, the cube would be doubled.]"
+   :source "Heiberg III (1881) p. 104; Heath 1896, p. xviii"}
+  {:id :delian/menaechmus
+   :title "Menaechmus: the parabola and the hyperbola"
+   :statement "τὸ ἄρα ὑπὸ δοθείσης τῆς Α καὶ τῆς ΔΖ ἴσον ἐστὶ τῷ ἀπὸ τῆς ΖΘ. [series: the rectangle under the given A and DZ equals the square on ZTheta, so Theta is on a parabola; and on a hyperbola, since the rectangle KTheta . ThetaZ is given.]"
+   :source "Heiberg III (1881) p. 92; Heath 1896, pp. xix-xxi"}
+  {:id :delian/archytas
+   :title "Archytas: the cone, the cylinder and the torus"
+   :statement "Ἡ Ἀρχύτου εὕρησις, ὡς Εὔδημος ἱστορεῖ. [Heath: the solution determines a certain point as the intersection of three surfaces of revolution, a right cone, a right cylinder, and the surface formed by causing a semicircle to revolve about the apex of the cone.]"
+   :source "Heiberg III (1881) p. 98; Heath 1896, p. xxii"}
+  {:id :delian/mesolabe
+   :title "Eratosthenes: the mesolabe"
+   :statement "μηδὲ σύ γ᾽ Ἀρχύτεω δυσμήχανα ἔργα κυλίνδρων μηδὲ Μενεχμείους κωνοτομεῖν τριάδας δίζηαι. [Heath: no resort to Archytas' unwieldy contrivances of cylinders or to cutting the cone in the triads of Menaechmus.]"
+   :source "Heiberg III (1881) p. 112; Heath 1896, p. xviii"}
+  {:id :delian/conchoid
+   :title "Nicomedes: the conchoid"
+   :statement "Ὡς Νικομήδης ἐν τῷ περὶ κογχοειδῶν γραμμῶν. [series: as Nicomedes in his book On conchoid lines: the curve inserts between a ruler and a line a segment of given length pointing at the pole.]"
+   :source "Heiberg III (1881) p. 114"}
+  {:id :delian/cissoid
+   :title "Diocles: the cissoid"
+   :statement "Ὡς Διοκλῆς ἐν τῷ περὶ πυρίων. [series: as Diocles in his book On burning mirrors: the curve through the crossings gives the two means.]"
+   :source "Heiberg III (1881) p. 78"}
+  {:id :delian/wantzel
+   :title "Wantzel 1837: impossible with ruler and compass"
+   :author "Pierre-Laurent Wantzel"
+   :work "Recherches sur les moyens de reconnaître si un problème de géométrie peut se résoudre avec la règle et le compas"
+   :statement "Ainsi la duplication du cube, qui dépend de l'équation x^3 - 2a^3 = 0 toujours irréductible, ne peut être obtenue par la Géométrie élémentaire. [series: so the doubling of the cube, which depends on the equation x^3 - 2a^3 = 0, always irreducible, cannot be obtained by elementary geometry.]"
+   :source "J. math. pures appl. 2 (1837), p. 369"}]}

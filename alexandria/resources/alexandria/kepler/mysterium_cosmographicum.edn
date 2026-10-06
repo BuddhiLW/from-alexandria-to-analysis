@@ -1,0 +1,33 @@
+;; Kepler, Mysterium Cosmographicum (Tuebingen, 1596): the five regular
+;; solids between the six planetary spheres. The book has no public-domain
+;; English translation; statements follow J. L. E. Dreyer, History of the
+;; Planetary Systems from Thales to Kepler (Cambridge, 1906), ch. XV,
+;; pp. 374-376 (archive.org historyofplaneta0000unse), which reports Kepler's
+;; order and his comparison table (Myst. Cosmogr. cap. XIV, Opera I p. 151).
+;; Claims speak the vocabulary: (radius cube-insphere) is realized by
+;; alexandria.kepler.mysterium.
+{:tradition {:id :kepler/mysterium-cosmographicum
+             :author "Johannes Kepler"
+             :work "Mysterium Cosmographicum"
+             :date "1596"
+             :source "J. L. E. Dreyer, History of the Planetary Systems from Thales to Kepler, 1906"}
+ :propositions
+ [{:id :kepler/mysterium-order
+   :title "The order of the five solids between the six spheres"
+   :statement "Saturn, Cube, Jupiter, Tetrahedron, Mars, Dodecahedron, Earth, Icosahedron, Venus, Octahedron, Mercury. The sphere of Saturn is circumscribed to a cube in which the sphere of Jupiter is inscribed; the latter is circumscribed to the tetrahedron, and so on."
+   :source "Dreyer 1906, pp. 374-375"
+   :claims [{:claim (= (ratio (radius tetrahedron-insphere) (radius tetrahedron-circumsphere)) 1/3)}
+            {:claim (= (square (ratio (radius cube-insphere) (radius cube-circumsphere))) 1/3)}
+            {:claim (= (square (ratio (radius octahedron-insphere) (radius octahedron-circumsphere))) 1/3)}
+            {:claim (= (square (ratio (radius dodecahedron-insphere) (radius dodecahedron-circumsphere)))
+                       (square (ratio (radius icosahedron-insphere) (radius icosahedron-circumsphere))))}]}
+  {:id :kepler/mysterium-table
+   :title "Kepler's comparison with Copernicus"
+   :statement "How far did the dimensions of the spheres, resulting from the distances and excentricities according to Copernicus, fit the dimensions of the five regular solids computed from them, so that the inner surface of a sphere coincided with the sphere circumscribed to the solid next below, and the outer surface with the inscribed sphere of the solid next above?"
+   :source "Dreyer 1906, p. 375"
+   :table [{:outer "Saturn" :inner "Jupiter" :computed 577 :copernicus 635}
+           {:outer "Jupiter" :inner "Mars" :computed 333 :copernicus 333}
+           {:outer "Mars" :inner "Earth" :computed 795 :copernicus 757}
+           {:outer "Earth" :inner "Venus" :computed 795 :copernicus 794}
+           {:outer "Venus" :inner "Mercury" :computed 577 :midsphere 707 :copernicus 723}]
+   :claims [{:claim (= (square (ratio (radius octahedron-midsphere) (radius octahedron-circumsphere))) 1/2)}]}]}

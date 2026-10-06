@@ -1,0 +1,38 @@
+;; Riemann, Habilitationsschrift (1854, printed 1868), sections 4 to 6, told
+;; step by step. Each step is a claim, its reason, and the :stage a medium
+;; shows while the step is read (alexandria.riemann.integral-scenes). German
+;; quotations are verbatim from the Werke text (EMIS, D. R. Wilkins); the
+;; English is this series' own rendering.
+{:riemann/integral
+ {:source "Riemann 1868, sections 4 and 5"
+  :preface-de "Es war n\u00f6thig, ihr einen kurzen Aufsatz \u00fcber den Begriff eines bestimmten Integrales und den Umfang seiner G\u00fcltigkeit voraufzuschicken."
+  :preface "It was necessary to put in front of it a short essay on the concept of a definite integral and the extent of its validity."
+  :steps
+  [{:stage :tags :why "section 4, the sum S"
+    :claim "Cut [a, b] at x_1 < x_2 < ... < x_{n-1}. In each piece delta_i pick a point x_{i-1} + epsilon_i delta_i, epsilon_i a proper fraction, anywhere in the piece. Add up delta_i times the value of f there: that is S."}
+   {:stage :refine :why "section 4, the definition"
+    :claim "Make every delta smaller, choosing the points anew each time. If S comes as near as we like to one fixed number A, however the delta and epsilon are chosen, A is the integral. If not, the symbol has no meaning."}
+   {:stage :upper-lower :why "the extreme choices"
+    :claim "The largest S on a given cut takes the greatest value of f in every piece, the smallest takes the least. Every tagged sum lies between these upper and lower sums."}
+   {:stage :oscillation :why "section 5, the oscillation sum"
+    :claim "Their difference is delta_1 D_1 + ... + delta_n D_n, D_i the oscillation (greatest minus least value) in the i-th piece. S converges exactly when this sum becomes infinitely small with the delta."}
+   {:stage :sigma :why "section 5, the criterion"
+    :claim "Fix sigma. The pieces where the oscillation exceeds sigma, of total length s, contribute at least sigma s: so sigma s <= Delta and s <= Delta / sigma. Riemann's condition: for every sigma the total length of those pieces can be made as small as we please. It is necessary and sufficient."}]}
+
+ :riemann/pathological
+ {:source "Riemann 1868, section 6"
+  :statement-de "Da diese Functionen noch nirgends betrachtet sind, wird es gut sein, von einem bestimmten Beispiele auszugehen."
+  :statement "Since these functions have not yet been considered anywhere, it will be well to start from a definite example."
+  :steps
+  [{:stage :bracket :why "the notation (x)"
+    :claim "(x) is the excess of x over the nearest whole number: a sawtooth between -1/2 and 1/2, jumping at every half-integer, where it is given the mean value 0."}
+   {:stage :terms :why "the series"
+    :claim "f(x) = (x)/1 + (2x)/4 + (3x)/9 + ... The n-th term jumps at the odd multiples of 1/(2n) and is at most 1/(2n^2) in size, so the series converges for every x."}
+   {:stage :jumps :why "the jumps"
+    :claim "At x = p/(2n), p odd and prime to n, the terms (kx) with k an odd multiple of n all jump together: f(x + 0) = f(x) - (1/(2n^2))(1 + 1/9 + 1/25 + ...) = f(x) - pi^2/(16 n^2), and f(x - 0) = f(x) + pi^2/(16 n^2). Everywhere else f is continuous."}
+   {:stage :dense :why "every interval"
+    :claim "Fractions with even denominator lie in every interval, however small: f is discontinuous infinitely often between any two limits."}
+   {:stage :finite-jumps :why "only finitely many large jumps"
+    :claim "A jump at p/(2n) has size pi^2/(8 n^2). Those of size at least sigma have n <= pi / sqrt(8 sigma): finitely many."}
+   {:stage :integrable :why "section 5 applied"
+    :claim "Cover the finitely many large jumps by pieces of total length as small as we please; elsewhere make the pieces so small that the oscillation stays below sigma. Riemann's condition holds: f admits integration throughout."}]}}

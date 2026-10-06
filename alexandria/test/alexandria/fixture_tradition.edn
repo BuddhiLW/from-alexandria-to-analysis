@@ -1,0 +1,11 @@
+{:tradition {:id :fixture/tradition
+             :author "Fixture Author"
+             :work "Fixture Work"
+             :source "Fixture Source"}
+ :propositions
+ [{:id :fixture/one
+   :title "Fixture proposition"
+   :statement "A small construction-shaped proposition for shelf validation."
+   :source "Fixture page 1"
+   :kind :construction
+   :params []}]}

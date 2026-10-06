@@ -1,0 +1,103 @@
+;; Galileo, Two New Sciences (1638): the proofs, step by step.
+;; H. Crew and A. de Salvio, Dialogues Concerning Two New Sciences
+;; (Macmillan, 1914), public domain; archive.org dialoguesconcern00galiuoft.
+;; :quote fields are verbatim from that translation; :claim fields are the
+;; steps told in plain words, with :stage the drawing a medium shows
+;; (alexandria.galileo.motion-scenes).
+{:galileo/third-day-1
+ {:source "Crew and de Salvio 1914, pp. 173-174 [208-209]"
+  :statement "The time in which any space is traversed by a body starting from rest and uniformly accelerated is equal to the time in which that same space would be traversed by the same body moving at a uniform speed whose value is the mean of the highest speed and the speed just before acceleration began."
+  :quote "Let us represent by the line AB the time in which the space CD is traversed by a body which starts from rest at C and is uniformly accelerated; let the final and highest value of the speed gained during the interval AB be represented by the line EB drawn at right angles to AB; draw the line AE, then all lines drawn from equidistant points on AB and parallel to BE will represent the increasing values of the speed, beginning with the instant A."
+  :quote-2 "For, what the momenta may lack in the first part of the accelerated motion (the deficiency of the momenta being represented by the parallels of the triangle AGI) is made up by the momenta represented by the parallels of the triangle IEF."
+  :steps
+  [{:stage :axes :why "set-up"
+    :claim "Let the line AB stand for the time of the fall, and EB, at right angles to it, for the greatest speed, reached at the end."}
+   {:stage :triangle :why "definition of uniform acceleration"
+    :claim "Speed grows in proportion to time, so the speed at each instant is the parallel to EB drawn from that instant up to the line AE: the speeds fill the triangle AEB."}
+   {:stage :parallels :why "the sum of all the parallels"
+    :claim "The distance covered is made of all these speeds together: it is measured by the triangle AEB, as Oresme had measured it in the 1350s."}
+   {:stage :rectangle :why "construction"
+    :claim "Bisect EB at F, draw FG parallel to BA and GA parallel to FB: the rectangle AGFB stands for a uniform motion at half the greatest speed. GF cuts AE at its middle I."}
+   {:stage :swap :why "equal triangles"
+    :claim "What the accelerated motion lacks early on, the triangle AGI, it makes up later, in the triangle IEF; the two triangles are equal, and the trapezium AIFB is common."}
+   {:stage :conclusion :why "Q. E. D."
+    :claim "So triangle AEB equals rectangle AGFB: the accelerated body and the body moving uniformly at the mean speed cover the same space in the same time."}]}
+
+ :galileo/third-day-2
+ {:source "Crew and de Salvio 1914, pp. 174-175 [209-210]"
+  :statement "The spaces described by a body falling from rest with a uniformly accelerated motion are to each other as the squares of the time-intervals employed in traversing these distances."
+  :quote "Hence the ratio of the spaces traversed is the same as the squared ratio of the time-intervals."
+  :steps
+  [{:stage :two-times :why "set-up"
+    :claim "Take two times AD and AE from the start, and the greatest speeds DO and EP reached at their ends."}
+   {:stage :two-times :why "Prop. I"
+    :claim "Each fall covers the same distance as a uniform motion at half its greatest speed, for the same time."}
+   {:stage :two-times :why "speeds as the times"
+    :claim "The speeds DO and EP are to each other as the times AD and AE."}
+   {:stage :squares :why "uniform motion, Prop. IV"
+    :claim "In uniform motion the distances are as the speeds times the times; here both ratios are the ratio of the times, so the distances are as the squares of the times."}]}
+
+ :galileo/corollary-1
+ {:source "Crew and de Salvio 1914, pp. 175-176 [210]"
+  :statement "Hence it is clear that if we take any equal intervals of time whatever, counting from the beginning of the motion, such as AD, DE, EF, FG, in which the spaces HL, LM, MN, NI are traversed, these spaces will bear to one another the same ratio as the series of odd numbers, 1, 3, 5, 7."
+  :quote "for this is the ratio of the differences of the squares of the lines [which represent time], differences which exceed one another by equal amounts, this excess being equal to the smallest line [viz. the one representing a single time-interval]: or we may say [that this is the ratio] of the differences of the squares of the natural numbers beginning with unity."
+  :steps
+  [{:stage :staircase :why "Prop. II"
+    :claim "After 1, 2, 3, 4 equal times the body has fallen 1, 4, 9, 16 units: the squares."}
+   {:stage :staircase :why "subtraction"
+    :claim "In each single time it falls the difference of two squares: 1, 3, 5, 7."}
+   {:stage :gnomons :why "the pattern, once"
+    :claim "Why the odd numbers: to turn the square of side n into the square of side n + 1 you add an L-shaped band, a gnomon, of n + n + 1 = 2n + 1 unit squares. The Pythagoreans laid out pebbles this way; Euclid's Book II names the gnomon."}
+   {:stage :algebra :why "the pattern, in symbols"
+    :claim "(n + 1)^2 - n^2 = 2n + 1, and Emmy reduces the difference to 0 for every n: the gnomons are the odd numbers, and the odd numbers summed are the squares."}]}
+
+ :galileo/inclined-plane
+ {:source "Crew and de Salvio 1914, pp. 178-179 [212-213]"
+  :quote "A piece of wooden moulding or scantling, about 12 cubits long, half a cubit wide, and three finger-breadths thick, was taken; on its edge was cut a channel a little more than one finger in breadth; having made this groove very straight, smooth, and polished, and having lined it with parchment, also as smooth and polished as possible, we rolled along it a hard, smooth, and very round bronze ball."
+  :quote-2 "we now rolled the ball only one-quarter the length of the channel; and having measured the time of its descent, we found it precisely one-half of the former."
+  :quote-3 "For the measurement of time, we employed a large vessel of water placed in an elevated position; to the bottom of this vessel was soldered a pipe of small diameter giving a thin jet of water, which we collected in a small glass during the time of each descent, whether for the whole length of the channel or for a part of its length; the water thus collected was weighed, after each descent, on a very accurate balance; the differences and ratios of these weights gave us the differences and ratios of the times"
+  :steps
+  [{:stage :groove :why "the apparatus"
+    :claim "A groove about 12 cubits long, lined with parchment, one end lifted one or two cubits; a hard bronze ball rolls down it. The slope slows the fall enough to time it."}
+   {:stage :clock :why "the water clock"
+    :claim "While the ball rolls, a thin jet of water runs from a raised vessel into a glass; the water is weighed, and the weights are as the times."}
+   {:stage :roll :why "the measurement"
+    :claim "Mark where the ball is at the end of each equal time: the marks fall at 1, 4, 9, 16 units from the start, and the steps between them are 1, 3, 5, 7."}
+   {:stage :quarter :why "the check Galileo reports"
+    :claim "A quarter of the groove takes exactly half the time of the whole; repeated a full hundred times, at every slope, the spaces were as the squares of the times."}]}
+
+ :galileo/fourth-day-1
+ {:source "Crew and de Salvio 1914, pp. 244-250 [268-273]"
+  :statement "A projectile which is carried by a uniform horizontal motion compounded with a naturally accelerated vertical motion describes a path which is a semi-parabola."
+  :quote "Here, Salviati, it will be necessary to stop a little while for my sake and, I believe, also for the benefit of Simplicio; for it so happens that I have not gone very far in my study of Apollonius and am merely aware of the fact that he treats of the parabola and other conic sections"
+  :quote-2 "The square of hl is to that of fg as the line lb is to bg; and the square of fg is to that of io as gb is to bo; therefore the points i, f, h, lie on one and the same parabola."
+  :steps
+  [{:stage :ledge :why "set-up"
+    :claim "A body moves uniformly along a raised horizontal plane ab and leaves it at b. From then on it keeps its uniform motion sideways and also falls, naturally accelerated, along the vertical bn."}
+   {:stage :times :why "uniform motion"
+    :claim "Lay off bc, cd, de equal along the horizontal: equal times, since the sideways motion is uniform."}
+   {:stage :falls :why "Third Day, Prop. II"
+    :claim "Below c, d, e lay off the falls ci, df, eh in the ratio 1 : 4 : 9, the squares of the times."}
+   {:stage :trace :why "composition of motions"
+    :claim "At the end of each time the body is at i, f, h: as far across as the time, as far down as the square of the time."}
+   {:stage :symptom :why "Apollonius, Conics I.11"
+    :claim "Draw io, fg, hl back to the vertical through b. The square of hl is to the square of fg as lb is to bg: the square of each ordinate is in a fixed ratio to its abscissa. That is the symptom of the parabola Apollonius proves in Conics I.11; Galileo proves it again from the cone."}
+   {:stage :conclusion :why "converse of the symptom"
+    :claim "A point off the parabola would break the ratio; so every point i, f, h, and every point at any time, lies on one parabola. Q. E. D."}]}
+
+ :galileo/fourth-day-7
+ {:source "Crew and de Salvio 1914, pp. 273-276 [294-296]"
+  :statement "If projectiles describe semi-parabolas of the same amplitude, the momentum required to describe that one whose amplitude is double its altitude is less than that required for any other."
+  :quote "From which it follows that if projectiles are fired from the terminal point d, all having the same speed, but each having a different elevation, the maximum range, i. e., amplitude of the semi-parabola or of the entire parabola, will be obtained when the elevation is 45°: the other shots, fired at angles greater or less will have a shorter range."
+  :quote-2 "From accounts given by gunners, I was already aware of the fact that in the use of cannon and mortars, the maximum range, that is the one in which the shot goes farthest, is obtained when the elevation is 45° or, as they say, at the sixth point of the quadrant; but to understand why this happens far outweighs the mere information obtained by the testimony of others or even by repeated experiment."
+  :steps
+  [{:stage :fan :why "set-up"
+    :claim "Fire shots from one point with one speed v at different elevations. Split v into a sideways part c and an upward part w, with c^2 + w^2 = v^2."}
+   {:stage :fan :why "Fourth Day, Prop. I"
+    :claim "Each shot rises and falls on a parabola. It is in the air for the time 2w/g, and it travels sideways c in each unit of time: the range is 2cw/g."}
+   {:stage :square :why "Euclid II.5"
+    :claim "Galileo leans on Euclid II: when a line is cut into equal and unequal parts, the rectangle on the unequal parts is less than the square on the half. So 2cw = v^2 - (c - w)^2, greatest when c = w."}
+   {:stage :best :why "the corollary"
+    :claim "c = w is the elevation of 45 degrees; there the amplitude is double the altitude, as Proposition VII says, and the range is v^2/g."}
+   {:stage :pairs :why "Prop. VIII"
+    :claim "Elevations equally above and below 45 degrees swap c and w, so they reach the same range: the gunners' 7 and 5 points of the quadrant land together."}]}}

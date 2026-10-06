@@ -1,0 +1,88 @@
+;; The calculus of variations and analytical mechanics, 1696-1797: from
+;; Johann Bernoulli's challenge to Lagrange's Theorie des fonctions
+;; analytiques. One shelf; each proposition names its own author and work.
+;;
+;; Statements are quoted in the original language (long s printed as s) with
+;; an English rendering made for this series, marked :english. The claims are
+;; graded in Emmy by alexandria.lagrange.variations, .mechanics and
+;; .functions; the steps are in the *.proofs.edn files beside this one and in
+;; ../bernoulli/brachistochrone.proofs.edn.
+{:tradition {:id :lagrange/variations-and-mechanics
+             :author "Joseph-Louis Lagrange"
+             :work "Mecanique analitique"
+             :date "1696-1797"
+             :source "Lagrange, Mechanique analitique, Paris 1788 (archive.org mecaniqueanalyti00jlla)"}
+ :propositions
+ [{:id :bernoulli/brachistochrone
+   :author "Johann Bernoulli"
+   :work "Problema novum ad cujus solutionem mathematici invitantur, Acta Eruditorum"
+   :date "June 1696"
+   :title "The brachistochrone"
+   :original "Datis in plano verticali duobus punctis A et B assignare mobili M viam AMB, per quam gravitate sua descendens et moveri incipiens a puncto A, brevissimo tempore perveniat ad alterum punctum B."
+   :statement "Given two points A and B in a vertical plane, to assign to a moving body M the path AMB by which, descending under its own weight and starting from the point A, it reaches the other point B in the shortest time. (English rendering: this series.)"
+   :source "Acta Eruditorum, June 1696, p. 269"
+   :graded-by alexandria.lagrange.variations
+   :answer "the cycloid"}
+
+  {:id :huygens/tautochrone
+   :author "Christiaan Huygens"
+   :work "Horologium oscillatorium"
+   :date "1673"
+   :title "The tautochrone: the same cycloid"
+   :statement "On an inverted cycloid a body falling from rest reaches the lowest point in the same time from whatever height it starts. (Statement of Part II, Prop. 25, in this series' words.)"
+   :source "Huygens, Horologium oscillatorium, Paris 1673, Part II, Prop. 25"
+   :graded-by alexandria.lagrange.variations}
+
+  {:id :euler/methodus-1744
+   :author "Leonhard Euler"
+   :work "Methodus inveniendi lineas curvas maximi minimive proprietate gaudentes (E65)"
+   :date "1744"
+   :title "The rule for curves of maximum or minimum"
+   :original "Cum enim mundi universi fabrica sit perfectissima atque a Creatore sapientissimo absoluta, nihil omnino in mundo contingit, in quo non maximi minimive ratio quaepiam eluceat."
+   :statement "Since the fabric of the whole world is most perfect and the work of a most wise Creator, nothing at all happens in the world in which some rule of maximum or minimum does not shine forth. (Additamentum I, English rendering: this series.) For a formula of the integral of Z(x, y, p), p = dy/dx, the curve sought satisfies N - dP/dx = 0, where dZ = M dx + N dy + P dp."
+   :source "Euler, Methodus inveniendi, Lausanne and Geneva 1744, ch. II and Additamentum I, p. 245"
+   :graded-by alexandria.lagrange.variations}
+
+  {:id :lagrange/delta-1755
+   :author "Joseph-Louis Lagrange"
+   :work "Letter to Euler, Turin, 12 August 1755"
+   :date "1755"
+   :title "The delta: varying the whole curve at once"
+   :original "Differentiale ipsius y quatenus hic differentiatur, x manente, pro habendo maximo, minimove formulae datae valore, ad distinctionem aliarum ejusdem y differentiarum, quae in illa jam ingrediuntur, denotabo per δ; sic et δdy est differentia ipsius dy, dum y crescunt quantitate δy."
+   :statement "The differential of y, insofar as it is differentiated here, x staying fixed, in order to obtain the maximum or minimum value of the given formula, I shall denote by δ, to distinguish it from the other differentials of the same y which already enter it; so δdy is the difference of dy while the y grow by the quantity δy. (English rendering: this series.)"
+   :source "Oeuvres de Lagrange, t. XIV (Paris 1892), pp. 138-144"
+   :graded-by alexandria.lagrange.variations}
+
+  {:id :lagrange/virtual-velocities
+   :work "Mechanique analitique, Premiere partie, Section I"
+   :date "1788"
+   :title "The principle of virtual velocities"
+   :original "Si un systeme quelconque de tant de corps ou points que l'on veut, tires chacun par des puissances quelconques, est en equilibre, & qu'on donne a ce systeme un petit mouvement quelconque, en vertu duquel chaque point parcoure un espace infiniment petit qui exprimera sa vitesse virtuelle; la somme des puissances, multipliees chacune par l'espace que le point ou elle est appliquee parcourt suivant la direction de cette meme puissance, sera toujours egale a zero, en regardant comme positifs les petits espaces parcourus dans le sens des puissances, & comme negatifs les espaces parcourus dans un sens oppose."
+   :statement "If any system of as many bodies or points as one likes, each pulled by any powers, is in equilibrium, and one gives this system any small motion, by which each point runs through an infinitely small space that expresses its virtual velocity, then the sum of the powers, each multiplied by the space that its point runs through along the direction of that power, is always equal to zero, counting as positive the small spaces run through in the sense of the powers and as negative those run through in the opposite sense. (English rendering: this series.)"
+   :source "Lagrange, Mechanique analitique, Paris 1788, pp. 10-11"
+   :graded-by alexandria.lagrange.mechanics}
+
+  {:id :lagrange/equations-of-motion
+   :work "Mechanique analitique, Seconde partie"
+   :date "1788"
+   :title "Lagrange's equations: the pendulum and the double pendulum"
+   :statement "For a system whose position is fixed by coordinates q, with kinetic energy T and potential V, each coordinate obeys d/dt (dT/dq') - dT/dq + dV/dq = 0: the virtual work of the forces lost (d'Alembert), written once in the coordinates. (Statement in this series' words and modern notation.)"
+   :source "Lagrange, Mechanique analitique, Paris 1788, Seconde partie, Sect. IV"
+   :graded-by alexandria.lagrange.mechanics}
+
+  {:id :lagrange/kepler
+   :work "Mechanique analitique, Seconde partie"
+   :date "1788"
+   :title "The Kepler problem: equal areas, and the orbit is a conic"
+   :statement "A body attracted to a fixed centre by a force inversely as the square of the distance sweeps equal areas in equal times, and describes a conic section with the centre at a focus. (Statement in this series' words.)"
+   :source "Lagrange, Mechanique analitique, Paris 1788, Seconde partie (motion of a body attracted to fixed centres)"
+   :graded-by alexandria.lagrange.mechanics}
+
+  {:id :lagrange/mean-value
+   :work "Theorie des fonctions analytiques, art. 52"
+   :date "1797"
+   :title "The mean value theorem and the Lagrange remainder"
+   :original "D'ou resulte enfin ce theoreme nouveau et remarquable par sa simplicite et sa generalite, qu'en designant par u une quantite inconnue, mais renfermee entre les limites 0 et x, on peut developper successivement toute fonction de x et d'autres quantites quelconques suivant les puissances de x, de cette maniere: fx = f + xf'u, = f + xf' + x^2/2 f''u, = f + xf' + x^2/2 f'' + x^3/2.3 f'''u, &c."
+   :statement "Hence finally this new theorem, remarkable for its simplicity and generality: denoting by u an unknown quantity, but enclosed between the limits 0 and x, one can develop successively any function of x and of any other quantities along the powers of x in this way: f(x) = f(0) + x f'(u), = f(0) + x f'(0) + x^2/2 f''(u), and so on. (English rendering: this series.)"
+   :source "Lagrange, Theorie des fonctions analytiques, Paris an V (1797), art. 52, p. 49 (archive.org theoriedesfoncti00lagr)"
+   :graded-by alexandria.lagrange.functions}]}

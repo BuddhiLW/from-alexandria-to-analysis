@@ -1,0 +1,222 @@
+;; Cauchy's arguments, step by step, with the French of the first editions
+;; verbatim (:fr; spelling and accents as printed, OCR slips corrected
+;; against the page images) and the series' own English rendering (:en,
+;; marked as such where a passage is quoted). Each step is a claim, its
+;; reason and the :stage a medium shows while the step is read
+;; (alexandria.cauchy.analysis-scenes).
+;;
+;; Wording checked against the proofread Wikisource text of the Oeuvres in
+;; the corpus (~/Documents/feed/math-history/18-cauchy-cours-d-analyse/text/
+;; cours-d-analyse-oeuvres-wikisource.txt, resume-des-lecons-oeuvres-
+;; wikisource.txt); page numbers are the first editions'. Rechecked
+;; 2026-10-06, every :fr against both: verbatim up to the old spellings
+;; (elemens, differens) and Cauchy's displayed formulas set inline. Two
+;; places where the Oeuvres differ keep the first-edition reading:
+;; ch. VI p. 125 "il est d'abord necessaire que le terme general" (Oeuvres
+;; drop "que" at a page break) and Lecon 21 p. 81 "l'element x_1 - x_0 par
+;; f(x_0)" (Oeuvres print f(x)). Abel's footnote is not in the corpus; it
+;; stands on the 1839 Oeuvres completes scan.
+;;
+;; Sources: Cours d'analyse 1821 (archive.org coursdanalysedel00cauc);
+;; Resume des lecons 1823 (archive.org TO0E033362_TO0324_PNI-2035_000000);
+;; Abel, Oeuvres completes, ed. Holmboe, 1839 (archive.org
+;; oeuvrescomplete01abelgoog).
+{:cauchy/continuity
+ {:source "Cours d'analyse 1821, Preliminaires pp. 4-5, ch. II sec. 2 pp. 34-35"
+  :quotes
+  [{:fr "Lorsque les valeurs successivement attribuées à une même variable s'approchent indéfiniment d'une valeur fixe, de manière à finir par en différer aussi peu que l'on voudra, cette dernière est appelée la limite de toutes les autres."
+    :en "When the values successively attributed to one variable approach a fixed value indefinitely, so as to end by differing from it as little as one wishes, this last is called the limit of all the others."
+    :source "Cours d'analyse 1821, p. 4"}
+   {:fr "Lorsque les valeurs numériques successives d'une même variable décroissent indéfiniment, de manière à s'abaisser au-dessous de tout nombre donné, cette variable devient ce qu'on nomme un infiniment petit ou une quantité infiniment petite. Une variable de cette espèce a zéro pour limite."
+    :en "When the successive numerical values of one variable decrease indefinitely, so as to fall below every given number, this variable becomes what is called an infinitely small, or an infinitely small quantity. A variable of this kind has zero for its limit."
+    :source "Cours d'analyse 1821, p. 4"}
+   {:fr "En d'autres termes, la fonction f(x) restera continue par rapport à x entre les limites données, si, entre ces limites, un accroissement infiniment petit de la variable produit toujours un accroissement infiniment petit de la fonction elle-même."
+    :en "In other words, the function f(x) will remain continuous with respect to x between the given limits if, between these limits, an infinitely small increment of the variable always produces an infinitely small increment of the function itself."
+    :source "Cours d'analyse 1821, pp. 34-35"}]
+  :steps
+  [{:stage :graph :why "set-up"
+    :claim "Take a function f and a value a of the variable. Give the variable an increment h; the function receives the increment f(a + h) - f(a)."}
+   {:stage :band :why "the challenge"
+    :claim "Name a tolerance eps, as small as you like: a band of half-width eps about the value f(a)."}
+   {:stage :window :why "the answer"
+    :claim "Continuity at a is the promise of a window: some delta such that every h with |h| < delta keeps f(a + h) inside the band."}
+   {:stage :shrink :why "the game"
+    :claim "Shrink eps; the window must shrink with it, and it can, always. This is Cauchy's sentence: an infinitely small increment of the variable produces an infinitely small increment of the function."}
+   {:stage :jump :why "a failure"
+    :claim "At a jump no window works: for eps below half the jump, points on the far side of a stay outside the band however small delta is."}]}
+
+ :cauchy/ivt
+ {:source "Cours d'analyse 1821, ch. II sec. 2 Th. 4, p. 43; Note III, Th. 1, pp. 460-462"
+  :quotes
+  [{:fr "Si la fonction f(x) est continue par rapport à la variable x entre les limites x = x_0, x = X, et que l'on désigne par b une quantité intermédiaire entre f(x_0) et f(X), on pourra toujours satisfaire à l'équation f(x) = b par une ou plusieurs valeurs réelles de x comprises entre x_0 et X."
+    :en "If the function f(x) is continuous with respect to the variable x between the limits x = x_0, x = X, and b denotes a quantity intermediate between f(x_0) and f(X), one can always satisfy the equation f(x) = b by one or more real values of x lying between x_0 and X."
+    :source "Cours d'analyse 1821, ch. II, Th. 4, p. 43"}
+   {:fr "Soit x_0 la plus petite des deux quantités x_0, X. Faisons X - x_0 = h ; et désignons par m un nombre entier quelconque supérieur à l'unité."
+    :en "Let x_0 be the smaller of the two quantities x_0, X. Put X - x_0 = h; and let m be any whole number greater than one."
+    :source "Cours d'analyse 1821, Note III, p. 460"}]
+  :steps
+  [{:stage :sign :why "the hypothesis"
+    :claim "f(x) = x^3 - 2x - 5 is continuous from x_0 = 2 to X = 3, and f(2) = -1, f(3) = 16 have contrary signs. Put h = X - x_0 = 1."}
+   {:stage :divide :why "Note III, the series of values"
+    :claim "Divide h into m parts, m = 10, and form f(x_0), f(x_0 + h/m), f(x_0 + 2h/m), ..., f(X). Compare the first term with the second, the second with the third, and so on."}
+   {:stage :pair :why "two consecutive terms of contrary signs"
+    :claim "One ends necessarily by finding two consecutive terms of contrary signs, f(x_1) and f(X'), with x_1 the smaller value: x_0 <= x_1 < X' <= X and X' - x_1 = h/m. Here x_1 = 2, X' = 2.1."}
+   {:stage :refine :why "the same again"
+    :claim "Between x_1 and X' place in the same way two new values x_2, X'' giving results of contrary signs, with x_1 <= x_2 < X'' <= X' and X'' - x_2 = h/m^2. Continuing, one gets the increasing series x_0, x_1, x_2, ... and the decreasing series X, X', X'', ..."}
+   {:stage :limit :why "a common limit"
+    :claim "The differences h/m, h/m^2, h/m^3, ... decrease indefinitely, so the two series converge towards a common limit a. Because f is continuous, f(x_n) and f(X^(n)) converge to f(a); they keep contrary signs, so f(a) cannot differ from 0: a is a root."}
+   {:stage :scholie :why "Scholie 1"
+    :claim "Stop at x_n and X^(n) and take their half-sum for the root: the error is less than their half-difference h/(2 m^n). With m = 10 each round gives one more decimal: here a = 2.0945514..."}]}
+
+ :cauchy/series
+ {:source "Cours d'analyse 1821, ch. VI, pp. 123-135"
+  :quotes
+  [{:fr "Si, pour des valeurs de n toujours croissantes, la somme s_n s'approche indéfiniment d'une certaine limite s, la série sera dite convergente, et la limite en question s'appellera la somme de la série."
+    :en "If, for ever increasing values of n, the sum s_n approaches indefinitely a certain limit s, the series will be called convergent, and the limit in question will be called the sum of the series."
+    :source "Cours d'analyse 1821, p. 123"}
+   {:fr "Donc, pour que la série (1) soit convergente, il est d'abord nécessaire que le terme général u_n décroisse indéfiniment, tandis que n augmente ; mais cette condition ne suffit pas, et il faut encore que, pour des valeurs croissantes de n, les différentes sommes u_n + u_(n+1), u_n + u_(n+1) + u_(n+2), &c. ..., c'est-à-dire, les sommes des quantités u_n, u_(n+1), u_(n+2), &c. ..., prises, à partir de la première, en tel nombre que l'on voudra, finissent par obtenir constamment des valeurs numériques inférieures à toute limite assignable. Réciproquement, lorsque ces diverses conditions sont remplies, la convergence de la série est assurée."
+    :en "Therefore, for the series (1) to be convergent, it is first necessary that the general term u_n decrease indefinitely as n increases; but this condition does not suffice, and it is further required that, for increasing values of n, the various sums u_n + u_(n+1), u_n + u_(n+1) + u_(n+2), etc., that is, the sums of the quantities u_n, u_(n+1), u_(n+2), etc., taken from the first in any number one likes, end by constantly having numerical values below every assignable limit. Conversely, when these various conditions are fulfilled, the convergence of the series is assured."
+    :source "Cours d'analyse 1821, pp. 125-126"}
+   {:fr "Cherchez la limite ou les limites vers lesquelles converge, tandis que n croît indéfiniment, l'expression (u_n)^(1/n) ; et désignez par k la plus grande de ces limites, ou, en d'autres termes, la limite des plus grandes valeurs de l'expression dont il s'agit. La série (1) sera convergente, si l'on a k < 1, et divergente, si l'on a k > 1."
+    :en "Seek the limit or limits towards which the expression (u_n)^(1/n) converges as n increases indefinitely; and call k the greatest of these limits, or in other words the limit of the greatest values of the expression in question. The series (1) will be convergent if k < 1, and divergent if k > 1."
+    :source "Cours d'analyse 1821, p. 132"}]
+  :steps
+  [{:stage :partials :why "definition"
+    :claim "The series 1 + 1/1! + 1/2! + ... : its partial sums s_n climb, each by the next term."}
+   {:stage :tail-band :why "Cauchy's criterion"
+    :claim "Fix a band about s_n. Convergence means that, n once large enough, every later sum s_(n+p), however many terms p are added, stays in the band: the tail is as small as one likes."}
+   {:stage :ratio :why "ratio test"
+    :claim "Here u_(n+1)/u_n = 1/(n+1), whose limit k = 0 is below 1: past some n each term is less than half the one before, and the tail is less than a geometric progression."}
+   {:stage :harmonic :why "the condition does not suffice"
+    :claim "The harmonic series 1 + 1/2 + 1/3 + ... has terms that decrease to 0, yet 1/(n+1) + ... + 1/(2n) is never below 1/2: the tail never enters a narrow band, and the sums grow without limit."}]}
+
+ :cauchy/root-test
+ {:source "Cours d'analyse 1821, ch. VI sec. 2, Th. 1 and 2, pp. 132-135"
+  :quotes
+  [{:fr "Supposons d'abord k < 1, et choisissons à volonté entre les deux nombres 1 et k un troisième nombre U, en sorte qu'on ait k < U < 1."
+    :en "Suppose first k < 1, and choose at will between the two numbers 1 and k a third number U, so that k < U < 1."
+    :source "Cours d'analyse 1821, p. 132 (text checked against the proofread Oeuvres, corpus cours-d-analyse-oeuvres-wikisource.txt)"}]
+  :steps
+  [{:stage :roots :why "the greatest limit k"
+    :claim "Take u_n = n^2/2^n. The expression (u_n)^(1/n) = n^(2/n)/2 is 0.792 at n = 10, 0.548 at n = 100, 0.507 at n = 1000: its limit is k = 1/2."}
+   {:stage :choose-u :why "U between k and 1"
+    :claim "Since k < 1, choose U between them: U = 3/4. As n grows the greatest values of (u_n)^(1/n) cannot approach k indefinitely without ending below U."}
+   {:stage :compare :why "u_n < U^n"
+    :claim "So one can give n a value considerable enough that, for it and every greater value, (u_n)^(1/n) < U, that is u_n < U^n. Here from n = 13 on."}
+   {:stage :progression :why "a fortiori"
+    :claim "The terms of the series end by being always below the corresponding terms of the geometric progression 1, U, U^2, ...; this progression converges because U < 1, so the series converges a fortiori. Its sum is 6."}
+   {:stage :ratio :why "Theorem 2"
+    :claim "When the ratio u_(n+1)/u_n converges to a fixed limit, that limit is k (ch. II, sec. 3, Th. 4): the ratio test follows. For n^2/2^n the ratio (n+1)^2/(2 n^2) tends to 1/2."}]}
+
+ :cauchy/sum-theorem
+ {:source "Cours d'analyse 1821, pp. 131-132; Abel 1826"
+  :quotes
+  [{:fr "Lorsque les différens termes de la série (1) sont des fonctions d'une même variable x, continues par rapport à cette variable dans le voisinage d'une valeur particulière pour laquelle la série est convergente, la somme s de la série est aussi, dans le voisinage de cette valeur particulière, fonction continue de x."
+    :en "When the various terms of the series (1) are functions of one variable x, continuous with respect to this variable in the neighbourhood of a particular value for which the series is convergent, the sum s of the series is also, in the neighbourhood of this particular value, a continuous function of x."
+    :source "Cours d'analyse 1821, pp. 131-132"}
+   {:fr "Mais il me semble que ce théorème admet des exceptions. Par exemple la série, sin φ - 1/2 sin 2φ + 1/3 sin 3φ - ... etc. est discontinue pour toute valeur (2m + 1)π de x, où m est un nombre entier. Il y a, comme on sait, plusieurs séries de cette espèce."
+    :en "But it seems to me that this theorem admits exceptions. For example the series sin x - 1/2 sin 2x + 1/3 sin 3x - ... is discontinuous for every value (2m + 1) pi of x, m being a whole number. There are, as is known, several series of this kind."
+    :source "Abel 1826; Oeuvres completes, ed. Holmboe, 1839, vol. 1, p. 71, note"}]
+  :steps
+  [{:stage :terms :why "the hypotheses"
+    :claim "Each term sin x, -sin 2x/2, sin 3x/3, ... is continuous everywhere, and the series converges at every x."}
+   {:stage :partial-sums :why "Fourier"
+    :claim "The partial sums S_n add one term after another; they approach the sawtooth x/2 on (-pi, pi), repeated with period 2 pi."}
+   {:stage :jump :why "Abel's exception"
+    :claim "At x = pi every term is 0, so the sum is 0; just to the left of pi it is near pi/2, just to the right near -pi/2. The sum jumps: Cauchy's theorem, as stated, is false."}
+   {:stage :gibbs :why "the overshoot"
+    :claim "Near the jump every S_n overshoots: its peak tends to Si(pi) = 1.8519..., about 9% of the jump above pi/2, and the peak only moves closer to pi as n grows."}
+   {:stage :uniform :why "the missing idea"
+    :claim "Cauchy's proof takes one n for which the remainder r_n(x) is small, as if one n served all x near the point. Here none does: at x = pi - 1/n the error stays near 0.62. Convergence that is uniform in x (Seidel and Stokes, 1847; Weierstrass) is what the theorem needs."}]}
+
+ :cauchy/derivative
+ {:source "Resume des lecons 1823, Lecon 3, pp. 9-10"
+  :quotes
+  [{:fr "Par conséquent, si l'on pose alors Δx = i, les deux termes du rapport aux différences Δy/Δx = (f(x + i) - f(x))/i seront des quantités infiniment petites."
+    :en "Consequently, if one then puts Δx = i, the two terms of the ratio of differences Δy/Δx = (f(x + i) - f(x))/i will be infinitely small quantities."
+    :source "Resume des lecons 1823, p. 9"}
+   {:fr "Pour indiquer cette dépendance, on donne à la nouvelle fonction le nom de fonction dérivée, et on la désigne, à l'aide d'un accent, par la notation y' ou f'(x)."
+    :en "To indicate this dependence, one gives the new function the name of derived function, and one denotes it, with an accent, by the notation y' or f'(x)."
+    :source "Resume des lecons 1823, p. 9"}]
+  :steps
+  [{:stage :chord :why "the ratio of differences"
+    :claim "f is continuous, so an infinitely small increment i of x gives an infinitely small increment f(x + i) - f(x) of the function. Both terms of the ratio (f(x + i) - f(x))/i go to zero together."}
+   {:stage :shrink :why "the ratio has a limit"
+    :claim "The ratio itself may converge to another limit. For f(x) = sin x at x = 1 the ratio is 0.4974 at i = 1/10, 0.5361 at i = 1/100, 0.5402602 at i = 1/10000: it tends to cos 1 = 0.5403023."}
+   {:stage :power :why "Cauchy's example x^m"
+    :claim "For f(x) = x^m the ratio is m x^(m-1) + m(m-1)/2 x^(m-2) i + ... + i^(m-1): every term but the first carries i, so the limit is m x^(m-1), a new function of x."}
+   {:stage :derived :why "the name"
+    :claim "The limit depends on x and on the form of f: it is the derived function, written y' or f'(x). For sin x Cauchy writes the ratio as [sin(i/2)/(i/2)] cos(x + i/2), whose limit is cos x."}]}
+
+ :cauchy/integral
+ {:source "Resume des lecons 1823, Lecons 21, 22, 26 and 7"
+  :quotes
+  [{:fr "Cela posé, concevons que l'on multiplie chaque élément par la valeur de f(x) correspondante à l'origine de ce même élément, savoir, l'élément x_1 - x_0 par f(x_0), l'élément x_2 - x_1 par f(x_1), &c. ..., enfin l'élément X - x_(n-1) par f(x_(n-1)) ; et soit S = (x_1 - x_0) f(x_0) + (x_2 - x_1) f(x_1) + ... + (X - x_(n-1)) f(x_(n-1)) la somme des produits ainsi obtenus."
+    :en "This being so, conceive that each element is multiplied by the value of f(x) corresponding to the origin of that element, namely the element x_1 - x_0 by f(x_0), the element x_2 - x_1 by f(x_1), etc., finally the element X - x_(n-1) by f(x_(n-1)); and let S = (x_1 - x_0) f(x_0) + ... + (X - x_(n-1)) f(x_(n-1)) be the sum of the products so obtained."
+    :source "Resume des lecons 1823, p. 81"}
+   {:fr "la valeur de S finira par être sensiblement constante, ou, en d'autres termes, elle finira par atteindre une certaine limite qui dépendra uniquement de la forme de la fonction f(x), et des valeurs extrêmes x_0, X attribuées à la variable x. Cette limite est ce qu'on appelle une intégrale définie."
+    :en "the value of S will end by being sensibly constant, or in other words it will end by reaching a certain limit which will depend only on the form of the function f(x) and on the extreme values x_0, X attributed to the variable x. This limit is what is called a definite integral."
+    :source "Resume des lecons 1823, p. 83"}
+   {:fr "Donc l'intégrale (1), considérée comme fonction de x, a pour dérivée la fonction f(x) renfermée sous le signe ∫ dans cette intégrale."
+    :en "Therefore the integral (1), considered as a function of x, has for its derivative the function f(x) contained under the sign ∫ in this integral."
+    :source "Resume des lecons 1823, p. 101"}]
+  :steps
+  [{:stage :curve :why "set-up"
+    :claim "Let f be continuous from x_0 to X, and put values x_1, x_2, ..., x_(n-1) between them, dividing X - x_0 into elements."}
+   {:stage :rectangles :why "Lesson 21"
+    :claim "Multiply each element by the value of f at its origin, and add: S. Each product is a rectangle standing on the element, as tall as f at its left end."}
+   {:stage :refine :why "the limit"
+    :claim "Divide each element again, and again. Because f is continuous, the mode of division ends by having an imperceptible influence: S settles to a limit, the definite integral."}
+   {:stage :mean :why "Lesson 22, by the mean value"
+    :claim "S is the sum of the elements times a mean of the values f(x_0), ..., f(x_(n-1)); that mean is a value f(x_0 + theta (X - x_0)) with theta between 0 and 1, so S = (X - x_0) f(x_0 + theta (X - x_0))."}
+   {:stage :fundamental :why "Lesson 26"
+    :claim "Let the upper limit vary: the integral from x_0 to x is a new function of x, and its increment over an increment a is a f(x + theta a). Divide by a and pass to the limit: its derivative is f(x)."}]}
+
+ :cauchy/refinement
+ {:source "Resume des lecons 1823, Lecon 21, equations (3) to (7), pp. 81-83"
+  :quotes
+  [{:fr "si les valeurs numériques des élémens deviennent très-petites et le nombre n très-considérable, le mode de division n'aura plus sur la valeur de S qu'une influence insensible."
+    :en "if the numerical values of the elements become very small and the number n very considerable, the mode of division will have no more than an imperceptible influence on the value of S."
+    :source "Resume des lecons 1823, p. 81"}]
+  :steps
+  [{:stage :one :why "equation (3)"
+    :claim "If all the elements of X - x_0 were reduced to one, the difference itself, one would have simply S = (X - x_0) f(x_0)."}
+   {:stage :mean :why "equation (4)"
+    :claim "With the elements (1), S is the sum of the elements times a mean of f(x_0), f(x_1), ..., f(x_(n-1)); that mean is a value of f(x_0 + theta (X - x_0)), theta between 0 and 1. So S = (X - x_0) f(x_0 + theta (X - x_0))."}
+   {:stage :subdivide :why "equation (5)"
+    :claim "Divide each element again. The product (x_1 - x_0) f(x_0) becomes a sum of the same kind, equal by (4) to (x_1 - x_0) f(x_0 + theta_0 (x_1 - x_0)); and so for each element."}
+   {:stage :errors :why "equations (6) and (7)"
+    :claim "Write f(x_k + theta_k (x_(k+1) - x_k)) = f(x_k) +- e_k. The new S minus the old is +-e_0 (x_1 - x_0) +- ... +- e_(n-1) (X - x_(n-1)): X - x_0 times a mean of the e_k. f is continuous, so for very small elements every e_k is very small: subdividing hardly changes S."}
+   {:stage :third :why "two modes compared through a third"
+    :claim "Two modes of division with very small elements are compared through a third which uses all their points: passing from either to the third alters S very little, so passing from the first to the second does too. S has a limit, the definite integral."}]}
+
+ :cauchy/fundamental
+ {:source "Resume des lecons 1823, Lecon 26, equations (1) to (4), pp. 100-101"
+  :quotes
+  [{:fr "Ajoutons que, si l'on divise par α les deux membres de la formule (3), on en conclura, en passant aux limites, ℱ'(x) = f(x)."
+    :en "Let us add that if one divides both members of formula (3) by α, one will conclude, passing to the limits, ℱ'(x) = f(x)."
+    :source "Resume des lecons 1823, p. 101"}]
+  :steps
+  [{:stage :area :why "equation (1)"
+    :claim "In the definite integral from x_0 to X of f(x) dx let the upper limit vary and call it x: ℱ(x), the integral from x_0 to x, is a new function of x."}
+   {:stage :increment :why "equation (3)"
+    :claim "By formula (7) of Lesson 23 and the mean value, ℱ(x + α) - ℱ(x), the integral from x to x + α, equals α f(x + θα) with θ below 1. So an infinitely small α gives an infinitely small increment: ℱ is continuous."}
+   {:stage :divide :why "equation (4)"
+    :claim "Divide by α: (ℱ(x + α) - ℱ(x))/α = f(x + θα). As α decreases, x + θα tends to x and, f being continuous, the ratio tends to f(x). Pass to the limits: ℱ'(x) = f(x)."}]}
+
+ :cauchy/flat
+ {:source "Resume des lecons 1823, Avertissement and end of Lesson 38"
+  :quotes
+  [{:fr "Pour cette raison, j'ai cru devoir rejeter les développemens des fonctions en séries infinies, toutes les fois que les séries obtenues ne sont pas convergentes ; et je me suis vu forcé de renvoyer au calcul intégral la formule de Taylor, cette formule ne pouvant plus être admise comme générale qu'autant que la série qu'elle renferme se trouve réduite à un nombre fini de termes, et complétée par une intégrale définie. Je n'ignore pas que l'illustre auteur de la Mécanique analytique a pris la formule dont il s'agit pour base de sa théorie des fonctions dérivées."
+    :en "For this reason I thought I must reject the expansions of functions in infinite series whenever the series obtained are not convergent; and I found myself forced to put off Taylor's formula to the integral calculus, since this formula can no longer be admitted as general except in so far as the series it contains is reduced to a finite number of terms and completed by a definite integral. I am not unaware that the illustrious author of the Mecanique analytique took the formula in question as the basis of his theory of derived functions."
+    :source "Resume des lecons 1823, Avertissement, pp. v-vi"}
+   {:fr "On pourrait croire que la série (6) a toujours F(x) pour somme, quand elle est convergente, et que, dans le cas où ses différens termes s'évanouissent l'un après l'autre, la fonction F(x) s'évanouit elle-même. Mais, pour s'assurer du contraire, il suffit d'observer que la seconde condition sera remplie, si l'on suppose F(x) = e^(-1/x²), et la première, si l'on suppose F(x) = e^(-x²) + e^(-1/x²). Cependant la fonction e^(-1/x²) n'est pas identiquement nulle, et la série déduite de la dernière supposition a pour somme, non pas le binôme e^(-x²) + e^(-1/x²), mais son premier terme e^(-x²)."
+    :en "One might believe that the series (6) always has F(x) for its sum when it is convergent, and that, when its terms vanish one after another, the function F(x) itself vanishes. But to be assured of the contrary it suffices to observe that the second condition is fulfilled if one supposes F(x) = e^(-1/x^2), and the first if one supposes F(x) = e^(-x^2) + e^(-1/x^2). Yet the function e^(-1/x^2) is not identically zero, and the series deduced from the last supposition has for its sum not the binomial e^(-x^2) + e^(-1/x^2) but its first term e^(-x^2)."
+    :source "Resume des lecons 1823, p. 152"}]
+  :steps
+  [{:stage :flat :why "the function"
+    :claim "f(x) = exp(-1/x^2), with f(0) = 0. Away from 0 it rises towards 1; near 0 it is flatter than any power of x."}
+   {:stage :zoom :why "every derivative"
+    :claim "Each derivative is a polynomial in 1/x times exp(-1/x^2), and exp(-1/x^2) beats every power of 1/x: so f(0), f'(0), f''(0), ... are all 0. Zoom in: the graph only gets flatter."}
+   {:stage :taylor :why "Lagrange refuted"
+    :claim "The Taylor series of f at 0 is 0 + 0 x + 0 x^2 + ...: it converges everywhere, to 0, not to f. A function is not its power series; Lagrange's foundation of the calculus on Taylor's series cannot stand."}]}}

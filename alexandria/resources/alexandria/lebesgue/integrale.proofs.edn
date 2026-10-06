@@ -1,0 +1,53 @@
+;; Lebesgue, Intégrale, longueur, aire (1902), told step by step. :original
+;; is Lebesgue's French verbatim (archive.org integralelongueu00lebe, OCR
+;; corrected against the scan); :rendering is this series' English, marked as
+;; such. :stage is what alexandria.lebesgue.measure-scenes shows.
+{:lebesgue/introduction
+ {:source "Lebesgue 1902, Introduction, p. 1"
+  :passages
+  [{:original "On sait qu'il existe des fonctions dérivées non intégrables, lorsque l'on adopte, comme le fait M.r Jordan, la définition de l'intégrale qu'a donnée Riemann; de sorte que l'intégration, telle que l'a définie Riemann, ne permet pas dans tous les cas de résoudre le problème fondamental du calcul intégral : Trouver une fonction connaissant sa dérivée."
+    :rendering "We know that there are derivatives that are not integrable when one adopts, as M. Jordan does, the definition of the integral Riemann gave; so integration as Riemann defined it does not in every case solve the fundamental problem of the integral calculus: to find a function knowing its derivative."}
+   {:original "Il peut donc sembler naturel de chercher une autre définition de l'intégrale, telle que, dans des cas plus étendus, l'intégration soit l'opération inverse de la dérivation."
+    :rendering "It may therefore seem natural to look for another definition of the integral, such that, in wider cases, integration is the inverse operation of differentiation."}]}
+
+ :lebesgue/measure-zero
+ {:source "Lebesgue 1902, §§1-3, pp. 6-7"
+  :passages
+  [{:original "Nous nous proposons d'attacher à chaque ensemble borné un nombre positif ou nul que nous appellerons sa mesure et satisfaisant aux conditions suivantes : 1° Il existe des ensembles dont la mesure n'est pas nulle. 2° Deux ensembles égaux ont même mesure. 3° La mesure de la somme d'un nombre fini ou d'une infinité dénombrable d'ensembles, sans points communs, deux à deux, est la somme des mesures de ces ensembles."
+    :rendering "We set out to attach to each bounded set a positive or zero number, which we shall call its measure, satisfying the following conditions: 1. There are sets whose measure is not zero. 2. Two equal sets have the same measure. 3. The measure of the union of finitely many or a countable infinity of sets, without common points two by two, is the sum of the measures of these sets."}
+   {:original "Un ensemble E étant donné, on peut d'une infinité de manières enfermer ses points dans un nombre fini ou une infinité dénombrable d'intervalles. ... La limite inférieure de cette somme est une limite supérieure de m(E), nous l'appellerons la mesure extérieure de E, mₑ(E)."
+    :rendering "Given a set E, one can in infinitely many ways enclose its points in finitely many or a countable infinity of intervals. ... The lower limit of this sum is an upper bound of m(E); we shall call it the outer measure of E, mₑ(E)."}]
+  :steps
+  [{:stage :list :why "Cantor 1874"
+    :claim "The rationals of [0, 1] can be listed: r1, r2, r3, ... (Cantor's count, the zig-zag of the last section restricted to [0, 1])."}
+   {:stage :cover :why "enclose, §3"
+    :claim "Fix ε > 0. Enclose rₙ in an interval of length ε/2ⁿ centred on it: ε/2 for the first, ε/4 for the second, ε/8 for the third, ..."}
+   {:stage :sum :why "the geometric series"
+    :claim "The first N intervals have total length ε/2 + ε/4 + ... + ε/2ᴺ = ε(1 − 1/2ᴺ) < ε, and every rational of [0, 1] lies in one of them."}
+   {:stage :shrink :why "ε arbitrary"
+    :claim "So the outer measure of the rationals is at most ε, for every ε > 0: it is 0. The rationals are dense, yet they take up no length at all."}]}
+
+ :lebesgue/dirichlet
+ {:source "Lebesgue 1902, §§15-19, 23, pp. 18-28"
+  :passages
+  [{:original "Archimède en quarrant un segment de parabole a résolu un cas particulier de ce problème."
+    :rendering "Archimedes, in squaring a segment of the parabola, solved a particular case of this problem."}
+   {:original "Relativement aux fonctions f bornées quelconques M.r Darboux a démontré que les deux sommes s et S tendent vers des limites parfaitement déterminées; on les appelle intégrales par défaut et par excès. Lorsque ces deux intégrales sont égales, ... la fonction est dite intégrable et la limite commune de s et S est appelée depuis Riemann l'intégrale définie de f prise entre a et b."
+    :rendering "For any bounded functions f, M. Darboux proved that the two sums s and S tend to perfectly determined limits; they are called the integrals by defect and by excess. When these two integrals are equal, ... the function is called integrable, and the common limit of s and S has been called, since Riemann, the definite integral of f taken between a and b."}
+   {:original "En effet, divisons l'intervalle de variation de f(x) ; soient a₀, a₁, ... aₙ les points de division. Soit eᵢ l'ensemble des valeurs de x pour lesquelles f(x) = aᵢ. Soit e′ᵢ l'ensemble des valeurs de x pour lesquelles aᵢ < f(x) < aᵢ₊₁."
+    :rendering "Indeed, let us divide the interval of variation of f(x); let a₀, a₁, ... aₙ be the points of division. Let eᵢ be the set of values of x for which f(x) = aᵢ. Let e′ᵢ be the set of values of x for which aᵢ < f(x) < aᵢ₊₁."}
+   {:original "Ces résultats nous fournissent de nombreux exemples de fonctions sommables, discontinues et non intégrables (au sens de Riemann)."
+    :rendering "These results give us many examples of summable functions that are discontinuous and not integrable (in Riemann's sense)."}]
+  :steps
+  [{:stage :function :why "Dirichlet's function"
+    :claim "Let χ(x) = 1 when x is rational and χ(x) = 0 when x is irrational, on [0, 1]. Dirichlet gave it in 1829 as a function that no integral of his day could handle."}
+   {:stage :riemann-upper :why "vertical slices, the sum by excess"
+    :claim "Cut [0, 1] into intervals of any widths δᵢ. Every interval contains a rational, so its upper value Mᵢ = 1, and the sum by excess is S = Σ δᵢ · 1 = 1, for every division."}
+   {:stage :riemann-lower :why "vertical slices, the sum by defect"
+    :claim "Every interval also contains an irrational, so its lower value mᵢ = 0, and the sum by defect is s = Σ δᵢ · 0 = 0. The two never meet: χ is not integrable in Riemann's sense."}
+   {:stage :lebesgue-slices :why "horizontal slices, §19"
+    :claim "Divide instead the values of χ. Only two occur: the set where χ = 1 is the rationals, of measure 0; the set where χ = 0 is the irrationals, of measure 1 − 0 = 1."}
+   {:stage :lebesgue-sum :why "value times measure"
+    :claim "Lebesgue's sum is 1 · m(rationals) + 0 · m(irrationals) = 1 · 0 + 0 · 1 = 0. χ is summable, and its integral is 0."}
+   {:stage :coins :why "Lebesgue's own picture (paraphrased)"
+    :claim "Riemann counts money coin by coin, in the order it comes from the purse; Lebesgue sorts the coins by value first and multiplies each value by how many coins have it. For a purse this changes nothing; for χ it is the difference between no answer and the answer 0."}]}}

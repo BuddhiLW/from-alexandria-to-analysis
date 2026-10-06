@@ -1,0 +1,39 @@
+;; Fermat, Methodus ad disquirendam maximam et minimam (c. 1636), with the
+;; tangent to the parabola that follows it. Latin from Oeuvres de Fermat, ed.
+;; P. Tannery and C. Henry, vol. I (Paris 1891), pp. 133-136 (archive.org
+;; oeuvresdefermat01ferm); English is the series' own rendering, marked as
+;; such. Points are exact instances of alexandria.fermat.maxima.
+{:tradition {:id :fermat/methodus
+             :author "Pierre de Fermat"
+             :work "Methodus ad disquirendam maximam et minimam"
+             :date "c. 1636"
+             :source "Oeuvres de Fermat, ed. Tannery and Henry, vol. I, Paris 1891"}
+ :propositions
+ [{:id :fermat/rectangle
+   :title "The greatest rectangle"
+   :statement "Sit recta AC dividenda in E, ut rectangulum AEC sit maximum. ... Igitur B bifariam est dividenda ad solutionem propositi; nec potest generalior dari methodus. [Series' English rendering: Let the line AC be divided at E so that the rectangle AEC is greatest. ... Therefore B must be cut in half; nor can a more general method be given.]"
+   :source "Tannery and Henry 1891, vol. I, p. 134"
+   :construction
+   {:id :fermat-rectangle
+    :kind :construction
+    :window {:x [-0.5 4.5] :y [-0.5 2.5] :n 1 :sweep [0 1]}
+    :points [{:id :A :at [0 0] :fixed? true}
+             {:id :C :at [4 0] :fixed? true}
+             {:id :E :op :mid :of [:A :C]}]
+    :draw [[:segment :A :C]]
+    :checks [{:claim (= (length A E) (length E C))}]}}
+
+  {:id :fermat/tangent-parabola
+   :title "The tangent to the parabola"
+   :statement "Sit data, verbi gratia, parabole BDN, cujus vertex D, diameter DC, et punctum in ea datum B, ad quod ducenda est recta BE tangens parabolen et in puncto E cum diametro concurrens. ... Ergo CE probavimus duplam ipsius CD, quod quidem ita se habet. [Series' English rendering: Let there be given the parabola BDN, vertex D, diameter DC, and B on it, at which the line BE is to be drawn touching the parabola and meeting the diameter at E. ... So we have proved CE double CD, which is indeed so.]"
+   :source "Tannery and Henry 1891, vol. I, pp. 134-136"
+   :construction
+   {:id :fermat-tangent
+    :kind :construction
+    :window {:x [-1.5 2] :y [-1.5 1.8] :n 1 :sweep [0 1]}
+    :points [{:id :D :at [0 0] :fixed? true}
+             {:id :B :at [1 1] :fixed? true}
+             {:id :C :at [1 0] :fixed? true}
+             {:id :E :at [-1 0] :fixed? true}]
+    :draw [[:segment :E :B] [:segment :B :C] [:segment :E :C]]
+    :checks [{:claim (= (length C E) (* 2 (length C D)))}]}}]}

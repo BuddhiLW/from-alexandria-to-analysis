@@ -1,0 +1,35 @@
+;; Weierstrass: the continuous function without a derivative (read to the
+;; Berlin Academy, 18 July 1872; first printed by P. du Bois-Reymond, Journal
+;; fuer die reine und angewandte Mathematik 79, 1875; Mathematische Werke II,
+;; 1895, pp. 71-74) and uniform convergence as he defined it in print (Zur
+;; Functionenlehre, Monatsberichte der Berliner Akademie 1880; Werke II,
+;; p. 202, footnote).
+;;
+;; :statement-de is Weierstrass' German from Mathematische Werke II
+;; (archive.org mathematischewer02weieuoft), formulas restored from the
+;; page images; :statement is this series' own English rendering.
+{:tradition {:id :weierstrass/monster
+             :author "Karl Weierstrass"
+             :work "Ueber continuirliche Functionen eines reellen Arguments, die fuer keinen Werth des letzteren einen bestimmten Differentialquotienten besitzen"
+             :date "18 July 1872 (printed 1875)"
+             :source "Weierstrass, Mathematische Werke II (Berlin 1895), pp. 71-74 and p. 202"
+             :translation "the series' own English rendering"}
+ :propositions
+ [{:id :weierstrass/belief
+   :title "What everyone assumed"
+   :number "p. 71"
+   :statement-de "Bis auf die neueste Zeit hat man allgemein angenommen, dass eine eindeutige und continuirliche Function einer reellen Ver\u00e4nderlichen auch stets eine erste Ableitung habe, deren Werth nur an einzelnen Stellen unbestimmt oder unendlich gross werden k\u00f6nne. Selbst in den Schriften von Gauss, Cauchy, Dirichlet findet sich meines Wissens keine \u00c4usserung, aus der unzweifelhaft hervorginge, dass diese Mathematiker, welche in ihrer Wissenschaft die strengste Kritik \u00fcberall zu \u00fcben gewohnt waren, anderer Ansicht gewesen seien."
+   :statement "Until the most recent times it has been generally assumed that a single-valued and continuous function of a real variable always has a first derivative, whose value can be undetermined or infinitely large only at isolated points. Even in the writings of Gauss, Cauchy, Dirichlet there is, as far as I know, no remark from which it would follow beyond doubt that these mathematicians, who were used to exercising the strictest criticism everywhere in their science, were of another opinion."
+   :source "Weierstrass, Werke II, p. 71"}
+  {:id :weierstrass/nowhere-differentiable
+   :title "The function without a derivative"
+   :number "pp. 72-74"
+   :statement-de "Es sei x eine reelle Ver\u00e4nderliche, a eine ungrade ganze Zahl, b eine positive Constante, kleiner als 1, und f(x) = \u03a3_{n=0}^\u221e b^n cos(a^n x \u03c0); so ist f(x) eine stetige Function, von der sich zeigen l\u00e4sst, dass sie, sobald der Werth des Products ab eine gewisse Grenze \u00fcbersteigt, an keiner Stelle einen bestimmten Differentialquotienten besitzt. [...] Nimmt man nun a, b so an, dass ab > 1 + 3\u03c0/2 [...] ist, so haben (f(x') - f(x_0))/(x' - x_0), (f(x'') - f(x_0))/(x'' - x_0) stets entgegengesetzte Zeichen, werden aber beide, wenn m ohne Ende w\u00e4chst, unendlich gross. Hieraus ergiebt sich unmittelbar, dass f(x) an der Stelle (x = x_0) weder einen bestimmten endlichen, noch auch einen bestimmten unendlich grossen Differentialquotienten besitzt."
+   :statement "Let x be a real variable, a an odd whole number, b a positive constant less than 1, and f(x) = sum_{n=0}^infinity b^n cos(a^n x pi); then f(x) is a continuous function of which it can be shown that, as soon as the product ab exceeds a certain bound, it has at no point a determinate derivative. If a and b are taken so that ab > 1 + 3pi/2, the quotients (f(x') - f(x_0))/(x' - x_0) and (f(x'') - f(x_0))/(x'' - x_0) always have opposite signs, but both become infinitely large as m grows without end. From this it follows at once that f(x) has at the point x = x_0 neither a determinate finite nor a determinate infinitely large derivative."
+   :source "Weierstrass, Werke II, pp. 72-74"}
+  {:id :weierstrass/uniform
+   :title "Uniform convergence"
+   :number "p. 202, note"
+   :statement-de "Eine unendliche Reihe \u03a3_{\u03bd=0}^\u221e f_\u03bd, deren Glieder Functionen beliebig vieler Ver\u00e4nderlichen sind, convergirt in einem gegebenen Theile (B) ihres Convergenzbereichs gleichm\u00e4ssig, wenn sich nach Annahme einer beliebig kleinen positiven Gr\u00f6sse \u03b4 stets eine ganze positive Zahl m so bestimmen l\u00e4sst, dass der absolute Betrag der Summe \u03a3_{\u03bd=n}^\u221e f_\u03bd f\u00fcr jeden Werth von n, der \u2265 m, und f\u00fcr jedes dem Bereiche B angeh\u00f6rige Werthsystem der Ver\u00e4nderlichen kleiner als \u03b4 ist. [...] Diese Bedingung ist sicher erf\u00fcllt, wenn es eine Reihe bestimmter positiver Gr\u00f6ssen g_0, g_1, g_2, ... giebt, f\u00fcr die sich feststellen l\u00e4sst, dass an jeder Stelle des Bereichs B |f_\u03bd| \u2264 g_\u03bd (\u03bd = 0, ..., \u221e) und die Summe \u03a3_{\u03bd=0}^\u221e g_\u03bd einen endlichen Werth hat."
+   :statement "An infinite series sum f_nu, whose terms are functions of any number of variables, converges uniformly in a given part B of its domain of convergence if, a positive quantity delta being taken as small as we please, a positive whole number m can always be found such that the absolute value of the sum f_n + f_{n+1} + ... is less than delta for every n >= m and for every system of values of the variables belonging to B. This condition is certainly fulfilled if there is a sequence of fixed positive quantities g_0, g_1, g_2, ... for which it can be established that |f_nu| <= g_nu at every point of B and the sum of the g_nu has a finite value (the M-test)."
+   :source "Weierstrass, Zur Functionenlehre (1880), Werke II, p. 202, footnote"}]}

@@ -1,0 +1,79 @@
+;; Cauchy, the arithmetization of analysis: Cours d'analyse (1821) and the
+;; Resume des lecons sur le calcul infinitesimal (1823), with Abel's 1826
+;; exception to the sum theorem. Statements in the series' own English
+;; rendering of the French originals (public domain); the French, verbatim,
+;; is in analysis.proofs.edn under :fr.
+;;
+;; Sources (archive.org scans of the first editions):
+;;   Cours  A.-L. Cauchy, Cours d'analyse de l'Ecole royale polytechnique,
+;;          1re partie, Analyse algebrique (Paris, Debure, 1821)
+;;          archive.org/details/coursdanalysedel00cauc
+;;   Resume A.-L. Cauchy, Resume des lecons donnees a l'Ecole royale
+;;          polytechnique sur le calcul infinitesimal, tome 1 (Paris, 1823)
+;;          archive.org/details/TO0E033362_TO0324_PNI-2035_000000
+;;   Abel   N. H. Abel, Recherches sur la serie 1 + m/1 x + ..., Journal fur
+;;          die reine und angewandte Mathematik 1 (1826), pp. 311-339;
+;;          Oeuvres completes, ed. B. Holmboe (Christiania, 1839), vol. 1,
+;;          the footnote on p. 71
+;;          archive.org/details/oeuvrescomplete01abelgoog
+;;
+;; No construction boards: Cauchy's claims are about functions and sums,
+;; not points; the checks are graded in alexandria.cauchy.analysis.
+{:tradition {:id :cauchy/analysis
+             :author "Augustin-Louis Cauchy"
+             :work "Cours d'analyse (1821); Resume des lecons (1823)"
+             :date "1821-1823"
+             :source "Cauchy, Cours d'analyse, 1821; Resume des lecons, 1823 (English: the series' rendering)"}
+ :propositions
+ [{:id :cauchy/limit
+   :title "Preliminaries: limit and infinitely small"
+   :number "Cours, Preliminaires"
+   :statement "When the values successively attributed to one variable approach a fixed value indefinitely, so as to end by differing from it as little as one wishes, this last is called the limit of all the others. When the successive numerical values of one variable decrease indefinitely, so as to fall below every given number, this variable becomes what is called an infinitely small, or an infinitely small quantity. A variable of this kind has zero for its limit."
+   :source "Cours d'analyse 1821, pp. 4-5"}
+  {:id :cauchy/continuity
+   :title "Chapter II, section 2: continuous functions"
+   :number "Cours, ch. II, sec. 2"
+   :statement "The function f(x) will remain continuous with respect to x between the given limits if, between these limits, an infinitely small increment of the variable always produces an infinitely small increment of the function itself."
+   :source "Cours d'analyse 1821, pp. 34-35"}
+  {:id :cauchy/series-criterion
+   :title "Chapter VI, section 1: convergence of a series"
+   :number "Cours, ch. VI, sec. 1"
+   :statement "For the series to be convergent it is necessary and sufficient that, for infinitely large values of n, the sums s_n, s_(n+1), s_(n+2), ... differ from the limit s, and consequently from each other, by infinitely small quantities: the sums of the quantities u_n, u_(n+1), u_(n+2), ..., taken from the first in any number one likes, end by constantly having numerical values below every assignable limit."
+   :source "Cours d'analyse 1821, pp. 123-126"}
+  {:id :cauchy/root-test
+   :title "Chapter VI, section 2, Theorems 1 and 2: the root and ratio tests"
+   :number "Cours, ch. VI, sec. 2, Th. 1-2"
+   :statement "Seek the limit or limits towards which the expression (u_n)^(1/n) converges as n increases indefinitely, and call k the greatest of these limits. The series will be convergent if k < 1 and divergent if k > 1. If, for increasing values of n, the ratio u_(n+1)/u_n converges towards a fixed limit k, the series will be convergent whenever k < 1, and divergent whenever k > 1."
+   :source "Cours d'analyse 1821, pp. 132-135"}
+  {:id :cauchy/sum-theorem
+   :title "Chapter VI, section 1, Theorem 1: the sum of a convergent series of continuous functions"
+   :number "Cours, ch. VI, sec. 1, Th. 1"
+   :statement "When the various terms of the series are functions of one variable x, continuous with respect to this variable in the neighbourhood of a particular value for which the series is convergent, the sum s of the series is also, in the neighbourhood of this particular value, a continuous function of x. (False as stated: Abel 1826.)"
+   :source "Cours d'analyse 1821, pp. 131-132"}
+  {:id :abel/exception
+   :title "Abel 1826: the theorem admits exceptions"
+   :number "Abel, Recherches sur la serie, footnote to Theorem IV"
+   :author "Niels Henrik Abel"
+   :work "Recherches sur la serie 1 + m/1 x + m(m-1)/1.2 x^2 + ... (Crelle's Journal 1, 1826)"
+   :statement "But it seems to me that this theorem admits exceptions. For example the series sin x - 1/2 sin 2x + 1/3 sin 3x - ... is discontinuous for every value (2m + 1) pi of x, m being a whole number. There are, as is known, several series of this kind."
+   :source "Abel 1826; Oeuvres completes, ed. Holmboe, 1839, vol. 1, p. 71, note"}
+  {:id :cauchy/definite-integral
+   :title "Resume, Lesson 21: the definite integral"
+   :number "Resume, Lecon 21"
+   :statement "If the numerical values of the elements become very small and the number n very considerable, the mode of division will have only an imperceptible influence on the value of S = (x1 - x0) f(x0) + (x2 - x1) f(x1) + ... + (X - x_(n-1)) f(x_(n-1)); and if the numerical values of these elements are made to decrease indefinitely while their number grows, the value of S will end by reaching a certain limit which depends only on the form of the function f(x) and on the extreme values x0, X attributed to the variable x. This limit is what is called a definite integral."
+   :source "Resume des lecons 1823, pp. 81-83"}
+  {:id :cauchy/mean-value
+   :title "Resume, Lesson 7: the mean value"
+   :number "Resume, Lecon 7"
+   :statement "There exists, between the limits 0 and 1, a value of theta fit to verify the equation (f(x0 + h) - f(x0))/h = f'(x0 + theta h), provided that the function f(x) and its derivative f'(x) remain continuous between the extreme values."
+   :source "Resume des lecons 1823, pp. 27-28"}
+  {:id :cauchy/fundamental-theorem
+   :title "Resume, Lesson 26: the derivative of the integral"
+   :number "Resume, Lecon 26"
+   :statement "The integral of f(x) dx from x0 to x, considered as a function of x, has for its derivative the function f(x) contained under the sign of integration in this integral."
+   :source "Resume des lecons 1823, pp. 100-101"}
+  {:id :cauchy/flat-function
+   :title "Resume, end of Lesson 38: Taylor's series may sum to another function"
+   :number "Resume, Lecon 38"
+   :statement "One might believe that the series always has F(x) for its sum when it is convergent, and that, when its terms vanish one after another, the function F(x) itself vanishes. To be assured of the contrary it suffices to observe that the second condition is fulfilled if F(x) = exp(-1/x^2). Yet this function is not identically zero."
+   :source "Resume des lecons 1823, p. 152"}]}

@@ -1,0 +1,25 @@
+;; Every tradition on the shelves: one EDN resource each, read by
+;; alexandria.library. Add a tradition by adding its file and one entry here.
+;;
+;;   :id        the tradition, a qualified keyword
+;;   :resource  its file, on the classpath
+{:traditions
+ [{:id :euclid/elements-1 :resource "alexandria/euclid/elements_1.edn"}
+  {:id :galileo/two-new-sciences :resource "alexandria/galileo/two_new_sciences.edn"}
+  {:id :kepler/mysterium-cosmographicum :resource "alexandria/kepler/mysterium_cosmographicum.edn"}
+  {:id :kepler/astronomia-nova :resource "alexandria/kepler/astronomia_nova.edn"}
+  {:id :dedekind/stetigkeit :resource "alexandria/dedekind/stetigkeit.edn"}
+  {:id :cantor/mengenlehre :resource "alexandria/cantor/mengenlehre.edn"}
+  {:id :lebesgue/integrale :resource "alexandria/lebesgue/integrale.edn"}
+  {:id :apollonius/conics :resource "alexandria/apollonius/conics.edn"}
+  {:id :leibniz/nova-methodus :resource "alexandria/leibniz/nova_methodus.edn"}
+  {:id :newton/principia :resource "alexandria/newton/principia.edn"}
+  {:id :euler/opera :resource "alexandria/euler/opera.edn"}
+  {:id :descartes/la-geometrie :resource "alexandria/descartes/la_geometrie.edn"}
+  {:id :fermat/methodus :resource "alexandria/fermat/methodus.edn"}
+  {:id :lagrange/variations-and-mechanics :resource "alexandria/lagrange/variations_and_mechanics.edn"}
+  {:id :cauchy/analysis :resource "alexandria/cauchy/analysis.edn"}
+  {:id :riemann/trigonometrische-reihe :resource "alexandria/riemann/trigonometrische_reihe.edn"}
+  {:id :weierstrass/monster :resource "alexandria/weierstrass/monster.edn"}
+  {:id :eudoxus/elements-5 :resource "alexandria/eudoxus/elements_5.edn"}
+  {:id :delian/duplication :resource "alexandria/delian/duplication.edn"}]}

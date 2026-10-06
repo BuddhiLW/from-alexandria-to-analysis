@@ -1,0 +1,48 @@
+;; Kepler, Astronomia Nova (1609) and Harmonices Mundi (1619): the laws,
+;; step by step. Quotations verbatim from J. L. E. Dreyer, History of the
+;; Planetary Systems from Thales to Kepler (Cambridge, 1906), pp. 385-407
+;; (public domain; archive.org historyofplaneta0000unse), and Newton,
+;; Principia, tr. Motte, American edition 1846 (Project Gutenberg #76404).
+;; Each step is a claim, its reason, and the :stage a medium shows
+;; (alexandria.kepler.orbit-scenes).
+{:kepler/war-with-mars
+ {:source "Dreyer 1906, pp. 385-392"
+  :passages
+  [{:source "Dreyer 1906, p. 385 (Astronomia Nova cap. XIX)"
+    :text "We see now, says Kepler, why Ptolemy acquiesced in the bisection of the excentricity, for 8' was well within the limit of accuracy to his observations (10'); but to us Divine goodness has given a most diligent observer in Tycho Brahe, and it is therefore right that we should with a grateful mind make use of this gift to find the true celestial motions."}
+   {:source "Dreyer 1906, p. 392"
+    :text "The numerous observations made by Tycho Brahe, with a degree of accuracy never before attained, had in the skilful hand of Kepler revealed the unexpected fact that Mars describes an ellipse, in one of the foci of which the sun is situated, and that the radius vector of the planet sweeps over equal areas in equal times."}]
+  :steps
+  [{:stage :circle :why "the vicarious hypothesis"
+    :claim "Kepler first gave Mars a circle with an equant, fitted to Tycho's oppositions. Places 45 degrees from the apsides then differed from Tycho by 8 minutes of arc."}
+   {:stage :eight :why "Tycho's accuracy"
+    :claim "Ptolemy could ignore 8', inside the 10' of his observations. Tycho's observations were finer than 8'. Kepler would not ignore it: the circle had to go."}
+   {:stage :ellipse :why "first law"
+    :claim "After the oval, Kepler proved that an ellipse with the Sun in one focus gives every distance right: at eccentric anomaly E the distance is a (1 - e cos E). Apollonius III.52 supplies the focal property: the two focal distances sum to the major axis."}
+   {:stage :sweep :why "second law"
+    :claim "The line from the Sun to Mars sweeps area at the rate the planet's time runs: written through E, the area from perihelion is (ab/2)(E - e sin E)."}
+   {:stage :equal-areas :why "equal times"
+    :claim "Put M = E - e sin E, the mean anomaly: the area is (ab/2) M, linear in M, so equal times sweep equal areas. Mars runs fast near the Sun and slow far from it."}
+   {:stage :solve :why "Kepler's equation"
+    :claim "Given the time, M is known and E is not: E - e sin E = M has no solution in closed form. Kepler solved it by trial; here bisection and the fixed-point steps E <- M + e sin E."}]}
+
+ :kepler/harmonice
+ {:source "Dreyer 1906, p. 407; Newton, Principia III, Phaenomenon IV"
+  :passages
+  [{:source "Dreyer 1906, p. 407"
+    :text "After many trials Kepler found on May 15, 1618, his celebrated third law, that the squares of the periods of revolution of any two planets are proportional to the cubes of their mean distances from the sun."}
+   {:source "Newton, Principia III, Phaenomenon IV, tr. Motte (Gutenberg #76404)"
+    :text "This proportion, first observed by Kepler, is now received by all astronomers; for the periodic times are the same, and the dimensions of the orbits are the same, whether the sun revolves about the earth, or the earth about the sun."}
+   {:source "Newton, Principia I, Proposition I, tr. Motte (Gutenberg #76404)"
+    :text "The areas, which revolving bodies describe by radii drawn to an immovable centre of force do lie in the same immovable planes, and are proportional to the times in which they are described."}
+   {:source "Newton, Principia I, Proposition XI, tr. Motte (Gutenberg #76404)"
+    :text "If a body revolves in an ellipsis; it is required to find the law of the centripetal force tending to the focus of the ellipsis."}]
+  :steps
+  [{:stage :table :why "the data"
+    :claim "Six periods and six mean distances: Newton prints the periods and Kepler's distances side by side in the Principia."}
+   {:stage :points :why "T^2 against a^3"
+    :claim "Plot T^2 against a^3, in years and Earth distances, on logarithmic axes."}
+   {:stage :line :why "third law"
+    :claim "All six fall on one line of slope 1: T^2 / a^3 is the same for every planet, between 0.993 and 1.009 on Kepler's distances."}
+   {:stage :newton :why "forward"
+    :claim "Newton turned the laws into mechanics: equal areas mean the force points to the Sun (Principia I, Prop. 1), the ellipse with the Sun at a focus means it falls as the inverse square (Prop. 11), and the third law fixes one constant for all planets."}]}}

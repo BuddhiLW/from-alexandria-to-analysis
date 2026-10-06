@@ -1,0 +1,50 @@
+;; Fermat, Methodus ad disquirendam maximam et minimam, and De tangentibus
+;; linearum curvarum. Latin quoted from Oeuvres de Fermat, ed. P. Tannery and
+;; C. Henry, vol. I (Paris 1891), pp. 133-136 (archive.org
+;; oeuvresdefermat01ferm, public domain); :claim is the series' own English
+;; rendering, :latin the original. :stage names what
+;; alexandria.fermat.maxima-scenes draws.
+{:fermat/rectangle
+ {:source "Tannery and Henry 1891, vol. I, pp. 133-134"
+  :rule "Statuatur quilibet quaestionis terminus esse A ... et, inventa maxima aut minima in terminis sub A, gradu aut gradibus, ut libet, involutis, ponatur rursus idem qui prius terminus esse A + E, iterumque inveniatur maxima aut minima in terminis sub A et E gradibus, ut libet, coefficientibus. Adaequentur, ut loquitur Diophantus, duo homogenea maximae aut minimae aequalia."
+  :steps
+  [{:stage :problem :why "the problem"
+    :claim "Let the line AC be divided at E so that the rectangle AEC is greatest."
+    :latin "Sit recta AC dividenda in E, ut rectangulum AEC sit maximum."}
+   {:stage :name-a :why "name the term A"
+    :claim "Call AC B, and one part of it A; the other is B - A, and the rectangle under the parts is B in A - A squared, which must be found greatest."
+    :latin "Recta AC dicatur B. Ponatur pars altera ipsius B esse A: ergo reliqua erit B - A, et rectangulum sub segmentis erit B in A - Aq., quod debet inveniri maximum."}
+   {:stage :name-ae :why "again, with A + E"
+    :claim "Now let one part be A + E; the other is B - A - E, and the rectangle is B in A - A squared + B in E - 2 A in E - E squared, which must be adequated to the first rectangle."
+    :latin "Ponatur rursus pars altera ipsius B esse A + E: ergo reliqua erit B - A - E, et rectangulum sub segmentis erit B in A - Aq. + B in E - A in E bis - Eq., quod debet adaequari superiori rectangulo B in A - Aq."}
+   {:stage :common :why "take away what is common"
+    :claim "Taking away what is common, B in E is adequated to 2 A in E + E squared."
+    :latin "Demptis communibus, B in E adaequabitur A in E bis + Eq."}
+   {:stage :divide :why "divide by E"
+    :claim "And, all being divided by E, B is adequated to 2A + E."
+    :latin "et, omnibus per E divisis, B adaequabitur A bis + E."}
+   {:stage :strike :why "strike out E"
+    :claim "Strike out E: B equals 2A. Therefore B is to be cut in half; nor can a more general method be given."
+    :latin "Elidatur E, B aequabitur A bis. Igitur B bifariam est dividenda ad solutionem propositi; nec potest generalior dari methodus."}
+   {:stage :derivative :why "Leibniz 1684"
+    :claim "What is left after E is struck out is what Leibniz will write d(BA - AA)/dA = B - 2A, and setting it to nothing is setting the derivative to zero."}]}
+
+ :fermat/tangent
+ {:source "Tannery and Henry 1891, vol. I, pp. 134-136"
+  :steps
+  [{:stage :parabola :why "the problem"
+    :claim "Let the parabola BDN be given, vertex D, diameter DC, and B on it, at which a line BE is to be drawn touching the parabola and meeting the diameter at E."
+    :latin "Sit data, verbi gratia, parabole BDN, cujus vertex D, diameter DC, et punctum in ea datum B, ad quod ducenda est recta BE tangens parabolen et in puncto E cum diametro concurrens."}
+   {:stage :outside :why "O lies outside the curve"
+    :claim "Take any point O on BE and the ordinate OI; since O is outside the parabola, CD : DI is greater than BC squared : OI squared, that is, by similar triangles, than CE squared : IE squared."}
+   {:stage :name :why "name the lines"
+    :claim "CD is given, call it D; let CE be A and CI be E. Then D : D - E has a greater ratio than A squared : A squared + E squared - 2 A E."
+    :latin "sit igitur CD aequalis D datae. Ponatur CE esse A: ponatur CI esse E."}
+   {:stage :adequate :why "adequate, as for a maximum"
+    :claim "Multiplying, and adequating by the method above, with what is common taken away: D in E squared - 2 D in A in E is adequated to - A squared in E."
+    :latin "Adaequentur igitur juxta superiorem methodum"}
+   {:stage :strike :why "divide by E, strike E"
+    :claim "Divide all by E and strike out D in E: A squared equals 2 D in A, so A equals 2D."}
+   {:stage :subtangent :why "the result"
+    :claim "So we have proved CE double CD, which is indeed so. Nor does the method ever fail."
+    :latin "Ergo CE probavimus duplam ipsius CD, quod quidem ita se habet. Nec unquam fallit methodus"}]}}

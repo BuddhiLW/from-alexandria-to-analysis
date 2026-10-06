@@ -1,0 +1,165 @@
+;; Leonhard Euler: the proofs, step by step, and the Latin they follow.
+;;
+;; :latin   passages quoted verbatim from the first printings (long s
+;;          printed as s; Euler's own spelling, "vt", "quatuor", kept)
+;; :english this series' own rendering of the same passages
+;; :steps   {:claim :why :stage}; :stage names what the scene draws while
+;;          the step is read (alexandria.euler.*-scenes)
+;;
+;; Sources:
+;;   E53  Commentarii academiae scientiarum Petropolitanae 8 (1741),
+;;        pp. 128-140; text from la.wikisource.org, "Solutio problematis ad
+;;        geometriam situs pertinentis" (oldid 173403)
+;;   E41  Commentarii ... Petropolitanae 7 (1740), pp. 123-134; scan of the
+;;        original, Euler Archive E041.pdf
+;;   E101 Introductio in analysin infinitorum, vol. 1, cap. VIII, par. 138;
+;;        archive.org bub_gb_sjxLPYrwgPYC (the 1797 Lyon reprint of the 1748
+;;        text)
+;;   E230 Novi commentarii ... Petropolitanae 4 (1758), p. 119; scan of the
+;;        original, Euler Archive E230.pdf
+{:euler/koenigsberg
+ {:latin
+  {:passages
+   ["Regiomonti in Borussia esse insulam A der Kneiphof dictam, fluuiumque eam cingentem in duos diuidi ramos, quemadmodum ex figura videre licet: ramos vero huius fluuii septem instructos esse pontibus, a, b, c, d, e, f, et g. Circa hos pontes iam ista proponebatur quaestio, num quis cursum ita instituere queat, vt per singulos pontes semel et non plus quam semel transeat."
+    "Innititur autem tota mea methodus idoneo modo singulos pontium transitus designandi, in quo vtor litteris maiusculis A, B, C, D singulis regionibus adscriptis, quae flumine sunt separatae."
+    "In serie ergo octo litterarum, quibus transitus per septem pontes deberet designari, littera A ter adesse deberet, litterarum vero B, C, et D vnaquaeque bis; id quod in serie octo litterarum omnino fieri nequit. Ex quo perspicuum est, per septem pontes Regiomontanos talem transitum institui non posse."
+    "Primo autem obseruo omnes numeros pontium singulis litteris A, B, C etc. adscriptos simul sumptos duplo maiores esse toto pontium numero."
+    "Si fuerint plures duabus regiones, ad quas ducentium pontium numerus est impar, tum certo affirmari potest, talem transitum non dari."]
+   :locus ["par. 2" "par. 4" "par. 9" "par. 16" "par. 20"]
+   :source "E53, Commentarii academiae scientiarum Petropolitanae 8 (1741), pp. 128-140"}
+  :english
+  ["In the town of Königsberg in Prussia there is an island A, called \"Kneiphof,\" with the two branches of the river (Pregel) flowing around it, as shown in Figure 1. There are seven bridges, a, b, c, d, e, f and g, crossing the two branches. The question is whether a person can plan a walk in such a way that he will cross each of these bridges once but not more than once."
+   "My entire method rests on the appropriate and convenient way in which I denote the crossing of bridges, in that I use capital letters, A, B, C, D, to designate the various land areas that are separated from one another by the river."
+   "That is to say, the series of eight letters that represents the crossing of the seven bridges must contain A three times and B, C and D each twice; but this is quite impossible with a series of eight letters. Thus it is apparent that a crossing of the seven bridges of Königsberg in the manner required cannot be effected."
+   "In the first place, I note that the sum of all the numbers of bridges to each region, that are written down in the second column opposite the letters A, B, C, etc., is necessarily double the actual number of bridges."
+   "If there are more than two regions which are approached by an odd number of bridges, no route satisfying the required conditions can be found."]
+  :english-source "The Seven Bridges of Königsberg, public-domain English translation on en.wikisource.org (corpus 15-euler/text/E53-seven-bridges-en-wikisource.txt), sections 2, 4, 9, 16, 20"
+  :steps
+  [{:stage :city :why "par. 1-2"
+    :claim "Par. 1: Leibniz named a geometry of position, where quantities are not measured. Par. 2: at Koenigsberg the island A, the Kneiphof, is circled by the river's two branches, crossed by seven bridges a, b, c, d, e, f, g. Can a walk cross each bridge once and not more than once? Euler asks it for any river and any number of bridges."}
+   {:stage :city :why "par. 3"
+    :claim "Par. 3: one could list every possible walk and look. Euler sets this aside: too many combinations, useless with more bridges, and it finds much that was not asked. He wants a method that shows only whether such a walk exists."}
+   {:stage :letters :why "par. 4"
+    :claim "Par. 4: capital letters A, B, C, D name the regions the water separates. A crossing from A to B, by bridge a or b, is written AB. A walker going on from B to D by bridge f writes BD; the two crossings together are written ABD, the middle B serving as arrival and departure."}
+   {:stage :letters :why "par. 5"
+    :claim "Par. 5: going on from D to C by g gives ABDC: four letters, three bridges. A walk over any number of bridges is written with one letter more than there are bridges, so a walk over the seven bridges needs eight letters."}
+   {:stage :collapse :why "par. 6"
+    :claim "Par. 6: the record does not say which bridge was used, only which regions. If the walk existed, its eight letters would have AB next to each other twice (bridges a and b), AC twice (c and d), and AD, BD, CD once each (e, f, g). Shrink each region to a point and each bridge to a line: that is all the problem keeps."}
+   {:stage :collapse :why "par. 7"
+    :claim "Par. 7: so the question becomes: can eight letters from A, B, C, D be arranged with those successions? Before searching for an arrangement Euler looks for a rule that says whether one can exist."}
+   {:stage :degree :why "par. 8"
+    :claim "Par. 8 (his Figure 2): take one region A with bridges a, b, c, ... leading into it. One bridge: A is written once, before or after the crossing. Three bridges: A is written twice, whether or not the walk starts in A. Five: three times. For any odd number of bridges, add one and halve it."}
+   {:stage :count :why "par. 9"
+    :claim "Par. 9: at Koenigsberg five bridges lead into A, so A is written 3 times; three each into B, C and D, so each twice. The eight letters would have to hold 3 + 2 + 2 + 2 = 9. That cannot be, so no such walk over the seven bridges exists."}
+   {:stage :count :why "par. 10"
+    :claim "Par. 10: whenever every region has an odd number of bridges, add up how often each letter must appear. Equal to the bridges plus one: the walk can be made. Larger: it cannot. The rule counts only the bridges at A, wherever they come from."}
+   {:stage :even :why "par. 11-12"
+    :claim "Par. 11-12: an even number of bridges at A depends on the start. Two bridges and the walk starts in A: A is written twice (out, and back); starting elsewhere, once. Four: three times or twice; six: four or three. Even d: d/2 letters, or d/2 + 1 if the walk starts in A."}
+   {:stage :even :why "par. 13"
+    :claim "Par. 13: a walk starts in only one region. So write for each region half its bridges plus one if odd, half if even. If the total equals the bridges plus one, the walk exists and starts in an odd region; if it is one less, it starts in an even region, which adds the missing letter."}
+   {:stage :table :why "par. 14"
+    :claim "Par. 14, the operation: (1) name the regions A, B, C, ...; (2) add one to the number of bridges and write it above; (3) write each letter with the number of its bridges; (4) star the letters with even numbers; (5) write half of each even number, half of each odd number plus one; (6) add this last column. For Koenigsberg: 8 above; A 5, B 3, C 3, D 3; 3 + 2 + 2 + 2 = 9, more than 8: no walk."}
+   {:stage :fifteen :why "par. 15"
+    :claim "Par. 15 (his Figure 3): two islands A and B, four rivers, fifteen bridges, six regions A to F. Above: 16. Bridges: A 8, B 4, C 4, D 3, E 5, F 6; starred A, B, C, F. Halves: 4, 2, 2, 2, 3, 3, total 16, equal to the number above: a walk exists if it starts in D or E. He writes one out, capitals for regions and small letters for bridges: EaFbBcFdAeFfCgAhCiDkAmEnApBoElD."}
+   {:stage :handshake :why "par. 16"
+    :claim "Par. 16: an easier rule follows from one observation. The numbers written beside A, B, C, ... add up to twice the number of bridges, because each bridge is counted at both regions it joins."}
+   {:stage :handshake :why "par. 17"
+    :claim "Par. 17: so that sum is even, and the odd numbers among the counts come in an even number: never one, three or five of them. At Koenigsberg four are odd (A, B, C, D, par. 14); in par. 15 two (D and E)."}
+   {:stage :doubled :why "par. 18"
+    :claim "Par. 18: half the sum plus one is the number above. If every count is even, the halves add up to one less than that number, so a walk always exists, from any region. At Koenigsberg one can cross every bridge twice: split each bridge in two and every count becomes even."}
+   {:stage :rule :why "par. 19"
+    :claim "Par. 19: if exactly two counts are odd, the halves add up to exactly the number above, and the walk exists from either odd region. With four, six, eight odd counts the total exceeds it by one, two, three: no walk."}
+   {:stage :rule :why "par. 20"
+    :claim "Par. 20, the rule: more than two regions with an odd number of bridges, no such walk. Exactly two, a walk that starts in one of them. None, a walk from any region."}
+   {:stage :rule :why "par. 21"
+    :claim "Par. 21: to find the walk once it is known to exist, set aside in thought pairs of bridges joining the same two regions, find a walk over the rest, and put the pairs back; Euler says this is easy and gives no more."}]}
+
+ :euler/basel
+ {:latin
+  {:passages
+   ["Ex natura autem et resolutione aequationum constat, esse coefficientem termini, in quo inest s, aequalem summae omnium coefficientium ipsius s in factoribus."
+    "Ex quo magnum huius methodi, si cui forte ea non satis certa videatur, firmamentum elucet; ita vt de reliquis, quae ex hac methodo deriuabantur, omnino non liceat dubitari."
+    "Quamque huius seriei summa per 6 multiplicata aequalis est quadrato peripheriae circuli cuius diameter est 1, quae est ipsa propositio cuius initio mentionem feci."
+    "seriei 1 + 1/16 + 1/81 + 1/256 + etc. summa per 90 multiplicata dat biquadratum peripheriae circuli cuius diameter est 1."]
+   :locus ["par. 6" "par. 10" "par. 11" "par. 12"]
+   :source "E41, Commentarii academiae scientiarum Petropolitanae 7 (1740), pp. 123-134"}
+  :english
+  ["From the nature and the resolution of equations it is known that the coefficient of the term containing s equals the sum of the coefficients of s in the factors."
+   "From this the method, should it seem to anyone not certain enough, gains a great confirmation, so that one may not doubt at all the other results derived by it."
+   "The sum of this series multiplied by 6 equals the square of the circumference of the circle whose diameter is 1; that is the very proposition I mentioned at the start."
+   "The sum of the series 1 + 1/16 + 1/81 + 1/256 + etc. multiplied by 90 gives the fourth power of the circumference of the circle whose diameter is 1."]
+  :steps
+  [{:stage :partial-sums :why "par. 1-2"
+    :claim "Par. 1: the series of reciprocal powers have been studied so much that hardly anything new seems left to find. Par. 2: Euler has found, quite unexpectedly, that six times 1 + 1/4 + 1/9 + 1/16 + ... is the square of the circumference p of the circle of diameter 1. He had the sum to many decimals, 1.644934066842264364..., and the square root of six times it gives 3.14159265358979323..."}
+   {:stage :sinc :why "par. 3"
+    :claim "Par. 3 (his Figure 1): in a circle of radius 1 take the arc AM = s, its sine PM = y and cosine CP = x. As everyone knows, y = s - s^3/1.2.3 + s^5/1.2.3.4.5 - ..."}
+   {:stage :roots :why "par. 4-6"
+    :claim "Par. 4: read the other way, 0 = 1 - s/y + s^3/1.2.3 y - s^5/1.2.3.4.5 y + ... is an equation whose roots s are all the arcs with sine y. Par. 5: knowing all the roots is knowing all the factors (1 - s/A)(1 - s/B)... Par. 6: from the nature of equations, the coefficient of s, 1/y, is the sum of the reciprocal roots, and the coefficient of s^2, which is 0, is the sum of their products in pairs."}
+   {:stage :roots :why "par. 7"
+    :claim "Par. 7: if A is the smallest arc with sine y and p the half circumference, the roots are A, p - A, 2p + A, 3p - A, ... and -p - A, -2p + A, ...: every arc with the same sine."}
+   {:stage :fourth :why "par. 8-9"
+    :claim "Par. 8: for terms a + b + c + ... whose sum is alpha, sum of products of pairs beta, of triples gamma, ..., the sums of the powers are P = alpha, Q = P alpha - 2 beta, R = Q alpha - P beta + 3 gamma, and so on. Par. 9: for our roots alpha = 1/y, beta = 0, gamma = -1/6y, delta = 0, epsilon = 1/120y, ..."}
+   {:stage :fourth :why "par. 10"
+    :claim "Par. 10: let the sine equal the radius, y = 1. The smallest arc is a quarter circumference q = p/2, and the roots are q, q, -3q, -3q, 5q, 5q, ... Then P = 1 gives 1 - 1/3 + 1/5 - 1/7 + ... = q/2 = p/4, Leibniz's series: a firm support of the method."}
+   {:stage :match :why "par. 11"
+    :claim "Par. 11: the squares. Q = 1 gives 1 + 1/9 + 1/25 + ... = q^2/2 = p^2/8. The whole series 1 + 1/4 + 1/9 + ... is these odd terms and a quarter of itself, so it is 4/3 of p^2/8: six times its sum is p^2, the proposition mentioned at the start."}
+   {:stage :fourth :why "par. 12-13"
+    :claim "Par. 12: R, S, T, ... = 1/2, 1/3, 5/24, ... give the higher powers; the sum of 1 + 1/16 + 1/81 + 1/256 + ... times 90 is p^4. Par. 13: the alternating sums of odd cubes, fifth powers, ... follow the same way."}
+   {:stage :partial-sums :why "par. 14-15"
+    :claim "Par. 14: with y = 1/sqrt 2 (A = p/4) the method gives Newton's series 1 + 1/3 - 1/5 - 1/7 + 1/9 + ... Par. 15: with y = sqrt 3/2 (A = p/3) a series in which the multiples of 3 are missing."}
+   {:stage :sinc :why "par. 16"
+    :claim "Par. 16: with y = 0 the series cannot be read off this way, since y stands in the denominators. Divide the equation by s instead: 0 = 1 - s^2/1.2.3 + s^4/1.2.3.4.5 - ..., whose roots are p, -p, 2p, -2p, ..."}
+   {:stage :product :why "par. 16-17, the bold step"
+    :claim "So sin s / s = (1 - s^2/p^2)(1 - s^2/4p^2)(1 - s^2/9p^2)...: a polynomial of infinite degree factored like a finite one. The partial products close in on the curve."}
+   {:stage :match :why "par. 17"
+    :claim "Par. 17: from the nature of equations the coefficient of ss, 1/6, equals 1/p^2 + 1/4p^2 + 1/9p^2 + ...; the products of these terms in pairs add up to 1/120, in threes to 1/5040, ..."}
+   {:stage :fourth :why "par. 18"
+    :claim "Par. 18: the rule of par. 8 gives the sums of 1/n^2, 1/n^4, ..., 1/n^12: p^2/6, p^4/90, p^6/945, p^8/9450, p^10/93555, 691 p^12/638512875. Dividing each by the one before gives p^2 in as many ways."}
+   {:stage :partial-sums :why "par. 19"
+    :claim "Par. 19: the series themselves add up slowly and need a square root to give p; Euler draws from them expressions equal to p itself. The partial sums 1, 1.25, 1.3611, ... (raster) climb to 1.6449...; after N terms less than 1/N is missing."}]}
+
+ :euler/exponential
+ {:latin
+  {:passages
+   ["Ex quibus intelligitur quomodo quantitates exponentiales imaginariae ad Sinus & Cosinus Arcuum realium reducantur. Erit vero e^{+v√-1} = cos.v + √-1.sin.v & e^{-v√-1} = cos.v - √-1.sin.v."]
+   :locus ["cap. VIII, par. 138"]
+   :source "E101, Introductio in analysin infinitorum (1748), vol. 1"}
+  :english
+  ["From this it is understood how imaginary exponential quantities reduce to the sines and cosines of real arcs. Namely e^{+v√-1} = cos v + √-1 sin v and e^{-v√-1} = cos v - √-1 sin v."]
+  :steps
+  [{:stage :series :why "cap. VII"
+    :claim "e^z = 1 + z + z^2/2! + z^3/3! + ... for every z (Euler: (1 + z/i)^i with i infinitely large)."}
+   {:stage :powers :why "i^2 = -1"
+    :claim "Put z = ix. The powers of i turn by a quarter each time: 1, i, -1, -i, 1, ... So the terms x^k/k! point east, north, west, south in turn."}
+   {:stage :spiral :why "partial sums"
+    :claim "Lay the terms end to end: 1, then ix, then -x^2/2, ... The path spirals in on one point, the k-th segment of length x^k/k!."}
+   {:stage :split :why "par. 138"
+    :claim "The east-west terms are 1 - x^2/2! + x^4/4! - ... = cos x; the north-south terms are x - x^3/3! + ... = sin x. So e^{ix} = cos x + i sin x."}
+   {:stage :circle :why "|e^{ix}| = 1"
+    :claim "As x varies, the end point runs round the unit circle, at angle x."}
+   {:stage :pi :why "x = pi"
+    :claim "At x = pi the spiral ends at cos pi + i sin pi = -1: e^{i pi} + 1 = 0."}]}
+
+ :euler/polyhedra
+ {:latin
+  {:passages
+   ["In omni solido hedris planis incluso aggregatum ex numero angulorum solidorum et ex numero hedrarum binario excedit numerum acierum."
+    "Fateri equidem cogor, me huius theorematis demonstrationem firmam adhuc eruere non potuisse; interim tamen eius veritas pro omnibus solidorum generibus, ad quae examinabitur, non difficulter agnoscetur, ita vt sequens inductio vicem demonstrationis gerere queat."]
+   :locus ["E230, par. 33" "E230, par. 33"]
+   :source "E230, Novi commentarii academiae scientiarum Petropolitanae 4 (1758), p. 119"}
+  :english
+  ["In every solid enclosed by plane faces, the number of solid angles together with the number of faces exceeds the number of edges by two."
+   "I must admit that I have not yet been able to find a firm proof of this theorem; meanwhile its truth will be recognised without difficulty for every kind of solid it is tested on, so that the following induction may take the place of a proof."]
+  :steps
+  [{:stage :cube :why "E230, par. 33"
+    :claim "A cube: S = 8 solid angles (vertices), A = 12 edges, H = 6 faces. 8 + 6 = 12 + 2."}
+   {:stage :solids :why "E230, induction"
+    :claim "Pyramids, prisms and the five regular solids obey the same count. Euler tests it kind by kind; in E231 he proves it by cutting off solid angles one at a time."}
+   {:stage :flatten :why "Schlegel diagram"
+    :claim "Look at the cube from just above one face: the near face becomes the outer square, the far face the inner one. Nothing is cut or glued: V, E, F stay the same."}
+   {:stage :remove-face :why "Cauchy 1813"
+    :claim "Remove the outer face: the flat net has V - E + F = 1."}
+   {:stage :triangulate :why "Cauchy 1813"
+    :claim "Draw a diagonal in a face: one more edge, one more face. V - E + F stays 1."}
+   {:stage :peel :why "Cauchy 1813"
+    :claim "Take off a boundary triangle: either one edge and one face go, or two edges, one face and one vertex. V - E + F stays 1, down to a single triangle: 3 - 3 + 1 = 1."}]}}

@@ -1,0 +1,61 @@
+;; Apollonius of Perga, Conics, told step by step. Quotations are verbatim
+;; from T. L. Heath, Apollonius of Perga: Treatise on Conic Sections
+;; (Cambridge, 1896; archive.org treatiseonconics00apolrich), pages named per
+;; step. Each step is a claim, its reason, and the :stage a medium shows
+;; while the step is read (alexandria.apollonius.conics-scenes).
+{:apollonius/preface
+ {:source "Heath 1896, pp. lxix-lxx"
+  :from "Apollonius" :to "Eudemus"
+  :passages
+  ["Apollonius to Eudemus, greeting."
+   "When I was with you in Pergamum, I observed that you were eager to become acquainted with my work in conics; therefore I send you the first book which I have corrected, and the remaining books I will forward when I have finished them to my satisfaction."
+   "the first contains the modes of producing the three sections and the opposite branches [of the hyperbola] and their fundamental properties worked out more fully and generally than in the writings of other authors"
+   "The third book contains many remarkable theorems useful for the synthesis of solid loci and determinations of limits"]}
+
+ :apollonius/menaechmus
+ {:source "Heath 1896, pp. xvii-xix (Eratosthenes' letter, quoted by Eutocius)"
+  :passages
+  ["While then for a long time everyone was at a loss, Hippocrates of Chios was the first to observe that, if between two straight lines of which the greater is double of the less it were discovered how to find two mean proportionals in continued proportion, the cube would be doubled"
+   "Thus the evidence so far shows (1) that Menaechmus (a pupil of Eudoxus and a contemporary of Plato) was the discoverer of the conic sections, and (2) that he used them as a means of solving the problem of the doubling of the cube."]}
+
+ :apollonius/I.11-13
+ {:source "Heath 1896, pp. 7-12 (Props. 1-3), lxxix-lxxx"
+  :steps
+  [{:stage :cone :why "set-up"
+    :claim "Suppose, as usual, that the plane of section cuts the circular base in a straight line DME and that ABC is the axial triangle whose base BC is that diameter of the base of the cone which bisects DME at right angles at the point M. (p. 7)"}
+   {:stage :diameter :why "the diameter of the section"
+    :claim "Then, if the plane of the section and the plane of the axial triangle intersect in the straight line PM, PM is a diameter of the section bisecting all chords of the section, as QQ', which are drawn parallel to DE. If QQ' is so bisected in V, QV is said to be an ordinate [...] and the length PV cut off from the diameter by any ordinate QV will be called the abscissa of QV. (p. 8)"}
+   {:stage :circle :why "a section parallel to the base"
+    :claim "Let HK be drawn through V parallel to BC. Then, since QV is also parallel to DE, it follows that the plane through H, Q, K is parallel to the base of the cone and therefore produces a circular section whose diameter is HK. Also QV is at right angles to HK. Therefore HV.VK = QV^2. (pp. 8-9)"}
+   {:stage :similar :why "similar triangles in the axial triangle"
+    :claim "Then, by similar triangles, HV : PV = BF : AF, VK : P'V = FC : AF. Therefore HV.VK : PV.P'V = BF.FC : AF^2. Hence QV^2 : PV.P'V = PL : PP'. (I.12, p. 10; I.13 the same, p. 12)"}
+   {:stage :symptoma :why "one equation, one sign"
+    :claim "If QV = y, PV = x, PL = p, and PP' = d, y^2 = px ± (p/d)x^2. The line p is called, for all three curves alike, the parameter or latus rectum. (pp. 10, 12, lxxx)"}
+   {:stage :apply :why "application of areas"
+    :claim "Thus the parabola is the curve in which the rectangle which is equal to y^2 is applied to p and neither falls short of it nor overlaps it, the ellipse and hyperbola are those in which the rectangle is applied to p but falls short of it, or overlaps it, respectively. (p. lxxx)"}
+   {:stage :names :why "parabole, hyperbole, elleipsis"
+    :claim "Hence the section is called a Parabola. [...] Hence the section is called a Hyperbola. [...] The section is therefore called an Ellipse. (pp. 9, 10, 12)"}]}
+
+ :apollonius/focal
+ {:source "Heath 1896, pp. 113-118 (Props. 69-73)"
+  :steps
+  [{:stage :foci :why "the points arising out of the application"
+    :claim "The foci are not spoken of by Apollonius under any equivalent of that name, but they are determined as the two points on the axis of a central conic [...] such that the rectangles AS.SA', AS'.S'A' are each equal to one-fourth part of the figure of the conic, i.e. [p.AA'/4] or CB^2. (p. 113)"}
+   {:stage :tangent :why "III.48"
+    :claim "The focal distances of P make equal angles with the tangent at that point. (Prop. 71, p. 116)"}
+   {:stage :sum :why "III.51-52"
+    :claim "In an ellipse the sum, and in a hyperbola the difference, of the focal distances of any point is equal to the axis AA'. (Prop. 73, p. 118)"}
+   {:stage :string :why "the gardener's construction"
+    :claim "So a string of length AA' pinned at S and S' and kept taut by a pencil draws the ellipse: SP + S'P never changes."}
+   {:stage :difference :why "the hyperbola, the same with a minus sign"
+    :claim "On the hyperbola, S'P - SP = AA' on one branch and SP - S'P = AA' on the other: the same rule with the sign of the excess turned."}]}
+
+ :apollonius/dandelin
+ {:source "G. P. Dandelin, Mémoire sur quelques propriétés remarquables de la focale parabolique (Brussels, 1822)"
+  :steps
+  [{:stage :spheres :why "inscribed spheres"
+    :claim "Put two spheres in the cone, each touching the cone along a circle and the cutting plane at one point. Those points are the foci."}
+   {:stage :tangents :why "tangents from a point to a sphere are equal"
+    :claim "From a point Q of the section, QF1 and QG1 are both tangents to the first sphere, G1 where the generator through Q meets its circle of contact; so QF1 = QG1, and likewise QF2 = QG2."}
+   {:stage :generator :why "the generator between the circles"
+    :claim "Therefore QF1 + QF2 = G1G2, the stretch of the generator between the two circles of contact, the same for every Q: Apollonius' III.52 in one picture."}]}}

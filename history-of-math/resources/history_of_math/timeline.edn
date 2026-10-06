@@ -1,0 +1,74 @@
+;; The series "From Alexandria to Analysis": every work it plans to cover, in
+;; order. history-of-math.timeline reads this file and joins it with the
+;; notebooks that exist (history-of-math.build/discover): an entry whose
+;; notebook is built becomes a link, the others show as planned.
+;;
+;;   :eras     [{:id :title :role}]  :role names the colour of the era in the
+;;                                   series palette (history-of-math.series)
+;;   :entries  [{:year :figure :work :significance :era}]
+;;     :year      the work's date, an int, negative = BC
+;;     :circa     true when the date is approximate
+;;     :notebook  the notebook id (file stem, _ -> -) when it is known; else
+;;                the join takes a notebook of the same year whose
+;;                :history/title names the figure
+{:title "From Alexandria to Analysis"
+ :eras
+ [{:id :greek :title "Greek geometry and astronomy" :role :era/greek}
+  {:id :medieval :title "From Oresme to Copernicus" :role :era/medieval}
+  {:id :new-sciences :title "The new sciences" :role :era/new-sciences}
+  {:id :calculus :title "The calculus" :role :era/calculus}
+  {:id :rigour :title "Analysis made rigorous" :role :era/rigour}]
+
+ :entries
+ [{:year -300 :circa true :figure "Euclid" :work "Elements" :era :greek :notebook "euclid-elements"
+   :significance "Geometry and number deduced from definitions, postulates and common notions."}
+  {:year -250 :circa true :figure "Archimedes" :work "Measurement of a Circle; Quadrature of the Parabola; The Method" :era :greek :notebook "archimedes"
+   :significance "Exhaustion squeezes the circle and the parabola between polygons; the balance finds the result first."}
+  {:year -200 :circa true :figure "Apollonius" :work "Conics" :era :greek :notebook "apollonius-conics"
+   :significance "Ellipse, parabola and hyperbola as sections of one cone, with their tangents and diameters."}
+  {:year 150 :circa true :figure "Ptolemy" :work "Almagest" :era :greek
+   :significance "A table of chords and a geometric model that predicts the planets for fourteen centuries."}
+  {:year 1350 :circa true :figure "Oresme" :work "Tractatus de configurationibus qualitatum et motuum" :era :medieval
+   :significance "A changing quality drawn as a figure; the area under uniform acceleration gives the mean speed rule."}
+  {:year 1543 :figure "Copernicus" :work "De revolutionibus orbium coelestium" :era :medieval
+   :significance "The Sun at the centre: Ptolemy's circles rearranged around it."}
+  {:year 1596 :figure "Kepler" :work "Mysterium cosmographicum" :era :new-sciences
+   :significance "The planetary spheres spaced by the five regular solids of Euclid XIII."}
+  {:year 1609 :figure "Kepler" :work "Astronomia nova" :era :new-sciences
+   :significance "Mars moves on an ellipse with the Sun at a focus, sweeping equal areas in equal times."}
+  {:year 1619 :figure "Kepler" :work "Harmonices mundi" :era :new-sciences :notebook "kepler-laws"
+   :significance "The squares of the periods are as the cubes of the mean distances."}
+  {:year 1636 :circa true :figure "Fermat" :work "Ad locos planos et solidos isagoge; Methodus ad disquirendam maximam et minimam" :era :new-sciences :notebook "descartes-fermat"
+   :significance "Curves as equations in two unknowns, and maxima found by adequality."}
+  {:year 1637 :figure "Descartes" :work "La Géométrie" :era :new-sciences :notebook "descartes-fermat"
+   :significance "Geometric problems solved by algebra on coordinates; curves classified by their equations."}
+  {:year 1638 :figure "Galileo" :work "Discorsi e dimostrazioni matematiche intorno a due nuove scienze" :era :new-sciences
+   :significance "Fall as uniform acceleration: distances as the squares of the times, projectiles on parabolas."}
+  {:year 1684 :figure "Leibniz" :work "Nova methodus pro maximis et minimis" :era :calculus :notebook "leibniz-nova-methodus"
+   :significance "The differential calculus published: rules for d(xy), d(x/v) and tangents of any curve."}
+  {:year 1687 :figure "Newton" :work "Philosophiae naturalis principia mathematica" :era :calculus :notebook "newton-principia"
+   :significance "Kepler's laws derived from an inverse-square force by first and last ratios."}
+  {:year 1736 :figure "Euler" :work "Mechanica" :era :calculus
+   :significance "Newton's mechanics rewritten as differential equations in analytic form."}
+  {:year 1748 :figure "Euler" :work "Introductio in analysin infinitorum" :era :calculus :notebook "euler"
+   :significance "The function as the object of analysis; e, the exponential and series for sine and cosine."}
+  {:year 1788 :figure "Lagrange" :work "Mécanique analytique" :era :calculus :notebook "lagrange"
+   :significance "Mechanics without figures: equations of motion from virtual work and generalized coordinates."}
+  {:year 1801 :figure "Gauss" :work "Disquisitiones arithmeticae" :era :calculus
+   :significance "Congruences, quadratic reciprocity, and the constructible regular 17-gon."}
+  {:year 1827 :figure "Gauss" :work "Disquisitiones generales circa superficies curvas" :era :calculus
+   :significance "Curvature measured inside the surface: the Theorema Egregium."}
+  {:year 1821 :figure "Cauchy" :work "Cours d'analyse" :era :rigour :notebook "cauchy"
+   :significance "Limits, continuity and convergence defined; the infinite series made an object of proof."}
+  {:year 1854 :figure "Riemann" :work "Über die Darstellbarkeit einer Function durch eine trigonometrische Reihe" :era :rigour :notebook "riemann-weierstrass"
+   :significance "The integral defined by sums over partitions, and the question which functions it reaches."}
+  {:year 1872 :figure "Weierstrass" :work "Über continuirliche Functionen eines reellen Arguments" :era :rigour :notebook "riemann-weierstrass"
+   :significance "A continuous function with a derivative nowhere: intuition about curves is not proof."}
+  {:year 1872 :figure "Dedekind" :work "Stetigkeit und irrationale Zahlen" :era :rigour
+   :significance "The real numbers as cuts of the rationals, Eudoxus' Book V made arithmetic."}
+  {:year 1874 :figure "Cantor" :work "Über eine Eigenschaft des Inbegriffes aller reellen algebraischen Zahlen" :era :rigour :notebook "dedekind-cantor"
+   :significance "The algebraic numbers are countable; the real numbers are not."}
+  {:year 1902 :figure "Lebesgue" :work "Intégrale, longueur, aire" :era :rigour :notebook "dedekind-cantor"
+   :significance "Measure first, then the integral: limits of integrals behave."}
+  {:year -350 :circa true :figure "Menaechmus (and Hippocrates, Archytas, Eratosthenes)" :work "The doubling of the cube (the Delian problem), as Eutocius collects the solutions" :era :greek :notebook "doubling-the-cube"
+   :significance "Two mean proportionals; the conic sections first appear as loci to double the cube. Wantzel proves it impossible with ruler and compass in 1837."}]}
