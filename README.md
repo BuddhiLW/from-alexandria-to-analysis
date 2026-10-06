@@ -43,6 +43,12 @@ figures, proofs and graded checks go into `alexandria/`. Quote public-domain
 editions of the originals; when you quote a modern translation, name its
 translator and edition beside the quote.
 
+`main` takes changes only through pull requests. Every pull request runs the
+`build` check (`.github/workflows/site.yml`): all notebooks are built, which
+runs every Emmy check, and a headless browser opens each page and fails on
+any error or remote script. A merge to `main` publishes the new version to
+https://notebooks.buddhilw.com/ within a few minutes.
+
 ## Licence
 
 - Code (Alexandria, its players and kernels, the build): GNU General Public
