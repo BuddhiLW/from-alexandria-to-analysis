@@ -1,0 +1,16 @@
+{:now [{:claim "Classes form a Boolean ring: x² = x for every element"
+        :modern "A Boolean ring is a commutative ring with identity in which every element is idempotent; then x + x = 0, so the characteristic is 2. By Stone's representation theorem (1936) every Boolean ring is a ring of subsets of a set, with intersection as product and symmetric difference as sum."
+        :tex "x^2=x \\;\\Rightarrow\\; x+x=0,\\qquad x(1-x)=0"}
+       {:claim "Eliminating a variable from f(x) = 0 gives f(1)f(0) = 0"
+        :modern "In a Boolean algebra the existential quantifier over one variable is the join f(1) ∨ f(0), and f = 0 for some x exactly when the join is 0, which Boole writes as the product of the two complements; this is the resolution of Boolean unification and the Boolean case of quantifier elimination."
+        :tex "\\exists x\\, f(x)=0 \\iff f(1)\\,f(0)=0"}
+       {:claim "A syllogism is valid when its conclusion is true in every model of its premises; Boole's equations carry no existential import"
+        :modern "Read as a first-order sentence, 'all S are M' is ∀x (S(x) → M(x)), true when S is empty. Under that reading 15 of the 24 traditional moods are valid and 9 (Barbari, Celaront, …) need the extra premise that a class is non-empty."
+        :tex "\\forall x\\,(S(x)\\to M(x)) \\;\\equiv\\; s(1-m)=0"}]
+ :fields [{:field :logic-computing :label "Circuits" :how "Shannon (1937) showed that a network of switches obeys the algebra with x² = x, 0 for open and 1 for closed; the gates of a digital circuit are Boole's operations." :example "AND is the product xy, NOT is 1 - x, XOR is the ring sum."}
+          {:field :logic-computing :label "Satisfiability" :how "Deciding whether an equation f = 0 has a solution in {0,1} is the satisfiability problem; eliminating variables one at a time as Boole does is Davis-Putnam resolution." :example "SAT solvers decide it for millions of variables, although it is NP-complete in general."}
+          {:field :abstract-algebra :label "Algebra" :how "Boolean rings are the commutative rings of characteristic 2 all of whose elements are idempotent; their prime ideals correspond to the points of a Stone space." :example "The powerset of a finite set under symmetric difference and intersection."}]
+ :tangents []
+ :texts [{:author "George Boole" :work "An Investigation of the Laws of Thought (London: Walton and Maberly, 1854)" :year 1854 :url "https://archive.org/details/bub_gb_SWgLVT0otY8C" :kind :archive :lang "en"}
+         {:author "George Boole" :work "An Investigation of the Laws of Thought, Project Gutenberg #15114" :year 1854 :url "https://www.gutenberg.org/ebooks/15114" :kind :archive :lang "en"}]
+ :links [{:to "goedel-turing" :relation :generalizes :note "Gödel and Turing study what formal systems built on this kind of logic can and cannot decide."}]}

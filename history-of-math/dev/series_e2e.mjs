@@ -47,6 +47,26 @@ const apexClean = await page.evaluate(() => ({
   allLinks: [...document.querySelectorAll(".all-works-link a")].map(a => a.getAttribute("href")) }));
 await page.screenshot({ path: `${output}/apex.png`, fullPage: true });
 
+// the index: a plain-link h3 per series, the whole timeline under it. Every
+// series page resolves, and so does every built notebook link of the walked
+// series (ALL=1: every index link, for a build of the whole shelf).
+const idx = await page.locator(".index-series").evaluateAll(ss => ss.map(s => ({
+  slug: s.getAttribute("data-series"),
+  head: s.querySelector("h3 > a.index-series-link")?.getAttribute("href") || null,
+  notebooks: [...s.querySelectorAll("li[data-built=true] a.index-notebook")].map(a => a.getAttribute("href")),
+  planned: [...s.querySelectorAll("li[data-built=false]")].map(l => l.querySelectorAll("a").length) })));
+const firsts = await page.locator(".series-card a.series-first").evaluateAll(as => as.map(a => a.getAttribute("data-first")));
+const status = async href => (await page.request.get(new URL(href, page.url()).href)).status();
+const indexBad = [];
+for (const s of idx) {
+  if (s.head) { const c = await status(s.head); if (c >= 400) indexBad.push(`${c} ${s.head}`); }
+  for (const h of (process.env.ALL || s.slug === walk) ? s.notebooks : []) {
+    const c = await status(h); if (c >= 400) indexBad.push(`${c} ${h}`);
+  }
+}
+const indexOk = idx.length === cards.length && idx.every(s => s.head && s.planned.every(n => n === 0)) &&
+  idx.some(s => s.notebooks.length > 0) && indexBad.length === 0 && firsts.length > 0;
+
 // the year of each entry, as the JVM wrote it, and every topic's own count
 const pages = [];
 for (const c of cards) {
@@ -104,7 +124,7 @@ for (const [k, url] of [["apex", apex], ["topic", topicUrl(walk)]]) {
 const ok = cards.length >= 12 && new Set(cards.map(c => c.slug)).size === cards.length &&
   cards.every(c => c.scope > 20 && c.width >= container - 2) &&
   decks === 6 && apexClean.svgs === 0 && apexClean.selector === 0 && apexClean.allLinks.length === 1 &&
-  pages.length === cards.length &&
+  pages.length === cards.length && indexOk &&
   pages.every(p => p.h1ok && p.n > 0 && p.timelines === 1 && p.extra === 0 && p.ordered && p.linksOk) &&
   expected.length >= 3 && seen.length === expected.length &&
   // previous / next follow the series' reading order (notebook years), which may
@@ -113,7 +133,7 @@ const ok = cards.length >= 12 && new Set(cards.map(c => c.slug)).size === cards.
   crumbs.every(cs => cs.filter(c => c.current).length === 1 && cs.find(c => c.current).slug === walk) &&
   lastHasNext === 0 && crumbBack &&
   phone.apex <= 0 && phone.topic <= 0 && errors.length === 0;
-console.log(JSON.stringify({ ok, cards: cards.length, decks, apexClean, pages, walk, expected, seen,
+console.log(JSON.stringify({ ok, indexOk, index: idx.length, indexBad, firsts: firsts.length, cards: cards.length, decks, apexClean, pages, walk, expected, seen,
                              crumbs: crumbs.map(c => c.length), lastHasNext, crumbBack, phone, errors, failed }));
 await browser.close();
 process.exit(ok ? 0 : 1);

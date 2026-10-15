@@ -108,9 +108,12 @@
     (filterv #(or (on-strands? s %) (contains? named (:notebook %))) joined)))
 
 (defn summary
-  "{:span [first-year last-year] :built n :planned n :first notebook} of
-   series s: built are its members, planned its timeline entries without a
-   notebook."
+  "{:span [first-year last-year] :built n :planned n :entries m
+   :entries-built k :first notebook} of series s: built are its members,
+   planned its timeline entries without a notebook, :entries the size of
+   its timeline and :entries-built how many of those have a notebook (the
+   honest `k of m entries built`; :built counts members and may differ,
+   since a notebook can belong through its :order alone)."
   [s notebooks joined]
   (let [ms (members s notebooks)
         es (entries s joined)
@@ -118,6 +121,8 @@
     {:span (when (seq years) [(apply min years) (apply max years)])
      :built (count ms)
      :planned (count (remove :built? es))
+     :entries (count es)
+     :entries-built (count (filter :built? es))
      :first (first ms)}))
 
 (defn memberships

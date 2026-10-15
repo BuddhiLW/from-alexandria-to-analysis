@@ -31,6 +31,65 @@
     (is (str/includes? index "links/all-href") "one line to the page of every work")
     (is (str/includes? index "Free to read") "the licence stays")))
 
+(defn- hrefs [h] (set (keep #(:href (when (map? (second %)) (second %))) (nodes h))))
+
+(deftest the-apex-index-links-every-series-and-every-built-notebook
+  (let [{:keys [reg nbs joined]} (site)
+        ss (series/notebook-series reg)
+        index (apex/index reg nbs joined)
+        hs (hrefs index)
+        ;; the universe from the files, as completeness_test
+        files (->> (.listFiles (java.io.File. build/notebooks-dir))
+                   (filter #(and (.isFile %) (str/ends-with? (.getName %) ".clj")
+                                 (not= "index.clj" (.getName %))))
+                   (map #(build/notebook-id (.getName %))) set)
+        sections (with-class index "index-series")]
+    (testing "non-vacuity"
+      (is (<= 12 (count ss)))
+      (is (<= 30 (count files)))
+      (is (= (count ss) (count sections))))
+    (testing "an h3 per series, a plain link to its page, in registry order"
+      (is (= (map #(str "series/" (:slug %) "/") ss)
+             (for [sec sections
+                   :let [h3 (first (filter #(= :h3 (first %)) (nodes sec)))]]
+               (:href (second (first (filter #(= :a (first %)) (nodes h3)))))))))
+    (doseq [s ss]
+      (testing (:slug s)
+        (is (contains? hs (str "series/" (:slug s) "/")))
+        (doseq [e (series/entries s joined) :when (:built? e)]
+          (is (contains? hs (str (:notebook e) "/?series=" (:slug s))) (:notebook e)))
+        (doseq [m (series/members s nbs)]
+          (is (contains? files (:id m)))
+          (is (contains? hs (str (:id m) "/?series=" (:slug s))) (:id m)))
+        (let [sec (first (filter #(= (:slug s) (:data-series (second %))) sections))
+              lis (with-class sec "index-entry")
+              planned (filter #(= "false" (:data-built (second %))) lis)]
+          (is (<= (count (series/entries s joined)) (count lis)) "the whole timeline")
+          (is (= (:planned (series/summary s nbs joined)) (count planned)) "planned entries counted")
+          (is (every? #(str/includes? (pr-str %) "(planned)") planned))
+          (is (every? (fn [li] (not-any? #(= :a (first %)) (nodes li))) planned) "planned entries are plain text"))))
+    (testing "the decks close the list as absolute https links"
+      (doseq [d (series/decks reg) :when (= :live (:status d))]
+        (is (contains? hs (:url d)))))))
+
+(deftest a-series-card-starts-with-its-first-notebook-and-counts-honestly
+  (let [{:keys [reg nbs joined]} (site)]
+    (doseq [s (series/notebook-series reg)
+            :let [sm (series/summary s nbs joined)
+                  card (apex/series-card s sm)
+                  first-link (first (with-class card "series-first"))
+                  built (second (first (with-class card "series-built")))]]
+      (testing (:slug s)
+        (is (= (:entries sm) (count (series/entries s joined))))
+        (is (<= (:entries-built sm) (:entries sm)))
+        (is (= (:entries sm) (+ (:entries-built sm) (:planned sm))))
+        (is (= (:entries-built sm) (:data-n built)))
+        (is (str/includes? (pr-str card) (str (:entries-built sm) " of ")))
+        (if (:first sm)
+          (do (is (= (:id (:first sm)) (:data-first (second first-link))))
+              (is (= (str (:id (:first sm)) "/?series=" (:slug s)) (:href (second first-link)))))
+          (is (nil? first-link)))))))
+
 (deftest a-topic-page-holds-its-own-entries-in-year-order
   (let [{:keys [t reg joined]} (site)
         edges (timeline/influence-edges joined)]
