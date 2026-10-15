@@ -730,8 +730,10 @@
                     (when-not @pushing
                       (let [src (cond (not= (:S old) (:S new)) :S
                                       (not= (:y old) (:y new)) :y)
+                            ;; Leva answers a push with the value rounded to its
+                            ;; 0.01 step: within half a step it is that echo
                             echo? (and src (contains? @pushed src)
-                                       (< (js/Math.abs (- (get new src) (get @pushed src))) 1e-6))]
+                                       (<= (js/Math.abs (- (get new src) (get @pushed src))) (+ 0.005 1e-9)))]
                         (when (and src (not echo?))
                           ;; the reader's move pauses the transport
                           (when (:playing? @st) (swap! st assoc :playing? false))
@@ -740,11 +742,19 @@
                                       :y {:S (:amyy P)}
                                       :S (let [r (if (<= (:y new) (:half P)) (:r1 P) (:r2 P))]
                                            (when (js/isFinite r) {:y r})))]
+                            ;; pushed after the current notification: from inside
+                            ;; the watch, Leva's own watch on prm would run next
+                            ;; with the stale state and the two would feed each
+                            ;; other until the stack overflows
                             (when out
-                              (reset! pushed out)
-                              (reset! pushing true)
-                              (try (swap! prm merge out)
-                                   (finally (reset! pushing false)))))))))))
+                              (js/setTimeout
+                               (fn []
+                                 (reset! pushed out)
+                                 (reset! pushing true)
+                                 (try (swap! prm merge out)
+                                      (finally (reset! pushing false)))
+                                 (js/setTimeout #(swap! pushed (fn [m] (apply dissoc m (keys out)))) 600))
+                               0)))))))))
 
      (defn render
        "Clerk render-fn. value: {:steps [{:id :text :quote :cite}] :kernels

@@ -9,7 +9,8 @@
             [desargues.board.construction]
             [desargues.board.euclid]
             [desargues.board.kernel :as kernel]
-            [emmy.numerical.quadrature :as quadrature]))
+            [emmy.numerical.quadrature :as quadrature]
+            [alexandria.vocab]))
 
 (def shelves
   ["alexandria/archimedes/measurement_of_a_circle.edn"
@@ -40,7 +41,11 @@
 (defn- with-point-at [construction id at]
   (update construction :points
           (fn [points]
-            (mapv (fn [p] (if (= id (:id p)) (assoc p :at at) p)) points))))
+            (mapv (fn [p]
+                    (if (= id (:id p))
+                      {:id id :at at}
+                      p))
+                  points))))
 
 (defn- board-values
   ([construction] (board-values construction {}))
@@ -101,14 +106,16 @@
       (testing (str id " " overrides)
         (checks-hold? construction overrides)))))
 
-(deftest perturbing-free-point-breaks-a-check
+(deftest perturbing-constructed-parabola-apex-breaks-generation-check
   (let [by-id (into {} (map (juxt :id :construction) (propositions)))
-        circle (-> (:archimedes/circle-1 by-id)
-                   (with-point-at :T0 [2.6 0.5]))
-        check (first (:checks circle))
-        {:keys [values]} (board-values circle)]
+        parabola (-> (:archimedes/parabola-17-24 by-id)
+                     (with-point-at :V [0.2 0.35]))
+        check (->> (:checks parabola)
+                   (filter #(= "constructed next-generation triangles equal one fourth of ABV" (:label %)))
+                   first)
+        {:keys [values]} (board-values parabola)]
     (is (not (check-holds? check (values (:label check))))
-        "Moving the triangle's free vertex changes the computed area check")))
+        "Moving V off its constructed parabola midpoint breaks the next-generation equality")))
 
 (deftest emmy-quadrature-checks-parabolic-segment
   (let [area (quadrature/definite-integral #(- 1 (* % %)) -1.0 1.0

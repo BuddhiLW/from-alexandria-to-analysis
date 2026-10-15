@@ -15,7 +15,26 @@
 ;; turned curves into equations. Newton and Leibniz made the calculus.
 ;; Euler made the function its object. Cauchy, Riemann, Weierstrass,
 ;; Dedekind and Cantor rebuilt it on limits and on the real numbers, and
-;; Lebesgue rebuilt the integral on measure.
+;; Lebesgue rebuilt the integral on measure. The last era, structures,
+;; foundations and computation, turns to the frameworks themselves: Riemann
+;; asks what a geometry must be given, and finds a rule for measuring an
+;; infinitely small step; Klein answers that a geometry is the group of
+;; transformations that leaves its properties unchanged; Hilbert answers
+;; that a geometry is whatever satisfies its axioms, and tests each axiom
+;; with a model in which it fails.
+;;
+;; ## Strands
+;;
+;; Mathematics does not split into tidy subjects, so the series follows
+;; fourteen strands: geometry, differential geometry, analysis, measure
+;; theory, trigonometry, algebra, abstract algebra, number theory,
+;; probability, topology, graph theory, set theory, logic and computing, and
+;; mechanics and physics. A strand is a tag, not a box. Ptolemy's table of
+;; chords is trigonometry and astronomy at once, and it appears on both
+;; timelines. Pick a strand below to see its own timeline. The chips beside
+;; a work name the other strands it is on. The chords across the ring of
+;; strands are bridges: one work leading to another on a different strand,
+;; as Apollonius' conics lead to Kepler's orbits.
 ;;
 ;; Filled circles are notebooks you can open; open circles are planned.
 ^{:nextjournal.clerk/visibility {:code :hide :result :hide}}
@@ -37,7 +56,8 @@
     (when-not (r/ok? nbs) (throw (ex-info (build/error-message (:error nbs)) (:error nbs))))
     {:timeline (:ok t) :joined (timeline/join (:ok t) (:ok nbs))}))
 
-(clerk/html (timeline/strip (:timeline series) (:joined series)))
+(timeline/interactive (:timeline series) (:joined series))
+
 
 ;; ## The works
 ;;
@@ -45,6 +65,15 @@
 ;; of its composition; "c." marks an approximate date.
 
 (clerk/html (timeline/table (:joined series)))
+
+;; ## Closing
+;;
+;; The closing page asks three questions of the Greek notebooks: why the
+;; Greeks valued geometry, how they worked without algebra, and whether they
+;; could have gone on to algebra, the calculus and an industrial revolution.
+
+(clerk/html [:p [:a (timeline/href "greek-closing")
+                 "Closing: why the Greeks valued geometry, and what came after"]])
 
 ;; ## Free to read, copy and improve
 ;;

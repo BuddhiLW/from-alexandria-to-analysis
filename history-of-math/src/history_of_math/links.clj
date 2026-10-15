@@ -50,3 +50,14 @@
   "Anchor attributes for href: a real page load, not Clerk's router."
   [href]
   {:href href :data-ignore-anchor-click "true"})
+
+(defn relation-label
+  "The phrase a lens shows for a relation between two notebooks."
+  [relation]
+  (case relation
+    :anticipates "leads to"
+    :generalizes "generalizes"
+    :proves "proves"
+    :refutes "refutes"
+    :uses "uses"
+    (str/replace (name relation) "-" " ")))

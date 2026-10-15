@@ -1,0 +1,20 @@
+{:now [{:claim "The law of reflection is a linear map"
+        :modern "A ray with direction d hitting a surface with unit normal n leaves along d - 2(d·n)n, the Householder reflection; it keeps lengths and the angle with the normal."
+        :tex "d' = d - 2\\,(d\\cdot n)\\,n"}
+       {:claim "Alhazen's problem is a quartic"
+        :modern "The reflection point on a circle from two given points satisfies a polynomial equation of degree four in the coordinates of the point; it has no ruler-and-compass solution in general, which is why Ibn al-Haytham needed conic sections and why it is solved today by a root finder."
+        :tex "\\frac{P\\times(A-P)}{|A-P|} + \\frac{P\\times(B-P)}{|B-P|} = 0"}
+       {:claim "The focus of a parabola"
+        :modern "Every ray parallel to the axis of y² = 4fx is reflected through (f, 0): the property behind satellite dishes, reflecting telescopes and solar concentrators."
+        :tex "y^2 = 4fx \\;\\Rightarrow\\; \\text{every axial ray passes through } (f, 0)"}]
+ :fields [{:field :mechanics-physics :label "Optics" :how "Ray tracing in geometric optics and computer graphics computes reflection points exactly as in Alhazen's problem." :example "Specular highlights on a sphere in a renderer."}
+          {:field :geometry :how "The reflection point is an intersection of a circle with a hyperbola, a problem of conics in the tradition of Apollonius." :example "Huygens' and Barrow's solutions of the same problem in the seventeenth century."}
+          {:field :analysis :how "The volume of the paraboloid by sums of powers of the integers is an integral computed before the calculus (Suter 1912; text not yet in hand)." :example "Archimedes' sums for the conoids, carried one power further."}]
+ :tangents []
+ :texts [{:author "Friedrich Risner (ed.), Ibn al-Haytham and Witelo" :work "Opticae thesaurus: Alhazeni Arabis libri septem" :year 1572 :url "https://www.e-rara.ch/" :kind :archive :lang "la"}
+         {:author "J. L. Heiberg and E. Wiedemann" :work "Ibn al Haitams Schrift über parabolische Hohlspiegel, Bibliotheca mathematica 3. F. 10" :year 1910 :url "https://archive.org/details/bibliothecamathematica.v.10" :kind :translation :lang "de"}
+         {:author "Johannes Kepler" :work "Ad Vitellionem paralipomena" :year 1604 :url "https://www.e-rara.ch/doi/10.3931/e-rara-87652" :kind :archive :lang "la"}
+         {:author "Isaac Barrow" :work "Lectiones opticae" :year 1674 :url "https://www.e-rara.ch/doi/10.3931/e-rara-1187996" :kind :archive :lang "la"}]
+ :links [{:to "kepler-laws" :relation :uses :note "Kepler read Risner's Alhazen for the Paralipomena of 1604, five years before the Astronomia nova."}
+         {:to "apollonius-conics" :relation :uses :note "The lemmas of Book V and the burning mirror rest on Apollonius' conics."}
+         {:to "descartes-fermat" :relation :uses :note "Descartes' Dioptrique of 1637 takes up the image place without naming Alhazen."}]}

@@ -39,15 +39,16 @@ await page.addInitScript(() => {
 await page.goto(url, { waitUntil: "networkidle" });
 const fig = page.locator("[data-figure=conics-playground]");
 await fig.waitFor({ timeout: 60000 });
+await fig.scrollIntoViewIfNeeded(); // X runs while the figure is on screen
 await page.waitForTimeout(2500);
 
 const keys = ["alpha", "tilt", "h", "l", "e"];
 const read = () => page.evaluate((keys) => {
   const v = {};
-  for (const k of keys) v[k] = parseFloat(document.getElementById(k).value);
-  v.theta = parseFloat(document.querySelector("[data-x-theta]").getAttribute("data-x-theta"));
-  v.name = document.querySelector("[data-conic-name]").textContent;
-  v.formula = document.querySelector("[data-formula]").getAttribute("data-formula");
+  for (const k of keys) { const all = document.querySelectorAll("#" + k); v[k] = parseFloat(all[all.length - 1].value); }
+  v.theta = parseFloat(document.querySelector("[data-figure=conics-playground]").querySelector("[data-x-theta]").getAttribute("data-x-theta"));
+  v.name = document.querySelector("[data-figure=conics-playground]").querySelector("[data-conic-name]").textContent;
+  v.formula = document.querySelector("[data-figure=conics-playground]").querySelector("[data-formula]").getAttribute("data-formula");
   return v;
 }, keys);
 const rad = (d) => (d * Math.PI) / 180;
@@ -59,7 +60,7 @@ const solves = () => page.evaluate(() => globalThis.__playgroundSolves || 0);
 const solveCounts = [];
 const set = async (k, v) => {
   const before = await solves();
-  const input = page.locator("#" + k);
+  const input = page.locator("#" + k).last(); // the playground follows the symptoma widget, whose Leva panel also has #tilt
   await input.fill(String(v));
   await input.press("Enter");
   await page.waitForTimeout(900);
@@ -71,7 +72,7 @@ const set = async (k, v) => {
 const agreement = [];
 const agree = async (label) => {
   const r = await page.evaluate(() => {
-    const el = document.querySelector("[data-x3]");
+    const el = document.querySelector("[data-figure=conics-playground]").querySelector("[data-x3]");
     const a = el.getAttribute("data-x3").split(" ").map(Number);
     const b = el.getAttribute("data-x2").split(" ").map(Number);
     return { a, b, d: Math.hypot(a[0] - b[0], a[1] - b[1]) };
@@ -140,11 +141,11 @@ const wasm = await page.evaluate(() => globalThis.__wasm.instance);
 const grades = await page.evaluate(() => [...document.querySelectorAll("[data-grade]")].map((x) => x.getAttribute("data-grade")));
 const letters = await page.evaluate(() => [...document.querySelectorAll("[data-figure=conics-playground] [data-label]")]
   .filter((x) => x.style.display !== "none").map((x) => x.getAttribute("data-label")));
-const canvases = await page.evaluate(() => document.querySelectorAll("canvas").length);
+const canvases = await page.evaluate(() => document.querySelector("[data-figure=conics-playground]").querySelectorAll("canvas").length);
 check("wasm kernels instantiated", wasm >= 15, wasm);
 check("every grade proved", grades.length > 0 && grades.every((g) => g === "proved"), grades);
 check("HTML letters over the scene", ["X", "X\u2032", "F"].every((l) => letters.includes(l)), letters);
-check("one MathBox canvas", canvases === 1, canvases);
+check("one MathBox canvas in the playground", canvases === 1, canvases);
 check("no page errors", errors.length === 0, errors);
 
 console.log(JSON.stringify({ ok: fails.length === 0, fails, wasm, grades: grades.length, solveCounts, agreement, steps }));

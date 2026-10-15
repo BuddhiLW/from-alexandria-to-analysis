@@ -1,0 +1,7 @@
+{:erlangen {:title "Erlangen Program" :status :live :url "/erlangen-program/"}
+ :projective {:title "Projective geometry" :status :live :url "/projective/"}
+ :set-theory {:title "Set theory · Pinter course" :status :live :url "/set-theory/"}
+ :two-runtimes {:title "Clojure on Zig and Rust" :status :live :url "/clojure-on-zig-and-rust/"}
+ :group-theory {:title "A group-theory journey" :status :planned}
+ :physics {:title "Mathematics of physics" :status :planned}
+ :logic-computing {:title "Logic and computing" :status :planned}}

@@ -20,20 +20,25 @@
 ;; exists. The sections follow Cauchy's own order: the *Cours* (limit,
 ;; continuity, the root between two signs, series, the sum theorem), then
 ;; the *Résumé* (derivative, integral, fundamental theorem).
-^{:nextjournal.clerk/visibility {:code :hide :result :hide}}
 (ns cauchy
-  {:history/year 1821
-   :history/title "Cauchy, Cours d'analyse"
-   :history/era "Rigour"
+  {:history/year 1821 :history/title "Cauchy, Cours d'analyse" :history/era "Rigour"
+   :history/fields #{:analysis}
    :nextjournal.clerk/visibility {:code :hide :result :show}
    :nextjournal.clerk/toc true}
   (:require [alexandria.cauchy.analysis :as cauchy]
             [alexandria.cauchy.analysis-view :as view]
+            [alexandria.cauchy.limit-widget :as limit-widget]
+            [alexandria.cauchy.ratio-widget :as ratio-widget]
+            [alexandria.cauchy.playground :as playground]
+            [alexandria.cauchy.playground-limits :as limits]
+            [history-of-math.widgets :as hom]
             [clojure.string :as str]
             [history-of-math.page :as page]
             [nextjournal.clerk :as clerk]))
 
 ^{::clerk/visibility {:result :hide}}
+(hom/install!)
+
 (defn quotes
   "The French passages of part id, each with our English and the page."
   [id]
@@ -45,10 +50,8 @@
 ^{::clerk/visibility {:result :hide}}
 (def graded (cauchy/graded))
 
-^{::clerk/visibility {:result :hide}}
 (defn badges
-  "One line per graded check: its grade, who computed it (Emmy for a
-   symbolic or exact check, raster for a number) and its label."
+  "One line per graded check: its grade, who computed it and its label."
   [part]
   (clerk/html
    (into [:div {:style {:display "flex" :flex-direction "column" :gap "0.3em"}}]
@@ -59,6 +62,22 @@
                           :font-family "ui-monospace, monospace" :font-size "0.85em"
                           :border (str "1px solid " tone) :color tone}}
             (str (name grade) (if (= source :raster) " by raster: " " by Emmy: ") label)]))))
+
+(defn computed-note [label value]
+  (clerk/html [:div {:style {:font-family "ui-monospace, monospace" :margin "0.6em 0"}
+                     :data-raster-note label}
+               label " " value]))
+
+(defn raster-facts []
+  (let [xs (:xs (view/limit-data))
+        N (fn [eps] (first (for [j (range 1 40)
+                                 :when (every? (fn [[n x]] (or (< n j) (< (Math/abs (- x 1)) eps))) xs)] j)))
+        threshold (first (filter (fn [j] (every? #(< (cauchy/root-test-term %) (cauchy/expt-rational 3/4 %))
+                                                (range j 200))) (range 1 200)))]
+    {:ranks [(N 0.1) (N 0.03)]
+     :peak cauchy/si-pi
+     :error (cauchy/error-near-jump 48)
+     :threshold threshold}))
 
 ;; ## Paris, 1821
 ;;
@@ -91,6 +110,54 @@
 ;; a proof of the intermediate value theorem with the same definition of
 ;; continuity and the same criterion for convergence. It appeared as a
 ;; pamphlet in Prague and was not read in Paris.
+
+;; ## The limit: *Préliminaires*
+;;
+;; The *Cours* opens with definitions, before any algebra. Cauchy first
+;; says what a variable is, then what its limit is, and only then what an
+;; infinitely small is. The figure below draws the passage one sentence at
+;; a time: the current sentence is marked beside it, and each step adds
+;; only what that sentence brings in. Click a sentence to replay it.
+
+(quotes :cauchy/limit)
+
+(view/limit)
+
+;; Now try it yourself: drag the orange handle to narrow the band
+;; $1 \pm \varepsilon$ and the blue point to pick a rank $n$; the red cut is
+;; the rank $N(\varepsilon)$ after which every value stays inside.
+
+(limits/widget :limit)
+
+;; The doubter's distance is the band in the third step. For the variable
+;; $x_n = 1 + (-1)^n/n$, the computed ranks below show how a smaller
+;; distance asks for a later rank. Cauchy's circle follows, whose polygon
+;; areas $\frac{k}{2}\sin\frac{2\pi}{k}$ climb towards $\pi$.
+(let [{:keys [ranks]} (raster-facts)]
+  (computed-note "Raster ranks N(0.1), N(0.03):" (str (first ranks) ", " (second ranks))))
+
+
+;; ## Continuity: chapter II, section 2
+;;
+;; Thirty pages later Cauchy uses the infinitely small to define a
+;; continuous function. He speaks of a function "between two limits", and
+;; his letter for the increment is $\alpha$.
+
+(quotes :cauchy/continuity-ch2)
+
+(view/continuity-ch2)
+
+;; Now try it yourself: drag $x$ and $x + \alpha$ on the curve; the faded
+;; red strokes are the same increment for $\alpha/2, \alpha/4, \dots$.
+;; Move $x$ across the jump at 1 and the increment stops decreasing.
+
+(limits/widget :continuity-ch2)
+
+;; Notice what the definition asks: *for each value of $x$*, the difference
+;; $f(x + \alpha) - f(x)$ must decrease indefinitely with $\alpha$. In the
+;; figure the red segments are those differences at twelve values of $x$;
+;; each halving of $\alpha$ roughly halves the largest of them. At a jump one
+;; segment keeps its height whatever $\alpha$ is.
 
 ;; ## The limit, and continuity as a game
 
@@ -129,6 +196,31 @@
 
 (badges :continuity)
 
+;; ### Play the doubter: ε and δ tied
+;;
+;; Now play both sides. Every quantity in the panel is a control. Move
+;; $\varepsilon$ and $\delta$ answers: the largest window for that band,
+;; found by a search that halves $[0, 1]$ 48 times, each trial one raster
+;; kernel call that returns the 33 increments $|f(a + h) - f(a)|$ in the
+;; window; the faint blue bars under the plot are the first trials. Move
+;; $\delta$ and $\varepsilon$ answers: the worst increment $W(a, \delta)$ in
+;; that window, the narrowest band it fits. Move $a$ or change $f$ and the
+;; band stays, the window is solved again. For $x^2$ and $1/x$ the formula
+;; Emmy derives below is shown with the current numbers, beside the
+;; search's answer. Pick the jump and slide $a$ onto 1: whatever
+;; $\varepsilon$ below the jump you name, $\delta$ falls to 0.
+
+(limit-widget/widget)
+
+;; How Emmy finds the formula. On the worst side the edge of the window is
+;; where the increment equals $\varepsilon$: $F(\delta) = 0$. Emmy
+;; differentiates $F$ to read off its coefficients, sees that the third
+;; derivative vanishes (so $F$ is at most quadratic), and takes the positive
+;; root. Then it checks that the two maps, $\varepsilon \mapsto \delta$ and
+;; $\delta \mapsto \varepsilon$, undo each other.
+
+(limit-widget/derivation)
+
 ;; ## A root between two signs: chapter II and Note III
 ;;
 ;; Right after continuity, Cauchy states its first consequence (chapter
@@ -157,6 +249,12 @@
 ;; watch the tenths of a tenth.
 
 (view/ivt)
+
+;; Now try it yourself: drag $x_0$ and $X$ along the axis, change the
+;; number $m$ of parts or the function, and watch which intervals keep
+;; opposite signs at their ends and how the bracket narrows each round.
+
+(limits/widget :ivt)
 
 (badges :ivt)
 
@@ -189,13 +287,19 @@
 ;; $e = 2.71828\ldots$, and the *tail band*: from a stage $n$ on, every
 ;; later sum stays in a band that narrows as $n$ grows.
 
-(view/series)
+(clerk/col (view/series) (playground/widget :series))
 
 (badges :series)
 
 ;; ### The root test, as Cauchy proves it: chapter VI, Theorem 1
 
 (quotes :cauchy/root-test)
+
+;; Theorem 2 comes a page later. Cauchy gets it from Theorem 1 through a
+;; result of chapter II: when the ratio $u_{n+1}/u_n$ has a limit, the root
+;; $(u_n)^{1/n}$ has the same limit.
+
+(quotes :cauchy/ratio-test)
 
 ;; Let $k$ be the greatest limit of $(u_n)^{1/n}$. If $k < 1$, Cauchy puts
 ;; a number $U$ between $k$ and 1. The greatest values of $(u_n)^{1/n}$
@@ -206,14 +310,37 @@
 ;; same argument with $1 < U < k$ gives infinitely many terms above $U^n$,
 ;; which grow without bound. Theorem 2, the ratio test, follows because
 ;; when $u_{n+1}/u_n$ has a limit, that limit is $k$.
-;;
-;; The player follows the proof on $u_n = n^2/2^n$: the roots
-;; $(u_n)^{1/n} = n^{2/n}/2$ (a raster kernel) fall to $k = 1/2$; take
-;; $U = 3/4$; the exact fractions show $u_n < U^n$ from $n = 13$ on.
+;; The player follows $u_n = n^2/2^n$: the roots
+;; $(u_n)^{1/n} = n^{2/n}/2$ fall to $k = 1/2$. With $U = 3/4$,
+;; exact fractions locate the first rank beyond which $u_n < U^n$:
 
-(view/root-test)
+(computed-note "Exact threshold from raster-checked terms:" (:threshold (raster-facts)))
+
+(clerk/col (view/root-test) (playground/widget :root-test))
 
 (badges :root-test)
+
+;; ### Root and ratio side by side: pick a series
+;;
+;; Pick a series in the panel and drive $n$. The red curve is the root
+;; $(u_n)^{1/n}$, the blue one the ratio $u_{n+1}/u_n$; both close on the
+;; same $k$ (green), the ratio faster. Emmy writes the ratio in closed form
+;; beside the plot, and the second line substitutes the current $n$.
+;;
+;; $U$ and $N$ are tied by Cauchy's argument. Move $U$ (between $k$ and 1)
+;; and $N$ follows: the first rank from which every root stays below $U$,
+;; so that $u_n < U^n$. Move $N$ and $U$ follows: the greatest root from $N$
+;; on, the smallest $U$ that works from there, which is his "limit of the
+;; greatest values" read at $N$. For $2^n/n^2$, with $k = 2$, the same
+;; argument runs above 1 and the series diverges. For $1/n$ and $1/n^2$,
+;; $k = 1$: no $U$ exists, and the two theorems say nothing; one series
+;; diverges and the other converges. Every number in the table is a raster
+;; kernel of Emmy's $\log u_n$.
+
+(ratio-widget/widget)
+
+(ratio-widget/grades-list)
+
 
 ;; *Reading the original.* Chapter VI, section 2, pages 132-135 of the
 ;; 1821 *Cours*. He gives no figure and no numerical example for Theorem
@@ -243,22 +370,22 @@
 ;;
 ;; Watch the partial sums $S_n$ approach the sawtooth; the moving curve is
 ;; a compiled raster kernel. Near the jump they overshoot: the peak tends
-;; to $\int_0^\pi \frac{\sin t}{t}\,dt = 1.8519\ldots$, not to
-;; $\pi/2 = 1.5708$. Henry Wilbraham described this overshoot in 1848; it
-;; is named after Josiah Willard Gibbs, who met it again in 1899.
+;; to $\int_0^\pi \frac{\sin t}{t}\,dt$, not to $\pi/2$.
+;; Henry Wilbraham described the overshoot in 1848; Gibbs met it in 1899.
+(let [{:keys [peak error]} (raster-facts)]
+  (clerk/col (computed-note "Gibbs peak Si(π), raster quadrature:" (format "%.6f" peak))
+             (computed-note "Error at π−1/48, raster series:" (format "%.6f" error))))
+
 
 (view/sum-theorem)
 
 (badges :sum-theorem)
-
 ;; What is wrong with the proof? It picks one $n$ that makes the remainder
-;; small at $x$, and uses it for the points near $x$ too. In Abel's series
-;; no single $n$ serves: at $x = \pi - 1/n$ the error $|S_n(x) - x/2|$
-;; stays near $0.62$ for every $n$. The missing idea is *uniform
-;; convergence*: one $n$ for all $x$ at once. Philipp Ludwig von Seidel and
-;; George Stokes isolated it in 1847, and Weierstrass made it standard. With
-;; uniform convergence the theorem is true; Cauchy restated it that way in
-;; 1853. The story continues in the notebook on Riemann and Weierstrass.
+;; small at $x$, and uses it for nearby points. In Abel's series at
+;; $x = \pi - 1/n$, the error $|S_n(x) - x/2|$ stays away from zero.
+;; The missing hypothesis is *uniform convergence*: one $n$ for all $x$.
+;; Seidel and Stokes isolated it in 1847; Weierstrass made it standard.
+;; Cauchy restated the theorem in that form in 1853.
 ;;
 ;; The slider under the player sets $n$ for its last stage. Play that stage
 ;; and drag it from 10 to 48 terms: the red error bar at $x = \pi - 1/n$
@@ -288,6 +415,12 @@
 ;; kernel.
 
 (view/derivative)
+
+;; Now try it yourself: drag the two points on the curve, x and x + i,
+;; or pick another function, and watch the secant turn onto the tangent;
+;; put x on the jump to see the ratio run away.
+
+(limits/widget :derivative)
 
 (badges :derivative)
 
@@ -319,7 +452,7 @@
 ;; he lets the upper limit move and finds that the derivative of the
 ;; integral is $f$: the fundamental theorem of the calculus.
 
-(view/integral)
+(clerk/col (view/integral) (playground/widget :integral))
 
 ;; For a polynomial the sums have closed forms. With $n$ equal elements and
 ;; $f(x) = x^2$,
@@ -354,7 +487,7 @@
 ;; kernel, and the badge checks $|S' - S| \le (X - x_0)^2 / n$, the bound
 ;; equation (7) gives here since $|f'| \le 1$.
 
-(view/refinement)
+(clerk/col (view/refinement) (playground/widget :refinement))
 
 (badges :refinement)
 
@@ -371,7 +504,7 @@
 ;; raster quadrature of $1 + \sin t$, and $\theta$ for each $\alpha$ is
 ;; found by raster's Brent; it stays between 0 and 1 and tends to $1/2$.
 
-(view/fundamental)
+(clerk/col (view/fundamental) (playground/widget :fundamental))
 
 (badges :fundamental)
 
@@ -396,7 +529,7 @@
 ;; converges everywhere, to the wrong function. Zoom in on the origin and
 ;; magnify the height by a power: the graph only gets flatter.
 
-(view/flat)
+(clerk/col (view/flat) (playground/widget :flat))
 
 (badges :flat)
 

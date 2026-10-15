@@ -23,14 +23,21 @@
   {:history/year 1596
    :history/title "Kepler, Mysterium Cosmographicum"
    :history/era "Scientific Revolution"
+   :history/fields #{:mechanics-physics :geometry}
    :nextjournal.clerk/visibility {:code :hide :result :show}
    :nextjournal.clerk/toc true}
   (:require [alexandria.kepler.mysterium :as my]
             [alexandria.kepler.mysterium-view :as view]
+            [alexandria.kepler.mysterium-widget :as nest]
+            [alexandria.kepler.mysterium-playground :as nest-play]
             [alexandria.solids :as solids]
             [clojure.string :as str]
             [history-of-math.page :as page]
+            [history-of-math.widgets :as hom]
             [nextjournal.clerk :as clerk]))
+
+^{::clerk/visibility {:code :hide :result :hide}}
+(hom/install!)
 
 ;; ## Where the idea came from
 ;;
@@ -87,6 +94,42 @@
 ;; turning in space and drawn in orthographic projection.
 
 (view/player)
+
+;; Now try it yourself: reorder the five solids, scale the nest, and see
+;; which order fits Copernicus' distances best.
+
+(nest-play/playground)
+
+;; ## The nest in space, every radius tied
+;;
+;; Kepler wrote the rule down the moment he found it, in Latin, in the
+;; preface. Starting from the Earth:
+;;
+;; > *Terra est Circulus mensor omnium. Illi circumscribe Dodecaedron:
+;; > Circulus hoc comprehendens erit Mars.*
+;; > The Earth is the circle that measures all. Circumscribe a dodecahedron
+;; > about it: the circle containing that will be Mars.
+;; >
+;; > — Kepler, *Mysterium Cosmographicum* (1596), preface
+;;
+;; Below, the six spheres and the five solids in MathBox. Every radius is a
+;; slider, and the sliders are tied. The geometry fixes each ratio
+;; $r_{\text{inner}} / r_{\text{outer}}$, so moving one radius solves Saturn's
+;; back and carries the other five with it. The *shell* slider picks one
+;; solid. That solid is drawn bold and named, and its relation is shown with
+;; today's numbers. Copernicus' value is beside it, together with the miss.
+;; The orange rings are Copernicus' radii, set beside Kepler's spheres as
+;; Kepler set them in his table.
+
+(nest/widget)
+
+;; Emmy writes each radius as Saturn's radius times the chain of ratios
+;; outside it. It grades the tie both ways for every planet. Solving
+;; Saturn's radius back from a planet's and going forward again gives the
+;; identity:
+
+(nest/derivation)
+
 
 ;; ## The ratios, exactly
 ;;

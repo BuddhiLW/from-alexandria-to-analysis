@@ -25,12 +25,18 @@
   {:history/year 1687
    :history/title "Newton, Principia Mathematica"
    :history/era "Calculus"
+   :history/fields #{:mechanics-physics :analysis :geometry}
    :nextjournal.clerk/toc true
    :nextjournal.clerk/visibility {:code :hide :result :show}}
   (:require [alexandria.newton.principia-view :as view]
-            [clojure.string :as str]
+  [alexandria.calculus.playground-widget :as play]
+            [history-of-math.widgets :as hom]
+                      [clojure.string :as str]
             [history-of-math.page :as page]
             [nextjournal.clerk :as clerk]))
+
+^{::clerk/visibility {:code :hide :result :hide}}
+(hom/install!)
 
 ^{::clerk/visibility {:result :hide}}
 (defn badges [rows]
@@ -72,6 +78,9 @@
 ;; "any given difference".
 
 (view/lemma-1)
+;; Now try it yourself: change the curve and the number of rectangles.
+(play/playground :lemma)
+
 
 (badges (graded-where #(str/includes? % "Lemma")))
 
@@ -92,6 +101,9 @@
 ;; impulse.
 
 (view/proposition-1)
+;; Now try it yourself: vary the impulses, dt and force centre; equal areas need S.
+(play/playground :impulses)
+
 
 (badges (graded-where #(or (str/includes? % "SAB") (str/includes? % "SBc") (str/includes? % "polygon"))))
 
@@ -122,6 +134,9 @@
 ;; equation, which Jacques Binet wrote in 1818.
 
 (view/proposition-11)
+
+;; Now try it yourself: change e, P and the centre; the focus is essential.
+(play/playground :ellipse)
 
 (badges (graded-where #(or (str/includes? % "u =") (str/includes? % "acceleration")
                            (str/includes? % "a_x") (str/includes? % "a_y"))))

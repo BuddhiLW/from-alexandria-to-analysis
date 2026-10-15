@@ -1,0 +1,10 @@
+/* The series' rules over Mafs' core.css, loaded after it on every page.
+
+   A Mafs text label is only ink: no figure of the series ever clicks one.
+   Drawn after (over) a MovablePoint, a label set beside the point covered
+   its hitbox, took the mousedown, and Mafs panned the whole view instead of
+   moving the point. Click-through labels leave every handle to the pointer,
+   whatever order a figure draws its labels in. */
+.MafsView text {
+  pointer-events: none;
+}

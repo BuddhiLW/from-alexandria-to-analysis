@@ -164,6 +164,52 @@
   (variant (grade/grade :symbolic [(c/check check {})])))
 
 ;; ---------------------------------------------------------------------------
+;; The nest as a tie: every planet's radius from Saturn's, and back
+
+(defn chain
+  "The exact factor of planet i (0 = Saturn): the product of r/R of the
+   solids outside it, so r_i = r_Saturn * (chain i). Mercury on the
+   octahedron's insphere (Kepler's rule), or its midsphere with :mid."
+  ([i] (chain i :in))
+  ([i mercury]
+   (reduce e/* 1 (map-indexed (fn [j [_ id _]] (ratio id (if (= j 4) mercury :in)))
+                              (take i shells)))))
+
+(def copernicus-chain
+  "Copernicus' factors r_i / r_Saturn, from Kepler's table (outer = 1000)."
+  (vec (reductions (fn [acc {:keys [copernicus]}] (* acc (/ copernicus 1000))) 1 kepler-table)))
+
+(defn radius-of-saturn
+  "Forward: planet i's radius from Saturn's."
+  [i r-saturn]
+  (e/* r-saturn (chain i)))
+
+(defn saturn-of-radius
+  "Inverse: Saturn's radius from planet i's (linear in r_Saturn)."
+  [i r]
+  (e// r (chain i)))
+
+(defn chain-equations
+  "[{:label :eqs}] for emmy.clerk/->TeX: each planet's radius from Saturn's,
+   the factor in closed form."
+  []
+  [{:label "each sphere is the insphere of the solid outside it: r_inner = (r/R) r_outer, so from Saturn's sphere in"
+    :eqs (for [i (range 1 6)]
+           (list '= (symbol (str "r_" (name (planets i))))
+                 (e/simplify (radius-of-saturn i 'r_saturn))))}])
+
+(defn chain-grades
+  "[{:label :grade}]: forward then inverse and inverse then forward, for
+   every planet, each a difference Emmy simplifies to exact 0."
+  []
+  (vec (for [i (range 1 6)
+             [label diff] [[(str (name (planets i)) ": forward then inverse, r_Saturn(r_" (name (planets i)) "(r_Saturn)) = r_Saturn")
+                            (e/- (saturn-of-radius i (radius-of-saturn i 'r)) 'r)]
+                           [(str (name (planets i)) ": inverse then forward, r_" (name (planets i)) "(r_Saturn(r)) = r")
+                            (e/- (radius-of-saturn i (saturn-of-radius i 'r)) 'r)]]]
+         {:label label :grade (variant (grade/grade :symbolic [diff]))})))
+
+;; ---------------------------------------------------------------------------
 ;; The proposition as data
 
 (def proofs-resource "alexandria/kepler/mysterium_cosmographicum.proofs.edn")

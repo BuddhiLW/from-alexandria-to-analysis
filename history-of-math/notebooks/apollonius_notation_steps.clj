@@ -4,10 +4,12 @@
   {:history/year -200
    :history/title "Apollonius: how a plane cuts a cone, step by step"
    :history/era "Greek geometry"
+   :history/fields #{:geometry}
    :nextjournal.clerk/visibility {:code :hide :result :show}}
   (:require [alexandria.apollonius.notation-steps-view :as notation]
             [history-of-math.widgets :as hom]
-            [nextjournal.clerk :as clerk]))
+            [nextjournal.clerk :as clerk]
+            [history-of-math.page :as page]))
 
 ^{::clerk/visibility {:result :hide}}
 (hom/install!)
@@ -19,3 +21,6 @@
 ;; the Emmy construction in `alexandria.apollonius.conics`.
 
 (notation/figure)
+
+^{::clerk/no-cache true}
+(page/prev-next "notebooks/apollonius_notation_steps.clj")

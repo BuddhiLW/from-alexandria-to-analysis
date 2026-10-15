@@ -38,14 +38,27 @@
 (defn- line [palette p q f colour]
   (svg/polyline [p q] {:stroke (get palette colour) :width 0.014 :attrs (a/create f)}))
 
-(defn- i-1 [palette figures {{:keys [A B C]} :points} {:keys [ca cb join radii]}]
+(defn- i-1
+  "I.1 at progress {:ca :cb :join :ra :rb :radii}: the two circles traced,
+   the joins drawn, then each radius named in turn (Def. 15: AC with AB
+   in circle BCD, BC with BA in circle ACE), then all three equal."
+  [palette figures {{:keys [A B C]} :points} {:keys [ca cb join ra rb radii]}]
   (let [circle (fn [centre through f]
                  (when (pos? f)
                    (svg/polyline (traced figures centre through f)
-                                 {:stroke (:construction palette) :width 0.01})))]
+                                 {:stroke (:construction palette) :width 0.01})))
+        mark (fn [f p q colour]
+               (svg/polyline [p q] {:stroke (get palette colour) :width 0.04
+                                    :attrs (merge (a/create f) {:opacity 0.7})}))]
     [:g (circle A B ca) (circle B A cb)
      (svg/segment A B {:stroke (:ink palette) :width 0.016})
      (line palette C A join :found) (line palette C B join :found)
+     ;; Def. 15 in circle BCD: AC and AB are its radii
+     (mark ra A C :construction) (mark ra A B :construction)
+     (svg/layer (a/fade ra) (svg/text [-0.9 0.95] "AC = AB" {:size 0.1 :colour (:construction palette)}))
+     ;; Def. 15 in circle ACE: BC and BA are its radii
+     (mark rb B C :found) (mark rb B A :found)
+     (svg/layer (a/fade rb) (svg/text [0.9 0.95] "BC = BA" {:size 0.1 :colour (:found palette)}))
      (svg/layer (a/fade radii)
                 (svg/text [0 -0.35] "AC = AB = BC" {:size 0.1 :colour (:found palette)}))
      (svg/dot A (:ink palette)) (svg/dot B (:ink palette))
@@ -54,19 +67,23 @@
      (when (pos? ca) (label palette C "C"))]))
 
 (def ^:private i-1-at
-  "Each stage's progress map at step progress p, earlier stages complete."
-  {:given (fn [_] {})
-   :circle-a (fn [p] {:ca (a/play p 0 0.85)})
-   :circle-b (fn [p] {:ca 1 :cb (a/play p 0 0.85)})
-   :join (fn [p] {:ca 1 :cb 1 :join (a/play p 0 0.7)})
-   :radii (fn [p] {:ca 1 :cb 1 :join 1 :radii (a/play p 0 0.5)})
-   :equal (fn [_] {:ca 1 :cb 1 :join 1 :radii 1})
-   :done (fn [_] {:ca 1 :cb 1 :join 1 :radii 1})})
+  "Each stage's progress map at step progress p, earlier stages complete.
+   One stage per sentence of Heath's I.1 that adds to the figure."
+  (let [drawn {:ca 1 :cb 1 :join 1}]
+    {:given (fn [_] {})
+     :circle-a (fn [p] {:ca (a/play p 0 0.85)})
+     :circle-b (fn [p] {:ca 1 :cb (a/play p 0 0.85)})
+     :join (fn [p] {:ca 1 :cb 1 :join (a/play p 0 0.7)})
+     :radius-a (fn [p] (assoc drawn :ra (a/play p 0 0.6)))
+     :radius-b (fn [p] (assoc drawn :ra 1 :rb (a/play p 0 0.6)))
+     :radii (fn [p] (assoc drawn :ra 1 :rb 1 :radii (a/play p 0 0.5)))
+     :equal (fn [_] (assoc drawn :ra 1 :rb 1 :radii 1))
+     :done (fn [_] (assoc drawn :radii 1))}))
 
 (doseq [stage (keys i-1-at)]
   (defmethod scene/draw [:euclid/I.1 stage] [_ st p {:keys [palette figures data]}]
     (i-1 palette figures data
-         (merge {:ca 0 :cb 0 :join 0 :radii 0} ((i-1-at (scene/stage-kind st)) p)))))
+         (merge {:ca 0 :cb 0 :join 0 :ra 0 :rb 0 :radii 0}((i-1-at (scene/stage-kind st)) p)))))
 
 ;; ---------------------------------------------------------------------------
 ;; I.47

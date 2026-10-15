@@ -36,11 +36,13 @@
    :nextjournal.clerk/toc true
    :history/year 1872
    :history/title "Dedekind, Cantor, Lebesgue: the line made of numbers"
-   :history/era "Rigour"}
+   :history/era "Rigour"
+   :history/fields #{:set-theory :analysis :measure-theory}}
   (:require [alexandria.cantor.sets :as sets]
             [alexandria.cantor.sets-view :as sets-view]
             [alexandria.dedekind.cuts :as cuts]
             [alexandria.dedekind.cuts-view :as cuts-view]
+            [alexandria.dedekind.playground :as playground]
             [alexandria.lebesgue.measure :as measure]
             [alexandria.lebesgue.measure-view :as measure-view]
             [clojure.string :as str]
@@ -132,6 +134,9 @@
 ;; ever lands on the mark.
 
 (cuts-view/cut-sqrt-2)
+;; Now try it yourself: move Dedekind's cut and vary its radicand.
+(playground/cut)
+
 
 ;; Dedekind's proof that $A_1$ has no greatest member uses one formula.
 ;; For a positive rational $x$ and $D = 2$, put
@@ -225,6 +230,9 @@
 ;; whose value was already counted.
 
 (sets-view/zigzag)
+;; Now try it yourself: change the index of Cantor's enumeration.
+(playground/zigzag)
+
 
 ;; ### The algebraic numbers, counted by height
 ;;
@@ -246,6 +254,9 @@
 ;; exact rationals.
 
 (sets-view/heights)
+;; Now try it yourself: walk through the algebraic heights.
+(playground/heights)
+
 
 (clerk/md
  (str "| height $N$ | real algebraic numbers | $\\varphi(N)$ |\n|---:|:---|---:|\n"
@@ -283,6 +294,9 @@
 ;; place $\mu$, for every $\mu$.
 
 (sets-view/diagonal)
+;; Now try it yourself: edit Cantor's digits and flip the diagonal.
+(playground/diagonal)
+
 
 ;; In the same paper the same flip proves that every set has more subsets
 ;; than members, so Cantor's sizes of infinity have no largest one. The
@@ -354,6 +368,9 @@
 ;; dense set of points that takes up no length at all.
 
 (measure-view/measure-zero)
+;; Now try it yourself: cover the first N rationals with an ε-budget.
+(playground/measure-zero)
+
 
 ;; ### Dirichlet's function
 ;;
@@ -382,6 +399,9 @@
 ;; answer.
 
 (measure-view/dirichlet)
+;; Now try it yourself: refine Dirichlet's partition without closing its gap.
+(playground/dirichlet)
+
 
 (badges (measure/graded))
 

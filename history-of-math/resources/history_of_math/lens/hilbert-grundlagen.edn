@@ -1,0 +1,24 @@
+{:now [{:claim "Geometry is the theory of its axioms"
+        :modern "A geometry is any structure satisfying Hilbert's axioms; a statement is a theorem when it holds in every such structure, and by Gödel's completeness theorem exactly then is it provable from them."
+        :tex "T \\vDash \\varphi \\iff T \\vdash \\varphi"}
+       {:claim "Independence by models"
+        :modern "An axiom is independent of the others when some structure satisfies the others and not it. Moulton's plane (1902) satisfies the plane incidence and order axioms while Desargues' theorem fails."
+        :tex "T \\nvdash \\varphi \\iff T \\cup \\{\\neg\\varphi\\} \\text{ has a model}"}
+       {:claim "Coordinates and Desargues"
+        :modern "A projective plane is coordinatized by a division ring exactly when Desargues' theorem holds in it, and by a field exactly when Pappus' theorem holds; Hilbert proved the ordered versions of both in the Grundlagen."
+        :tex "\\text{Desargues} \\iff \\text{plane} \\cong \\mathbb{P}^2(D)"}
+       {:claim "Relative consistency"
+        :modern "The model in the real numbers proves that geometry is consistent if real arithmetic is. Gödel's second incompleteness theorem (1931) shows that arithmetic cannot prove its own consistency, so Hilbert's second problem has no finitary solution of the kind he hoped for."
+        :tex "\\mathrm{Con}(\\mathbb{R}) \\Rightarrow \\mathrm{Con}(\\text{Hilbert})"}]
+ :fields [{:field :logic-computing :label "Logic" :how "Model theory grew from the method of the Grundlagen: interpret the primitive words, check the axioms, read off what is and is not provable." :example "Tarski's decision procedure for elementary geometry (1948)."}
+          {:field :logic-computing :label "Computing" :how "Proof assistants formalize Hilbert's axioms and recheck his arguments mechanically." :example "The Coq formalization GeoCoq, which derives Hilbert's axioms from Tarski's."}
+          {:field :geometry :how "Finite and non-Desarguesian planes are classified by the algebra that coordinatizes them." :example "The Moulton plane and the projective planes over near-fields."}]
+ :tangents [{:series :projective :hook "Desargues' theorem is the incidence statement that lets a projective plane be given coordinates; the projective deck builds that plane." :link "/projective/"}
+            {:series :erlangen :hook "Klein (1872) defines a geometry by its group; Hilbert (1899) defines it by its axioms. The two answers meet in the coordinate model." :link "/erlangen-program/"}
+            {:series :logic-computing :hook "Hilbert's second problem leads to Gödel 1931 and to the formal proof systems of computing." :link "planned"}]
+ :texts [{:author "David Hilbert" :work "Grundlagen der Geometrie, Leipzig: Teubner 1899 (Festschrift zur Enthüllung des Gauss-Weber-Denkmals)" :year 1899 :url "https://archive.org/details/grundlagendergeo00hilb" :kind :archive :lang "de"}
+         {:author "David Hilbert" :work "The foundations of geometry, tr. E. J. Townsend, Chicago: Open Court 1902" :year 1902 :url "https://www.gutenberg.org/ebooks/17384" :kind :translation :lang "en"}
+         {:author "David Hilbert" :work "Mathematische Probleme, Göttinger Nachrichten 1900" :year 1900 :url "https://de.wikisource.org/wiki/Mathematische_Probleme" :kind :wikisource :lang "de"}]
+ :links [{:to "euclid-elements" :relation :generalizes :note "Euclid's postulates and tacit diagram assumptions made explicit as five groups of axioms."}
+         {:to "non-euclidean" :relation :uses :note "Beltrami's 1868 model is the pattern of a relative consistency proof that Hilbert repeats with coordinates."}
+         {:to "klein-erlangen" :relation :uses :note "Klein's projective models and his group view supply the transformations Hilbert's congruence axioms describe."}]}

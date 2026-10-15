@@ -219,4 +219,55 @@
    {:stage :zoom :why "every derivative"
     :claim "Each derivative is a polynomial in 1/x times exp(-1/x^2), and exp(-1/x^2) beats every power of 1/x: so f(0), f'(0), f''(0), ... are all 0. Zoom in: the graph only gets flatter."}
    {:stage :taylor :why "Lagrange refuted"
-    :claim "The Taylor series of f at 0 is 0 + 0 x + 0 x^2 + ...: it converges everywhere, to 0, not to f. A function is not its power series; Lagrange's foundation of the calculus on Taylor's series cannot stand."}]}}
+    :claim "The Taylor series of f at 0 is 0 + 0 x + 0 x^2 + ...: it converges everywhere, to 0, not to f. A function is not its power series; Lagrange's foundation of the calculus on Taylor's series cannot stand."}]}
+ :cauchy/limit {:source "Cours d'analyse 1821, Preliminaires, pp. 4-5 (Oeuvres, ser. 2, t. III, p. 19)"
+                :quotes
+                [{:fr "On nomme quantité variable celle que l'on considère comme devant recevoir successivement plusieurs valeurs différentes les unes des autres."
+                  :en "One calls a variable quantity one that is considered as having to receive successively several values different from one another."
+                  :source "Cours d'analyse 1821, Preliminaires, p. 4"}
+                 {:fr "Lorsque les valeurs successivement attribuées à une même variable s'approchent indéfiniment d'une valeur fixe, de manière à finir par en différer aussi peu que l'on voudra, cette dernière est appelée la limite de toutes les autres."
+                  :en "When the values successively attributed to one variable approach a fixed value indefinitely, so as to end by differing from it as little as one wishes, this last is called the limit of all the others."
+                  :source "Cours d'analyse 1821, Preliminaires, p. 4"}
+                 {:fr "Lorsque les valeurs numériques successives d'une même variable décroissent indéfiniment, de manière à s'abaisser au-dessous de tout nombre donné, cette variable devient ce qu'on nomme un infiniment petit ou une quantité infiniment petite."
+                  :en "When the successive numerical values of one variable decrease indefinitely, so as to fall below every given number, this variable becomes what is called an infinitely small, or an infinitely small quantity."
+                  :source "Cours d'analyse 1821, Preliminaires, p. 4"}]
+                :steps
+                [{:stage :variable :why "quantité variable"
+                  :claim "On nomme quantité variable celle que l'on considère comme devant recevoir successivement plusieurs valeurs différentes les unes des autres. (A variable receives values one after another: here x_n = 1 + (-1)^n/n, drawn as dots for n = 1, 2, 3, ...)"}
+                 {:stage :fixed :why "une valeur fixe"
+                  :claim "Lorsque les valeurs successivement attribuées à une même variable s'approchent indéfiniment d'une valeur fixe, (the fixed value, here 1, drawn as a line)"}
+                 {:stage :as-little :why "aussi peu que l'on voudra"
+                  :claim "de manière à finir par en différer aussi peu que l'on voudra, (name any distance eps: a band about 1; from some rank n on every value stays inside it; a smaller eps needs a later rank)"}
+                 {:stage :limit :why "la limite"
+                  :claim "cette dernière est appelée la limite de toutes les autres. (1 is the limit of the x_n)"}
+                 {:stage :circle :why "son exemple géométrique"
+                  :claim "En Géométrie, la surface du cercle est la limite vers laquelle convergent les surfaces des polygones inscrits, tandis que le nombre de leurs côtés croît de plus en plus. (inscribed polygons of 3, 4, 5, ... sides; their areas, from raster kernels, close on pi)"}
+                 {:stage :infinitesimal :why "infiniment petit"
+                  :claim "Lorsque les valeurs numériques successives d'une même variable décroissent indéfiniment, de manière à s'abaisser au-dessous de tout nombre donné, cette variable devient ce qu'on nomme un infiniment petit. Une variable de cette espèce a zéro pour limite. (the distances |x_n - 1| = 1/n fall below every number named)"}]}
+ :cauchy/continuity-ch2 {:source "Cours d'analyse 1821, ch. II, sec. 2, pp. 34-35 (Oeuvres, ser. 2, t. III, pp. 43-44)"
+                         :quotes
+                         [{:fr "Soit f(x) une fonction de la variable x, et supposons que, pour chaque valeur de x intermédiaire entre deux limites données, cette fonction admette constamment une valeur unique et finie."
+                           :en "Let f(x) be a function of the variable x, and suppose that, for each value of x between two given limits, this function always has one finite value."
+                           :source "Cours d'analyse 1821, ch. II, sec. 2, p. 34"}
+                          {:fr "Cela posé, la fonction f(x) sera, entre les deux limites assignées à la variable x, fonction continue de cette variable, si, pour chaque valeur de x intermédiaire entre ces limites, la valeur numérique de la différence f(x + α) - f(x) décroît indéfiniment avec celle de α."
+                           :en "This being so, the function f(x) will be, between the two limits assigned to the variable x, a continuous function of this variable if, for each value of x between these limits, the numerical value of the difference f(x + α) - f(x) decreases indefinitely with that of α."
+                           :source "Cours d'analyse 1821, ch. II, sec. 2, p. 34"}]
+                         :steps
+                         [{:stage :limits :why "deux limites données"
+                           :claim "Soit f(x) une fonction de la variable x, et supposons que, pour chaque valeur de x intermédiaire entre deux limites données, cette fonction admette constamment une valeur unique et finie. (Here f(x) = 1 + sin x between x_0 = 0.3 and X = 5.5.)"}
+                          {:stage :increment :why "un accroissement α"
+                           :claim "Si, en partant d'une valeur de x comprise entre ces limites, on attribue à la variable x un accroissement infiniment petit α, (a value x, and x + α beside it)"}
+                          {:stage :difference :why "la différence"
+                           :claim "la fonction elle-même recevra pour accroissement la différence f(x + α) - f(x), qui dépendra en même temps de la nouvelle variable α et de la valeur de x. (the rise from f(x) to f(x + α), drawn as a red segment)"}
+                          {:stage :every-x :why "pour chaque valeur de x"
+                           :claim "Cela posé, la fonction f(x) sera, entre les deux limites assignées à la variable x, fonction continue de cette variable, si, pour chaque valeur de x intermédiaire entre ces limites, (the same difference at many values of x at once)"}
+                          {:stage :decrease :why "décroît indéfiniment avec α"
+                           :claim "la valeur numérique de la différence f(x + α) - f(x) décroît indéfiniment avec celle de α. (α halves, again and again: every red segment shrinks with it; the largest of them is printed, from raster kernels)"}
+                          {:stage :jump :why "en d'autres termes"
+                           :claim "En d'autres termes, la fonction f(x) restera continue par rapport à x entre les limites données, si, entre ces limites, un accroissement infiniment petit de la variable produit toujours un accroissement infiniment petit de la fonction elle-même. (A function with a jump at 3 fails: at the x just left of 3 the difference stays near the jump however small α is.)"}]}
+ :cauchy/ratio-test {:source "Cours d'analyse 1821, ch. VI sec. 2, Th. 2, pp. 134-135 (Oeuvres, ser. 2, t. III, pp. 122-123)"
+                     :quotes
+                     [{:fr "Si, pour des valeurs croissantes de n, le rapport u_(n+1)/u_n converge vers une limite fixe k, la série (1) sera convergente toutes les fois que l'on aura k < 1, et divergente toutes les fois que l'on aura k > 1."
+                       :en "If, for increasing values of n, the ratio u_(n+1)/u_n converges towards a fixed limit k, the series (1) will be convergent whenever k < 1, and divergent whenever k > 1."
+                       :source "Cours d'analyse 1821, ch. VI, Th. 2 (Oeuvres p. 123)"}]
+                     :steps []}}

@@ -27,7 +27,8 @@
             [edamame.core :as edamame]
             [hive-dsl.result :as r]
             [malli.core :as m]
-            [malli.error :as me]))
+            [malli.error :as me]
+            [history-of-math.strands :as strands]))
 
 ;; ---------------------------------------------------------------------------
 ;; Port: where the notebook files come from
@@ -87,27 +88,32 @@
       (r/err {:history/error :notebook/no-ns-form :path path}))))
 
 (defn read-notebook
-  "Result of {:id :path :year :title :era} read from one file."
+  "Result of {:id :path :year :title :era :fields} read from one file."
   [{:keys [path text]}]
   (r/let-ok [md (ns-metadata path text)]
     (r/ok {:id (notebook-id path)
            :path path
            :year (:history/year md)
            :title (:history/title md)
-           :era (:history/era md)})))
+           :era (:history/era md)
+           :fields (:history/fields md)})))
 
 ;; ---------------------------------------------------------------------------
 ;; Promote
 
 (def Notebook
+  "A discovered notebook. :fields (:history/fields) is a non-empty set of
+   strand ids of strands.edn: the strands whose timelines the notebook is on."
   [:map
    [:id [:re #"^[a-z0-9][a-z0-9-]*$"]]
    [:path string?]
    [:year int?]
    [:title [:string {:min 1}]]
-   [:era [:string {:min 1}]]])
+   [:era [:string {:min 1}]]
+   [:fields strands/Fields]])
 
-(def ^:private key-of {:year :history/year :title :history/title :era :history/era})
+(def ^:private key-of {:year :history/year :title :history/title :era :history/era
+                       :fields :history/fields})
 
 (defn validate
   "Result of notebook nb, or an Err naming its file and what is missing or
@@ -116,7 +122,7 @@
   (if (m/validate Notebook nb)
     (r/ok nb)
     (let [explain (me/humanize (m/explain Notebook nb))
-          missing (vec (for [k [:year :title :era] :when (nil? (get nb k))] (key-of k)))]
+          missing (vec (for [k [:year :title :era :fields] :when (nil? (get nb k))] (key-of k)))]
       (r/err {:history/error :notebook/metadata
               :path (:path nb)
               :missing missing
@@ -219,12 +225,13 @@
 
 (defn release-bundle!
   "Release-compile nss with shadow-cljs (history-of-math.bundle, npm deps from
-   ./package.json) and store under out-path the bundle, the widget CSS and
-   the `vendor` scripts. Returns {:js \"_data/<hash>.js\" :css [\"css/<f>\"
-   ...]}, paths relative to out-path."
+   ./package.json) and store under out-path the bundle, the widget CSS
+   (history-of-math.widgets/stylesheets: node_modules' and the series' own)
+   and the `vendor` scripts. Returns {:js \"_data/<hash>.js\" :css
+   [\"css/<f>\" ...]}, paths relative to out-path."
   [nss out-path]
   (let [store! (requiring-resolve 'nextjournal.clerk.viewer/store+get-cas-url!)
-        css (deref (requiring-resolve 'history-of-math.widgets/css))
+        sheets ((requiring-resolve 'history-of-math.widgets/stylesheets))
         js-path ((requiring-resolve 'history-of-math.bundle/release!) nss)
         js (store! {:out-path out-path :ext "js"}
                    (java.nio.file.Files/readAllBytes (.toPath (io/file js-path))))]
@@ -233,8 +240,9 @@
     (doseq [[src name] vendor]
       (io/copy (io/file "node_modules" src) (io/file out-path "vendor" (str name ".js"))))
     {:js js
-     :css (vec (for [[src published] css]
-                 (do (io/copy (io/file "node_modules" src) (io/file out-path "css" published))
+     :css (vec (for [[src published] sheets]
+                 (do (with-open [in (io/input-stream src)]
+                       (io/copy in (io/file out-path "css" published)))
                      (str "css/" published))))}))
 
 (def ^:private !head-links

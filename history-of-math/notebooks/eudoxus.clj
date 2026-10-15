@@ -15,13 +15,22 @@
   {:history/year -350
    :history/title "Eudoxus, Elements V and XII"
    :history/era "Classical Greek"
+   :history/fields #{:geometry :analysis}
    :nextjournal.clerk/visibility {:code :hide :result :show}
    :nextjournal.clerk/toc true}
   (:require [alexandria.eudoxus.exhaustion-view :as view]
             [alexandria.eudoxus.proportion :as ep]
+            [alexandria.archimedes.playground :as playground]
+            [alexandria.eudoxus.ties :as ties]
+            [alexandria.eudoxus.widgets :as widgets]
+            [alexandria.medium.tied :as tie]
             [alexandria.proofs :as proofs]
             [history-of-math.page :as page]
+            [history-of-math.widgets :as hom]
             [nextjournal.clerk :as clerk]))
+
+^{::clerk/visibility {:result :hide}}
+(hom/install!)
 
 ;; ## The side and the diagonal
 ;;
@@ -60,6 +69,20 @@
 
 (page/grade-badges (drop 5 (ep/graded)))
 
+;; ### Definition 5, live
+;;
+;; Four magnitudes as bars, tied so that $C : D = A : B$. Move $A$, $B$ or
+;; $C$ and $D$ follows as the fourth proportional; move $D$ and $C$
+;; follows, with $A$ and $B$ held. The equimultiples $m$ and $n$ are free.
+;; The page names both comparisons live: $mA$ against $nB$, and $mC$
+;; against $nD$. Whatever $m$ and $n$ are, they come out *alike*, which is
+;; Definition 5. Emmy proves why: with $D = CB/A$,
+;; $mC - nD = \frac{C}{A}(mA - nB)$, and $\frac{C}{A} > 0$.
+
+(widgets/def-5)
+
+(tie/derivation (ties/equations) (take 3 (ties/grades)))
+
 ;; For the diagonal and the side, the test $n d > m s$ becomes, after
 ;; squaring with I.47, $2n^2 > m^2$: whole numbers only. Each fraction
 ;; $m/n$ falls below or above $d : s$, never on it.
@@ -89,11 +112,28 @@
 ;; the circle each covers is computed from its vertices.
 
 (view/xii-2)
+;; Now try it yourself: drag either diameter and double both polygons.
+(playground/eudoxus)
+
 
 (page/grade-badges (take 2 (drop 3 (ep/graded))))
+
+;; ### The exhaustion, live
+;;
+;; X.1 is the engine: given any $\varepsilon$, enough doublings leave less
+;; than $\varepsilon$ of the circle uncovered. Move $k$ and the
+;; $2^k$-gon and its leftover follow. Move $\varepsilon$ and $k$ follows,
+;; solved by Newton's method on Emmy's derivative.
+
+(widgets/xii-2)
+
+(page/grade-badges (drop 3 (ties/grades)))
 
 ;; ## Where this goes
 ;;
 ;; Archimedes, the next notebook, uses exhaustion to measure the circle and
 ;; the parabolic segment. The theory of Book V stays the foundation of
 ;; ratio until Dedekind's cuts of 1872 turn it into the real numbers.
+
+^{::clerk/no-cache true}
+(page/prev-next "notebooks/eudoxus.clj")

@@ -33,4 +33,25 @@
     :steps [[:goto "/"]
             [:wait-for "svg"]
             [:wait-ms 6000]
-            [:expect-js "document.body.innerText.indexOf('no drawing for') < 0"]]}]}}
+            [:expect-js "document.body.innerText.indexOf('no drawing for') < 0"]]}
+
+   {:id    :euler-widgets-mount
+    :tags  [:euler :widgets]
+    :doc   "Every widget mounts on the raster backend: Basel, e, e^{ix}, E101
+            ch. VII stepped, E230 stepped, the cut solid (MathBox canvas)."
+    :steps [[:goto "/"]
+            [:wait-for "[data-figure=\"euler-polyhedron\"]"]
+            [:wait-ms 6000]
+            [:expect-js "['euler-basel','euler-e','euler-cis','euler-base','euler-terms','euler-polyhedron'].every(id => document.querySelector('[data-figure=\"' + id + '\"]'))"]
+            [:expect-js "document.querySelector('[data-figure=\"euler-polyhedron\"]').querySelectorAll('canvas').length >= 1"]]}
+
+   {:id    :euler-cut-solid-named
+    :tags  [:euler :widgets]
+    :doc   "The cut solid starts as the cube named in Greek with V - E + F = 2;
+            the e^{ix} point is named (x = 2: second quadrant)."
+    :steps [[:goto "/"]
+            [:wait-for "[data-figure=\"euler-polyhedron\"]"]
+            [:wait-ms 6000]
+            [:expect-js "document.querySelector('[data-figure=\"euler-polyhedron\"]').dataset.name.indexOf('κύβος') >= 0"]
+            [:expect-js "document.querySelector('[data-figure=\"euler-polyhedron\"]').dataset.chi === '2'"]
+            [:expect-js "document.querySelector('[data-figure=\"euler-cis\"]').dataset.name.indexOf('second quadrant') === 0"]]}]}}

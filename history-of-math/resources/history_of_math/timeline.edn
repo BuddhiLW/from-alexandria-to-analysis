@@ -7,6 +7,8 @@
 ;;                                   series palette (history-of-math.series)
 ;;   :entries  [{:year :figure :work :significance :era}]
 ;;     :year      the work's date, an int, negative = BC
+;;     :fields    a non-empty set of strand ids (strands.edn): the strands
+;;                whose timelines the work is on; a tag, never a partition
 ;;     :circa     true when the date is approximate
 ;;     :notebook  the notebook id (file stem, _ -> -) when it is known; else
 ;;                the join takes a notebook of the same year whose
@@ -17,58 +19,309 @@
   {:id :medieval :title "From Oresme to Copernicus" :role :era/medieval}
   {:id :new-sciences :title "The new sciences" :role :era/new-sciences}
   {:id :calculus :title "The calculus" :role :era/calculus}
-  {:id :rigour :title "Analysis made rigorous" :role :era/rigour}]
+  {:id :rigour :title "Analysis made rigorous" :role :era/rigour}
+  {:id :structures :title "Structures, foundations and computation" :role :era/structures}]
 
  :entries
- [{:year -300 :circa true :figure "Euclid" :work "Elements" :era :greek :notebook "euclid-elements"
+ [{:year -300 :circa true :figure "Euclid" :work "Elements" :fields #{:geometry :number-theory} :era :greek :notebook "euclid-elements"
    :significance "Geometry and number deduced from definitions, postulates and common notions."}
-  {:year -250 :circa true :figure "Archimedes" :work "Measurement of a Circle; Quadrature of the Parabola; The Method" :era :greek :notebook "archimedes"
+  {:year -250 :circa true :figure "Archimedes" :work "Measurement of a Circle; Quadrature of the Parabola; The Method" :fields #{:geometry :analysis :mechanics-physics} :era :greek :notebook "archimedes"
    :significance "Exhaustion squeezes the circle and the parabola between polygons; the balance finds the result first."}
-  {:year -200 :circa true :figure "Apollonius" :work "Conics" :era :greek :notebook "apollonius-conics"
+  {:year -200 :circa true :figure "Apollonius" :work "Conics" :fields #{:geometry} :era :greek :notebook "apollonius-conics"
    :significance "Ellipse, parabola and hyperbola as sections of one cone, with their tangents and diameters."}
-  {:year 150 :circa true :figure "Ptolemy" :work "Almagest" :era :greek
+  {:year 150 :circa true :figure "Ptolemy" :work "Almagest" :fields #{:trigonometry :mechanics-physics :geometry} :era :greek :notebook "ptolemy-almagest"
    :significance "A table of chords and a geometric model that predicts the planets for fourteen centuries."}
-  {:year 1350 :circa true :figure "Oresme" :work "Tractatus de configurationibus qualitatum et motuum" :era :medieval
+  {:year 1350 :circa true :figure "Oresme" :work "Tractatus de configurationibus qualitatum et motuum" :fields #{:analysis :mechanics-physics} :era :medieval :notebook "oresme"
    :significance "A changing quality drawn as a figure; the area under uniform acceleration gives the mean speed rule."}
-  {:year 1543 :figure "Copernicus" :work "De revolutionibus orbium coelestium" :era :medieval
+  {:year 1543 :figure "Copernicus" :work "De revolutionibus orbium coelestium" :fields #{:mechanics-physics :trigonometry} :era :medieval :notebook "copernicus"
    :significance "The Sun at the centre: Ptolemy's circles rearranged around it."}
-  {:year 1596 :figure "Kepler" :work "Mysterium cosmographicum" :era :new-sciences
+  {:year 1596 :figure "Kepler" :work "Mysterium cosmographicum" :fields #{:mechanics-physics :geometry} :era :new-sciences
    :significance "The planetary spheres spaced by the five regular solids of Euclid XIII."}
-  {:year 1609 :figure "Kepler" :work "Astronomia nova" :era :new-sciences
+  {:year 1609 :figure "Kepler" :work "Astronomia nova" :fields #{:mechanics-physics :geometry} :era :new-sciences
    :significance "Mars moves on an ellipse with the Sun at a focus, sweeping equal areas in equal times."}
-  {:year 1619 :figure "Kepler" :work "Harmonices mundi" :era :new-sciences :notebook "kepler-laws"
+  {:year 1619 :figure "Kepler" :work "Harmonices mundi" :fields #{:mechanics-physics} :era :new-sciences :notebook "kepler-laws"
    :significance "The squares of the periods are as the cubes of the mean distances."}
-  {:year 1636 :circa true :figure "Fermat" :work "Ad locos planos et solidos isagoge; Methodus ad disquirendam maximam et minimam" :era :new-sciences :notebook "descartes-fermat"
+  {:year 1636 :circa true :figure "Fermat" :work "Ad locos planos et solidos isagoge; Methodus ad disquirendam maximam et minimam" :fields #{:geometry :algebra :analysis} :era :new-sciences :notebook "descartes-fermat"
    :significance "Curves as equations in two unknowns, and maxima found by adequality."}
-  {:year 1637 :figure "Descartes" :work "La Géométrie" :era :new-sciences :notebook "descartes-fermat"
+  {:year 1637 :figure "Descartes" :work "La Géométrie" :fields #{:geometry :algebra} :era :new-sciences :notebook "descartes-fermat"
    :significance "Geometric problems solved by algebra on coordinates; curves classified by their equations."}
-  {:year 1638 :figure "Galileo" :work "Discorsi e dimostrazioni matematiche intorno a due nuove scienze" :era :new-sciences
+  {:year 1638 :figure "Galileo" :work "Discorsi e dimostrazioni matematiche intorno a due nuove scienze" :fields #{:mechanics-physics :analysis} :era :new-sciences :notebook "galileo-two-new-sciences"
    :significance "Fall as uniform acceleration: distances as the squares of the times, projectiles on parabolas."}
-  {:year 1684 :figure "Leibniz" :work "Nova methodus pro maximis et minimis" :era :calculus :notebook "leibniz-nova-methodus"
+  {:year 1684 :figure "Leibniz" :work "Nova methodus pro maximis et minimis" :fields #{:analysis} :era :calculus :notebook "leibniz-nova-methodus"
    :significance "The differential calculus published: rules for d(xy), d(x/v) and tangents of any curve."}
-  {:year 1687 :figure "Newton" :work "Philosophiae naturalis principia mathematica" :era :calculus :notebook "newton-principia"
+  {:year 1687 :figure "Newton" :work "Philosophiae naturalis principia mathematica" :fields #{:mechanics-physics :analysis} :era :calculus :notebook "newton-principia"
    :significance "Kepler's laws derived from an inverse-square force by first and last ratios."}
-  {:year 1736 :figure "Euler" :work "Mechanica" :era :calculus
+  {:year 1736 :figure "Euler" :work "Mechanica" :fields #{:mechanics-physics :analysis} :era :calculus
    :significance "Newton's mechanics rewritten as differential equations in analytic form."}
-  {:year 1748 :figure "Euler" :work "Introductio in analysin infinitorum" :era :calculus :notebook "euler"
+  {:year 1748 :figure "Euler" :work "Introductio in analysin infinitorum" :fields #{:analysis :trigonometry} :era :calculus :notebook "euler"
    :significance "The function as the object of analysis; e, the exponential and series for sine and cosine."}
-  {:year 1788 :figure "Lagrange" :work "Mécanique analytique" :era :calculus :notebook "lagrange"
+  {:year 1788 :figure "Lagrange" :work "Mécanique analytique" :fields #{:mechanics-physics :analysis} :era :calculus :notebook "lagrange"
    :significance "Mechanics without figures: equations of motion from virtual work and generalized coordinates."}
-  {:year 1801 :figure "Gauss" :work "Disquisitiones arithmeticae" :era :calculus
+  {:year 1801 :figure "Gauss" :work "Disquisitiones arithmeticae" :fields #{:number-theory :abstract-algebra} :era :calculus :notebook "number-theory-gauss"
    :significance "Congruences, quadratic reciprocity, and the constructible regular 17-gon."}
-  {:year 1827 :figure "Gauss" :work "Disquisitiones generales circa superficies curvas" :era :calculus
+  {:year 1827 :figure "Gauss" :work "Disquisitiones generales circa superficies curvas" :fields #{:differential-geometry :geometry} :era :calculus :notebook "gauss"
    :significance "Curvature measured inside the surface: the Theorema Egregium."}
-  {:year 1821 :figure "Cauchy" :work "Cours d'analyse" :era :rigour :notebook "cauchy"
+  {:year 1829 :figure "Lobachevsky (and Bolyai 1832)" :work "On the principles of geometry; Geometrische Untersuchungen zur Theorie der Parallellinien (1840)" :fields #{:geometry} :era :structures :notebook "non-euclidean"
+   :significance "The parallel postulate dropped: two parallels through a point, the angle of parallelism tan(Π(x)/2) = e^−x."}
+  {:year 1868 :figure "Beltrami" :work "Saggio di interpretazione della geometria non-euclidea" :fields #{:geometry :differential-geometry :logic-computing} :era :structures :notebook "non-euclidean"
+   :significance "A model on the pseudosphere (K = −1): non-Euclidean geometry is as consistent as Euclid's."}
+  {:year 1821 :figure "Cauchy" :work "Cours d'analyse" :fields #{:analysis} :era :rigour :notebook "cauchy"
    :significance "Limits, continuity and convergence defined; the infinite series made an object of proof."}
-  {:year 1854 :figure "Riemann" :work "Über die Darstellbarkeit einer Function durch eine trigonometrische Reihe" :era :rigour :notebook "riemann-weierstrass"
+  {:year 1854 :figure "Riemann" :work "Über die Darstellbarkeit einer Function durch eine trigonometrische Reihe" :fields #{:analysis :trigonometry} :era :rigour :notebook "riemann-weierstrass"
    :significance "The integral defined by sums over partitions, and the question which functions it reaches."}
-  {:year 1872 :figure "Weierstrass" :work "Über continuirliche Functionen eines reellen Arguments" :era :rigour :notebook "riemann-weierstrass"
+  {:year 1854 :figure "Riemann" :work "Über die Hypothesen, welche der Geometrie zu Grunde liegen" :fields #{:geometry :differential-geometry :mechanics-physics} :era :structures :notebook "riemann-hypothesen"
+   :significance "Space as an n-fold manifold with a line element ds² = Σ g_ij dx_i dx_j; its curvature an empirical question."}
+  {:year 1872 :figure "Klein" :work "Vergleichende Betrachtungen über neuere geometrische Forschungen (the Erlangen programme)" :fields #{:geometry :algebra :abstract-algebra} :era :structures :notebook "klein-erlangen"
+   :significance "A geometry is the theory of the invariants of a group: Euclidean, affine, projective and hyperbolic geometry nested by their groups."}
+  {:year 1872 :figure "Weierstrass" :work "Über continuirliche Functionen eines reellen Arguments" :fields #{:analysis} :era :rigour :notebook "riemann-weierstrass"
    :significance "A continuous function with a derivative nowhere: intuition about curves is not proof."}
-  {:year 1872 :figure "Dedekind" :work "Stetigkeit und irrationale Zahlen" :era :rigour
+  {:year 1872 :figure "Dedekind" :work "Stetigkeit und irrationale Zahlen" :fields #{:analysis :set-theory} :era :rigour
    :significance "The real numbers as cuts of the rationals, Eudoxus' Book V made arithmetic."}
-  {:year 1874 :figure "Cantor" :work "Über eine Eigenschaft des Inbegriffes aller reellen algebraischen Zahlen" :era :rigour :notebook "dedekind-cantor"
+  {:year 1874 :figure "Cantor" :work "Über eine Eigenschaft des Inbegriffes aller reellen algebraischen Zahlen" :fields #{:set-theory :analysis} :era :rigour :notebook "dedekind-cantor"
    :significance "The algebraic numbers are countable; the real numbers are not."}
-  {:year 1902 :figure "Lebesgue" :work "Intégrale, longueur, aire" :era :rigour :notebook "dedekind-cantor"
+  {:year 1902 :figure "Lebesgue" :work "Intégrale, longueur, aire" :fields #{:measure-theory :analysis :probability} :era :rigour :notebook "dedekind-cantor"
    :significance "Measure first, then the integral: limits of integrals behave."}
-  {:year -350 :circa true :figure "Menaechmus (and Hippocrates, Archytas, Eratosthenes)" :work "The doubling of the cube (the Delian problem), as Eutocius collects the solutions" :era :greek :notebook "doubling-the-cube"
-   :significance "Two mean proportionals; the conic sections first appear as loci to double the cube. Wantzel proves it impossible with ruler and compass in 1837."}]}
+  {:year -350 :circa true :figure "Menaechmus (and Hippocrates, Archytas, Eratosthenes)" :work "The doubling of the cube (the Delian problem), as Eutocius collects the solutions" :fields #{:geometry :algebra} :era :greek :notebook "doubling-the-cube"
+   :significance "Two mean proportionals; the conic sections first appear as loci to double the cube. Wantzel proves it impossible with ruler and compass in 1837."}
+  {:year -350 :circa true :figure "Eudoxus" :work "The theory of proportion and the method of exhaustion (Elements V and XII)" :fields #{:geometry :analysis :number-theory} :era :greek :notebook "eudoxus"
+   :significance "Ratios of incommensurable magnitudes compared without numbers, and areas found by exhausting them with polygons."}
+  {:year 1696 :figure "Johann Bernoulli" :work "Problema novum ad cujus solutionem mathematici invitantur (the brachistochrone)" :fields #{:analysis :mechanics-physics} :era :calculus :notebook "bernoulli-brachistochrone"
+   :significance "The curve of fastest descent is a cycloid: the first problem of the calculus of variations."}
+
+  ;; --- planned works, strand by strand (wave H decision, 2026-10-12) ---
+
+  ;; geometry
+  {:year 1639 :figure "Desargues" :work "Brouillon project d'une atteinte aux événements des rencontres du cône avec un plan" :fields #{:geometry} :era :new-sciences
+   :significance "Parallel lines meet at a point at infinity, so every conic is a perspective image of a circle."}
+  {:year 1640 :figure "Pascal" :work "Essay pour les coniques" :fields #{:geometry} :era :new-sciences
+   :significance "The three intersections of opposite sides of a hexagon inscribed in a conic lie on one line."}
+  {:year 1799 :figure "Monge" :work "Géométrie descriptive" :fields #{:geometry} :era :calculus
+   :significance "Solids represented exactly by two orthogonal projections, the drawing method of engineering."}
+  {:year 1822 :figure "Poncelet" :work "Traité des propriétés projectives des figures" :fields #{:geometry} :era :structures
+   :significance "The properties a central projection preserves made a geometry of their own, with the principle of continuity and duality."}
+  {:year 1899 :figure "Hilbert" :work "Grundlagen der Geometrie" :fields #{:geometry :logic-computing} :era :structures :notebook "hilbert-grundlagen"
+   :significance "Incidence, order, parallels, congruence and continuity are separated into axiom groups; models test independence."}
+  {:year 1900 :figure "Hilbert" :work "Mathematische Probleme (Paris lecture)" :fields #{:logic-computing :geometry :number-theory} :era :structures :notebook "hilbert-grundlagen"
+   :significance "Twenty-three problems set an agenda, including the consistency of arithmetic and the axioms of physics."}
+
+  ;; trigonometry
+  {:year -140 :circa true :figure "Hipparchus" :work "The table of chords (lost; reported by Ptolemy and Theon)" :fields #{:trigonometry :mechanics-physics} :era :greek
+   :significance "The first table of chords of a circle, which turned angles into lengths for astronomy."}
+  {:year 499 :figure "Aryabhata" :work "Aryabhatiya" :fields #{:trigonometry :number-theory} :era :medieval
+   :significance "A table of half-chords, the sines, computed by a difference rule for 24 arcs of a quadrant."}
+  {:year 900 :circa true :figure "al-Battani" :work "Kitab az-Zij (the astronomical tables)" :fields #{:trigonometry :mechanics-physics} :era :medieval
+   :significance "Sines and cotangents in place of chords, with the cosine rule of spherical astronomy in words."}
+  {:year 1016 :circa true :figure "Ibn al-Haytham (Alhazen)" :work "Kitab al-Manazir (the Optics, written c. 1011-1021)" :fields #{:mechanics-physics :geometry} :era :medieval :notebook "alhazen-optics"
+   :significance "Sight by rays from every point of the object to the eye; equal angles of incidence and reflection; the point of reflection on a spherical mirror found by conics."}
+  {:year 1260 :circa true :figure "Nasir al-Din al-Tusi" :work "Treatise on the quadrilateral" :fields #{:trigonometry :geometry} :era :medieval
+   :significance "Trigonometry as a subject apart from astronomy: the sine law and all cases of the spherical triangle solved."}
+  {:year 1464 :circa true :figure "Regiomontanus" :work "De triangulis omnimodis (printed 1533)" :fields #{:trigonometry :geometry} :era :medieval :notebook "trig-chords-to-sines"
+   :significance "The first European textbook solving plane and spherical triangles of every kind."}
+  {:year 1572 :figure "Risner (ed.), Ibn al-Haytham" :work "Opticae thesaurus: Alhazeni Arabis libri septem (Basel)" :fields #{:geometry :analysis} :era :new-sciences :notebook "alhazen-optics"
+   :significance "The Latin Optics in print; Kepler 1604 and Barrow 1674 read Alhazen's problem and his theory of the image here."}
+  {:year 1579 :figure "Viète" :work "Canon mathematicus seu ad triangula" :fields #{:trigonometry} :era :new-sciences
+   :significance "Tables of all six functions at every minute, with formulas for the plane and spherical triangle."}
+  {:year 1595 :figure "Pitiscus" :work "Trigonometria" :fields #{:trigonometry} :era :new-sciences
+   :significance "The word trigonometry coined, in a manual that refined Rheticus' tables of sines."}
+  {:year 1614 :figure "Napier" :work "Mirifici logarithmorum canonis descriptio" :fields #{:trigonometry :analysis} :era :new-sciences
+   :significance "Logarithms of sines turn multiplication into addition, cutting the labour of astronomical calculation."}
+  {:year 1822 :figure "Fourier" :work "Théorie analytique de la chaleur" :fields #{:trigonometry :analysis :mechanics-physics} :era :rigour
+   :significance "Heat flow solved by sums of sines and cosines: any function on an interval as a trigonometric series."}
+
+  ;; algebra
+  {:year 820 :circa true :figure "al-Khwarizmi" :work "Al-kitab al-mukhtasar fi hisab al-jabr wa'l-muqabala" :fields #{:algebra} :era :medieval :notebook "algebra-cubic"
+   :significance "Quadratic equations sorted into six types and solved by completing the square, proved by figures."}
+  {:year 1070 :circa true :figure "Omar Khayyam" :work "Treatise on demonstration of problems of algebra" :fields #{:algebra :geometry} :era :medieval
+   :significance "Every type of cubic equation solved geometrically, by intersecting two conic sections."}
+  {:year 1202 :figure "Fibonacci" :work "Liber abaci" :fields #{:algebra :number-theory} :era :medieval
+   :significance "The Hindu-Arabic numerals and their algorithms brought to Europe, with the rabbit sequence as an exercise."}
+  {:year 1545 :figure "Cardano" :work "Ars magna" :fields #{:algebra} :era :medieval :notebook "algebra-cubic"
+   :significance "The general cubic and quartic solved by radicals, with square roots of negatives appearing on the way."}
+  {:year 1572 :figure "Bombelli" :work "L'Algebra" :fields #{:algebra} :era :new-sciences :notebook "algebra-cubic"
+   :significance "Rules for calculating with square roots of negative numbers, which make Cardano's formula give real roots."}
+  {:year 1591 :figure "Viète" :work "In artem analyticem isagoge" :fields #{:algebra} :era :new-sciences
+   :significance "Letters for known and unknown quantities alike: equations solved in general, not case by case."}
+  {:year 1799 :figure "Gauss" :work "Demonstratio nova theorematis omnem functionem algebraicam (doctoral dissertation)" :fields #{:algebra :analysis} :era :calculus
+   :significance "Every polynomial with real coefficients has a root, the fundamental theorem of algebra, proved by curves in the plane."}
+  {:year 1824 :figure "Abel" :work "Mémoire sur les équations algébriques" :fields #{:algebra} :era :rigour
+   :significance "The general equation of the fifth degree cannot be solved by radicals."}
+  {:year 1832 :figure "Galois" :work "Mémoire sur les conditions de résolubilité des équations par radicaux (presented 1830-1831, letter to Chevalier 29 May 1832)" :fields #{:abstract-algebra :algebra :number-theory} :era :structures :notebook "galois"
+   :significance "An equation is solvable by radicals exactly when its group of permutations of the roots is solvable."}
+  {:year 1846 :figure "Liouville (publishing Galois)" :work "Œuvres mathématiques d'Évariste Galois, Journal de mathématiques pures et appliquées 11, pp. 381-444" :fields #{:abstract-algebra :algebra} :era :structures :notebook "galois"
+   :significance "Galois' memoir printed fourteen years after his death, with the claim that solvability by radicals is decided by the group of the equation."}
+  {:year 1843 :figure "Hamilton" :work "On quaternions" :fields #{:abstract-algebra :geometry :mechanics-physics} :era :structures
+   :significance "Numbers i, j, k with i² = j² = k² = ijk = −1: a multiplication that does not commute and that rotates space."}
+  {:year 1844 :figure "Grassmann" :work "Die lineale Ausdehnungslehre" :fields #{:abstract-algebra :geometry} :era :structures
+   :significance "Vector spaces of any dimension and the exterior product, an algebra of extension built without coordinates."}
+  {:year 1858 :figure "Cayley" :work "A memoir on the theory of matrices" :fields #{:abstract-algebra} :era :structures
+   :significance "Matrices as objects added and multiplied, and every matrix a root of its own characteristic polynomial."}
+  {:year 1871 :figure "Dedekind" :work "Über die Theorie der ganzen algebraischen Zahlen (Supplement X to Dirichlet's Vorlesungen)" :fields #{:abstract-algebra :number-theory} :era :structures
+   :significance "Ideals restore unique factorization in rings of algebraic integers where numbers alone lose it."}
+  {:year 1921 :figure "Noether" :work "Idealtheorie in Ringbereichen" :fields #{:abstract-algebra} :era :structures
+   :significance "Rings in which every ascending chain of ideals stops, the axiom from which decomposition of ideals follows."}
+
+  ;; number theory
+  {:year 250 :circa true :figure "Diophantus" :work "Arithmetica" :fields #{:number-theory :algebra} :era :greek
+   :significance "Equations solved in rational numbers with an abbreviated symbol for the unknown and its powers."}
+  {:year 628 :figure "Brahmagupta" :work "Brahmasphutasiddhanta" :fields #{:number-theory :algebra} :era :medieval
+   :significance "Rules for zero and negative numbers, and a composition law that solves Nx² + 1 = y² in integers."}
+  {:year 1640 :figure "Fermat" :work "Letters to Frénicle and Mersenne" :fields #{:number-theory} :era :new-sciences
+   :significance "If p is prime, a^p − a is divisible by p: the little theorem, with primes as sums of two squares."}
+  {:year 1737 :figure "Euler" :work "Variae observationes circa series infinitas" :fields #{:number-theory :analysis} :era :calculus
+   :significance "The sum of 1/n^s equals the product over primes of 1/(1 − p^−s), so there are infinitely many primes by analysis."}
+  {:year 1770 :figure "Lagrange" :work "Démonstration d'un théorème d'arithmétique" :fields #{:number-theory} :era :calculus
+   :significance "Every positive integer is a sum of four squares."}
+  {:year 1837 :figure "Dirichlet" :work "Beweis des Satzes, dass jede unbegrenzte arithmetische Progression … unendlich viele Primzahlen enthält" :fields #{:number-theory :analysis} :era :rigour
+   :significance "Every progression a, a + q, a + 2q, … with a and q coprime holds infinitely many primes, proved with L-series."}
+  {:year 1859 :figure "Riemann" :work "Ueber die Anzahl der Primzahlen unter einer gegebenen Grösse" :fields #{:number-theory :analysis} :era :rigour
+   :significance "The count of primes written as a sum over the zeros of the zeta function in the complex plane."}
+
+  ;; probability
+  {:year 1564 :circa true :figure "Cardano" :work "Liber de ludo aleae (published 1663)" :fields #{:probability :graph-theory} :era :medieval
+   :significance "Fair stakes in dice reckoned by counting the equally likely outcomes."}
+  {:year 1654 :figure "Pascal and Fermat" :work "Correspondence on the problem of points" :fields #{:probability :graph-theory} :era :new-sciences :notebook "probability-points-1654"
+   :significance "An interrupted game's stakes divided by the chances each player had of winning: expectation by counting and by recursion."}
+  {:year 1657 :figure "Huygens" :work "De ratiociniis in ludo aleae" :fields #{:probability} :era :new-sciences
+   :significance "The first printed treatise on chance, built on the value of an expectation."}
+  {:year 1713 :figure "Jacob Bernoulli" :work "Ars conjectandi" :fields #{:probability :graph-theory} :era :calculus
+   :significance "The law of large numbers: the observed frequency approaches the probability as the trials multiply."}
+  {:year 1738 :figure "de Moivre" :work "The Doctrine of Chances (2nd ed., with the 1733 approximation)" :fields #{:probability :analysis} :era :calculus
+   :significance "The binomial distribution approximated by the bell curve e^(−x²), the first central limit theorem."}
+  {:year 1763 :figure "Bayes" :work "An Essay towards solving a Problem in the Doctrine of Chances" :fields #{:probability} :era :calculus
+   :significance "The probability of a cause inferred from observed events: inverse probability."}
+  {:year 1809 :figure "Gauss" :work "Theoria motus corporum coelestium" :fields #{:probability :mechanics-physics} :era :calculus
+   :significance "Least squares justified by the normal law of errors, and used to recover the orbit of Ceres."}
+  {:year 1812 :figure "Laplace" :work "Théorie analytique des probabilités" :fields #{:probability :analysis} :era :calculus
+   :significance "Generating functions and the central limit theorem gather probability into one analytic theory."}
+  {:year 1867 :figure "Chebyshev" :work "Des valeurs moyennes" :fields #{:probability} :era :rigour
+   :significance "An inequality bounding deviations from the mean proves the law of large numbers in a few lines."}
+  {:year 1906 :figure "Markov" :work "Extension of the law of large numbers to dependent quantities" :fields #{:probability} :era :structures
+   :significance "Chains of trials where each depends on the one before still obey the law of large numbers."}
+  {:year 1933 :figure "Kolmogorov" :work "Grundbegriffe der Wahrscheinlichkeitsrechnung" :fields #{:probability :measure-theory} :era :structures
+   :significance "Probability axiomatized as a measure of total mass one, joining chance to Lebesgue's integral."}
+
+  ;; topology
+  {:year 1654 :figure "Pascal" :work "Traité du triangle arithmétique" :fields #{:graph-theory :probability :number-theory} :era :new-sciences
+   :significance "The arithmetic triangle's entries count combinations and divide the stakes of an interrupted game."}
+  {:year 1736 :figure "Euler" :work "Solutio problematis ad geometriam situs pertinentis" :fields #{:graph-theory :topology} :era :calculus
+   :significance "No walk crosses Königsberg's seven bridges once each, decided by the parity of the bridges at each landmass."}
+  {:year 1752 :figure "Euler" :work "Elementa doctrinae solidorum" :fields #{:topology :geometry :graph-theory} :era :calculus :notebook "euler"
+   :significance "For every convex polyhedron, vertices minus edges plus faces equals two."}
+  {:year 1847 :figure "Listing" :work "Vorstudien zur Topologie" :fields #{:topology} :era :structures
+   :significance "The word topology coined for the study of properties unchanged by continuous deformation."}
+  {:year 1851 :figure "Riemann" :work "Grundlagen für eine allgemeine Theorie der Functionen einer veränderlichen complexen Grösse" :fields #{:topology :analysis} :era :rigour
+   :significance "A many-valued function lives on a surface spread over the plane, and the surface's connectivity governs the function."}
+  {:year 1865 :figure "Möbius" :work "Über die Bestimmung des Inhaltes eines Polyëders" :fields #{:topology :geometry} :era :structures
+   :significance "A surface with one side, the Möbius band, on which volume and orientation cannot be assigned consistently."}
+  {:year 1871 :figure "Betti" :work "Sopra gli spazi di un numero qualunque di dimensioni" :fields #{:topology} :era :structures
+   :significance "Numbers that count independent cycles of each dimension of a space, its connectivity in every dimension."}
+  {:year 1895 :figure "Poincaré" :work "Analysis situs" :fields #{:topology :abstract-algebra} :era :structures
+   :significance "The fundamental group and homology make algebraic invariants of a manifold, with duality for its Betti numbers."}
+  {:year 1911 :figure "Brouwer" :work "Über Abbildung von Mannigfaltigkeiten" :fields #{:topology} :era :structures
+   :significance "Every continuous map of a ball to itself fixes a point, and dimension is a topological invariant."}
+
+  ;; logic and computing
+  {:year -350 :circa true :figure "Aristotle" :work "Prior Analytics" :fields #{:logic-computing} :era :greek
+   :significance "The syllogism: valid inference classified by form alone, whatever the terms stand for."}
+  {:year 1703 :figure "Leibniz" :work "Explication de l'arithmétique binaire" :fields #{:logic-computing :number-theory} :era :calculus
+   :significance "Numbers written with 0 and 1 only, the arithmetic in which a machine can calculate by switching."}
+  {:year 1854 :figure "Boole" :work "An Investigation of the Laws of Thought" :fields #{:logic-computing :abstract-algebra} :era :structures
+   :significance "Logical reasoning written as algebra on classes, with x² = x as its law."}
+  {:year 1879 :figure "Frege" :work "Begriffsschrift" :fields #{:logic-computing} :era :structures
+   :significance "A formal language with quantifiers in which every step of a proof is checkable by rule."}
+  {:year 1889 :figure "Peano" :work "Arithmetices principia, nova methodo exposita" :fields #{:logic-computing :number-theory} :era :structures
+   :significance "The natural numbers axiomatized by zero, successor and induction."}
+  {:year 1931 :figure "Gödel" :work "Über formal unentscheidbare Sätze der Principia Mathematica und verwandter Systeme I" :fields #{:logic-computing :number-theory} :era :structures
+   :significance "Any consistent formal system that contains arithmetic has true statements it cannot prove."}
+  {:year 1936 :figure "Turing" :work "On computable numbers, with an application to the Entscheidungsproblem" :fields #{:logic-computing} :era :structures
+   :significance "Computation defined by a machine reading a tape, and a universal machine that runs any other; no machine decides all of mathematics."}
+
+  ;; differential geometry
+  {:year 1767 :figure "Euler" :work "Recherches sur la courbure des surfaces (E333)" :fields #{:differential-geometry :geometry} :era :calculus
+   :significance "The curvature of a surface at a point read from its normal sections, whose extreme curvatures lie in two perpendicular directions."}
+  {:year 1807 :figure "Monge" :work "Application de l'analyse à la géométrie" :fields #{:differential-geometry :analysis} :era :calculus
+   :significance "Curves and surfaces studied by partial differential equations, with lines of curvature and developable surfaces."}
+  {:year 1869 :figure "Christoffel" :work "Über die Transformation der homogenen Differentialausdrücke zweiten Grades" :fields #{:differential-geometry} :era :structures
+   :significance "The symbols that tell how a quadratic differential form changes under a change of variables, and the curvature tensor built from them."}
+  {:year 1900 :figure "Ricci and Levi-Civita" :work "Méthodes de calcul différentiel absolu et leurs applications" :fields #{:differential-geometry :mechanics-physics} :era :structures
+   :significance "The absolute differential calculus: tensors whose equations keep their form in every coordinate system."}
+  {:year 1916 :figure "Einstein" :work "Die Grundlage der allgemeinen Relativitätstheorie" :fields #{:differential-geometry :mechanics-physics} :era :structures
+   :significance "General relativity written out in the tensor calculus of Ricci and Levi-Civita: the metric of spacetime is the gravitational field."}
+  {:year 1917 :figure "Levi-Civita" :work "Nozione di parallelismo in una varietà qualunque" :fields #{:differential-geometry} :era :structures
+   :significance "Parallel transport of a vector along a curve in any Riemannian manifold, the connection behind the covariant derivative."}
+
+  ;; measure theory
+  {:year 1892 :figure "Jordan" :work "Remarques sur les intégrales définies" :fields #{:measure-theory :analysis} :era :rigour
+   :significance "The content of a set squeezed between the inner and outer areas of grids of squares, and the integral defined over such sets."}
+  {:year 1898 :figure "Borel" :work "Leçons sur la théorie des fonctions" :fields #{:measure-theory :set-theory} :era :rigour
+   :significance "A measure on the sets built from intervals by countable unions and complements, adding over countably many disjoint pieces."}
+  {:year 1904 :figure "Lebesgue" :work "Leçons sur l'intégration et la recherche des fonctions primitives" :fields #{:measure-theory :analysis} :era :rigour
+   :significance "The integral by slicing the range rather than the domain, with the theorem that a bounded convergent sequence may be integrated term by term."}
+  {:year 1905 :figure "Vitali" :work "Sul problema della misura dei gruppi di punti di una retta" :fields #{:measure-theory :set-theory} :era :rigour
+   :significance "With the axiom of choice, a set of points on the line to which no translation-invariant measure can be assigned."}
+  {:year 1913 :figure "Radon" :work "Theorie und Anwendungen der absolut additiven Mengenfunktionen" :fields #{:measure-theory :analysis} :era :rigour
+   :significance "Lebesgue's and Stieltjes' integrals joined in one integral with respect to any countably additive set function on n-space."}
+  {:year 1914 :figure "Carathéodory" :work "Über das lineare Maß von Punktmengen" :fields #{:measure-theory} :era :rigour
+   :significance "A measure built from any outer measure, the measurable sets being those that split every other set additively."}
+  {:year 1914 :figure "Hausdorff" :work "Grundzüge der Mengenlehre" :fields #{:set-theory :topology :measure-theory} :era :structures
+   :significance "Set theory gathered into one book, with topological spaces defined by neighbourhoods and the paradox that no measure suits every subset of the sphere."}
+
+  ;; abstract algebra
+  {:year 1854 :figure "Cayley" :work "On the theory of groups, as depending on the symbolic equation θⁿ = 1" :fields #{:abstract-algebra} :era :structures
+   :significance "A group defined abstractly by its multiplication table, whatever its elements are."}
+  {:year 1870 :figure "Jordan" :work "Traité des substitutions et des équations algébriques" :fields #{:abstract-algebra :algebra} :era :structures
+   :significance "Galois' theory set out as a theory of permutation groups, with composition series and their invariant factors."}
+  {:year 1894 :figure "Dedekind" :work "Über die Theorie der ganzen algebraischen Zahlen (Supplement XI to Dirichlet's Vorlesungen, 4th ed.)" :fields #{:abstract-algebra :number-theory} :era :structures
+   :significance "Fields, modules and ideals as the objects of algebra, and the Galois group as the group of automorphisms of a field."}
+  {:year 1895 :figure "Weber" :work "Lehrbuch der Algebra" :fields #{:abstract-algebra :algebra} :era :structures
+   :significance "The textbook that defines groups and fields by axioms and develops Galois theory from them."}
+  {:year 1896 :figure "Frobenius" :work "Über Gruppencharaktere" :fields #{:abstract-algebra} :era :structures
+   :significance "Characters of a finite group, the traces of its representations by matrices, which classify its representations."}
+  {:year 1910 :figure "Steinitz" :work "Algebraische Theorie der Körper" :fields #{:abstract-algebra} :era :structures
+   :significance "Every field classified by its characteristic and built from a prime field by algebraic and transcendental extension."}
+
+  ;; graph theory and combinatorics
+  {:year 1666 :figure "Leibniz" :work "Dissertatio de arte combinatoria" :fields #{:graph-theory :logic-computing} :era :new-sciences
+   :significance "Combinations and permutations counted, and complex concepts proposed as combinations of simple ones."}
+  {:year 1847 :figure "Kirchhoff" :work "Über die Auflösung der Gleichungen, auf welche man bei der Untersuchung der linearen Vertheilung galvanischer Ströme geführt wird" :fields #{:graph-theory :mechanics-physics} :era :structures
+   :significance "The currents of an electrical network solved through its spanning trees, counted by a determinant."}
+  {:year 1857 :figure "Cayley" :work "On the theory of the analytical forms called trees" :fields #{:graph-theory} :era :structures
+   :significance "Trees counted to enumerate the iterated derivatives of the calculus, later the isomers of chemistry."}
+  {:year 1857 :figure "Hamilton" :work "The Icosian game" :fields #{:graph-theory :abstract-algebra} :era :structures
+   :significance "A closed tour of the dodecahedron's vertices through each exactly once, played from Hamilton's icosian calculus."}
+  {:year 1879 :figure "Kempe" :work "On the geographical problem of the four colours" :fields #{:graph-theory :topology} :era :structures
+   :significance "A proof that four colours suffice for any map, by swapping colours along chains, accepted for eleven years."}
+  {:year 1890 :figure "Heawood" :work "Map-colour theorem" :fields #{:graph-theory :topology} :era :structures
+   :significance "Kempe's proof broken, five colours proved to suffice on the plane, and the number needed on surfaces of higher genus bounded."}
+
+  ;; set theory
+  {:year 1883 :figure "Cantor" :work "Grundlagen einer allgemeinen Mannigfaltigkeitslehre" :fields #{:set-theory} :era :rigour
+   :significance "The transfinite ordinal numbers, counted past every finite number by generating and limiting principles."}
+  {:year 1888 :figure "Dedekind" :work "Was sind und was sollen die Zahlen?" :fields #{:set-theory :logic-computing :number-theory} :era :rigour
+   :significance "The natural numbers built from sets and maps, with a set defined as infinite when it is equivalent to a proper part of itself."}
+  {:year 1891 :figure "Cantor" :work "Über eine elementare Frage der Mannigfaltigkeitslehre" :fields #{:set-theory :logic-computing} :era :rigour
+   :significance "The diagonal argument: no list exhausts the infinite sequences of two symbols, and every set has more subsets than elements."}
+  {:year 1895 :figure "Cantor" :work "Beiträge zur Begründung der transfiniten Mengenlehre" :fields #{:set-theory} :era :rigour
+   :significance "Cardinal and ordinal numbers with their arithmetic, the alephs, and order types of ordered sets."}
+  {:year 1904 :figure "Zermelo" :work "Beweis, dass jede Menge wohlgeordnet werden kann" :fields #{:set-theory :logic-computing} :era :structures
+   :significance "Every set can be well-ordered, proved from an axiom of choice made explicit for the first time."}
+  {:year 1908 :figure "Zermelo" :work "Untersuchungen über die Grundlagen der Mengenlehre I" :fields #{:set-theory :logic-computing} :era :structures
+   :significance "Set theory axiomatized so that the paradoxes cannot be formed: sets are carved out of given sets by definite properties."}
+
+  ;; logic and computing
+  {:year 1931 :figure "Gödel" :work "Über formal unentscheidbare Sätze der Principia Mathematica und verwandter Systeme I" :fields #{:logic-computing :number-theory} :era :structures :notebook "goedel-turing"
+   :significance "Arithmetization lets a sufficiently strong consistent formal system express a sentence asserting its own unprovability; its consistency cannot be proved within it. Monatshefte für Mathematik und Physik 38, 173-198."}
+  {:year 1936 :figure "Turing" :work "On computable numbers, with an application to the Entscheidungsproblem" :fields #{:logic-computing} :era :structures :notebook "goedel-turing"
+   :significance "A machine formalizes effective calculation; diagonalization shows no general decision procedure for whether a machine halts. Proceedings of the London Mathematical Society (2) 42, 230-265."}
+
+  ;; mechanics, physics and astronomy
+  {:year 1834 :figure "Hamilton" :work "On a general method in dynamics" :fields #{:mechanics-physics :analysis} :era :rigour
+   :significance "Motion from one function of positions and momenta, the Hamiltonian, through first-order canonical equations."}
+  {:year 1865 :figure "Maxwell" :work "A dynamical theory of the electromagnetic field" :fields #{:mechanics-physics :analysis} :era :structures
+   :significance "Electricity and magnetism in one set of field equations whose waves travel at the speed of light."}
+  {:year 1905 :figure "Einstein" :work "Zur Elektrodynamik bewegter Körper" :fields #{:mechanics-physics :geometry} :era :structures
+   :significance "The same laws and the same speed of light in every inertial frame, so time and length depend on the observer."}
+  {:year 1915 :figure "Einstein" :work "Die Feldgleichungen der Gravitation" :fields #{:mechanics-physics :differential-geometry} :era :structures
+   :significance "Gravity as the curvature of a Riemannian metric on spacetime, set by the matter it contains."}
+  {:year 1918 :figure "Noether" :work "Invariante Variationsprobleme (Göttinger Nachrichten, Math.-phys. Klasse, 235–257)" :fields #{:mechanics-physics :analysis :abstract-algebra} :era :structures :notebook "noether-1918"
+   :significance "Every continuous symmetry of an action gives a conserved quantity: time gives energy, rotation gives angular momentum."}]}

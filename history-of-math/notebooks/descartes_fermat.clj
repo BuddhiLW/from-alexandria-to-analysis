@@ -30,20 +30,29 @@
 ;; the *Œuvres de Fermat*, edited by Paul Tannery and Charles Henry, volume I
 ;; (Paris, 1891). The English under each quotation is this series' own
 ;; rendering.
-^{:nextjournal.clerk/visibility {:code :hide :result :hide}}
 (ns descartes-fermat
   {:history/year 1637
    :history/title "Descartes and Fermat: the algebra of curves"
    :history/era "Scientific Revolution"
+   :history/fields #{:geometry :algebra :analysis}
    :nextjournal.clerk/visibility {:code :hide :result :show}
    :nextjournal.clerk/toc true}
   (:require [alexandria.descartes.geometrie :as g]
             [alexandria.descartes.geometrie-view :as gv]
+            [alexandria.fermat.loci :as loci]
+            [alexandria.fermat.loci-view :as lv]
             [alexandria.fermat.maxima :as fm]
             [alexandria.fermat.maxima-view :as fv]
+            [alexandria.fermat.playgrounds :as play]
+            [alexandria.fermat.tangent-widget :as tw]
+            [alexandria.fermat.tie :as tie]
             [clojure.string :as str]
             [history-of-math.page :as page]
+            [history-of-math.widgets :as hom]
             [nextjournal.clerk :as clerk]))
+
+^{::clerk/visibility {:code :hide :result :hide}}
+(hom/install!)
 
 ^{::clerk/visibility {:result :hide}}
 (defn badges
@@ -237,6 +246,8 @@
 ;; the vertex to $P$. They coincide at $v = 3/2$.
 
 (gv/normal)
+(clerk/md "*Now try it yourself:* change Descartes’ curve and drag C or the circle centre P.")
+(play/normal-playground)
 
 (badges (:normals (g/graded)))
 
@@ -284,6 +295,30 @@
 ;; ordinate $EQ$. Descartes leaves the curve unnamed in the woodcut,
 ;; because the same figure serves all his examples. The player draws his
 ;; ellipse and the circle from raster kernels, with his letters.
+
+;; ### Descartes' normal, live, on every conic
+;;
+;; Descartes says why the method works in one sentence. As $E$ comes
+;; nearer to $C$, the two roots differ less and less:
+
+(quote-block "enfin elles sont entièrement égales, s'ils sont tous deux joints en un ; c'est-à-dire si le cercle, qui passe par C, y touche la courbe CE sans la couper."
+             "at last they are entirely equal, if the two points are joined in one; that is, if the circle through C touches the curve CE there without cutting it."
+             "Descartes, *La Géométrie*, Book II (Leiden 1637, p. 347)")
+
+;; Below, his circle is drawn on Apollonius' symptom
+;; $y^2 = p\,x + c\,x^2$ ($x = CD$, $y = BC$). The point is called $B$ as in
+;; Fermat's figure further down, and its foot is $C$. The widget opens on
+;; his own ellipse, $r = 2$, $q = 4$, $c = -r/q = -\tfrac12$, with the point
+;; at $CD = 1$. Slide "circle centre − P" and watch the two purple
+;; meetings. Away from $P$ the circle cuts the curve twice and
+;; $\Delta = 4\,(v - DP)^2 > 0$. At $P$ they join, $\Delta = 0$, and $BP$
+;; is the normal: $DP = CD\,(1 + c) + p/2$, his
+;; $v = e - \tfrac{r}{q}e + \tfrac12 r$. Every quantity is a control. Move
+;; $CD$, $CE$ or $DP$ and the others are solved again. Move $c$ through $0$
+;; and the curve changes name, with Apollonius' Greek: ἔλλειψις,
+;; παραβολή, ὑπερβολή.
+
+(tw/tangent-normal tw/descartes-init :descartes)
 
 
 ;; ## Book III: the rule of signs
@@ -418,6 +453,9 @@
 ;; greatest rectangle that slope is $0$.
 
 (fv/rectangle)
+(clerk/md "*Now try it yourself:* vary Fermat’s function, A and E; try a corner where striking E fails.")
+(play/adequality-playground)
+
 
 ;; Emmy carries out Fermat's steps as written: compare, divide by $E$,
 ;; strike $E$. It then proves that what remains **is** the derivative, for
@@ -441,6 +479,99 @@
   (quote-block (:latin step) (:claim step) "Fermat, *Methodus* (Tannery and Henry 1891, vol. I, p. 136)"))
 
 (fv/tangent)
+
+;; Tannery's French of the same lines (Œuvres, vol. III, 1896):
+
+(clerk/md (str/join "\n\n" (keep #(some->> (:french %) (str "> ")) (:steps (fv/section :fermat/tangent)))))
+
+;; ### Fermat's adequality, live, and Descartes' circle beside it
+;;
+;; Fermat ends his parabola with one dry sentence:
+
+(quote-block "Ergo CE probavimus duplam ipsius CD, quod quidem ita se habet."
+             "So we have proved CE double CD, which is indeed so."
+             "Fermat, *Methodus* (Tannery and Henry 1891, vol. I, p. 136)")
+
+;; Fermat's tangent and Descartes' normal are one idea seen twice. Below,
+;; the curve is Apollonius' symptom $y^2 = p\,x + c\,x^2$, with vertex $D$
+;; at the origin and the diameter along the $x$-axis. It opens on Fermat's
+;; parabola, $c = 0$. $B$ is a point on it, and $C$ is the foot of its
+;; ordinate $BC$, so $CD$ is the abscissa of $B$. Drag $B$ along the curve.
+;;
+;; - **Fermat** adequates $f(CD + E)$ with $f(CD)$, where
+;;   $f(x) = p\,x + c\,x^2$. He takes away what is common and divides by
+;;   $E$, which leaves $Q = p + 2c\,CD + cE$. Striking out $E$ gives the
+;;   tangent $BE$ with subtangent $CE = 2\,BC^2/Q$, which is $2\,CD$ on the
+;;   parabola. The orange chord runs from $B$ to the point at $CD + E$, and
+;;   it turns into the tangent when you slide $E$ to $0$.
+;; - **Descartes** gives the normal $BP$. A circle about $(v, 0)$ through
+;;   $B$ meets the curve twice, and moving the centre onto $P$ makes the
+;;   two meetings one: $\Delta = 0$, a double root. Then
+;;   $DP = CD\,(1 + c) + p/2$.
+;;
+;; The five quantities $p$, $c$, $CD$, $CE$ and $DP$ are all controls, tied
+;; by those two equations. Move any of $CD$, $CE$ or $DP$ and the others are
+;; solved again. Move $p$ or $c$ and $CD$ is held. Both equations are
+;; printed with the current numbers substituted, and the curve is named
+;; live from the sign of $c$, with Apollonius' names. Every number shown is
+;; computed by a raster kernel in your browser.
+
+(tw/tangent-normal)
+
+;; Emmy derives both equations on the page, for every conic. Fermat's
+;; quotient comes first, then Descartes' discriminant. Emmy reads off the
+;; discriminant's coefficients in $v$ and finds it a perfect square,
+;; $4\,(v - DP)^2$, so it has a single root. At $c = 0$ that root is Fermat's
+;; parabola again, and at $c = -r/q$ it is Descartes' own ellipse rule. The
+;; tie and its inverse then follow, and each forward-then-inverse
+;; composition is graded as the identity:
+
+(tw/derivation)
+
+;; Adequality and the double root find the same tangent, for the parabola
+;; and for any cubic:
+
+(badges (fm/double-root-graded))
+
+;; ## Fermat's *Isagoge*: an equation in two unknowns is a curve
+;;
+;; Before 1637, and independently of Descartes, Fermat wrote a short
+;; introduction to plane and solid loci. It opens with the sentence that
+;; analytic geometry still rests on:
+
+(let [{:keys [passage french source]} (lv/section)]
+  (quote-block passage
+               "Whenever in a final equation two unknown quantities are found, there is a locus, and the end of one of them describes a straight line or a curve."
+               (str "Fermat, *Ad locos planos et solidos isagoge* (" source "); Tannery's French: " french)))
+
+;; His frame, one sentence at a time. $NZM$ is a line given in position,
+;; and $N$ is a given point on it. The first unknown, $A$, is the length
+;; $NZ$. The second, $E$, is $ZI$, raised at a given angle. Fermat's own
+;; equations then follow, in his notation: "$A$ in $E$" is the product $AE$
+;; and "$A$ q." is $A^2$. The player steps through the frame and the five
+;; loci, and $I$ runs along each curve:
+
+(lv/loci)
+
+(clerk/md "*Now try it yourself:* set every coefficient of Fermat’s general second-degree equation; drag I and watch the discriminant and locus name.")
+(play/loci-playground)
+
+(badges (loci/graded))
+
+;; Now try it yourself. Pick one of Fermat's equations and move the given
+;; lines $D$, $B$, $Z$ and the ratio $k$. Each equation is read as the
+;; general one of the second degree,
+;; $\alpha A^2 + \beta AE + \gamma E^2 + \delta A + \varepsilon E + \zeta = 0$.
+;; Its invariant $\beta^2 - 4\alpha\gamma$ is computed live, and the curve
+;; is named from it: negative for an ellipse (a circle when the squares are
+;; equal and there is no rectangle), zero for a parabola, positive for a
+;; hyperbola, and a line when no square appears. At $k = 1$ the ellipse
+;; becomes the circle.
+
+(tw/loci-panel)
+
+(badges (tie/loci-graded))
+
 
 ;; ## The quarrel, and what came after
 ;;

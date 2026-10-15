@@ -373,9 +373,17 @@
           (list 'fn ['_ '_ 'old 'new]
                 (list 'when-not '@pushing
                       (list 'let ['src (list 'first (list 'filter '(fn [k] (not= (get old k) (get new k))) tied))
-                                  'echo? (list 'and 'src '(contains? @pushed src)
-                                               (list '<= '(js/Math.abs (- (get new src) (get @pushed src)))
-                                                     (list '+ 1e-9 (list 'get half 'src))))]
+                                  ;; within half a step of the value just pushed, or of
+                                  ;; the exact state itself (Leva re-commits its rounded
+                                  ;; display on blur, long after the push), it is Leva's
+                                  ;; rounding, not the reader
+                                  'echo? (list 'and 'src
+                                               (list 'or
+                                                     (list 'and '(contains? @pushed src)
+                                                           (list '<= '(js/Math.abs (- (get new src) (get @pushed src)))
+                                                                 (list '+ 1e-9 (list 'get half 'src))))
+                                                     (list '<= (list 'js/Math.abs (list '- '(get new src) (list 'get (list 'deref !s) 'src)))
+                                                           (list '+ 1e-9 (list 'get half 'src)))))]
                             (list 'when (list 'and 'src '(not echo?)) (tie-solve tie-sym !p !s))))))))
 
 (defn- formula

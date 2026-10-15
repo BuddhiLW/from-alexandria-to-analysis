@@ -1,0 +1,140 @@
+;; Conics I.11-14 read verbatim (Heath 1896, Propositions 1-4, pp. 8-14),
+;; one proposition per figure, one or two of Heath's sentences per step.
+;; :text is the step's sentence beside the figure (Markdown: **term**,
+;; *word*, $TeX$); :quote is Heath's words, verbatim, :cite its page;
+;; :introduces names what the drawing adds at that step, exactly
+;; (alexandria.apollonius.book-one-scene draws those and no more).
+;; :tilt is the proposition's case (degrees, the cone of slope 0.6 with P
+;; at height 0.7): :parabola is held at PM parallel to AC; the others
+;; range over their case. :greek is Heiberg's naming sentence.
+{:source "Apollonius, Conics I.11-14, after T. L. Heath, Apollonius of Perga: Treatise on Conic Sections (Cambridge 1896), pp. 8-14"
+ :props
+ [{:id "I.11" :case :parabola :tilt {:at :parabola} :x 0.9
+   :title "I.11: the parabola"
+   :greek "καλείσθω δὲ ἡ μὲν τοιαύτη τομὴ παραβολή" :heiberg "Heiberg, vol. I, p. 42"
+   :steps
+   [{:id "I.11.1"
+     :text "The case: the diameter $PM$ of the section is **parallel** to the side $AC$ of the axial triangle; $QV$ is an ordinate."
+     :quote "First let the diameter PM of the section be parallel to one of the sides of the axial triangle as AC, and let QV be any ordinate to the diameter PM."
+     :cite "Heath 1896, Prop. 1 [I.11], p. 8"
+     :introduces [:cone :axial :DE :PM :section :QV]}
+    {:id "I.11.2"
+     :text "The upright side $PL$ stands at right angles to $PM$ in the plane, cut so that $PL : PA = BC^2 : BA \\cdot AC$."
+     :quote "Then, if a straight line PL (supposed to be drawn perpendicular to PM in the plane of the section) be taken of such a length that PL : PA = BC² : BA.AC, it is to be proved that QV² = PL.PV."
+     :cite "Heath 1896, p. 8"
+     :introduces [:PL]}
+    {:id "I.11.3"
+     :text "Through $V$ draw $HK$ parallel to $BC$: the plane through $H$, $Q$, $K$ cuts the cone in a **circle**, so $QV^2 = HV \\cdot VK$."
+     :quote "Let HK be drawn through V parallel to BC."
+     :cite "Heath 1896, p. 8"
+     :introduces [:HK :circle]}
+    {:id "I.11.4"
+     :text "Similar triangles turn $HV$ and $VK$ into lengths on the figure: $HV : PV = BC : AC$ and $VK : PA = BC : BA$."
+     :quote "Now, by similar triangles and by parallels, HV : PV = BC : AC and VK : PA = BC : BA."
+     :cite "Heath 1896, p. 9"
+     :introduces [:similar]}
+    {:id "I.11.5"
+     :text "Compounding, $QV^2 = PL \\cdot PV$: the square on $QV$ is the rectangle on $PL$ with height $PV$, applied exactly, the **parabola** (*parabolē*)."
+     :quote "It follows that the square on any ordinate to the fixed diameter PM is equal to a rectangle applied to the fixed straight line PL drawn at right angles to PM with altitude equal to the corresponding abscissa PV. Hence the section is called a Parabola."
+     :cite "Heath 1896, p. 9"
+     :introduces [:square :rect]}]}
+  {:id "I.12" :case :hyperbola :tilt {:range [62 80] :at 70} :x 0.9
+   :title "I.12: the hyperbola"
+   :greek "καλείσθω δὲ ἡ μὲν τοιαύτη τομὴ ὑπερβολή" :heiberg "Heiberg, vol. I, p. 46"
+   :steps
+   [{:id "I.12.1"
+     :text "The case: $PM$ is **not** parallel to $AC$; it meets $CA$ produced beyond the apex in $P'$."
+     :quote "Next let PM not be parallel to AC but let it meet CA produced beyond the apex of the cone in P'."
+     :cite "Heath 1896, Prop. 2 [I.12], p. 9"
+     :introduces [:cone :axial :DE :PM :section :QV :P' :PP']}
+    {:id "I.12.2"
+     :text "$AF$ through the apex parallel to $PM$ meets $BC$ in $F$; the upright side $PL$ is cut so that $PL : PP' = BF \\cdot FC : AF^2$."
+     :quote "Draw PL at right angles to PM in the plane of the section and of such a length that PL : PP' = BF . FC : AF², where AF is a straight line through A parallel to PM and meeting BC in F."
+     :cite "Heath 1896, p. 9"
+     :introduces [:AF :PL]}
+    {:id "I.12.3"
+     :text "$VR$ parallel to $PL$ meets $P'L$ produced in $R$; the claim is $QV^2 = PV \\cdot VR$."
+     :quote "Then, if VR be drawn parallel to PL and P'L be joined and produced to meet VR in R, it is to be proved that QV² = PV.VR."
+     :cite "Heath 1896, pp. 9-10"
+     :introduces [:P'L :VR]}
+    {:id "I.12.4"
+     :text "The circle through $V$ parallel to the base, on the diameter $HK$, gives $QV^2 = HV \\cdot VK$ again."
+     :quote "As before, let HK be drawn through V parallel to BC, so that QV² = HV.VK."
+     :cite "Heath 1896, p. 10"
+     :introduces [:HK :circle]}
+    {:id "I.12.5"
+     :text "Similar triangles: $HV : PV = BF : AF$ and $VK : P'V = FC : AF$; so $QV^2 : PV \\cdot P'V = PL : PP' = VR : P'V$."
+     :quote "Then, by similar triangles, HV : PV = BF : AF, VK : P'V = FC : AF."
+     :cite "Heath 1896, p. 10"
+     :introduces [:similar]}
+    {:id "I.12.6"
+     :text "Hence $QV^2 = PV \\cdot VR$: the rectangle on $PL$ with height $PV$ **overlaps** $PL$ by $VR - PL$, the **hyperbola** (*hyperbolē*)."
+     :quote "It follows that the square on the ordinate is equal to a rectangle whose height is equal to the abscissa and whose base lies along the fixed straight line PL but overlaps it by a length equal to the difference between VR and PL. Hence the section is called a Hyperbola."
+     :cite "Heath 1896, p. 10"
+     :introduces [:square :rect :strip]}]}
+  {:id "I.13" :case :ellipse :tilt {:range [25 56] :at 35} :x 0.9
+   :title "I.13: the ellipse"
+   :greek "καλείσθω δὲ ἡ μὲν τοιαύτη τομὴ ἔλλειψις" :heiberg "Heiberg, vol. I, p. 52"
+   :steps
+   [{:id "I.13.1"
+     :text "The case: $PM$ meets the side $AC$ itself in $P'$, and the base line $BC$ (produced) in $M$; $AF$, parallel to $PM$, meets $BC$ produced in $F$."
+     :quote "If PM meets AC in P' and BC in M, draw AF parallel to PM meeting BC produced in F"
+     :cite "Heath 1896, Prop. 3 [I.13], p. 11"
+     :introduces [:cone :axial :DE :PM :section :QV :P' :PP' :AF]}
+    {:id "I.13.2"
+     :text "The upright side $PL$, at right angles to $PM$, is cut so that $PL : PP' = BF \\cdot FC : AF^2$."
+     :quote "draw PL at right angles to PM in the plane of the section and of such a length that PL : PP' = BF.FC : AF²."
+     :cite "Heath 1896, p. 11"
+     :introduces [:PL]}
+    {:id "I.13.3"
+     :text "Join $P'L$; $VR$ parallel to $PL$ meets it in $R$."
+     :quote "Join P'L and draw VR parallel to PL meeting P'L in R."
+     :cite "Heath 1896, p. 11"
+     :introduces [:P'L :VR]}
+    {:id "I.13.4"
+     :text "Through $V$, $HK$ parallel to $BC$ is the diameter of a circle of the cone: $QV^2 = HV \\cdot VK$."
+     :quote "Draw HK through V parallel to BC. Then, as before, QV² = HV.VK."
+     :cite "Heath 1896, p. 12"
+     :introduces [:HK :circle]}
+    {:id "I.13.5"
+     :text "The same similar triangles, word for word: $HV : PV = BF : AF$, $VK : P'V = FC : AF$."
+     :quote "Now, by similar triangles, HV : PV = BF : AF, VK : P'V = FC : AF."
+     :cite "Heath 1896, p. 12"
+     :introduces [:similar]}
+    {:id "I.13.6"
+     :text "Hence $QV^2 = PV \\cdot VR$, and now $VR$ is **shorter** than $PL$: the rectangle falls short, the **ellipse** (*elleipsis*)."
+     :quote "Thus the square on the ordinate is equal to a rectangle whose height is equal to the abscissa and whose base lies along the fixed straight line PL but falls short of it by a length equal to the difference between VR and PL. The section is therefore called an Ellipse."
+     :cite "Heath 1896, p. 12"
+     :introduces [:square :rect :strip]}]}
+  {:id "I.14" :case :opposite :tilt {:range [62 80] :at 72} :x 0.9
+   :title "I.14: the opposite branches"
+   :greek "καλείσθωσαν δὲ αἱ τοιαῦται τομαὶ ἀντικείμεναι" :heiberg "Heiberg, vol. I, p. 52"
+   :steps
+   [{:id "I.14.1"
+     :text "A plane that cuts **both** cones of the double cone, not through the apex, cuts each in a hyperbola."
+     :quote "If a plane cuts both parts of a double cone and does not pass through the apex, the sections of the two parts of the cone will both be hyperbolas which will have the same diameter and equal latera recta corresponding thereto."
+     :cite "Heath 1896, Prop. 4 [I.14], p. 13"
+     :introduces [:cone :nappe2 :section :section2]}
+    {:id "I.14.2"
+     :text "The circle $B'C'$ is parallel to the base $BC$, on the opposite cone."
+     :quote "Let BC be the circle about which the straight line generating the cone revolves, and let B'C' be any parallel section cutting the opposite half of the cone."
+     :cite "Heath 1896, p. 13"
+     :introduces [:axial :axial2]}
+    {:id "I.14.3"
+     :text "The plane meets the two bases in $DE$ and $D'E'$, which are parallel."
+     :quote "Let a plane cut both halves of the cone, intersecting the base BC in the straight line DE and the plane B'C' in D'E'."
+     :cite "Heath 1896, p. 13"
+     :introduces [:DE :D'E']}
+    {:id "I.14.4"
+     :text "$MM'$ joins the middles of $DE$ and $D'E'$ and meets $CA$, $C'A$ in $P$, $P'$; $AFF'$ through the apex is parallel to it."
+     :introduces [:PM :MM' :P' :PP' :AF :AF']}
+    {:id "I.14.5"
+     :text "The upright sides $PL$ and $P'L'$ are drawn at right angles to $MM'$, with $PL : PP' = BF \\cdot FC : AF^2$ and $P'L' : P'P = B'F' \\cdot F'C' : AF'^2$."
+     :quote "Draw perpendiculars PL, P'L' to MM' in the plane of the section"
+     :cite "Heath 1896, p. 14"
+     :introduces [:PL :P'L']}
+    {:id "I.14.6"
+     :text "Each branch is a hyperbola by I.12, on the one diameter $MPP'M'$; the triangles $AFB$, $AF'B'$ are similar, so the two upright sides are equal."
+     :quote "And the two hyperbolas have the same diameter MPP'M'. It remains to prove that PL = P'L'."
+     :cite "Heath 1896, p. 14"
+     :introduces [:QV :Q2V2 :square :rect :strip :square2 :rect2]}]}]}

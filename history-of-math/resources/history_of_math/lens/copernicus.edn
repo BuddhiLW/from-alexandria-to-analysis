@@ -1,0 +1,24 @@
+{:now [{:claim "Retrograde motion is relative motion"
+        :modern "The direction of a planet seen from the Earth is the angle of the difference of two position vectors; its rate turns negative near the closest approach exactly when the inner body has the larger linear speed."
+        :tex "\\dot\\lambda=\\frac{G_x\\dot G_y-G_y\\dot G_x}{|G|^2},\\qquad G=P-E"}
+       {:claim "Changing the frame does not change the sky"
+        :modern "Ptolemy's epicycle and Copernicus' orbit are the same vector sum G = P + (-E) read in two frames: a change of origin, a Galilean symmetry of the kinematics. What the heliocentric frame adds is that the scale of every planet is fixed in units of the Earth's orbit."
+        :tex "G = P + (-E) = C + (u,v)"}
+       {:claim "Synodic and sidereal periods are beat frequencies"
+        :modern "Two uniform rotations of frequencies 1/E and 1/P meet with the difference frequency, as two tones beat; the same relation fixes conjunctions of satellites and the lunar month."
+        :tex "\\frac1S=\\left|\\frac1E-\\frac1P\\right|"}]
+ :fields [{:field :mechanics-physics :label "Astronomy" :how "The heliocentric order fixed the relative distances of the planets for the first time, from the epicycle ratios alone." :example "Mars at 1.52 Earth radii from Ptolemy's 39;30 epicycle; Jupiter at 5.2 from 11;30."}
+          {:field :mechanics-physics :label "Physics" :how "Choosing the frame in which motion is simplest is the first step of mechanics; Copernicus' frame is the one in which Kepler and Newton could see the laws." :example "Retrograde loops disappear in the Sun's frame and appear in the Earth's."}
+          {:field :mechanics-physics :label "Engineering" :how "Synodic periods set launch windows: a spacecraft to Mars leaves once per Earth-Mars synodic period." :example "About every 780 days, Copernicus' 779 days 56 minutes."}
+          {:field :logic-computing :label "Computing" :how "Integrating coupled rotations step by step is how ephemerides are computed today." :example "The RK4 integration of the moving Earth and Mars in this notebook."}]
+ :tangents [{:series :physics :hook "From Copernicus' circles to Kepler's ellipses and Newton's inverse square: the frame that made the laws visible."}]
+ :texts [{:author "Nicolaus Copernicus" :work "De revolutionibus orbium coelestium (Latin, 1543 text)" :year 1543 :url "https://la.wikisource.org/wiki/De_revolutionibus_orbium_coelestium" :kind :wikisource :lang "la"}
+         {:author "Nicolaus Copernicus" :work "De revolutionibus, first edition (Nuremberg 1543), scan" :year 1543 :url "https://commons.wikimedia.org/wiki/File:Nicolai_Copernici_torinensis_De_revolutionibus_orbium_coelestium.djvu" :kind :commons-scan :lang "la"}
+         {:author "Nicolaus Copernicus" :work "De revolutionibus, Thorn edition (1873)" :year 1873 :url "https://archive.org/details/nicolaicopernici00cope_1" :kind :archive :lang "la"}
+         {:author "Nicolaus Coppernicus" :work "Über die Kreisbewegungen der Weltkörper (tr. C. L. Menzzer)" :year 1879 :url "https://de.wikisource.org/wiki/Nicolaus_Coppernicus_aus_Thorn_%C3%BCber_die_Kreisbewegungen_der_Weltk%C3%B6rper" :kind :translation :lang "de"}
+         {:author "Nicolaus Coppernicus" :work "Über die Kreisbewegungen der Weltkörper (Menzzer), Commons scan" :year 1879 :url "https://commons.wikimedia.org/wiki/File:Kreisbewegungen-Coppernicus-0.djvu" :kind :commons-scan :lang "de"}]
+ :links [{:to "ptolemy-almagest" :relation :uses :note "The same epicycles and deferents, rearranged about the Sun: each outer epicycle is the Earth's orbit."}
+         {:to "apollonius-conics" :relation :uses :note "Apollonius' equivalence of epicycle and eccentric, which Copernicus uses for the planets' unequal motion."}
+         {:to "kepler-mysterium" :relation :anticipates :note "Kepler set out to explain the heliocentric distances that Copernicus had fixed."}
+         {:to "kepler-laws" :relation :anticipates :note "Kepler's third law ties the periods and distances that Copernicus first put in one order."}
+         {:to "newton-principia" :relation :anticipates :note "Newton's gravity explains why the farther planets are slower."}]}

@@ -1,0 +1,23 @@
+{:now [{:claim "A geometry is the theory of the invariants of a group acting on a space"
+        :modern "A Klein geometry is a homogeneous space G/H: a Lie group G acting transitively on a manifold, H the stabiliser of a point; its properties are the G-invariant ones."
+        :tex "(G, X),\\quad X \\cong G/H"}
+       {:claim "Smaller group, more invariants"
+        :modern "If H ⊂ G act on the same space, every G-invariant is H-invariant: the geometries form a lattice opposite to the lattice of subgroups. Euclidean ⊂ similarity ⊂ affine ⊂ projective on the plane has 3, 4, 6 and 8 parameters."
+        :tex "E(2) \\subset \\mathrm{Sim}(2) \\subset \\mathrm{Aff}(2) \\subset \\mathrm{PGL}(3,\\mathbb{R})"}
+       {:claim "The cross-ratio is the projective invariant"
+        :modern "PGL(2) acts simply 3-transitively on the projective line, so four points have exactly one invariant, the cross-ratio; Cayley-Klein metrics are logarithms of it relative to a conic."
+        :tex "(x_1,x_2;x_3,x_4) = \\frac{(x_3-x_1)(x_4-x_2)}{(x_4-x_1)(x_3-x_2)}"}]
+ :fields [{:field :mechanics-physics :label "Physics" :how "Physical laws are classified by their symmetry groups: Galilean and Lorentz invariance, gauge groups; Noether ties each continuous symmetry to a conserved quantity." :example "Special relativity as the geometry of the Lorentz group (Minkowski 1908, explicitly after Klein)."}
+          {:field :geometry :how "Cartan's generalised spaces (1920s) glue Klein geometries along a manifold; Thurston's eight 3-dimensional geometries are Klein geometries." :example "Cartan connections; Thurston's geometrisation conjecture, proved by Perelman 2003."}
+          {:field :logic-computing :label "Computing" :how "Computer vision and graphics work in projective coordinates; invariants of a group are what a recogniser can rely on." :example "Homogeneous coordinates and 4x4 matrices in every 3D pipeline; cross-ratio invariants in camera-independent recognition."}
+          {:field :abstract-algebra :how "Invariant theory of a group acting on polynomials, the 'theory of invariants' Klein named, became Hilbert's finiteness theorem and geometric invariant theory." :example "Hilbert's basis theorem (1890); Mumford's GIT (1965)."}]
+ :tangents [{:series :erlangen :hook "The live Erlangen deck follows the programme group by group." :link "/erlangen-program/"}
+            {:series :projective :hook "The largest of the four planar groups, and its one invariant, the cross-ratio." :link "/projective/"}
+            {:series :group-theory :hook "What a group is, subgroups, actions and stabilisers: the language Klein borrowed from Jordan." :link "planned"}]
+ :texts [{:author "Felix Klein" :work "Vergleichende Betrachtungen über neuere geometrische Forschungen (Programm, Erlangen: A. Deichert, 1872)" :year 1872 :url "https://archive.org/details/vergleichendebe00kleigoog" :kind :archive :lang "de"}
+         {:author "Felix Klein" :work "A comparative review of recent researches in geometry, tr. M. W. Haskell, Bulletin of the New York Mathematical Society 2 (1893) 215-249" :year 1893 :url "https://archive.org/details/bulletinnewyork00socigoog" :kind :translation :lang "en"}]
+ :links [{:to "non-euclidean" :relation :generalizes :note "Lobachevsky's geometry is the invariant theory of the projective maps that keep a conic: Klein's model of 1871."}
+         {:to "riemann-hypothesen" :relation :uses :note "Riemann's manifoldness of n dimensions is Klein's starting space; the homogeneous ones are Klein geometries."}
+         {:to "apollonius-conics" :relation :generalizes :note "Under the projective group all non-degenerate conics are one; Apollonius' classes are invariants of the smaller affine and metric groups."}
+         {:to "euclid-elements" :relation :generalizes :note "Euclid's geometry becomes the invariant theory of the principal group, one geometry among many."}
+         {:to "gauss" :relation :uses :note "Gauss' intrinsic curvature is an invariant of the group of isometries of a surface."}]}

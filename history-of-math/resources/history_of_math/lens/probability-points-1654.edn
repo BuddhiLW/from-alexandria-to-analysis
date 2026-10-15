@@ -1,0 +1,20 @@
+{:now [{:claim "The fair split is a conditional expectation"
+        :modern "The first player's share is the probability that he wins the unfinished game, given the score: the expectation of his final winnings. Pascal's rule is the statement that this value is a martingale, the mean of its values one round later."
+        :tex "E(a,b) = \\tfrac12\\,E(a-1,b) + \\tfrac12\\,E(a,b-1),\\qquad E(0,b)=1,\\ E(a,0)=0"}
+       {:claim "Fermat's count is a binomial tail"
+        :modern "Playing all n = a + b - 1 rounds, the number of rounds the first player wins is binomial; he wins the game when it is at least a. The triangle's base is the binomial distribution, and summing its last b cells is summing its upper tail."
+        :tex "E(a,b) = 2^{-(a+b-1)} \\sum_{k=a}^{a+b-1} \\binom{a+b-1}{k}"}
+       {:claim "Huygens' price is the expected value"
+        :modern "A gamble paying a in p equally likely cases and b in q is worth its mean; the fair price is linear in the prizes and the weights are probabilities. This is the definition from which decision theory and the pricing of contracts start."
+        :tex "x = \\frac{pa + qb}{p+q} = \\mathbb{E}[X]"}]
+ :fields [{:field :probability :how "Expectation, the binomial distribution and backward induction all begin in these letters." :example "The fair price of a bet; the probability of winning a best-of-seven series from 2 games to 3."}
+          {:field :probability :label "Finance" :how "Pricing an option on a binomial tree is Pascal's recursion: each node is the discounted mean of the two nodes after it." :example "The Cox-Ross-Rubinstein model of 1979."}
+          {:field :graph-theory :label "Combinatorics" :how "The arithmetic triangle's cells are the binomial coefficients, its addition rule the identity C(n, k) = C(n-1, k-1) + C(n-1, k)." :example "The coefficients of (a + b)^n, Newton's binomial series."}
+          {:field :logic-computing :label "Computing" :how "Filling a table of positions from the end of a game backward is dynamic programming." :example "The grid of section 3, the same order as Bellman's equation."}]
+ :tangents []
+ :texts [{:author "Pierre de Fermat" :work "Œuvres de Fermat, t. II, Correspondance (ed. Tannery and Henry), with the letters of Pascal" :year 1894 :url "https://archive.org/details/oeuvresdefermat942ferm" :kind :archive :lang "fr"}
+         {:author "Blaise Pascal" :work "Traité du triangle arithmétique, avec quelques autres petits traitez sur la mesme matière" :year 1665 :url "https://archive.org/details/bub_gb_UqgUAAAAQAAJ" :kind :archive :lang "fr"}
+         {:author "Christiaan Huygens" :work "De ratiociniis in ludo aleae" :year 1657 :url "https://archive.org/details/DeRatiociniisInLudoAleae" :kind :archive :lang "la"}
+         {:author "Christiaan Huygens" :work "The Value of all Chances in Games of Fortune (English translation)" :year 1714 :url "https://archive.org/details/bim_eighteenth-century_christiani-hugenii-libel_huygens-christiaan-van_1714" :kind :translation :lang "en"}
+         {:author "Isaac Todhunter" :work "A History of the Mathematical Theory of Probability from Pascal to Laplace" :year 1865 :url "https://archive.org/details/cu31924005730282" :kind :archive :lang "en"}]
+ :links [{:to "descartes-fermat" :relation :uses :note "The same Fermat, in the same years, and the same habit of turning a problem into a count of cases."}]}

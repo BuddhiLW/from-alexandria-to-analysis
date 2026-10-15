@@ -1,0 +1,18 @@
+{:now [{:claim "One conic, three affine faces"
+        :modern "Every nondegenerate real conic is a projective quadric. An affine chart cuts it as an ellipse, parabola or hyperbola according to its intersection with the line at infinity."
+        :tex "x^{\\mathsf T}Qx=0\\qquad(x\\in\\mathbb P^2)"}
+       {:claim "The focus survives in dynamical equations"
+        :modern "The orbital polar equation reuses the focal parameter and eccentricity of the conics playground."
+        :tex "r(\\theta)=\\frac{\\ell}{1+e\\cos\\theta}"}]
+ :fields [{:field :geometry :how "Projective transformations change the affine type while preserving incidence." :example "A perspective image of a circle can be an ellipse."}
+          {:field :mechanics-physics :label "Astronomy" :how "Two-body inverse-square trajectories are conic sections." :example "Keplerian elliptical orbits and hyperbolic flybys."}
+          {:field :mechanics-physics :label "Engineering" :how "A parabola returns parallel incoming rays to its focus." :example "Parabolic mirrors and radio dishes."}
+          {:field :mechanics-physics :label "Physics" :how "Differences of distances to fixed transmitters trace hyperbolas." :example "Hyperbolic positioning; GPS instead uses timed pseudoranges whose differences give hyperboloids."}]
+ :tangents [{:series :projective :hook "Look at conics after changing the line at infinity."}
+            {:series :erlangen :hook "The projective group explains which properties of conics survive."}
+            {:series :physics :hook "Follow conic trajectories from Kepler to celestial mechanics."}]
+ :texts [{:author "Apollonius of Perga" :work "Conics, Books I–IV (Heath translation, 1896)" :year 1896 :url "https://archive.org/details/treatiseonconics00apolrich" :kind :translation :lang "en"}]
+ :links [{:to "doubling-the-cube" :relation :uses :note "Menaechmus used two conics to find the mean proportionals."}
+         {:to "kepler-laws" :relation :anticipates :note "The ellipse supplies the orbit with the Sun at a focus."}
+         {:to "descartes-fermat" :relation :anticipates :note "The symptoma becomes an equation in coordinates."}
+         {:to "newton-principia" :relation :anticipates :note "Newton's inverse-square proofs invoke the focal properties."}]}

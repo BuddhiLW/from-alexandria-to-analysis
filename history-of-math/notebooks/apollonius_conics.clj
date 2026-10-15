@@ -4,15 +4,21 @@
   {:history/year -200
    :history/title "Apollonius of Perga, Conics"
    :history/era "Hellenistic"
+   :history/fields #{:geometry}
    :nextjournal.clerk/visibility {:code :fold :result :show}
    :nextjournal.clerk/toc true}
-  (:require [alexandria.apollonius.areas-widget :as areas]
+  (:require [alexandria.apollonius.areas-steps-view :as areas-steps]
+            [alexandria.apollonius.areas-widget :as areas]
+            [alexandria.apollonius.book-one-view :as book-one]
             [alexandria.apollonius.cone-widget :as cone]
             [alexandria.apollonius.conics-view :as conics]
             [alexandria.apollonius.notation-steps-view :as notation]
             [alexandria.apollonius.playground-widget :as playground]
+            [alexandria.apollonius.symptom :as symptoma]
+            [alexandria.apollonius.symptom-widget :as symptom]
             [clojure.string :as str]
             [history-of-math.page :as page]
+            [history-of-math.lens :as lens]
             [history-of-math.widgets :as hom]
             [nextjournal.clerk :as clerk]))
 
@@ -108,6 +114,39 @@
 
 (notation/figure)
 
+;; ## The symptoma
+;;
+;; With the letters just fixed (the abscissa $x = PV$, the ordinate
+;; $y = QV$, the parameter $p = PL$, the transverse diameter $d = PP'$),
+;; each of I.11-13 ends in one property of the section, which Apollonius
+;; calls its *symptoma*:
+
+(symptom/equation)
+
+;; In one form, $y^2 = p\,x + c\,x^2$ with $c = -p/d$, $0$ or $+p/d$. The
+;; square on the ordinate is a rectangle applied to $p$ with height $x$:
+;; exactly for the parabola, exceeding it by $\tfrac{p}{d}x^2$ for the
+;; hyperbola, falling short of it by the same amount for the ellipse. In
+;; Heath's words, for I.11:
+
+(symptom/heath :parabola)
+
+;; The symptoma follows from the cone and the plane alone. The circle
+;; through $V$ parallel to the base gives $QV^2 = HV \cdot VK$ (shown just
+;; below), and in space $HV \cdot VK$ simplifies to $p\,x + c\,x^2$. Emmy
+;; checks each step:
+
+(symptom/proofs)
+
+;; The notation figure again, now live. Sweep the tilt to go from ellipse
+;; through parabola to hyperbola, and move $x$ or $y$: the two are tied by
+;; the equation, so moving one re-solves the other. Beside the figure,
+;; $y^2 = p\,x + c\,x^2$ is shown with the current numbers, and the areas
+;; are drawn to scale: the square on $QV$, the rectangle on $PL$ with
+;; height $PV$, and the strip $c\,x^2$ between them.
+
+(symptom/widget)
+
 ;; One more line belongs to the argument. Through the foot $V$ of an
 ;; ordinate, Apollonius draws $HK$ parallel to $BC$. The plane through $HK$
 ;; and $QQ'$ is parallel to the base, so it cuts the cone in a **circle** with
@@ -155,6 +194,18 @@
 
 (cone/cone)
 
+;; The same proposition in Heath's own figure, one of his sentences per
+;; step (press play, or click a step). Beside it the widget: the tilt is
+;; held where $PM$ is parallel to $AC$; $x = PV$ and $y = QV$ are tied by
+;; $QV^2 = PL \cdot PV$, move either and the other is solved by the
+;; symptoma's raster kernel. Every number shown is that kernel's output.
+
+(book-one/proposition "I.11")
+
+(clerk/tex (:parabola (symptoma/tex)))
+
+(book-one/steps :I.11)
+
 ;; ## I.12: the hyperbola
 ;;
 ;; > καλείσθω δὲ ἡ μὲν τοιαύτη τομὴ ὑπερβολή
@@ -181,6 +232,18 @@
 ;; but overlaps it by a length equal to the difference between VR and PL.
 ;; Hence the section is called a Hyperbola" (p. 10).
 
+;; Heath's figure of I.12, stepped through his sentences, with its widget:
+;; the tilt (held inside the hyperbola's range), $x = PV$ and $y = QV$ are
+;; tied by $QV^2 = PV \cdot VR$. Move the tilt and $x$ holds while $y$
+;; follows; move $y$ and $x$ is solved. The name is read from the sign of
+;; $VR - PL$, and the strip by which $VR$ overlaps $PL$ is drawn to scale.
+
+(book-one/proposition "I.12")
+
+(clerk/tex (:hyperbola (symptoma/tex)))
+
+(book-one/steps :I.12-13)
+
 ;; ## I.13: the ellipse
 ;;
 ;; > καλείσθω δὲ ἡ μὲν τοιαύτη τομὴ ἔλλειψις
@@ -199,6 +262,15 @@
 ;; PL. The section is therefore called an Ellipse" (p. 12).
 
 (badges :apollonius/I.11-13)
+
+;; Heath's figure of I.13, stepped through his sentences. The tilt stays
+;; in the ellipse's range; $VR$ now falls short of $PL$, and the strip
+;; $PL - VR$ is drawn dashed. Moving $y$ solves $x$ on $V$'s own side of the
+;; widest ordinate (the ellipse has two abscissae for each $QV$).
+
+(book-one/proposition "I.13")
+
+(clerk/tex (:ellipse (symptoma/tex)))
 
 ;; Emmy builds the cone and the plane in space with letters, not numbers:
 ;; slope $k$ of the cone, tilt $\theta$, height $h$ of the vertex. From that
@@ -225,6 +297,15 @@
 ;; $D'M'E'$ appears on $B'C'$: the second branch is drawn through $P'$ and
 ;; the caption adds I.14.
 
+;; Heath's figure of I.14, stepped: the second nappe, its base $B'C'$, the
+;; second branch through $P'$ with the same $PL$ and $PP'$. Below the steps,
+;; the tie runs on the near branch; the far branch's $Q_2V_2^2 = P'V_2 \cdot V_2R_2$
+;; is drawn from the same kernel.
+
+(book-one/proposition "I.14")
+
+(book-one/steps :I.14)
+
 ;; ## The names come from the application of areas
 ;;
 ;; Write $QV = y$, $PV = x$, $PL = p$, $PP' = d$. Heath's footnotes to I.12
@@ -242,6 +323,20 @@
 ;; *elleipsis* (falling short). In Heiberg's I.12 the square on the ordinate
 ;; is a rectangle "ὑπερβάλλον", exceeding; in I.13 it is "ἐλλεῖπον", falling
 ;; short.
+;;
+;; The figure walks that problem from the Pythagoreans to Apollonius, one
+;; sentence a step, each with Euclid's words: I.44 applies a given area to
+;; a given line, VI.28 applies it falling short by a square, VI.29
+;; exceeding by a square, and the last steps lay the square on $QV$ along
+;; $PL$. Move $y$ and the applied rectangle $S$ follows; move $S$ and $y$
+;; follows.
+
+(areas-steps/figure)
+
+;; Each algebraic step of the figure, expanded and checked by Emmy:
+
+(areas-steps/identities)
+
 ;;
 ;; | $c$ | the rectangle $PV \cdot VR$ on $PL$ | name |
 ;; |:---:|:---|:---|
@@ -319,18 +414,29 @@
 ;; Apollonius describes each section from its vertex $P$. Five centuries
 ;; later Pappus (*Collection* VII) gave one more description, from a focus
 ;; $F$ and a line, the **directrix**: the distance to $F$ stands in a fixed
-;; ratio $e$ to the distance from the directrix. About the focus, with $\ell$
-;; the semi-parameter, that is one curve,
+;; ratio $e$ to the distance from the directrix. The cone itself gives it.
+;; Cut the right cone of half-angle $\alpha$ by the plane
+;; $z = h + x\tan(\text{tilt})$, and drop every point $X$ of the section
+;; straight down onto the plane through the apex, at right angles to the
+;; axis. Its shadow $X'$ traces, about the foot of the axis,
 ;;
-;; $$r = \frac{\ell}{1 + e\cos t},$$
+;; $$\rho = \frac{\ell}{1 - e\cos\theta}, \qquad \ell = h\tan\alpha, \qquad e = \tan(\text{tilt})\tan\alpha.$$
 ;;
-;; and it is Apollonius' symptoma with $p = 2\ell$ and $c = e^2 - 1$. The
-;; sign of $c$ is the sign of $e - 1$: $e < 1$ ellipse, $e = 1$ parabola,
-;; $e > 1$ hyperbola, whose far branch is the opposite section of I.14.
-;;
-;; Drag $\ell$ and $e$. The solid curve is the focal form. The dashed curve is
-;; drawn separately from $y^2 = p x + c x^2$ about $P$, and it lies on the
-;; solid one at every setting.
+;; That is Apollonius' symptoma with $p = 2\ell$ and $c = e^2 - 1$: the
+;; sign of $c$ is the sign of $e - 1$, so $e < 1$ is the ellipse, $e = 1$
+;; the parabola, $e > 1$ the hyperbola, whose far branch on the other nappe
+;; is the opposite section of I.14. Emmy derives the shadow from the cone
+;; and the plane, solves it both ways, and checks that going forward and
+;; back returns the start:
+
+(playground/derivation)
+
+;; The playground draws all of it at once. Every quantity is a control:
+;; $\alpha$, the tilt and $h$ set the cone and the plane; $\ell$ and $e$ set
+;; the shadow. Move any one and the others are re-solved through the
+;; equations above, so the cone, the plane, the section, its shadow with
+;; the directrix and the formula with its current numbers stay one figure.
+;; The section's name changes with $e$. Drag the scene to turn it.
 
 (playground/playground)
 
@@ -359,4 +465,6 @@
 ;; next notebooks in the series take up that thread.
 
 ^{::clerk/no-cache true}
+
+(lens/section "apollonius-conics")
 (page/prev-next "notebooks/apollonius_conics.clj")

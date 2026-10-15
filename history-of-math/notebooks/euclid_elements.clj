@@ -23,17 +23,24 @@
   {:history/year -300
    :history/title "Euclid, Elements"
    :history/era "Greek geometry"
+   :history/fields #{:geometry :number-theory}
    :nextjournal.clerk/visibility {:code :hide :result :show}
    :nextjournal.clerk/toc true}
   (:require [alexandria.library :as library]
+            [alexandria.apollonius.areas-steps-view :as areas-steps]
             [alexandria.euclid.elements :as elements]
             [alexandria.euclid.elements-view :as elements-view]
+            [alexandria.euclid.playgrounds-view :as play]
+            [alexandria.euclid.ties-view :as ties]
             [alexandria.proofs :as proofs]
             [alexandria.notebooks.euclid-i1-surfaces :as surfaces]
             [hive-dsl.result :as r]
             [history-of-math.page :as page]
+            [history-of-math.widgets :as hom]
             [nextjournal.clerk :as clerk]))
 
+^{::clerk/visibility {:code :hide :result :hide}}
+(hom/install!)
 ^{::clerk/visibility {:result :hide}}
 (defn statement
   "Heath's statement of proposition id, from the shelf, as a quotation."
@@ -93,23 +100,18 @@
 
 (statement :euclid/I.1)
 
-;; Let $AB$ be the given finite straight line.
-
-(page/steps
- [["With centre $A$ and distance $AB$ let the circle $BCD$ be described" "Post. 3"]
-  ["With centre $B$ and distance $BA$ let the circle $ACE$ be described" "Post. 3"]
-  ["From the point $C$, in which the circles cut one another, join $CA$ and $CB$" "Post. 1"]
-  ["$AC = AB$, since $A$ is the centre of the circle $CDB$" "Def. 15"]
-  ["$BC = BA$, since $B$ is the centre of the circle $CAE$" "Def. 15"]
-  ["$CA = CB$, since each is equal to $AB$" "C.N. 1"]
-  ["The triangle $ABC$ is equilateral, and it has been constructed on $AB$. *Being what it was required to do.*" "Def. 20"]])
-
-;; Play the construction. Each circle is drawn the way Post. 3 describes it:
-;; a radius swept once around its centre. The moving points are computed by
-;; a raster kernel in the browser, and the given points by the board's
-;; raster frame.
+;; Heath's proof, one sentence to a step: the figure beside it adds what
+;; each sentence introduces and nothing more. Each circle is drawn the way
+;; Post. 3 describes it, a radius swept once around its centre. Then each
+;; radius is marked in its own circle, since Def. 15 is used twice, once for
+;; each centre. Click a sentence to replay it. The moving points come from
+;; a raster kernel in the browser, the given points from the board's raster
+;; frame.
 
 (elements-view/player :euclid/I.1)
+
+;; Now try it yourself: drag both endpoints and watch both circles meet.
+(play/i1)
 
 ;; **The gap.** Step 3 says "the point $C$, in which the circles cut one
 ;; another". Nothing in the postulates says two circles must cut at all;
@@ -234,9 +236,98 @@
 
 (elements-view/player :euclid/I.47)
 
+;; Now try it yourself: all three corners are free. Drag $B$ and watch the
+;; windmill. The parallel $AL$ still cuts the square on $BC$ into the
+;; rectangles $BL$ and $CL$, but they match the squares on $AB$ and $AC$
+;; only while the angle at $A$ is right. Open the angle and Book II takes
+;; over: the perpendicular $BD$ falls outside $CA$ (II.12) or within it
+;; (II.13), and the rectangle $CA \cdot AD$ is what is gained or lost.
+;; Switch the layers off to see one construction at a time.
+
+(play/i47)
+
 ;; I.48 is the converse: if the squares add up, the angle is right.
 
 (proposition :euclid/I.48)
+
+;; ### Move the triangle: I.47, II.12, II.13
+;;
+;; Book II says what happens when the angle at $A$ is not right. Drop the
+;; perpendicular $BD$ from $B$ onto $CA$. Heath's II.12: "In obtuse-angled
+;; triangles the square on the side subtending the obtuse angle is greater
+;; than the squares on the sides containing the obtuse angle by twice the
+;; rectangle contained by one of the sides about the obtuse angle, namely
+;; that on which the perpendicular falls, and the straight line cut off
+;; outside by the perpendicular towards the obtuse angle." II.13 says the
+;; same for an acute angle, with "less" and "within".
+;;
+;; Write $a = BC$, $b = CA$, $c = AB$ and $d = AD$, signed: $d$ is negative
+;; when $D$ falls outside, on $CA$ produced. Emmy puts $B$ at $(d, h)$ and
+;; eliminates $h$. The three propositions are then one equation, read for
+;; $d = 0$, $d < 0$ and $d > 0$:
+
+(ties/derivation :pythagoras)
+
+;; Below, every one of $a$, $b$, $c$ and the angle $A$ is a control, and $B$
+;; can be dragged. They are tied by that equation, and each move names what
+;; holds still. If $b$, $c$ or $A$ moves, $a$ is solved forward. If $a$
+;; moves, $b$ and $A$ hold and $c$ is solved back by the inverse. If $B$ is
+;; dragged, $b$ holds and $c$ and $A$ are read off $B$. The rectangle
+;; $CA \cdot AD$ appears when the angle is not right. It is the excess
+;; (II.12, solid) or the defect (II.13, dashed), drawn inside the square on
+;; $CA$. The name above the formula changes as the triangle stops being
+;; right. Every number comes from raster kernels.
+
+(ties/pythagoras)
+
+;; ## Applying an area: I.44 and VI.28-29
+;;
+;; I.44 asks for a parallelogram of given area on a given line: "To a given
+;; straight line to apply, in a given rectilineal angle, a parallelogram
+;; equal to a given triangle." VI.28 and VI.29 apply it so that it *falls
+;; short* of the line, or *runs past* it, by a figure of given shape.
+;; Proclus, after Eudemus, says the Pythagoreans named the three cases
+;; *parabolē* (application), *hyperbolē* (exceeding) and *elleipsis*
+;; (falling short). Apollonius, about a century after Euclid, gave these
+;; names to the three conic sections.
+;;
+;; The figure below is the one the Apollonius notebook uses. It is stepped
+;; one sentence at a time, from I.44 through VI.27-29 to the three curves,
+;; and it runs on the same raster kernels.
+
+(areas-steps/figure)
+
+(areas-steps/identities)
+
+;; One relation covers all three cases. On the line $AB = a$, apply a
+;; rectangle of height $y$ whose base $AX$ is $a + k\,y$. The leftover $XB$
+;; is $|k|\,y$ wide and $y$ high, so its shape is fixed by $k$. It is a
+;; defect when $k < 0$ (VI.28; $k = -1$ makes it a square), nothing when
+;; $k = 0$ (I.44), and an excess when $k > 0$ (VI.29). Emmy turns
+;; $S = (a + k\,y)\,y$ into a quadratic in $y$, checks its root, and
+;; completes the square for VI.27: falling short, $S$ can never pass
+;; $a^2/4|k|$.
+
+(ties/derivation :application)
+
+;; Every one of $a$, $S$, $y$ and $k$ is a control. If $y$, $a$ or $k$
+;; moves, the others hold and $S$ is solved forward. If $S$ moves, $a$ and
+;; $k$ hold and $y$ is solved back, on the nearer root. Falling short, $S$
+;; stops at VI.27's greatest value. Move $k$ through $0$ to watch the name
+;; change from *elleipsis* to *parabolē* to *hyperbolē*.
+
+(ties/application)
+
+;; Now try it yourself, with nothing held. Euclid applies in a *given
+;; angle*, so the parallelogram can lean: drag $\theta$. Drag $B$ to change
+;; the line, $X$ to move the end of the base, $A'$ to change the height,
+;; and set the given area $S_0$ that VI.28 asks for. The thin outline is
+;; the parallelogram that applies exactly $S_0$. Falling short, it exists
+;; only while $S_0$ is no greater than VI.27's greatest, drawn dashed:
+;; Euclid's *diorismos*, the condition he states with VI.28. Ask for more
+;; and the badge turns red.
+
+(play/application)
 
 ;; ## Where this goes
 ;;

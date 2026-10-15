@@ -1,0 +1,23 @@
+{:now [{:claim "A manifold with a line element"
+        :modern "A Riemannian manifold is a smooth manifold with a positive definite symmetric 2-tensor g; lengths, angles, geodesics and curvature all come from g."
+        :tex "ds^2 = g_{ij}\\,dx^i dx^j"}
+       {:claim "Curvature in every surface direction"
+        :modern "Riemann's curvature at a point in a surface direction is today's sectional curvature K(σ) = R(X,Y,Y,X)/|X∧Y|², read off the Riemann curvature tensor; in two dimensions it is Gauss' K."
+        :tex "K(X,Y) = \\frac{\\langle R(X,Y)Y, X\\rangle}{|X|^2|Y|^2 - \\langle X,Y\\rangle^2}"}
+       {:claim "Geodesics spread according to curvature"
+        :modern "The Jacobi equation J'' + K J = 0 measures how nearby geodesics converge (K > 0) or diverge (K < 0)."
+        :tex "\\ddot J + K\\,J = 0"}]
+ :fields [{:field :mechanics-physics :label "Physics" :how "General relativity (1915) makes gravity the curvature of a Lorentzian metric on spacetime, determined by matter through Einstein's equations: Riemann's 'binding forces'." :example "The perihelion of Mercury and the bending of starlight, 1919."}
+          {:field :differential-geometry :how "Riemannian geometry: comparison theorems, Gauss-Bonnet, the classification of surfaces by curvature, Ricci flow and the Poincaré conjecture (2003)." :example "A complete surface with K ≥ c > 0 is compact (Bonnet-Myers)."}
+          {:field :logic-computing :label "Computing" :how "Geodesics on meshes and statistical manifolds: shortest paths on surfaces, optimisation along the Fisher metric (natural gradient)." :example "Geodesic distance on a 3D scan for shape matching."}
+          {:field :topology :label "Topology" :how "Curvature constrains topology: the integral of K over a closed surface is 2π times its Euler characteristic." :example "Every metric on the torus has total curvature 0."}]
+ :tangents [{:series :physics :hook "From ds² to Einstein's field equations: is physical space curved? Riemann left it to experiment, Einstein answered with gravity." :link "planned"}
+            {:series :erlangen :hook "Klein's Erlangen programme (1872) classifies geometries by groups; Riemann's metric geometries mostly have no symmetry at all, the other road." :link "/erlangen-program/"}
+            {:series :projective :hook "Cayley and Klein recover Riemann's constant-curvature spaces inside projective geometry, with a conic as the absolute." :link "/projective/"}]
+ :texts [{:author "Bernhard Riemann" :work "Ueber die Hypothesen, welche der Geometrie zu Grunde liegen (Abh. Ges. Wiss. Göttingen 13, 1868)" :year 1868 :url "https://www.emis.de/classics/Riemann/Geom.pdf" :kind :archive :lang "de"}
+         {:author "Bernhard Riemann" :work "On the Hypotheses which lie at the Bases of Geometry, tr. W. K. Clifford (Nature 8, 1873)" :year 1873 :url "https://www.emis.de/classics/Riemann/WKCGeom.pdf" :kind :translation :lang "en"}
+         {:author "Bernhard Riemann" :work "Gesammelte mathematische Werke, ed. H. Weber (1876)" :year 1876 :url "https://archive.org/details/bernardrgesamm00riemrich" :kind :archive :lang "de"}]
+ :links [{:to "gauss" :relation :generalizes :note "Gauss' first fundamental form and Theorema egregium taken to n dimensions."}
+         {:to "euclid-elements" :relation :refutes :note "Euclid's geometry becomes one hypothesis among many: the flat case K = 0, to be tested by experience."}
+         {:to "riemann-weierstrass" :relation :uses :note "The same year and the same Habilitation: the integral lecture and the geometry lecture."}
+         {:to "newton-principia" :relation :anticipates :note "Riemann asks for the ground of the metric in 'binding forces', the road from Newton's gravity to Einstein's."}]}

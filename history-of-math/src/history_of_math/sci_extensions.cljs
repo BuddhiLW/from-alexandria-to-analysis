@@ -21,7 +21,8 @@
             [alexandria.palette]
             [emmy.viewer.sci]
             [sci.core :as sci]
-            [sci.ctx-store]))
+            [sci.ctx-store]
+            [history-of-math.timeline-view]))
 
 (emmy.viewer.sci/install!)
 
@@ -35,7 +36,8 @@
    'alexandria.medium.scene    (sci/copy-ns alexandria.medium.scene (sci/create-ns 'alexandria.medium.scene))
    'alexandria.medium.svg      (sci/copy-ns alexandria.medium.svg (sci/create-ns 'alexandria.medium.svg))
    'alexandria.medium.timeline (sci/copy-ns alexandria.medium.timeline (sci/create-ns 'alexandria.medium.timeline))
-   'alexandria.palette         (sci/copy-ns alexandria.palette (sci/create-ns 'alexandria.palette))})
+   'alexandria.palette         (sci/copy-ns alexandria.palette (sci/create-ns 'alexandria.palette))
+   'history-of-math.timeline-view (sci/copy-ns history-of-math.timeline-view (sci/create-ns 'history-of-math.timeline-view))})
 
 (sci.ctx-store/swap-ctx!
  sci/merge-opts

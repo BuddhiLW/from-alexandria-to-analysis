@@ -33,7 +33,8 @@
    'ratio (fn [[a b]] (str "\\frac{" a "}{" b "}"))
    'segment-area (fn [[p a b]] (str "\\operatorname{seg}(" p ";" a b ")"))
    'hyperbola (fn [[a b]] (str "\\mathcal{H}_{" a "," b "}"))
-   'parabola (fn [[a b]] (str "\\mathcal{P}_{" a "," b "}"))
+   ;; two points for a conic's parabola, three for Archimedes' segment
+   'parabola (fn [args] (str "\\mathcal{P}_{" (str/join "," args) "}"))
    'ellipse (fn [[a b]] (str "\\mathcal{E}_{" a "," b "}"))
    'circle (fn [[o r]] (str "\\odot(" o "," r ")"))
    'series-sum (fn [[r n]] (str "\\sum_{k=0}^{" n "}" r "^k"))

@@ -1,0 +1,27 @@
+{:now [{:claim "The parallel postulate is independent of the other axioms"
+        :modern "Absolute geometry (Euclid's axioms without the fifth) has two complete extensions in the plane: Euclidean (curvature 0) and hyperbolic (constant curvature K < 0); Beltrami's and Klein's models prove the second consistent if the first is."
+        :tex "\\text{Hilbert axioms} \\setminus \\{\\text{V}\\} \\nvdash \\text{V}"}
+       {:claim "The angle of parallelism"
+        :modern "In the hyperbolic plane of curvature −1 the angle of parallelism at distance x satisfies tan(Π(x)/2) = e^{−x}, equivalently sin Π(x) = 1/cosh x."
+        :tex "\\tan\\tfrac{\\Pi(x)}{2} = e^{-x},\\qquad \\sin\\Pi(x) = \\operatorname{sech} x"}
+       {:claim "Area is the angle defect"
+        :modern "Gauss-Bonnet for a geodesic triangle on a surface of constant curvature K: K · area = A + B + C − π; with K = −1 the area is π − (A + B + C), at most π (the ideal triangle)."
+        :tex "\\text{area} = \\pi - (A+B+C)"}
+       {:claim "Models"
+        :modern "The Poincaré disk (conformal), the Beltrami-Klein disk (geodesics are chords), the upper half-plane and the hyperboloid are isometric models of the same plane H²; its isometry group is PSL(2,R)."
+        :tex "\\mathrm{Isom}^+(\\mathbb{H}^2) \\cong \\mathrm{PSL}(2,\\mathbb{R})"}]
+ :fields [{:field :geometry :how "Hyperbolic geometry is the generic geometry of surfaces: by uniformisation every closed surface of genus ≥ 2 carries a metric of constant curvature −1." :example "Thurston's geometrisation of 3-manifolds; Escher's Circle Limit woodcuts drawn in the Poincaré disk."}
+          {:field :mechanics-physics :label "Physics" :how "The velocities of special relativity form a hyperbolic space: rapidities add, velocities compose by the Lorentz group, which is the isometry group of the hyperboloid model." :example "Thomas precession as the angle defect of a velocity triangle."}
+          {:field :logic-computing :label "Computing" :how "Hyperbolic embeddings place trees and hierarchies with low distortion, since the circumference of a hyperbolic disk grows exponentially." :example "Poincaré embeddings of WordNet (Nickel and Kiela, 2017)."}
+          {:field :topology :label "Topology" :how "Hyperbolic structures make topology rigid: Mostow rigidity says the volume of a closed hyperbolic 3-manifold is a topological invariant." :example "The figure-eight knot complement has hyperbolic volume 2.0298832."}
+          {:field :logic-computing :label "Logic" :how "The first relative consistency proof: a theory is shown consistent by a model inside another theory, the method of Hilbert's Grundlagen and of modern model theory." :example "Beltrami 1868: hyperbolic plane geometry interpreted on the pseudosphere."}]
+ :tangents [{:series :erlangen :hook "Klein (1871-72) builds Euclidean, hyperbolic and elliptic geometry from one projective plane and a conic; Erlangen makes a geometry the invariants of its group." :link "/erlangen-program/"}
+            {:series :projective :hook "The Beltrami-Klein disk is projective geometry with a circle as Cayley's absolute: hyperbolic distance is half the log of a cross-ratio." :link "/projective/"}
+            {:series :group-theory :hook "Möbius maps of the disk form PSL(2,R); its discrete subgroups (Fuchsian groups) tile the disk, Poincaré 1882." :link "planned"}]
+ :texts [{:author "N. I. Lobachevsky" :work "Geometrical researches on the theory of parallels (1840), tr. G. B. Halsted, Austin 1891" :year 1891 :url "https://archive.org/details/geometricalresea00loba" :kind :translation :lang "en"}
+         {:author "János Bolyai" :work "The science absolute of space (Appendix, 1832), tr. G. B. Halsted, 4th ed., Austin 1896" :year 1896 :url "https://archive.org/details/scienceabsolute00bolyrich" :kind :translation :lang "en"}
+         {:author "Eugenio Beltrami" :work "Opere matematiche I (Roma 1902), with the Saggio di interpretazione della geometria non-euclidea (1868)" :year 1902 :url "https://archive.org/details/operematematiche01beltuoft" :kind :archive :lang "it"}]
+ :links [{:to "euclid-elements" :relation :refutes :note "Postulate 5 dropped: it is independent of the others, not a theorem."}
+         {:to "gauss" :relation :uses :note "Beltrami's model is a surface of constant Gaussian curvature −1, K computed from E, F, G alone (Theorema egregium)."}
+         {:to "riemann-hypothesen" :relation :anticipates :note "Riemann's constant-curvature spaces (α < 0) are Lobachevsky's; Beltrami read both in 1868."}
+         {:to "apollonius-conics" :relation :uses :note "The Beltrami-Klein disk is the inside of a conic; Klein's metric is a cross-ratio with respect to it."}]}

@@ -23,7 +23,8 @@
    it needs, which the build copies from node_modules."
   (:require [emmy.clerk :as ec]
             [emmy.viewer.compile :as vc]
-            [emmy.viewer.raster]))
+            [emmy.viewer.raster]
+            [clojure.java.io :as io]))
 
 (def backend
   "The computational backend of the series' plots."
@@ -44,11 +45,11 @@
   (apply ec/install! viewers))
 
 (def bundled-cljs
-  "The namespaces history-of-math.sci-extensions compiles into the bundle
-   (besides emmy-viewers'). Clerk must not ship their sources again."
+  "Namespaces precompiled into history-of-math's browser bundle."
   '#{alexandria.medium.anim alexandria.medium.figure alexandria.medium.html-labels alexandria.medium.math
      alexandria.medium.plane alexandria.medium.player alexandria.medium.scene
-     alexandria.medium.svg alexandria.medium.timeline alexandria.palette})
+     alexandria.medium.svg alexandria.medium.timeline alexandria.palette
+     history-of-math.timeline-view})
 
 (defn register-bundle!
   "Tell Clerk that the namespaces of `bundled-cljs` are already in the
@@ -67,3 +68,22 @@
   [["mafs/core.css" "mafs-core.css"]
    ["mathbox/build/mathbox.css" "mathbox.css"]
    ["jsxgraph/distrib/jsxgraph.css" "jsxgraph.css"]])
+
+(def series-css
+  "The series' own stylesheets, as [classpath-resource published-name],
+   published after `css` so they refine it. mafs.css makes every Mafs text
+   label click-through: a label drawn over a MovablePoint took the
+   mousedown and Mafs panned the view instead of moving the point, in any
+   playground that drew a letter after its handle."
+  [["history_of_math/mafs.css" "mafs-series.css"]])
+
+(defn stylesheets
+  "Every widget stylesheet a page loads, in order, as [source
+   published-name]: `css` from node_modules (relative to the working
+   directory), then `series-css` from the classpath. A source is what
+   clojure.java.io/copy reads (a File, a resource URL)."
+  []
+  (concat (for [[src published] css] [(java.io.File. "node_modules" ^String src) published])
+          (for [[src published] series-css]
+            [(or (clojure.java.io/resource src) (throw (ex-info (str "no resource " src) {:src src})))
+             published])))

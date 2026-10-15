@@ -1,0 +1,42 @@
+;; Fermat, Ad locos planos et solidos isagoge (written before 1637). Latin from
+;; Oeuvres de Fermat, ed. P. Tannery and C. Henry, vol. I (Paris 1891),
+;; pp. 91-100 (Wikisource proofread text); English is the series' own
+;; rendering, marked as such. Points are exact instances of
+;; alexandria.fermat.loci (rational parametrisations, u = 1/2).
+{:tradition {:id :fermat/loci
+             :author "Pierre de Fermat"
+             :work "Ad locos planos et solidos isagoge"
+             :date "before 1637"
+             :source "Oeuvres de Fermat, ed. Tannery and Henry, vol. I, Paris 1891"}
+ :propositions
+ [{:id :fermat/locus-line
+   :title "D in A = B in E: a line"
+   :statement "D in A æquetur B in E: punctum I erit ad lineam rectam positione datam. [Series' English rendering: Let D times A equal B times E: the point I will be on a straight line given in position.]"
+   :source "Tannery and Henry 1891, vol. I, p. 92"
+   :construction
+   {:id :fermat-locus-line
+    :kind :construction
+    :window {:x [-0.5 3] :y [-0.5 2] :n 1 :sweep [0 1]}
+    :points [{:id :N :at [0 0] :fixed? true}
+             {:id :Z :at [2 0] :fixed? true}
+             {:id :I :at [2 1] :fixed? true}
+             {:id :Z1 :at [1 0] :fixed? true}
+             {:id :I1 :at [1 1/2] :fixed? true}]
+    :draw [[:segment :N :I] [:segment :N :Z] [:segment :Z :I] [:segment :Z1 :I1]]
+    :checks [{:collinear [:N :I1 :I]}]}}
+
+  {:id :fermat/locus-circle
+   :title "B q. - A q. = E q.: a circle"
+   :statement "Bq. - Aq. æquetur Eq.: punctum I est ad circulum positione datum, quando angulus NZI est rectus. [Series' English rendering: Let the square of B minus the square of A equal the square of E: the point I is on a circle given in position, when the angle NZI is right.]"
+   :source "Tannery and Henry 1891, vol. I, p. 98"
+   :construction
+   {:id :fermat-locus-circle
+    :kind :construction
+    :window {:x [-2 2] :y [-2 2] :n 1 :sweep [0 1]}
+    :points [{:id :N :at [0 0] :fixed? true}
+             {:id :M :at [5 0] :fixed? true}
+             {:id :Z :at [3 0] :fixed? true}
+             {:id :I :at [3 4] :fixed? true}]
+    :draw [[:segment :N :M] [:segment :Z :I] [:segment :N :I]]
+    :checks [{:claim (= (length N I) (length N M))}
+             {:perpendicular [[:N :Z] [:Z :I]]}]}}]}

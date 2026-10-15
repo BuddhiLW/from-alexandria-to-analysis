@@ -1,0 +1,45 @@
+;; The strands of the series: one timeline per field of mathematics.
+;;
+;; A field is a TAG, never a partition. A timeline entry (timeline.edn
+;; :fields), a notebook (ns metadata :history/fields) and a lens card (lens
+;; :fields [{:field ...}]) all name strands by these ids; a work on two
+;; strands appears on both, and a lens :link whose ends lie on different
+;; strands is drawn on the hub as a bridge between them.
+;;
+;; The cut is Pedro's (2026-10-12): number theory, differential geometry,
+;; graph theory, set theory, abstract algebra and measure theory each have
+;; their own strand. Adding a strand is one row here plus a palette role.
+;;
+;;   :id     the strand id, the one vocabulary of fields
+;;   :title  the strand's name on the hub
+;;   :scope  one sentence: what the strand follows
+;;   :role   its colour, a key of the :series palette (alexandria.palette)
+{:strands
+ [{:id :geometry :title "Geometry" :role :strand/geometry
+   :scope "Figures, space and what stays the same when they move: from Euclid's postulates through projective and non-Euclidean geometry to Klein's groups."}
+  {:id :differential-geometry :title "Differential geometry" :role :strand/differential-geometry
+   :scope "Curvature measured with the calculus: curves and surfaces, Gauss's intrinsic curvature, Riemann's manifolds, the tensor calculus and the curved spacetime of general relativity."}
+  {:id :analysis :title "Analysis" :role :strand/analysis
+   :scope "Measuring the curved, the changing and the infinite: exhaustion, the calculus, limits, the real numbers and the integral."}
+  {:id :measure-theory :title "Measure theory" :role :strand/measure-theory
+   :scope "Length, area and probability for any set of points: Jordan content, Borel and Lebesgue measure, the Lebesgue integral and the axioms of probability."}
+  {:id :trigonometry :title "Trigonometry" :role :strand/trigonometry
+   :scope "Angles turned into numbers: tables of chords and sines, plane and spherical triangles, logarithms and the series of Fourier."}
+  {:id :algebra :title "Algebra" :role :strand/algebra
+   :scope "Solving for the unknown: the theory of equations from al-Khwarizmi's quadratics through the cubic and the quartic to Abel's impossibility for the quintic."}
+  {:id :abstract-algebra :title "Abstract algebra" :role :strand/abstract-algebra
+   :scope "The operations studied for themselves: groups, fields, rings and ideals, from Galois's groups of equations to Noether's ideal theory."}
+  {:id :number-theory :title "Number theory" :role :strand/number-theory
+   :scope "The whole numbers and their primes, from Euclid's arithmetic books through congruences and reciprocity to the zeta function."}
+  {:id :probability :title "Probability" :role :strand/probability
+   :scope "Chance made calculable: games of dice, expectation, the law of large numbers, the normal curve and inference."}
+  {:id :topology :title "Topology" :role :strand/topology
+   :scope "The properties of shapes that survive stretching: polyhedra, surfaces, connectivity, homology and fixed points."}
+  {:id :graph-theory :title "Graph theory" :role :strand/graph-theory
+   :scope "Counting arrangements and the networks of points and lines: the arithmetic triangle, the bridges of Königsberg, circuits, trees and the colouring of maps."}
+  {:id :set-theory :title "Set theory" :role :strand/set-theory
+   :scope "The infinite made an object of mathematics: countable and uncountable sets, ordinals and cardinals, well-ordering and the axioms of Zermelo."}
+  {:id :logic-computing :title "Logic and computing" :role :strand/logic-computing
+   :scope "What a proof is and what can be computed: syllogisms, the algebra of logic, axioms, incompleteness and the machine."}
+  {:id :mechanics-physics :title "Mechanics, physics and astronomy" :role :strand/mechanics-physics
+   :scope "Mathematics as the law of nature: the lever, the planets, falling bodies, the equations of motion, fields and spacetime."}]}

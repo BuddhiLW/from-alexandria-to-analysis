@@ -1,0 +1,20 @@
+{:now [{:claim "First incompleteness theorem"
+        :modern "Every consistent, effectively axiomatized theory T that interprets elementary arithmetic has a sentence G_T that T neither proves nor refutes (Rosser 1936 removed Gödel's omega-consistency hypothesis)."
+        :tex "T \\nvdash G_T \\quad\\text{and}\\quad T \\nvdash \\neg G_T"}
+       {:claim "Second incompleteness theorem"
+        :modern "Such a theory T, if consistent, does not prove the arithmetic sentence Con(T) that expresses its own consistency."
+        :tex "T \\nvdash \\mathrm{Con}(T)"}
+       {:claim "The halting problem is undecidable"
+        :modern "The set K of programs that halt on their own description is computably enumerable but not computable; by the Church-Turing thesis no algorithm decides it."
+        :tex "K = \\{\\, e : \\varphi_e(e)\\!\\downarrow \\,\\} \\notin \\Delta^0_1"}]
+ :fields [{:field :logic-computing :label "Computing" :how "Turing's universal machine is the stored-program computer: one machine reads another's description as data and runs it." :example "An interpreter, a virtual machine or an emulator is a universal machine in Turing's sense."}
+          {:field :logic-computing :label "Verification" :how "Rice's theorem extends the halting argument to every non-trivial property of program behaviour, so program analysers must approximate." :example "Type checkers and static analysers reject some correct programs in order to always terminate."}
+          {:field :number-theory :how "Gödel numbering made syntax arithmetic; Matiyasevich (1970) pushed it to Diophantine equations and settled Hilbert's tenth problem negatively." :example "No algorithm decides whether an integer polynomial equation has an integer solution."}]
+ :tangents [{:series :logic-computing :hook "Hilbert's Paris address of 1900 asked for a proof that the axioms of arithmetic are consistent (problem 2) and for a decision method for Diophantine equations (problem 10); Gödel and Turing answered the spirit of both in the negative."}
+            {:series :set-theory :hook "Cantor's diagonal argument, the engine of both proofs here, is the first theorem of the set-theory course: no list of binary sequences contains them all." :link "/set-theory/"}
+            {:series :two-runtimes :hook "A Clojure runtime written in Zig or Rust is a universal machine running descriptions of other machines, the construction of Turing's section 6." :link "/clojure-on-zig-and-rust/"}]
+ :texts [{:author "Kurt Gödel" :work "Über formal unentscheidbare Sätze der Principia Mathematica und verwandter Systeme I, Monatshefte für Mathematik und Physik 38" :year 1931 :url "https://doi.org/10.1007/BF01700692" :kind :archive :lang "de"}
+         {:author "Alan M. Turing" :work "On computable numbers, with an application to the Entscheidungsproblem, Proc. London Math. Soc. (2) 42" :year 1936 :url "https://doi.org/10.1112/plms/s2-42.1.230" :kind :archive :lang "en"}
+         {:author "David Hilbert" :work "Mathematische Probleme, Vortrag gehalten auf dem internationalen Mathematiker-Kongreß zu Paris" :year 1900 :url "https://de.wikisource.org/wiki/Mathematische_Probleme" :kind :wikisource :lang "de"}]
+ :links [{:to "dedekind-cantor" :relation :uses :note "Gödel's sentence and Turing's machine D are both built by Cantor's diagonal argument."}
+         {:to "non-euclidean" :relation :generalizes :note "Beltrami proved consistency relative to a model; Gödel's second theorem shows why arithmetic cannot prove its own consistency outright."}]}

@@ -1,4 +1,4 @@
-;; # Archimedes: the circle, the parabola and *The Method*
+;; # Archimedes: the circle, the parabola, the sphere and *The Method*
 ;;
 ;; Archimedes lived in Syracuse, on Sicily, from about 287 to 212 BC. He
 ;; wrote to the mathematicians of Alexandria (Conon, Dositheus, and
@@ -10,34 +10,44 @@
 ;; His method of proof is *exhaustion*, which Eudoxus had invented and
 ;; Euclid's Book XII uses: trap the curved figure between polygons, make the
 ;; trap as tight as you please, and rule out every other value by
-;; contradiction. This notebook follows three works in T. L. Heath's
+;; contradiction. This notebook follows four works in T. L. Heath's
 ;; translation, *The Works of Archimedes* (1897, with the 1912 supplement
 ;; for *The Method*): *Measurement of a Circle*, the rings argument told
-;; later about the same circle, and *The Method*, the letter where
-;; Archimedes shows how he *found* the area of the parabolic segment before
-;; he proved it.
+;; later about the same circle, *Quadrature of the Parabola*, *On the
+;; Sphere and Cylinder*, and *The Method*, the letter where Archimedes shows
+;; how he *found* his results before he proved them.
 ;;
 ;; Press ▶ to watch a proof, or click any step to see its figure. The
-;; figures, Archimedes' numbers and the checks come from Alexandria's shelf
-;; of Archimedes (`alexandria.archimedes.circle`, `alexandria.archimedes.method`).
-;; Each moving figure is an Emmy function compiled to WebAssembly by
-;; emmy-viewers' raster backend.
+;; widgets tie every quantity of a proposition to the others by its
+;; equations: move any slider and the rest follow. The figures, the numbers
+;; and the checks come from Alexandria's shelf of Archimedes; each moving
+;; figure and every number on screen is an Emmy function compiled to
+;; WebAssembly by emmy-viewers' raster backend.
 ^{:nextjournal.clerk/visibility {:code :hide :result :hide}}
 (ns archimedes
   {:history/year -250
    :history/title "Archimedes, Measurement of a Circle and The Method"
    :history/era "Greek geometry"
+   :history/fields #{:geometry :analysis :mechanics-physics}
    :nextjournal.clerk/visibility {:code :hide :result :show}
    :nextjournal.clerk/toc true}
   (:require [alexandria.archimedes.circle :as circle]
             [alexandria.archimedes.circle-view :as view]
+            [alexandria.archimedes.playground :as playground]
             [alexandria.archimedes.method :as method]
             [alexandria.archimedes.method-view :as method-view]
             [alexandria.archimedes.quadrature :as quadrature]
             [alexandria.archimedes.quadrature-view :as quadrature-view]
+            [alexandria.archimedes.ties :as ties]
+            [alexandria.archimedes.widgets :as widgets]
+            [alexandria.medium.tied :as tie]
             [clojure.string :as str]
             [history-of-math.page :as page]
+            [history-of-math.widgets :as hom]
             [nextjournal.clerk :as clerk]))
+
+^{::clerk/visibility {:result :hide}}
+(hom/install!)
 
 ;; ## *Measurement of a Circle*
 ;;
@@ -71,6 +81,9 @@
 ;; magnify the apex and the end of the base, where polygon and $K$ part.
 
 (view/proposition-1)
+;; Now try it yourself: resize the circle and double its bracketing polygons.
+(playground/circle)
+
 
 (page/grade-badges [(nth (circle/graded-identities) 0)])
 
@@ -117,6 +130,9 @@
 
 (view/proposition-2)
 
+;; Now try it yourself: drag the radius of the circle inside its diameter-square.
+(playground/square)
+
 (page/grade-badges [(nth (circle/graded-identities) 2)])
 
 ;; ### Proposition 3
@@ -136,11 +152,41 @@
 
 (view/proposition-3)
 
+;; Now try it yourself: double from the hexagon to Archimedes' 96-gon.
+(playground/circle)
+
 (page/grade-badges [(nth (circle/graded-identities) 1)])
 
 (let [checks (circle/table-checks)]
   (page/badge (every? :holds? checks)
               (str "all " (count checks) " of Archimedes' inequalities, decided exactly in rationals")))
+
+;; ### Proposition 3, live: the n-gon and its bracket
+;;
+;; Archimedes stops at 96 sides; nothing in his argument does. Here every
+;; quantity of the proposition is a control, tied by the equations below:
+;; $n$ the number of sides, $d$ the diameter, $p$ the perimeter of the
+;; inscribed $n$-gon, $P$ that of the circumscribed one, and the bound
+;; $\varepsilon = (P - p)/d$ on how far either ratio misses $\pi$.
+;;
+;; - Move $n$ or $d$: the other holds, and $p$, $P$, $\varepsilon$ follow.
+;; - Move $p$ or $P$: $n$ holds, and $d$ follows (exact inverse).
+;; - Move $\varepsilon$: $d$ holds, and $n$ follows, solved by Newton's
+;;   method on Emmy's derivative: how many sides make the bracket that
+;;   tight. The page also names the first whole $n$ that reaches it.
+;;
+;; The widget starts at Archimedes' 96-gon; its bracket, computed by raster,
+;; sits inside his $3\frac{10}{71} < \pi < 3\frac17$.
+
+(widgets/circle)
+
+;; Emmy derives the tie and checks the recursion behind Archimedes' table.
+;; With $\theta = \pi/2n$, *Elements* VI.3 at the bisected angle makes the
+;; doubled circumscribed perimeter the harmonic mean of the two old ones,
+;; and the doubled inscribed perimeter the geometric mean of the old
+;; inscribed one and the new circumscribed one.
+
+(tie/derivation (ties/circle-equations) (ties/circle-grades))
 
 ;; ## *The Method*: how he found it
 ;;
@@ -169,6 +215,9 @@
 ;; > four-thirds of the triangle which has the same base and equal height.*
 
 (method-view/proposition-1)
+;; Now try it yourself: move the slice O and change the arm HK.
+(playground/lever)
+
 
 (page/grade-badges (method/graded) #{:grade/proved :grade/numeric})
 
@@ -177,10 +226,7 @@
 ;;
 ;; > *Now the fact here stated is not actually demonstrated by the argument
 ;; > used; but that argument has given a sort of indication that the
-;; > conclusion is true. Seeing then that the theorem is not demonstrated,
-;; > but at the same time suspecting that the conclusion is true, we shall
-;; > have recourse to the geometrical demonstration which I myself
-;; > discovered and have already published.*
+;; > conclusion is true.*
 ;;
 ;; The balance adds up infinitely many lines, which Greek geometry could not
 ;; justify. The published demonstration uses finitely many triangles: each
@@ -229,9 +275,63 @@
 (quad-statement :archimedes/parabola-24)
 
 (quadrature-view/player :archimedes/parabola-24)
+;; Now try it yourself: move the chord and grow coloured generations of triangles.
+(playground/quadrature)
+
 
 (page/grade-badges (quadrature/graded))
 
+;; ### Props 21-24, live: generations of triangles and the 4/3 limit
+;;
+;; The same argument on any chord. The segment of $y = a^2 - x^2$ cut by the
+;; chord of half-width $a$ has first triangle $T = a^3$ (base $2a$, height
+;; $a^2$). After $k$ generations the inscribed polygon is $S_k$ and what is
+;; left of the segment is $R_k$.
+;;
+;; - Move $k$ or $a$: the other holds, and $T$, $S$, $R$ follow.
+;; - Move $T$: $k$ holds and the chord follows, $a = T^{1/3}$.
+;; - Move $R$ or $S$: $T$ holds and $k$ follows, solved exactly from
+;;   $4^{k+1} = 4T/3R$: how many generations bring the leftover that low.
+;;
+;; Whatever you do, $S + R = \frac43 T$: that is Proposition 24, and the
+;; ratio $S/T$ climbs toward $\frac43$ without reaching it.
+
+(widgets/parabola)
+
+(tie/derivation (ties/parabola-equations) (ties/parabola-grades))
+
+;; ## *On the Sphere and Cylinder* I.34 and *The Method*, Prop. 2
+;;
+;; Archimedes asked that his tomb carry a sphere inside a cylinder. In the
+;; preface to *On the Sphere and Cylinder* he writes to Dositheus that
+;;
+;; > *any cylinder having its base equal to the greatest circle of those in
+;; > the sphere, and height equal to the diameter of the sphere, is itself
+;; > [i.e. in content] half as large again as the sphere*
+;; >
+;; > — Heath (1897), *On the Sphere and Cylinder* I, preface
+;;
+;; and Book I proves it through Proposition 34:
+;;
+;; > *Any sphere is equal to four times the cone which has its base equal to
+;; > the greatest circle in the sphere and its height equal to the radius of
+;; > the sphere.*
+;;
+;; *The Method*, Prop. 2, shows how he found it. Along the diameter
+;; $AC = 2r$, at distance $x$ from $A$, a plane cuts a circle from the
+;; sphere (radius$^2 = x(2r - x)$), one from the cone $AEF$ (radius $x$)
+;; and one from the cylinder (radius $2r$). Hung at $H$, with $HA = AC$, the
+;; first two balance the third where it is; summed over $x$, the sphere and
+;; the cone hung at $H$ balance the cylinder at its centre.
+;;
+;; Below, the three solids in MathBox on the raster backend: drag to orbit,
+;; scroll to zoom. Every volume is a control. Move one and $r$ follows by
+;; its exact inverse, the others follow, and the ratios stay
+;; $V : C = 2 : 3$ and $V : K = 4 : 1$, read live from raster.
+
+(widgets/sphere)
+
+(tie/derivation (ties/sphere-equations) (ties/sphere-grades))
 
 ;; ## Where this goes
 ;;
