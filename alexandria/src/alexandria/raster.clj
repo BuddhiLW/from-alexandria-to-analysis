@@ -56,10 +56,17 @@
                            x))
                  form))
 
+(def ^:dynamic *simplify?*
+  "Whether a kernel's body is simplified by Emmy before lowering (default
+   true). Bind it false for branch-free clamp kernels (sums of abs), which
+   Emmy's simplifier expands past the JVM's method size; the browser
+   compiles the same functions with emmy-viewers' {:simplify? false}."
+  true)
+
 (defn- lowered
   "The raster vocabulary of Emmy expression expr; a number stays a double."
   [expr]
-  (let [v (e/simplify expr)]
+  (let [v (if *simplify?* (e/simplify expr) (e/freeze expr))]
     (if (number? v) (double v) (atan2 (algebra/realize :raster v)))))
 
 (defn- compile-ftm
@@ -97,7 +104,9 @@
       4 (k (x 0) (x 1) (x 2) (x 3))
       5 (k (x 0) (x 1) (x 2) (x 3) (x 4))
       6 (k (x 0) (x 1) (x 2) (x 3) (x 4) (x 5))
-      (throw (ex-info "alexandria.raster: kernels take at most 6 numbers" {:n (count xs)})))))
+      7 (k (x 0) (x 1) (x 2) (x 3) (x 4) (x 5) (x 6))
+      8 (k (x 0) (x 1) (x 2) (x 3) (x 4) (x 5) (x 6) (x 7))
+      (throw (ex-info "alexandria.raster: kernels take at most 8 numbers" {:n (count xs)})))))
 
 (defn value
   "f at the numbers xs, computed by f's raster kernels: a double, or a

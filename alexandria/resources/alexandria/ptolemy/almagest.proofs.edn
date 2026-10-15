@@ -1,0 +1,29 @@
+;; Ptolemy, Almagest I.10 (Halma's chapter IX): the chord of half an arc and
+;; of the sum of two arcs, one of Ptolemy's sentences per step. Quotations
+;; verbatim from N. Halma, Composition mathématique de Claude Ptolémée,
+;; t. 1 (Paris, 1813), fr.wikisource "Almageste", Livre I, ch. IX (public
+;; domain). Each step names the :stage that alexandria.ptolemy.chords-scenes
+;; draws.
+{:ptolemy/half
+ {:source "Halma 1813, Almageste I, ch. IX, pp. 31-32"
+  :steps
+  [{:stage :setup :why "Halma p. 31"
+    :claim "Soit le demi-cercle ABG décrit sur le diamètre AG, soit donnée la droite GB et soit l’arc GB coupé par moitié au point D. (The semicircle ABG on the diameter AG, the chord GB given, the arc GB bisected at D.)"}
+   {:stage :ae :why "Halma p. 31"
+    :claim "Soit prise AE égale à AB, et joignons la droite DE. (Take AE equal to AB, join DE: triangles ABD and AED are equal, so DE = BD = DG.)"}
+   {:stage :dz :why "Halma pp. 31-32"
+    :claim "EZ est égale à ZG ; or EG entière est la différence des droites AB, AG ; donc ZG est la moitié de cette différence. (DZ is the height of the isosceles triangle DEG, so ZG = (AG − AB)/2.)"}
+   {:stage :result :why "Halma p. 32"
+    :claim "Le rectangle AG GZ est égal au carré fait sur GD ; donc la droite GD qui soutend la moitié de l’arc BG, sera donnée de longueur. (AG·GZ = GD², so the chord of half the arc is known.)"}]}
+
+ :ptolemy/sum
+ {:source "Halma 1813, Almageste I, ch. IX, pp. 32-33"
+  :steps
+  [{:stage :setup :why "Halma p. 32"
+    :claim "Soient pris depuis le point A les deux arcs donnés consécutifs AB, BG, et joignons leurs soutendantes données AB, BG. (Two consecutive arcs AB, BG from A on the circle about Z, their chords given.)"}
+   {:stage :diameter :why "Halma p. 33"
+    :claim "Soit mené, de B en E, le diamètre BZE, et soient tirées les droites BD, DG, GE, DE. (The diameter BZE: BD, GE and DE are chords of the remaining semicircles, so they are given.)"}
+   {:stage :quad :why "Halma p. 33"
+    :claim "Le quadrilatère BGDE étant inscrit au cercle, le rectangle de ces diagonales est égal à la somme des rectangles faits sur les côtés opposés. (By the lemma, BD·GE = BG·DE + BE·GD, and BE is the diameter: GD is given.)"}
+   {:stage :result :why "Halma p. 33"
+    :claim "On en conclura aisément la valeur de GA, qui soutend le reste de la demi-circonférence. (GA is the chord of the supplement of GD: the chord of the sum of the two arcs.)"}]}}

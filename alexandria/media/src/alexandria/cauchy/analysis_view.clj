@@ -56,6 +56,55 @@
                   :durations {:graph 3500 :window 5000 :shrink 9000 :jump 7000}}))
 
 ;; ---------------------------------------------------------------------------
+;; Preliminaires (the limit) and ch. II sec. 2 (continuity), stepped
+
+(def ^:private limit-render 'alexandria.cauchy.limit-scenes/render)
+
+(defn limit-data
+  "x_n = 1 + (-1)^n/n for n = 1..40 (raster kernel), the rank N from which
+   |x_n - 1| < eps for a few eps, and the inscribed polygons of 3..48 sides:
+   area k/2 sin(2 pi/k) and vertices (cos, sin) by raster kernels."
+  []
+  (let [xs (mapv (fn [n] [n (raster/value (fn [n s] (e/+ 1 (e/divide s n))) n (if (even? n) 1.0 -1.0))]) (range 1 41))
+        ranks (mapv (fn [eps] {:eps eps :N (first (filter (fn [N] (every? (fn [[n x]] (or (< n N) (< (Math/abs (- x 1)) eps))) xs)) (range 1 41)))})
+                    [0.5 0.25 0.1 0.05 0.03])]
+    {:xs xs :ranks ranks :pi (raster/value (fn [x] (e/* 4 (e/atan x))) 1.0)
+     :polygons (mapv (fn [k] {:k k
+                              :area (raster/value (fn [k] (e/* (e/divide k 2) (e/sin (e/divide (e/* 2 Math/PI) k)))) k)
+                              :vertices (mapv (fn [j] (raster/value (fn [t] [(e/cos t) (e/sin t)]) (* 2 Math/PI (/ j (double k))))) (range k))})
+                     [3 4 5 6 8 12 24 48])}))
+
+(defn limit []
+  (medium/player limit-render :cauchy/limit (steps :cauchy/limit) {} (limit-data)
+                 {:window [[-0.3 6.9] [-1.2 2.6]] :height 330
+                  :durations {:variable 6000 :fixed 3500 :as-little 9000 :limit 3500 :circle 8000 :infinitesimal 8000}}))
+
+(defn continuity-ch2-data
+  "f(x) = 1 + sin x between x0 = 0.3 and X = 5.5: the curve, f at 12 values
+   of x and at x + alpha for alpha = 1/2 .. 1/64, all by raster kernels, and
+   the largest difference per alpha; a jump of 0.8 at 3 for the failure."
+  []
+  (let [f cauchy/cauchy-integrand
+        x0 0.3 X 5.5
+        xs (mapv #(+ x0 (* % 0.42)) (range 12))
+        fx (raster/sample f (mapv vector xs))
+        alphas (mapv (fn [k] (let [alpha (/ 1.0 (Math/pow 2 k))
+                                   fxa (raster/sample f (mapv #(vector (+ % alpha)) xs))]
+                               {:alpha alpha :fxa fxa :max (reduce max (map #(Math/abs (- %1 %2)) fxa fx))}))
+                       (range 1 7))
+        g (fn [x] (if (< x 3.0) (+ 0.9 (* 0.15 x)) (+ 1.7 (* 0.15 x))))]
+    {:curve (sample f x0 X 200) :x0 x0 :X X :xs xs :fx fx :alphas alphas
+     :jump {:curve-l (mapv (fn [x] [x (g x)]) [0.3 2.999]) :curve-r (mapv (fn [x] [x (g x)]) [3.0 5.5]) :x 3.0
+            :alphas (mapv (fn [k] (let [alpha (/ 1.0 (Math/pow 2 k)) x (- 3.0 (* 0.5 alpha))]
+                                    {:alpha alpha :fx (g x) :fxa (g (+ x alpha))}))
+                          (range 1 7))}}))
+
+(defn continuity-ch2 []
+  (medium/player limit-render :cauchy/continuity-ch2 (steps :cauchy/continuity-ch2) {} (continuity-ch2-data)
+                 {:window [[-0.2 6.0] [-0.6 2.9]] :height 330
+                  :durations {:limits 4000 :increment 4000 :difference 4000 :every-x 6000 :decrease 9000 :jump 8000}}))
+
+;; ---------------------------------------------------------------------------
 ;; Series
 
 (defn series-data

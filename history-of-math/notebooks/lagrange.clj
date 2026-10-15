@@ -37,11 +37,17 @@
   {:history/year 1788
    :history/title "Lagrange: the calculus of variations and analytical mechanics"
    :history/era "Enlightenment"
+   :history/fields #{:mechanics-physics :analysis}
    :nextjournal.clerk/visibility {:code :hide :result :show}
    :nextjournal.clerk/toc true}
   (:require [alexandria.lagrange.lagrange-view :as view]
+            [alexandria.lagrange.playground :as play]
+            [history-of-math.widgets :as hom]
             [history-of-math.page :as page]
             [nextjournal.clerk :as clerk]))
+^{::clerk/visibility {:code :hide :result :hide}}
+(hom/install!)
+
 
 ^{::clerk/visibility {:result :hide}}
 (defn badges
@@ -91,6 +97,9 @@
 ;; integral (section 2 explains that equation), and races three beads.
 
 (view/brachistochrone)
+;; Now try it yourself: move B and compare the descent tracks.
+(play/playground :brach)
+
 
 (badges :brachistochrone)
 
@@ -143,6 +152,9 @@
 ;; the **Euler–Lagrange equation**. Euler named the method the *calculus of
 ;; variations*.
 
+;; Now try it yourself: vary the entire trial curve y + εη.
+(play/playground :delta)
+
 (view/delta)
 
 (badges :delta)
@@ -171,6 +183,9 @@
 
 (view/virtual-velocities)
 
+;; Now try it yourself: change both arms and both loads.
+(play/playground :virtual)
+
 (badges :virtual-velocities)
 
 ;; ### The pendulum and the double pendulum
@@ -182,6 +197,12 @@
 ;; integrates the equations and the curves are drawn from its numbers. The
 ;; double pendulum gets the same treatment: two angles, two equations,
 ;; integrated numerically.
+
+;; Now try it yourself: change the initial angle, speed, length and gravity.
+(play/playground :pendulum)
+
+;; Now try it yourself: start two double pendulums a little apart.
+(play/playground :double)
 
 (view/equations-of-motion)
 
@@ -203,6 +224,9 @@
 ;; ellipse, parabola and hyperbola alike.
 
 (view/kepler)
+;; Now try it yourself: change the energy and angular momentum.
+(play/playground :kepler)
+
 
 (badges :kepler)
 
@@ -224,6 +248,9 @@
 
 (view/mean-value)
 
+;; Now try it yourself: change f and the interval; seek the parallel tangent.
+(play/playground :mean)
+
 (badges :mean-value)
 (badges :remainder)
 
@@ -235,7 +262,11 @@
 ;; continuity, which is the proof taught today. That is the next notebook in
 ;; this series. In mechanics, William Rowan Hamilton (1834) rewrote
 ;; Lagrange's equations in positions and momenta, the form quantum mechanics
-;; would inherit.
+;; would inherit. Emmy Noether (1918) explained Lagrange's two first
+;; integrals above, the energy and the constant $r^2\varphi'$ of the cyclic
+;; angle: each is the conserved quantity of a symmetry of the Lagrangian,
+;; time translation and rotation. See
+;; [Noether, Invariante Variationsprobleme](../noether-1918/).
 
 ^{::clerk/no-cache true}
 (page/prev-next "notebooks/lagrange.clj")

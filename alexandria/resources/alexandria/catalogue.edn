@@ -22,4 +22,5 @@
   {:id :riemann/trigonometrische-reihe :resource "alexandria/riemann/trigonometrische_reihe.edn"}
   {:id :weierstrass/monster :resource "alexandria/weierstrass/monster.edn"}
   {:id :eudoxus/elements-5 :resource "alexandria/eudoxus/elements_5.edn"}
-  {:id :delian/duplication :resource "alexandria/delian/duplication.edn"}]}
+  {:id :delian/duplication :resource "alexandria/delian/duplication.edn"}
+  {:id :fermat/loci :resource "alexandria/fermat/loci.edn"}]}

@@ -1,0 +1,50 @@
+;; Oresme's latitude of forms, one sentence per step. The Latin is from the
+;; school text De latitudinibus formarum "secundum doctrinam magistri
+;; Nicolai Oresme" (Padua, 1486; incunable, public domain), expanded from
+;; the printer's abbreviations; the English in brackets is ours. Each step
+;; names the :stage that alexandria.oresme.scenes draws.
+{:oresme/latitude
+ {:source "De latitudinibus formarum (Padua 1486), the definitions"
+  :steps
+  [{:stage :extension :why "De latitudinibus, opening"
+    :claim "Latitudinum quedam uniformis, quedam difformis. (Of latitudes, some are uniform, some difform: the extension is laid along a line, and the degree at each point is raised on it as a perpendicular.)"}
+   {:stage :uniform :why "De latitudinibus, def. 1"
+    :claim "Latitudo uniformis est illa que est eiusdem gradus per totum. (A uniform latitude has the same degree throughout: its figure is a rectangle.)"}
+   {:stage :difform :why "De latitudinibus, def. 2"
+    :claim "Latitudo difformis est illa que non est eiusdem gradus per totum. (A difform latitude does not have the same degree throughout.)"}
+   {:stage :uniformly-difform :why "De latitudinibus, def. 3"
+    :claim "Latitudo uniformiter difformis est illa in qua est equalis excessus graduum eque distantium. (Uniformly difform: equal excesses of degree between points equally far apart. The top is a straight line; from no degree, a triangle.)"}
+   {:stage :difformly-difform :why "De latitudinibus, def. 4"
+    :claim "Latitudo difformiter difformis sumitur per oppositum. (Difformly difform is taken as the opposite: unequal excesses, a curved top.)"}
+   {:stage :area :why "Tractatus de configurationibus I"
+    :claim "The quantity of the quality is the area of its figure: the figure is measured, strip by strip, and two qualities compare as their figures."}]}
+
+ :oresme/mean
+ {:source "De latitudinibus formarum (Padua 1486), art. 2 suppositions 4-5, art. 3 conclusion 1"
+  :steps
+  [{:stage :setup :why "art. 3, concl. 1"
+    :claim "Omnis latitudo uniformiter difformis ... correspondet suo gradui medio. (Every uniformly difform latitude is worth its middle degree. The motion from no degree at A to the degree BC at B is the triangle ABC.)"}
+   {:stage :midpoint :why "art. 2, supp. 4 (Euclid VI)"
+    :claim "Cuiuslibet trianguli linea duo latera secans per equalia est subdupla ad tertium latus. (In any triangle the line cutting two sides in half is half the third side: the degree DE at the middle D is half of BC.)"}
+   {:stage :rectangle :why "art. 2, supp. 5"
+    :claim "Quodlibet parallelogrammum ex linea medii gradus et linea extensionis constitutum est equale triangulo. (The parallelogram on the line of the middle degree and the line of extension equals the triangle.)"}
+   {:stage :equal :why "art. 2, supp. 5"
+    :claim "The rectangle cuts off a small triangle above DE and adds an equal one below it: the two are congruent, so nothing is lost or gained."}
+   {:stage :result :why "art. 3, concl. 1"
+    :claim "So the distance of the uniformly accelerated motion equals that of the uniform motion at the middle degree: d = vₘ t."}]}
+
+ :oresme/harmonic
+ {:source "Oresme, Quaestiones super geometriam Euclidis, q. 2 (c. 1350), paraphrased"
+  :steps
+  [{:stage :terms :why "Quaestiones, q. 2"
+    :claim "Add 1, 1/2, 1/3, 1/4, ... without end. Each term is smaller than the one before, and they shrink to nothing. Does the sum stay below some bound?"}
+   {:stage [:group 1] :why "Quaestiones, q. 2"
+    :claim "After the first term, take 1/2: the first group, worth 1/2."}
+   {:stage [:group 2] :why "Quaestiones, q. 2"
+    :claim "Then 1/3 + 1/4: both are at least 1/4, so together they are at least 1/4 + 1/4 = 1/2."}
+   {:stage [:group 3] :why "Quaestiones, q. 2"
+    :claim "Then 1/5 + 1/6 + 1/7 + 1/8: four terms, each at least 1/8, so at least 1/2 again."}
+   {:stage [:group 4] :why "Quaestiones, q. 2"
+    :claim "And so on: group k has 2^(k−1) terms, each at least 1/2^k, so it is never less than 1/2."}
+   {:stage :bound :why "Quaestiones, q. 2"
+    :claim "Infinitely many halves pass any bound: after 2^k terms the sum is at least 1 + k/2. The total is infinite."}]}}

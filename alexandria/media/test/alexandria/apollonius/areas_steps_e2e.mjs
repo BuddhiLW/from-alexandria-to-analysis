@@ -42,25 +42,25 @@ const figure = page.locator("[data-figure=apollonius-areas]").first();
 await root.scrollIntoViewIfNeeded();
 await page.waitForTimeout(1500);
 
-const items = await page.locator("li[data-step]").count();
+const items = await root.locator("li[data-step]").count();
 const durations = [7000, 5000, 5500, 6000, 16000, 7000, 7500, 4500, 6500, 6000];
 const hashes = [];
 const steps = [];
 for (let i = 1; i <= durations.length; i++) {
-  await page.locator(`li[data-step="${i}"]`).click();
+  await page.locator(`li[data-step="${i}"]`).last().click();
   await page.waitForTimeout(durations[i - 1] + 800);
   const shown = await root.getAttribute("data-areas-step");
   const buf = await figure.screenshot({ path: `${shots}/step-${i}.png` });
   await root.screenshot({ path: `${shots}/widget-${i}.png` });
   hashes.push(createHash("sha1").update(buf).digest("hex").slice(0, 12));
-  const readout = (await page.locator("[data-readout]").allInnerTexts()).join(" ").replace(/\s+/g, " ").slice(0, 200);
-  const roots = await page.locator("[data-roots]").first().getAttribute("data-roots", { timeout: 500 }).catch(() => null);
-  const quote = (await page.locator("[data-quote]").count()) > 0;
+  const readout = (await root.locator("[data-readout]").allInnerTexts()).join(" ").replace(/\s+/g, " ").slice(0, 200);
+  const roots = await root.locator("[data-roots]").first().getAttribute("data-roots", { timeout: 500 }).catch(() => null);
+  const quote = (await root.locator("[data-quote]").count()) > 0;
   steps.push({ step: i, shown, readout, roots, quote });
 }
 
 // the tied panel at step 5
-await page.locator('li[data-step="5"]').click();
+await page.locator('li[data-step="5"]').last().click();
 await page.waitForTimeout(durations[4] + 800);
 const inputs = page.locator("[data-areas-step] input:not([type=range])");
 const n = await inputs.count();
@@ -69,9 +69,9 @@ const find = async (prefix) => {
   return null;
 };
 const readYS = async () => {
-  const r = page.locator("[data-readout]").first();
+  const r = root.locator("[data-readout]").first();
   return { y: await r.getAttribute("data-y"), S: await r.getAttribute("data-s"),
-           roots: await page.locator("[data-roots]").first().getAttribute("data-roots") };
+           roots: await root.locator("[data-roots]").first().getAttribute("data-roots") };
 };
 const typeInto = async (input, v) => { await input.fill(String(v)); await input.press("Enter"); await page.waitForTimeout(700); };
 const tie = { inputs: n, start: await readYS() };

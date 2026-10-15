@@ -28,17 +28,22 @@
 ;; (`alexandria.galileo.motion`) with Emmy, a computer algebra system: a
 ;; badge reading *proved* means Emmy reduced the claim to exactly 0 for
 ;; all values of its letters.
-^{:nextjournal.clerk/visibility {:code :hide :result :hide}}
 (ns galileo-two-new-sciences
-  {:history/year 1638
-   :history/title "Galileo, Two New Sciences"
+  {:history/year 1638 :history/title "Galileo, Two New Sciences"
    :history/era "Scientific Revolution"
+   :history/fields #{:mechanics-physics :analysis}
    :nextjournal.clerk/visibility {:code :hide :result :show}
    :nextjournal.clerk/toc true}
   (:require [alexandria.galileo.motion :as motion]
             [alexandria.galileo.motion-view :as view]
+            [alexandria.galileo.playground :as play]
+            [alexandria.galileo.shot-widget :as shot-widget]
             [history-of-math.page :as page]
+            [history-of-math.widgets :as hom]
             [nextjournal.clerk :as clerk]))
+
+^{::clerk/visibility {:code :hide :result :hide}}
+(hom/install!)
 
 ^{::clerk/visibility {:result :hide}}
 (defn quote-of
@@ -87,7 +92,10 @@
 
 (quote-of :galileo/third-day-1 :quote)
 
-(view/mean-speed)
+(clerk/col
+ (view/mean-speed)
+ (clerk/html [:p "Now try it yourself: drag E and watch equal areas and odd-number bars."])
+ (play/acceleration-playground))
 
 (quote-of :galileo/third-day-1 :quote-2)
 
@@ -148,7 +156,10 @@
 
 (quote-of :galileo/inclined-plane :quote-3)
 
-(view/inclined-plane)
+(clerk/col
+ (view/inclined-plane)
+ (clerk/html [:p "Now try it yourself: drag the raised end of Galileo's groove."])
+ (play/plane-playground))
 
 (quote-of :galileo/inclined-plane :quote-2)
 
@@ -177,7 +188,9 @@
 ;; uniform speed and $k$ the fall in the first unit of time. Then
 ;; $x^2 = \frac{u^2}{k}\,y$: the symptom, with $p = u^2/k$.
 
-(view/projectile)
+(clerk/col (view/projectile)
+ (clerk/html [:p "Now try it yourself: drag the launch velocity arrow to trace the parabola."])
+ (play/projectile-playground))
 
 (quote-of :galileo/fourth-day-1 :quote-2)
 
@@ -194,7 +207,9 @@
 
 (quote-of :galileo/fourth-day-7 :quote-2)
 
-(view/forty-five)
+(clerk/col (view/forty-five)
+ (clerk/html [:p "Now try it yourself: compare complementary elevations and find the maximum."])
+ (play/projectile-playground))
 
 ;; Galileo's proof compares momenta along parabolas of equal amplitude,
 ;; and rests on Euclid II.5: of all rectangles whose sides add up to a
@@ -202,6 +217,32 @@
 ;; $v$ into $c$ across and $w$ up, $c^2 + w^2 = v^2$, and let $g$ be the
 ;; acceleration of fall; the range is $2cw/g = \big(v^2 - (c - w)^2\big)/g$,
 ;; greatest when $c = w$.
+
+
+;; ## The shot and the fall in your hands
+;;
+;; Galileo's quantities are tied. A shot at speed $v$ and elevation
+;; $\theta$, with $g$ the acceleration of fall (9.81 m/s²), reaches the
+;; range and the height
+;;
+;; $$R = \frac{2v^2\sin\theta\cos\theta}{g}, \qquad H = \frac{v^2\sin^2\theta}{2g}.$$
+;;
+;; All four are controls. Move $v$ or $\theta$ and $R$ and $H$ follow.
+;; Move $R$ or $H$ and $v$ is solved back with $\theta$ held. The path is
+;; named as Apollonius named it, a parabola, and when $\theta$ reaches 45°
+;; the page says so: the greatest range for that speed, $v^2/g$. Below the
+;; shot, a body falls from rest through a height $D$ in the time
+;; $T = \sqrt{2D/g}$; cut $T$ into eight equal times and the distances
+;; fallen in each, in units of the first, are the odd numbers.
+
+(shot-widget/widget)
+
+;; Emmy derives every tie on the page. The landing time is the root of a
+;; bracket linear in $t$, so Emmy's linear solver finds it; the apex is
+;; where the derivative of the height vanishes, again linear in $t$. Each
+;; inverse is graded against its forward map, the identity, *proved*.
+
+(shot-widget/derivation)
 
 (badges (motion/graded :galileo/fourth-day-7))
 

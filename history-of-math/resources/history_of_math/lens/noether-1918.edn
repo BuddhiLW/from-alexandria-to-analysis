@@ -1,0 +1,23 @@
+{:now [{:claim "Each continuous symmetry of the action gives a conserved current"
+        :modern "If a one-parameter group with generator δq leaves ∫ L dt unchanged up to a boundary term dK/dt, then Q = (∂L/∂q̇)·δq − K is constant on every solution of the Euler-Lagrange equations. In field theory the same statement gives a current j^μ with ∂_μ j^μ = 0."
+        :tex "\\frac{d}{dt}\\Big(\\frac{\\partial L}{\\partial \\dot q}\\cdot\\delta q - K\\Big) = -\\,\\psi\\cdot\\delta q"}
+       {:claim "Time gives energy, space gives momentum, rotation gives angular momentum"
+        :modern "The Galilean (or Poincaré) group of a closed system has ten parameters, and its ten Noether charges are the energy, the three components of momentum, the three of angular momentum and the three boosts (the uniform motion of the centre of mass)."
+        :tex "t\\mapsto t+\\varepsilon \\Rightarrow E,\\quad q\\mapsto q+\\varepsilon a \\Rightarrow p\\cdot a,\\quad q\\mapsto R_\\varepsilon q \\Rightarrow J"}
+       {:claim "Infinite groups give identities, not conservation laws"
+        :modern "Theorem II is the root of gauge theory: a symmetry with arbitrary functions of spacetime (general covariance, U(1) gauge) yields Bianchi-type identities among the field equations, which is why energy in general relativity has no local density."
+        :tex "\\nabla_\\mu G^{\\mu\\nu} \\equiv 0"}]
+ :fields [{:field :mechanics-physics :label "Physics" :how "Conservation laws are derived from symmetry groups rather than postulated; gauge symmetries organise the Standard Model." :example "Charge conservation from the U(1) phase symmetry of the electron field."}
+          {:field :analysis :how "The calculus of variations treats Noether's identities with jet bundles and the variational bicomplex; conservation laws of PDE are classified by them." :example "Olver, Applications of Lie Groups to Differential Equations (1986)."}
+          {:field :abstract-algebra :how "Lie algebras of symmetries and their representations replace the individual conserved quantities; the charges form the moment map of the group action." :example "The moment map of symplectic geometry (Souriau 1970)."}
+          {:field :logic-computing :label "Computing" :how "Geometric (symplectic and variational) integrators keep the discrete Noether charges of the problem, so long simulations do not drift." :example "Discrete Noether theorem for variational integrators (Marsden and West 2001)."}]
+ :tangents [{:series :physics :hook "From Lagrange's mechanics to Noether's charges, Hamilton's equations and the gauge fields of the Standard Model." :link "planned"}
+            {:series :group-theory :hook "Lie groups, their one-parameter subgroups and generators: the groups whose invariant integrals Noether studies." :link "planned"}
+            {:series :erlangen :hook "Klein's programme, which Noether's paper honours, read in mechanics: physics as the invariants of a group." :link "/erlangen-program/"}]
+ :texts [{:author "Emmy Noether" :work "Invariante Variationsprobleme, Nachrichten der Königlichen Gesellschaft der Wissenschaften zu Göttingen, Math.-phys. Klasse (1918) 235-257 (transcription)" :year 1918 :url "https://de.wikisource.org/wiki/Invariante_Variationsprobleme" :kind :wikisource :lang "de"}
+         {:author "Emmy Noether" :work "Invariante Variationsprobleme (scan of the Nachrichten)" :year 1918 :url "https://commons.wikimedia.org/wiki/File:InvarianteVariationsprobleme.djvu" :kind :commons-scan :lang "de"}]
+ :links [{:to "lagrange" :relation :generalizes :note "Lagrange's cyclic coordinate (phi in the Kepler problem, so r² phi' is constant) and his energy integral are the two simplest cases of Theorem I."}
+         {:to "klein-erlangen" :relation :uses :note "The paper is dedicated to Klein's doctoral jubilee and applies his idea: a theory is characterised by the group that leaves it invariant."}
+         {:to "kepler-laws" :relation :proves :note "Equal areas in equal times is the conservation of angular momentum, the charge of rotations about the Sun."}
+         {:to "newton-principia" :relation :generalizes :note "Newton's conservation of the quantity of motion for a closed system is the charge of space translations."}
+         {:to "riemann-hypothesen" :relation :uses :note "Theorem II answers Hilbert's question about energy in Einstein's theory built on Riemann's metric."}]}

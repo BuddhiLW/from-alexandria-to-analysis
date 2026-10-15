@@ -1,0 +1,19 @@
+{:now [{:claim "Counting faces becomes topology"
+        :modern "For a connected convex polyhedron, vertices minus edges plus faces equals the Euler characteristic of the sphere. Other surfaces have different values."
+        :tex "V-E+F=\\chi(S^2)=2"}
+       {:claim "A rotating exponential describes oscillations"
+        :modern "Euler's identity is the bridge from trigonometry to Fourier modes and quantum phases."
+        :tex "e^{ix}=\\cos x+i\\sin x"}]
+ :fields [{:field :topology :label "Topology" :how "Euler characteristic is invariant under triangulation, not just a polyhedron count." :example "A torus has characteristic zero."}
+          {:field :logic-computing :label "Computing" :how "Fourier modes decompose signals into frequencies." :example "Audio compression and spectral algorithms."}
+          {:field :mechanics-physics :label "Physics" :how "Complex phases encode interference in quantum amplitudes." :example "A relative phase changes an interference fringe."}
+          {:field :graph-theory :label "Graph theory" :how "Counting vertices and edges opens the door to graph theory." :example "The Königsberg bridges problem and traversal."}]
+ :tangents [{:series :group-theory :hook "Symmetries of solids act on vertices, edges and faces."}
+            {:series :logic-computing :hook "See the Fourier transform as an algorithm on sampled data."}
+            {:series :physics :hook "Complex phases and oscillations return in waves and quantum mechanics."}]
+ :texts [{:author "Leonhard Euler" :work "Introductio in analysin infinitorum (1748 scan)" :year 1748 :url "https://archive.org/details/bub_gb_jQ1bAAAAQAAJ" :kind :archive :lang "la"}
+         {:author "Leonhard Euler" :work "Original texts on Wikisource" :year "18th century" :url "https://en.wikisource.org/wiki/Author:Leonhard_Euler" :kind :wikisource :lang "la, fr, de"}]
+ :links [{:to "newton-principia" :relation :uses :note "Euler rewrote mechanics in the language of differential equations."}
+         {:to "leibniz-nova-methodus" :relation :uses :note "Differential notation becomes the language of the function."}
+         {:to "lagrange" :relation :anticipates :note "Analytic mechanics inherits Euler's equations."}
+         {:to "riemann-weierstrass" :relation :anticipates :note "Trigonometric series lead to questions of convergence and integration."}]}

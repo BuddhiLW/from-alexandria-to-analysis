@@ -1,0 +1,20 @@
+{:now [{:claim "The sine is half a chord"
+        :modern "On the unit circle sin a is the half-chord of the arc 2a and cos a the distance of that chord from the centre; Ptolemy's and Aryabhata's tables are 2R sin and R sin for R = 60 and R = 3438."
+        :tex "\\operatorname{crd}(2a) = 2R\\sin a"}
+       {:claim "Aryabhata's rule is a second-order recurrence"
+        :modern "sin(x+h) - 2 sin x + sin(x-h) = -(2 - 2cos h) sin x: the discrete form of y'' = -y, the equation of the harmonic oscillator, integrated by finite differences."
+        :tex "s_{n+1} - 2s_n + s_{n-1} = -(2-2\\cos h)\\,s_n"}
+       {:claim "The law of sines in every constant curvature"
+        :modern "On a sphere of radius R the law reads sin(a/R)/sin A = sin(b/R)/sin B = sin(c/R)/sin C; in the hyperbolic plane sinh a/sin A = sinh b/sin B = sinh c/sin C; the plane law is the limit of both."
+        :tex "\\frac{\\sin_K a}{\\sin A} = \\frac{\\sin_K b}{\\sin B} = \\frac{\\sin_K c}{\\sin C}"}]
+ :fields [{:field :geometry :label "Surveying" :how "Triangulation fixes points from one measured base and angles, by the law of sines." :example "The great trigonometrical survey of India measured the height of Everest that way."}
+          {:field :mechanics-physics :label "Navigation and astronomy" :how "Spherical triangles give positions from star altitudes." :example "The navigational triangle of pole, zenith and star, solved by the spherical law of cosines."}
+          {:field :logic-computing :label "Computing" :how "Sine tables are still built by recurrences like Aryabhata's and by CORDIC rotations." :example "The Chebyshev recurrence sin((n+1)h) = 2 cos h sin(nh) - sin((n-1)h)."}
+          {:field :analysis :how "Second differences become second derivatives: the rule is the oscillator equation y'' = -y sampled." :example "Finite-difference schemes for waves."}]
+ :tangents [{:series :erlangen :hook "The law of sines and cosines are invariants of the rotation group SO(2) acting on the plane; Klein makes that the definition of a geometry."}]
+ :texts [{:author "Johannes Regiomontanus" :work "De triangulis omnimodis libri quinque, Nuremberg (Petreius)" :year 1533 :url "https://archive.org/details/ARes352131" :kind :archive :lang "la"}
+         {:author "Aryabhata" :work "The Aryabhatiya, tr. W. E. Clark, Chicago" :year 1930 :url "https://en.wikisource.org/wiki/%C4%80ryabha%E1%B9%AD%C4%AByaof%C4%80ryabha%E1%B9%ADa" :kind :translation :lang "en"}
+         {:author "Aryabhata" :work "The Aryabhatiya with the commentary Bhatadipika of Paramadicvara, ed. H. Kern, Leiden" :year 1874 :url "https://archive.org/details/aryabhatiyawithc00arya" :kind :archive :lang "sa"}]
+ :links [{:to "ptolemy-almagest" :relation :generalizes :note "Ptolemy's chord of the double arc, halved, is the sine; his table becomes Aryabhata's and Regiomontanus' tables."}
+         {:to "non-euclidean" :relation :anticipates :note "The law of sines holds on the sphere and the hyperbolic plane with sin(a/R) or sinh a for the sides."}
+         {:to "euler" :relation :anticipates :note "Euler makes sine a function of a number on the radius 1, and its recurrences identities of e^{ix}."}]}

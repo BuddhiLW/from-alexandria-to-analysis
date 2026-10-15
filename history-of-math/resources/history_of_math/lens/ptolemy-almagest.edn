@@ -1,0 +1,26 @@
+{:now [{:claim "The chord is the sine"
+        :modern "Ptolemy's chord of an arc in a circle of diameter 120 is 120 times the sine of half the arc; his half-arc and sum theorems are the half-angle and addition formulas."
+        :tex "\\operatorname{crd}(2a)=2R\\sin a,\\qquad \\sin(\\alpha+\\beta)=\\sin\\alpha\\cos\\beta+\\cos\\alpha\\sin\\beta"}
+       {:claim "Ptolemy's theorem is complex multiplication in disguise"
+        :modern "For any four points of the complex plane, (a-c)(b-d) = (a-b)(c-d) + (a-d)(b-c); taking absolute values gives Ptolemy's inequality, with equality exactly for concyclic points in order."
+        :tex "|a-c|\\,|b-d|\\le|a-b|\\,|c-d|+|a-d|\\,|b-c|"}
+       {:claim "Epicycles are a Fourier series"
+        :modern "A deferent with one epicycle is a sum of two uniform rotations; enough nested epicycles approximate any closed path, which is the discrete Fourier transform."
+        :tex "z(t)=\\sum_k c_k\\,e^{i\\omega_k t}"}]
+ :fields [{:field :mechanics-physics :label "Astronomy" :how "Ptolemy's model predicted planetary longitudes to a few degrees for fourteen centuries." :example "Retrograde loops of Mars from one epicycle of radius 39;30 parts of 60."}
+          {:field :geometry :how "The theorem on the cyclic quadrilateral characterises concyclic points and gives the addition formulas." :example "Ptolemy's inequality makes the plane a Ptolemaic metric space."}
+          {:field :logic-computing :label "Computing" :how "A precomputed table with interpolation is how numerical functions were evaluated until the computer, and how CORDIC and lookup tables still work." :example "The table's third column, a thirtieth of each difference, is linear interpolation."}
+          {:field :mechanics-physics :label "Engineering" :how "Sums of rotating vectors are phasors and Fourier series." :example "Signal synthesis and the drawing of curves by chained epicycles."}]
+ :tangents [{:series :physics :hook "From epicycles to Kepler's ellipse and Newton's gravity: why the circles worked so well."}
+            {:series :erlangen :hook "The cross-ratio is invariant, Ptolemy's relation is its metric shadow on a circle."}]
+ :texts [{:author "Claude Ptolémée" :work "Composition mathématique, livre I, ch. IX: les droites inscrites dans le cercle (tr. Halma)" :year 1813 :url "https://fr.wikisource.org/wiki/Almageste/Livre_I/09" :kind :wikisource :lang "fr"}
+         {:author "Claudius Ptolemaeus" :work "Syntaxis mathematica, pars I (ed. Heiberg)" :year 1898 :url "https://archive.org/details/claudiiptolemaei01ptoluoft" :kind :archive :lang "grc"}
+         {:author "Claudius Ptolemaeus" :work "Syntaxis mathematica, pars II (ed. Heiberg)" :year 1903 :url "https://archive.org/details/claudiiptolemae07ptolgoog" :kind :archive :lang "grc"}
+         {:author "Claudius Ptolemaeus" :work "Almagest, complete (Heiberg), Commons scan" :year 1903 :url "https://commons.wikimedia.org/wiki/File:Almagest_Complete,_Ptolemy,_Heiberg.djvu" :kind :commons-scan :lang "grc"}
+         {:author "Claudius Ptolemäus" :work "Handbuch der Astronomie, Bd. 1 (tr. Manitius)" :year 1912 :url "https://archive.org/details/desclaudiusptole01ptoluoft" :kind :translation :lang "de"}
+         {:author "Claudius Ptolemäus" :work "Handbuch der Astronomie, Bd. 2 (tr. Manitius)" :year 1913 :url "https://archive.org/details/desclaudiusptole02ptoluoft" :kind :translation :lang "de"}]
+ :links [{:to "euclid-elements" :relation :uses :note "The sides of the pentagon and decagon (XIII.9-10) start the table; III.31 gives the supplement."}
+         {:to "apollonius-conics" :relation :uses :note "Apollonius proved the equivalence of the epicyclic and eccentric hypotheses Ptolemy uses."}
+         {:to "kepler-mysterium" :relation :anticipates :note "Kepler set out to explain the distances that Ptolemy's model left free."}
+         {:to "kepler-laws" :relation :anticipates :note "Kepler's ellipse replaced the deferent and epicycle of Mars."}
+         {:to "euler" :relation :anticipates :note "Chords become Euler's sine and cosine; epicycles become sums of exponentials."}]}

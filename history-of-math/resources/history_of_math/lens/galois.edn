@@ -1,0 +1,22 @@
+{:now [{:claim "To every equation belongs a group of permutations of its roots"
+        :modern "The Galois group Gal(L/K) of the splitting field L of a polynomial over K is the group of field automorphisms of L fixing K; it acts faithfully on the roots, so it is a subgroup of S_n."
+        :tex "\\mathrm{Gal}(L/K) \\hookrightarrow S_n"}
+       {:claim "Lowering the group by adjoining quantities"
+        :modern "The fundamental theorem of Galois theory: intermediate fields K ⊂ M ⊂ L correspond one to one, inclusion reversed, to subgroups H of Gal(L/K); M/K is normal exactly when H is a normal subgroup."
+        :tex "M \\mapsto \\mathrm{Gal}(L/M),\\qquad H \\mapsto L^H"}
+       {:claim "Solvable by radicals exactly when the group decomposes properly down to prime orders"
+        :modern "A polynomial in characteristic 0 is solvable by radicals if and only if its Galois group is solvable; S_n is solvable for n ≤ 4 and not for n ≥ 5, since A_5 is simple."
+        :tex "G \\trianglerighteq G_1 \\trianglerighteq \\dots \\trianglerighteq 1,\\quad G_i/G_{i+1} \\cong \\mathbb{Z}/p_i"}]
+ :fields [{:field :abstract-algebra :how "The group, the normal subgroup and the quotient became objects of their own through Jordan (1870), Cayley and Dedekind; the classification of finite simple groups (completed 2004) lists every possible indecomposable step." :example "A_5, the smallest non-abelian simple group, of order 60: Galois' 5.4.3."}
+          {:field :number-theory :how "Galois groups of number fields organise algebraic number theory: class field theory describes the abelian ones, the Langlands programme aims at the rest." :example "Gal(Q(ζ_n)/Q) ≅ (Z/n)^*, Gauss' cyclotomy of 1801 seen through Galois."}
+          {:field :geometry :how "Ruler and compass constructions are towers of square roots, so a length is constructible only when its Galois group has order a power of 2." :example "Wantzel 1837: doubling the cube and trisecting the angle are impossible."}
+          {:field :logic-computing :label "Computing" :how "Computer algebra systems compute Galois groups of polynomials and decide solvability by radicals." :example "GAP, Magma and PARI/GP identify transitive groups of degree up to 47."}]
+ :tangents [{:series :group-theory :hook "What a group is, its subgroups, normal subgroups and quotients: the language Galois invented to answer one question about equations." :link "planned"}
+            {:series :erlangen :hook "Klein (1872) carried the same idea from equations to geometry: a geometry is what a group leaves unchanged." :link "/erlangen-program/"}]
+ :texts [{:author "Évariste Galois" :work "Œuvres mathématiques, éd. J. Liouville, Journal de mathématiques pures et appliquées 11 (1846) 381-444" :year 1846 :url "https://archive.org/details/s1journaldemat11liou" :kind :archive :lang "fr"}
+         {:author "Évariste Galois" :work "Œuvres mathématiques, avec une introduction par É. Picard (Paris: Gauthier-Villars, 1897)" :year 1897 :url "https://archive.org/details/oeuvresmathmatiq40213gut" :kind :archive :lang "fr"}
+         {:author "Niels Henrik Abel" :work "Œuvres complètes, éd. Sylow et Lie (Christiania, 1881), vol. 1" :year 1881 :url "https://archive.org/details/oeuvrescompltes01abelgoog" :kind :archive :lang "fr"}]
+ :links [{:to "algebra-cubic" :relation :generalizes :note "Cardano's and Ferrari's formulas exist because the groups of the cubic and the quartic, S_3 and S_4, are solvable."}
+         {:to "number-theory-gauss" :relation :generalizes :note "Gauss' periods of the 17-gon are the fixed fields of the subgroups of the cyclic group (Z/17)^*; Galois' Proposition I extends this to every equation."}
+         {:to "klein-erlangen" :relation :anticipates :note "Klein's programme of 1872 is Galois' idea applied to geometry, with Jordan's Traité (1870) between them."}
+         {:to "doubling-the-cube" :relation :proves :note "A cube root of 2 has degree 3 over the rationals, which no tower of square roots reaches: the Delian problem is impossible with ruler and compass."}]}

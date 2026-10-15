@@ -26,11 +26,14 @@
   {:history/year -350
    :history/title "The doubling of the cube (the Delian problem)"
    :history/era "Greek geometry"
+   :history/fields #{:geometry :algebra}
    :nextjournal.clerk/visibility {:code :hide :result :show}
    :nextjournal.clerk/toc true}
   (:require [alexandria.delian.duplication :as d]
+            [alexandria.delian.playgrounds-view :as play]
             [alexandria.delian.duplication-view :as view]
-            [alexandria.delian.duplication-widgets :as w]
+            [alexandria.delian.tie :as tie]
+            [alexandria.delian.tie-widgets :as tw]
             [alexandria.proofs :as proofs]
             [history-of-math.page :as page]
             [history-of-math.widgets :as hom]
@@ -43,7 +46,11 @@
 (def graded (d/graded))
 
 ^{::clerk/visibility {:result :hide}}
+(def tie-graded (tie/grades))
+
+^{::clerk/visibility {:result :hide}}
 (def numbers (view/data))
+
 
 ;; ## 1. The problem and its story
 ;;
@@ -124,6 +131,17 @@
 
 (page/grade-badges (:hippocrates graded))
 
+;; Now try it yourself: the two given lines $a$ and $b$ are free, not only
+;; $b = 2a$. Drag their ends below the axes. The three curves are the
+;; places where one of the equal ratios holds ($x^2 = ay$ says $a : x =
+;; x : y$, $y^2 = bx$ says $x : y = y : b$, $xy = ab$ the two together),
+;; and they cross at one point $\Theta$ whose coordinates are the two
+;; means. This is Menaechmus' answer to Hippocrates' question, met again in
+;; section 4. Drag the free point $P$ and see which ratio it breaks.
+
+(play/means)
+
+
 ;; **The pattern.** A continued proportion is Eudoxus' theory of ratio at
 ;; work: "the ratio taken three times" is the triplicate ratio of
 ;; *Elements* V, Definition 10, and Eudoxus was Menaechmus' teacher. One
@@ -149,13 +167,29 @@
 ;;
 ;; The construction puts four objects in space, one per sentence. Step
 ;; through them below (click a sentence, or ◀ and ▶▶): each step adds
-;; exactly what its sentence introduces, with $AD = 2$ and the chord $AB$
-;; on the slider. The half-cylinder is blue, the ring amber, the cone
-;; green. Drag to rotate, scroll to zoom, right-drag to pan. MathBox draws
-;; the surfaces through emmy-viewers' raster backend, and $B$, $K$, $I$ and
-;; the numbers beside the figure come from one raster kernel:
+;; exactly what its sentence introduces, with $AD = 2$. The half-cylinder
+;; is blue, the ring amber, the cone green. Drag to rotate, scroll to zoom,
+;; right-drag to pan.
+;;
+;; The panel ties three lengths: the chord $AB$, and the two means $AI$
+;; and $AK$, with $AI^3 = AD \cdot AB^2$ and $AK^2 = AD \cdot AI$. Move
+;; any of them and the others re-solve; the cone turns on its new
+;; generator and the meeting point $K$ runs along the curve where the ring
+;; cuts the cylinder. MathBox draws the surfaces through emmy-viewers'
+;; raster backend, and $B$, $K$, $I$ and every number beside the figure
+;; come from raster kernels:
 
-(w/archytas)
+(tw/archytas)
+
+;; Now try it yourself: nothing is held. Change the diameter $AD$, drag $B$
+;; round the circle in the plan to change the chord $AB$ (any ratio, not
+;; only $AD = 2AB$, and even past $AD$, where $AB$ is no chord), and drag
+;; the foot of $P$ to run $P$ along the curve where the ring cuts the
+;; half-cylinder. On that curve two of Archytas' conditions already hold;
+;; the ratios at $P$ agree with those at $K$ only when $P$ also lies on the
+;; cone, and that one point is $K$.
+
+(play/archytas)
 
 ;; The same construction in Eutocius' lettering, as a proof:
 
@@ -198,13 +232,25 @@
 
 (page/steps (proofs/steps d/proofs-resource :delian/menaechmus))
 
-;; The three loci, one per sentence, with $b = 2a$. Step through them, then
-;; move $a$ in the panel: the parabola $x^2 = a y$, the parabola
-;; $y^2 = 2a x$ and the hyperbola $x y = 2a^2$ (dashed) are drawn by raster
-;; kernels, and they always meet at one point $\Theta$ whose abscissa is $a$
-;; times the cube root of 2:
+;; The three loci, one per sentence, with $b = 2a$. Step through them. The
+;; panel holds three quantities tied by the curves: the given line $a$,
+;; the edge $x$ of the doubled cube (the abscissa of $\Theta$) and its
+;; volume $V = x^3 = 2a^3$. Move any of them and the other two re-solve:
+;; drag $x$ and the parabolas reshape until they meet above it; drag $V$
+;; and both $a$ and $x$ follow. The formula beside the sliders carries the
+;; current values, and $V/a^3$ stays at 2. Every curve, point and number
+;; comes from raster kernels:
 
-(w/menaechmus)
+(tw/menaechmus)
+
+;; Where does $x = a\sqrt[3]{2}$ come from? Emmy derives it on the page.
+;; It solves the first parabola for $y$, puts that into the second, and
+;; divides the resulting polynomial by $x$ (the two parabolas share their
+;; vertex, a root we discard). What is left is the doubled cube. Then it
+;; checks that each map of the panel (from $a$, from $x$, from $V$) undoes
+;; the others:
+
+(tw/derivation)
 
 ;; The cube root itself is a raster Brent root of $x^3 - 2$:
 
@@ -249,11 +295,21 @@
 
 (view/mesolabe)
 
-;; Emmy proves that at every slide the four points lie on one line and
-;; their heights are in continued proportion; raster finds the slide where
-;; the line reaches the given end:
+;; Now work the instrument yourself. The panel ties four quantities with
+;; $AE = 2$: the slide $s$, the lesser given line $D\Theta = AE\cdot s^3$,
+;; and the two means $BZ = AE\cdot s$, $GH = AE\cdot s^2$. Move the slide
+;; and the frames move; ask for a different $D\Theta$, or a different
+;; mean, and the frames slide to the one position that gives it. The three
+;; ratios beside the frames stay equal:
 
-(page/grade-badges (:mesolabe graded))
+(tw/mesolabe)
+
+;; Emmy proves that at every slide the four points lie on one line and
+;; their heights are in continued proportion, and that the panel's maps
+;; undo each other; raster finds the slide where the line reaches the
+;; given end:
+
+(page/grade-badges (concat (:mesolabe graded) (:mesolabe tie-graded)))
 
 ;; ### Nicomedes' conchoid
 ;;
@@ -267,6 +323,15 @@
 
 (view/conchoid)
 
+;; Now try it yourself: the pole $E$, the interval $l$ and the line through
+;; $E$ are free, and so is the given line the neusis must reach. Drag $R$
+;; to turn the line: the segment $RQ$ keeps its length $l$, which is what
+;; the instrument guarantees. Turn it until $Q$ falls on the given line and
+;; the neusis is done. Then drag $Q$ to change $l$ and watch the inner
+;; branch lose its loop when $l$ falls below $d$.
+
+(play/conchoid)
+
 (page/grade-badges (:conchoid graded))
 
 ;; ### Diocles' cissoid
@@ -277,6 +342,14 @@
 (page/steps (proofs/steps d/proofs-resource :delian/cissoid))
 
 (view/cissoid)
+
+;; Now try it yourself: drag $u$ along the diameter, or the end $2r$ to
+;; change the circle. The four lines $2r - u$, $h$, $u$, $y$ stand side by
+;; side under the figure; their three ratios stay equal wherever you put
+;; $u$, because the point is on the curve. Move $u$ until the last line is
+;; twice the first: then $u : h$ is the cube root of 2, as Diocles wants.
+
+(play/cissoid)
 
 (page/grade-badges (:cissoid graded))
 

@@ -1,0 +1,19 @@
+{:now [{:claim "Euler's rule decides a walk over every edge by counting"
+        :modern "A connected multigraph has a closed walk through every edge exactly once if and only if every degree is even, and an open one if and only if exactly two degrees are odd; Hierholzer's construction finds it in linear time."
+        :tex "\\#\\{v : \\deg v \\text{ odd}\\} \\in \\{0, 2\\}"}
+       {:claim "Kirchhoff's determinant counts spanning trees"
+        :modern "The number of spanning trees of a graph is any cofactor of its Laplacian D - A; with resistances as weights it is the denominator of every current in the network."
+        :tex "\\tau(G) = \\det L_{\\hat v}"}
+       {:claim "Cayley's formula"
+        :modern "The complete graph on n labelled points has n^(n-2) spanning trees; Pruefer's code is a bijection with the words of length n - 2 on n letters."
+        :tex "\\tau(K_n) = n^{n-2}"}]
+ :fields [{:field :logic-computing :label "Routing and search" :how "Euler walks and Hamiltonian tours are the route-inspection and travelling-salesman problems; one is easy, the other NP-complete." :example "Street sweeping and mail delivery routes (the Chinese postman problem)."}
+          {:field :mechanics-physics :label "Electrical networks" :how "Kirchhoff's laws, one equation per independent circuit, solve every linear network." :example "Circuit simulators assemble the Laplacian of the circuit graph."}
+          {:field :probability :how "The tree count and the Laplacian govern random walks and uniform spanning trees." :example "Wilson's algorithm samples a uniform spanning tree by loop-erased random walks."}
+          {:field :topology :how "V - E + F and the cycle rank are the first homology of a graph and the Euler characteristic." :example "The first Betti number of a graph is E - V + c."}]
+ :tangents [{:series :group-theory :hook "The symmetries of a graph form a group: the dodecahedron of the icosian game has 120, the full icosahedral group."}]
+ :texts [{:author "Leonhard Euler" :work "Solutio problematis ad geometriam situs pertinentis (E53), Commentarii academiae scientiarum Petropolitanae 8" :year 1741 :url "https://scholarlycommons.pacific.edu/euler-works/53/" :kind :archive :lang "la"}
+         {:author "Gustav Kirchhoff" :work "Ueber die Auflösung der Gleichungen, auf welche man bei der Untersuchung der linearen Vertheilung galvanischer Ströme geführt wird, Annalen der Physik und Chemie 72" :year 1847 :url "https://archive.org/details/annalenderphysi225unkngoog" :kind :archive :lang "de"}
+         {:author "Arthur Cayley" :work "A theorem on trees, Quarterly Journal of Pure and Applied Mathematics 23" :year 1889 :url "https://archive.org/details/collectedmathema13cayluoft" :kind :archive :lang "en"}
+         {:author "Alfred Bray Kempe" :work "On the geographical problem of the four colours, American Journal of Mathematics 2" :year 1879 :url "https://archive.org/details/americanjournal02unkngoog" :kind :archive :lang "en"}]
+ :links [{:to "euler" :relation :generalizes :note "The Euler notebook tells E53 paragraph by paragraph; here his rule is applied to any multigraph and followed to Kirchhoff, Cayley, Hamilton and Kempe."}]}

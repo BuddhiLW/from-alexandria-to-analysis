@@ -7,7 +7,9 @@
             [hive-dsl.result :as r]
             [history-of-math.build :as build]
             [nextjournal.clerk :as clerk]
-            [history-of-math.links :as links]))
+            [history-of-math.links :as links]
+            [history-of-math.apex :as apex]
+            [history-of-math.series :as series]))
 
 (defn steps
   "A proof as a table: step number, claim, reason. rows are [claim why]
@@ -69,14 +71,21 @@
                 (str "next: " (:title next) " →")])]])
 
 (defn prev-next
-  "The previous and next notebook of the series, in the build's chronological
-   order (history-of-math.build/discover over notebooks/), and the hub, as
-   links for the foot of the notebook at path. Call it uncached so a notebook
-   added to the series shows up:
+  "The foot of the notebook at path: a line naming every series it is on
+   (history-of-math.series, series.edn) and the previous and next notebook
+   within the series it was entered from (?series=<slug>, else its first
+   series), plus the way back to the apex. The navigation of each series is
+   built here; the browser (history-of-math.series-view) picks the current
+   one, so the static pages need no server. Call it uncached so a notebook
+   added to a series shows up:
 
      ^{::clerk/no-cache true} (page/prev-next \"notebooks/archimedes.clj\")"
   [path]
   (let [res (build/discover build/notebooks-dir)]
     (when-not (r/ok? res)
       (throw (ex-info (build/error-message (:error res)) (:error res))))
-    (clerk/html (prev-next-hiccup (build/neighbours (:ok res) path)))))
+    (clerk/with-viewer
+      {:name 'history-of-math.series-view/render
+       :require-cljs true :transform-fn clerk/mark-presented
+       :render-fn 'history-of-math.series-view/render}
+      (apex/notebook-nav (series/registry) (:ok res) (build/notebook-id path)))))

@@ -1,0 +1,75 @@
+;; The series: every path a reader can take from the apex, in the order the
+;; apex lists them. One vocabulary: a lens :tangents {:series <id>} names a
+;; series by its :id here, whichever kind it is.
+;;
+;; Two kinds of series:
+;;
+;;   :notebooks  a named, ordered path through the notebooks of this site,
+;;               with its own page at <out>/series/<slug>/
+;;     :id       the series id
+;;     :slug     its directory under series/
+;;     :title    proposals pending maintainer review (2026-10-12); change them here only
+;;     :scope    one sentence: what the series follows
+;;     :strands  the strands (strands.edn) it draws from: its timeline is
+;;               every timeline entry on one of them
+;;     :order    optional, notebook ids in reading order; without it the
+;;               order is by year over the notebooks on its strands
+;;
+;;   :deck       a series published elsewhere (slides, a course)
+;;     :status   :live (with its :url) or :planned
+{:series
+ [{:id :alexandria-to-analysis :kind :notebooks :slug "alexandria-to-analysis"
+   :title "From Alexandria to Analysis"
+   :scope "How to measure what is curved, changing or infinite, from Euclid's exhaustion through the calculus to Lebesgue's integral."
+   :strands [:analysis :geometry :mechanics-physics]}
+  {:id :chords-to-fourier :kind :notebooks :slug "chords-to-fourier"
+   :title "From Chords to Fourier"
+   :scope "Angles turned into numbers, from Hipparchus' table of chords to the sine, the logarithm and Fourier's series."
+   :strands [:trigonometry]}
+  {:id :dice-to-measure :kind :notebooks :slug "dice-to-measure"
+   :title "From Dice to Measure"
+   :scope "Chance made calculable and then rebuilt on measure, from the letters of Pascal and Fermat to Kolmogorov's axioms."
+   :strands [:probability :measure-theory]}
+  {:id :equations-to-structures :kind :notebooks :slug "equations-to-structures"
+   :title "From Equations to Structures"
+   :scope "Solving for the unknown until the operations themselves became the object: al-Khwarizmi, Cardano, Galois, Noether."
+   :strands [:algebra :abstract-algebra]}
+  {:id :whole-numbers :kind :notebooks :slug "whole-numbers"
+   :title "The Whole Numbers"
+   :scope "Primes, divisibility and congruences, from Euclid's arithmetic books to Gauss and the zeta function."
+   :strands [:number-theory]}
+  {:id :bridges-to-colours :kind :notebooks :slug "bridges-to-colours"
+   :title "From Bridges to Colours"
+   :scope "Counting and networks, from the arithmetic triangle and the bridges of Königsberg to the colouring of maps."
+   :strands [:graph-theory]}
+  {:id :shapes-that-stretch :kind :notebooks :slug "shapes-that-stretch"
+   :title "Shapes that Stretch"
+   :scope "What survives bending without tearing: Euler's polyhedra, surfaces, connectivity and Poincaré's analysis situs."
+   :strands [:topology]}
+  {:id :curved-space :kind :notebooks :slug "curved-space"
+   :title "Curved Space"
+   :scope "Curvature measured from inside, from Gauss's surfaces and Riemann's manifolds to the spacetime of general relativity."
+   :strands [:differential-geometry]}
+  {:id :infinite-counted :kind :notebooks :slug "infinite-counted"
+   :title "The Infinite Counted"
+   :scope "Sets of points made objects of mathematics: Cantor's cardinals and ordinals, Dedekind's chains, Zermelo's axioms."
+   :strands [:set-theory]}
+  {:id :proof-and-machine :kind :notebooks :slug "proof-and-machine"
+   :title "Proof and Machine"
+   :scope "What a proof is and what can be computed, from the syllogism and Boole's algebra to incompleteness and the machine."
+   :strands [:logic-computing]}
+  {:id :law-of-nature :kind :notebooks :slug "law-of-nature"
+   :title "Number as Law of Nature"
+   :scope "Mathematics as the law of nature: the lever, the planets, falling bodies, the equations of motion and spacetime."
+   :strands [:mechanics-physics]}
+  {:id :figures-and-groups :kind :notebooks :slug "figures-and-groups"
+   :title "Figures and their Groups"
+   :scope "Figures, space and what stays the same when they move, from Euclid's postulates to Klein's groups of transformations."
+   :strands [:geometry]}
+
+  {:id :erlangen :kind :deck :title "Erlangen Program" :status :live :url "https://presentation.buddhilw.com/erlangen-program/"}
+  {:id :projective :kind :deck :title "Projective geometry" :status :live :url "https://presentation.buddhilw.com/projective/"}
+  {:id :set-theory :kind :deck :title "Set theory · Pinter course" :status :live :url "https://presentation.buddhilw.com/set-theory/"}
+  {:id :group-theory :kind :deck :title "A group-theory journey" :status :planned}
+  {:id :physics :kind :deck :title "Mathematics of physics" :status :planned}
+  {:id :logic-computing :kind :deck :title "Logic and computing" :status :planned}]}

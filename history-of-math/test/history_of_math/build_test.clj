@@ -34,10 +34,16 @@
 ;; ---------------------------------------------------------------------------
 ;; Discovery on a fixture: the port is a seq of {:path :text}
 
-(defn- nb [path attrs]
-  {:path path
-   :text (str "^{:nextjournal.clerk/visibility {:code :hide}}\n(ns " (str/replace (build/notebook-id path) #"\.clj$" "")
-              " " (pr-str attrs) "\n  (:require [nextjournal.clerk :as clerk]))\n\n(clerk/md \"never evaluated\")\n")})
+(defn- nb
+  "A fixture notebook with ns attrs; :history/fields defaults to geometry
+   unless attrs says otherwise (a nil value leaves it out)."
+  [path attrs]
+  (let [attrs (if (contains? attrs :history/fields)
+                (into {} (remove (comp nil? val)) attrs)
+                (assoc attrs :history/fields #{:geometry}))]
+    {:path path
+     :text (str "^{:nextjournal.clerk/visibility {:code :hide}}\n(ns " (str/replace (build/notebook-id path) #"\.clj$" "")
+                " " (pr-str attrs) "\n  (:require [nextjournal.clerk :as clerk]))\n\n(clerk/md \"never evaluated\")\n")}))
 
 (def fixture
   [(nb "nb/newton_principia.clj" {:history/year 1687 :history/title "Newton, Principia" :history/era "Calculus"
@@ -45,7 +51,7 @@
    (nb "nb/euclid_i.clj" {:history/year -300 :history/title "Euclid" :history/era "Greek"})
    {:path "nb/index.clj" :text "(ns index)"}
    {:path "nb/leibniz.clj"
-    :text "(ns ^{:history/year 1684 :history/title \"Leibniz, Nova methodus\"} leibniz\n  \"doc\"\n  {:history/era \"Calculus\"})"}])
+    :text "(ns ^{:history/year 1684 :history/title \"Leibniz, Nova methodus\"} leibniz\n  \"doc\"\n  {:history/era \"Calculus\" :history/fields #{:analysis}})"}])
 
 (deftest discovery-reads-ns-metadata-and-sorts-chronologically
   (let [res (build/discover fixture)]
@@ -92,8 +98,8 @@
 
 (deftest build-fails-loudly-naming-the-file-and-builds-nothing
   (let [calls (atom [])]
-    (is (thrown-with-msg? clojure.lang.ExceptionInfo #"nb/oresme.clj: notebook metadata missing :history/year, :history/title, :history/era"
-                          (build/build-with (conj fixture (nb "nb/oresme.clj" {})) "nb/index.clj" "out"
+    (is (thrown-with-msg? clojure.lang.ExceptionInfo #"nb/oresme.clj: notebook metadata missing :history/year, :history/title, :history/era, :history/fields"
+                          (build/build-with (conj fixture (nb "nb/oresme.clj" {:history/fields nil})) "nb/index.clj" "out"
                                             #(swap! calls conj %))))
     (is (empty? @calls))))
 

@@ -17,7 +17,12 @@
             [hive-dsl.result :as r]
             [malli.core :as m]
             [malli.error :as me]
-            [history-of-math.links :as links]))
+            [alexandria.raster :as raster]
+            [history-of-math.lens :as lens]
+            [nextjournal.clerk :as clerk]
+            [emmy.env :as e]
+            [history-of-math.links :as links]
+            [history-of-math.strands :as strands]))
 
 (def resource "history_of_math/timeline.edn")
 
@@ -31,6 +36,8 @@
    [:work [:string {:min 1}]]
    [:significance [:string {:min 1}]]
    [:era keyword?]
+   ;; the strands (history-of-math.strands) whose timelines the work is on
+   [:fields strands/Fields]
    [:notebook {:optional true} [:re #"^[a-z0-9][a-z0-9-]*$"]]])
 
 (def Timeline
@@ -59,17 +66,51 @@
   (and title (str/includes? (str/lower-case title) (str/lower-case figure))))
 
 (defn join
-  "The entries with :notebook and :built?: an entry naming a notebook id is
-   built when that notebook was discovered; an entry without one takes a
-   discovered notebook of the same year whose title names its figure."
+  "The entries with :notebook and :built?, in order of year: an entry naming
+   a notebook id is built when that notebook was discovered; an entry without
+   one takes a discovered notebook of the same year whose title names its
+   figure, unless another entry names that notebook by id (so Euler's 1736
+   Mechanica does not take the notebook his 1736 Solutio names)."
   [{:keys [entries]} notebooks]
-  (let [by-id (into {} (map (juxt :id identity)) notebooks)]
-    (mapv (fn [{:keys [notebook year figure] :as e}]
-            (let [nb (if notebook
-                       (by-id notebook)
-                       (first (filter #(and (= year (:year %)) (names-figure? % figure)) notebooks)))]
-              (assoc e :notebook (or (:id nb) notebook) :built? (some? nb))))
-          entries)))
+  (let [by-id (into {} (map (juxt :id identity)) notebooks)
+        claimed (set (keep :notebook entries))
+        free (remove #(contains? claimed (:id %)) notebooks)]
+    (->> entries
+         (mapv (fn [{:keys [notebook year figure] :as e}]
+                 (let [nb (if notebook
+                            (by-id notebook)
+                            (first (filter #(and (= year (:year %)) (names-figure? % figure)) free)))]
+                   (assoc e :notebook (or (:id nb) notebook) :built? (some? nb)))))
+         (sort-by :year)
+         vec)))
+
+(defn strand
+  "The joined entries on strand id, in order: one field's timeline."
+  [joined id]
+  (filterv #(contains? (:fields %) id) joined))
+
+(defn ordered-fields
+  "A set of strand ids in registry order."
+  [fields]
+  (filterv (set fields) strands/ids))
+
+(defn bridges
+  "Strand-to-strand bridges carried by influence edges: for each edge, every
+   pair [a b] of a strand of its source and a strand of its target that the
+   other end is not on. Returns [{:from a :to b :count n :notes [..]}], pairs
+   unordered (a before b in registry order)."
+  [joined edges]
+  (let [fields-of (into {} (keep (fn [{:keys [notebook fields]}] (when notebook [notebook fields]))) joined)
+        rank (zipmap strands/ids (range))
+        pairs (for [{:keys [from to note]} edges
+                    :let [ff (fields-of from) tf (fields-of to)]
+                    a ff b tf
+                    :when (and (not= a b) (not (contains? tf a)) (not (contains? ff b)))]
+                [(sort-by rank [a b]) note])]
+    (->> (group-by first pairs)
+         (map (fn [[[a b] xs]] {:from a :to b :count (count xs) :notes (vec (distinct (map second xs)))}))
+         (sort-by (juxt (comp rank :from) (comp rank :to)))
+         vec)))
 
 (defn year-label
   "300 BC, c. 250 BC, 1543, c. 1350."
@@ -77,11 +118,14 @@
   (str (when circa "c. ") (if (neg? year) (str (- year) " BC") (str year))))
 
 (defn href
-  "Anchor attributes for notebook id from the hub, opened as its own page:
-   its directory in the static build, its Clerk route in serve mode
-   (history-of-math.links)."
-  [id]
-  (links/anchor (links/notebook-href :hub id)))
+  "Anchor attributes for notebook id from a page depth directories below
+   the apex (default 0, the apex), opened as its own page: its directory in
+   the static build, its Clerk route in serve mode (history-of-math.links)."
+  ([id] (href id 0))
+  ([id depth]
+   (links/anchor (if (links/serve?)
+                   (links/notebook-href :hub id)
+                   (str (links/up depth) id "/")))))
 
 ;; ---------------------------------------------------------------------------
 ;; The strip
@@ -139,15 +183,111 @@
        joined)))))
 
 (defn table
-  "Hiccup table of the joined entries: date, who, work, why it matters."
+  "Hiccup table of the joined entries: date, who, work, its strands, why it
+   matters. depth: the page's depth below the apex (default 0)."
+  ([joined] (table joined 0))
+  ([joined depth]
+   [:table {:style {:font-size "0.9em"}}
+    [:thead [:tr [:th "date"] [:th "who"] [:th "work"] [:th "strands"] [:th "what it did"]]]
+    (into [:tbody]
+          (for [{:keys [figure work significance built? notebook fields] :as e} joined]
+            [:tr
+             [:td {:style {:white-space "nowrap"}} (year-label e)]
+             [:td figure]
+             [:td (if built? [:a (href notebook depth) [:em work]] [:em work])
+              (when-not built? [:span {:style {:opacity 0.6}} " (planned)"])]
+             [:td {:class "strand-tags"} (str/join ", " (map strands/title (ordered-fields fields)))]
+             [:td significance]]))]))
+
+(defn influence-edges
+  "Resolved arcs for all installed lenses, from their :links to timeline nodes."
   [joined]
-  [:table {:style {:font-size "0.9em"}}
-   [:thead [:tr [:th "date"] [:th "who"] [:th "work"] [:th "what it did"]]]
-   (into [:tbody]
-         (for [{:keys [figure work significance built? notebook] :as e} joined]
-           [:tr
-            [:td {:style {:white-space "nowrap"}} (year-label e)]
-            [:td figure]
-            [:td (if built? [:a (href notebook) [:em work]] [:em work])
-             (when-not built? [:span {:style {:opacity 0.6}} " (planned)"])]
-            [:td significance]]))])
+  (let [ids (set (keep :notebook joined))]
+    (vec (for [id ids
+               {:keys [to relation note]} (:links (lens/read-lens id))
+               :when (contains? ids to)]
+           {:from id :to to :relation relation :note note}))))
+
+(def strand-ring
+  "The bridge map's frame: the strands sit on a circle of radius :r about
+   (:cx, :cy) in a :width x :height view box, labels outside it in two
+   lines. Square enough to read at phone width (390 px) without scrolling."
+  {:width 560 :height 410 :cx 280 :cy 205 :r 128})
+
+(defn interactive-data
+  "Raster-projected node and arc coordinates for the interactive hub.
+
+   Every node carries :fields (its strands, registry order) and :rows, its
+   y on the union timeline (:all) and on each strand's own timeline, so the
+   view only chooses which layout to show. :strands are the strands with
+   their colour, entry count and x on the bridge row; :bridges are lens
+   :links between works whose ends lie on different strands, folded to
+   strand pairs."
+  ([t joined] (interactive-data t joined 960))
+  ([{:keys [eras]} joined width]
+   (let [pal (palette/resolve-palette :series)
+         row 32 top 88
+         ancient (fn [y] (e/+ 40 (e/* (/ 240 720) (e/+ y 320))))
+         modern (fn [y] (e/+ 320 (e/* (/ (- width 360) 620) (e/- y 1300))))
+         vertical (fn [n] (e/+ top (e/* row n)))
+         strand-rows (into {}
+                           (for [id strands/ids]
+                             [id (into {} (map-indexed (fn [i e] [e i])) (strand joined id))]))
+         positions (mapv (fn [i {:keys [year era notebook work fields] :as entry}]
+                           (let [rows (into {:all (raster/value vertical i)}
+                                            (for [f fields] [f (raster/value vertical (get-in strand-rows [f entry]))]))]
+                             (assoc entry :id notebook
+                                    :x (raster/value (if (<= year 400) ancient modern) year)
+                                    :y (:all rows)
+                                    :rows rows
+                                    :year (year-label entry)
+                                    :work (first (str/split work #";"))
+                                    :colour (era-colour pal eras era)
+                                    :fields (ordered-fields fields))))
+                         (range) joined)
+         by-id (into {} (keep (fn [n] (when (and (:id n) (:built? n)) [(:id n) n]))) positions)
+         edges (influence-edges joined)
+         arcs (for [{:keys [from to] :as edge} edges
+                    :let [a (by-id from) b (by-id to)] :when (and a b)]
+                (assoc edge :x (:x a) :y (:y a) :target-x (:x b) :target-y (:y b)))
+         ;; the strands on a circle, the bridges as chords across it: with
+         ;; fourteen strands a row is too narrow on a phone, a ring is not
+         n (count strands/ids)
+         {:keys [cx cy r]} strand-ring
+         ring-x (fn [k] (e/+ cx (e/* r (e/cos (e/- (e/* (/ (* 2 Math/PI) n) k) (/ Math/PI 2))))))
+         ring-y (fn [k] (e/+ cy (e/* r (e/sin (e/- (e/* (/ (* 2 Math/PI) n) k) (/ Math/PI 2))))))
+         strand-x (zipmap strands/ids (map #(raster/value ring-x %) (range)))
+         strand-y (zipmap strands/ids (map #(raster/value ring-y %) (range)))
+         counts (frequencies (mapcat :fields joined))]
+     {:nodes positions :edges (vec arcs) :width width :ring strand-ring
+      :fields (filterv (set (keys counts)) strands/ids)
+      :strands (mapv (fn [{:keys [id title role scope]}]
+                       {:id id :title title :scope scope :colour (get pal role (:ink pal))
+                        :count (get counts id 0) :x (strand-x id) :y (strand-y id)})
+                     strands/strands)
+      :bridges (mapv (fn [{:keys [from to] :as b}]
+                       (assoc b :x (strand-x from) :y (strand-y from)
+                              :target-x (strand-x to) :target-y (strand-y to)))
+                     (bridges joined edges))
+      :height (+ top (* row (count joined)) 30)
+      :heights (into {} (for [id strands/ids] [id (+ top (* row (count (strand-rows id))) 30)]))})))
+
+(defn interactive
+  "The interactive timeline of joined entries with its strand selector and
+   ring map, the page of every work at once (<out>/all/). depth is the
+   page's depth below the apex: each built node gets its :href in the mode
+   of the links (history-of-math.links)."
+  ([t joined] (interactive t joined 0))
+  ([t joined depth]
+   (clerk/with-viewer
+     {:name 'history-of-math.timeline-view/render
+      :require-cljs true :transform-fn clerk/mark-presented
+      :render-fn 'history-of-math.timeline-view/render}
+     (update (interactive-data t joined) :nodes
+             (fn [ns] (mapv (fn [{:keys [id built?] :as n}]
+                              (cond-> n
+                                (and id built?)
+                                (assoc :href (if (links/serve?)
+                                               (links/notebook-href :hub id)
+                                               (str (links/up depth) id "/")))))
+                            ns))))))

@@ -46,7 +46,43 @@
   []
   (if (serve?) "/" "../"))
 
+(defn up
+  "The relative path from a page depth directories below the apex back to
+   it: \"\" for the apex, \"../\" for a notebook, \"../../\" for a topic."
+  [depth]
+  (apply str (repeat depth "../")))
+
+(defn apex-href
+  "The href of the apex from a page depth directories below it."
+  [depth]
+  (if (serve?) "/" (let [u (up depth)] (if (= "" u) "./" u))))
+
+(defn topic-href
+  "The href of the timeline page of topic slug: <out>/series/<slug>/ in the
+   static build, the topic template with ?series=<slug> under Clerk serve."
+  [depth slug]
+  (if (serve?)
+    (str "/notebooks/series/series_page?series=" slug)
+    (str (up depth) "series/" slug "/")))
+
+(defn all-href
+  "The href of the page with every work on one timeline: <out>/all/ in the
+   static build, its notebook under Clerk serve."
+  [depth]
+  (if (serve?) "/notebooks/series/all" (str (up depth) "all/")))
+
 (defn anchor
   "Anchor attributes for href: a real page load, not Clerk's router."
   [href]
   {:href href :data-ignore-anchor-click "true"})
+
+(defn relation-label
+  "The phrase a lens shows for a relation between two notebooks."
+  [relation]
+  (case relation
+    :anticipates "leads to"
+    :generalizes "generalizes"
+    :proves "proves"
+    :refutes "refutes"
+    :uses "uses"
+    (str/replace (name relation) "-" " ")))

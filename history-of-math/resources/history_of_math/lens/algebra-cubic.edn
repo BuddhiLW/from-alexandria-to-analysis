@@ -1,0 +1,20 @@
+{:now [{:claim "Completing the square is a change of variable"
+        :modern "x = y - b/2 removes the linear term of x^2 + bx = c; the same shift x = y - a/3 removes the square term of any cubic, which is why Cardano's depressed form x^3 + px = q is no loss of generality."
+        :tex "x^2 + bx - c = \\left(x + \\tfrac{b}{2}\\right)^2 - \\left(c + \\tfrac{b^2}{4}\\right)"}
+       {:claim "Cardano's formula needs complex numbers exactly when all three roots are real"
+        :modern "The discriminant of x^3 + px - q is -4p^3 - 27q^2 = -108 D. Three distinct real roots mean D < 0, and then no formula in real radicals exists (casus irreducibilis); the real roots are sums of complex conjugate cube roots."
+        :tex "x_k = \\omega^k \\sqrt[3]{\\tfrac{q}{2} + \\sqrt{D}} + \\bar\\omega^k \\sqrt[3]{\\tfrac{q}{2} - \\sqrt{D}},\\quad \\omega = e^{2\\pi i/3}"}
+       {:claim "Coefficients are the elementary symmetric functions of the roots"
+        :modern "Viète's relations; every symmetric polynomial in the roots is a polynomial in e1, e2, e3. Solving means breaking that symmetry, and the group of permutations it must break decides whether radicals suffice (Lagrange, Galois)."
+        :tex "(x - r_1)(x - r_2)(x - r_3) = x^3 - e_1 x^2 + e_2 x - e_3"}]
+ :fields [{:field :algebra :how "The quadratic and cubic formulas are the first two cases of solvability by radicals; the casus irreducibilis made complex numbers unavoidable." :example "Computer algebra systems still return Cardano's form, with complex cube roots, for a cubic with three real roots."}
+          {:field :geometry :how "Al-Khwarizmi's and Cardano's proofs are dissections of a square and a cube; the trigonometric solution of the irreducible case is the trisection of an angle." :example "x = 2 sqrt(-p/3) cos(phi/3): Viète's solution of the irreducible cubic by trisecting phi."}
+          {:field :logic-computing :label "Computing" :how "Al-Khwarizmi's name became the word algorithm; numerical root finders choose between Cardano's formula and Newton's method by the sign of the discriminant." :example "Ray tracers solve cubics and quartics for every ray that meets a curved surface."}]
+ :tangents [{:series :group-theory :hook "Why the cubic and quartic fall to radicals and the quintic does not: the symmetric groups S3, S4, S5."}
+            {:series :projective :hook "Cubic curves, their inflection points and the group law on an elliptic curve."}]
+ :texts [{:author "Muhammad ibn Musa al-Khwarizmi" :work "The Algebra of Mohammed ben Musa, ed. and tr. F. Rosen" :year 1831 :url "https://archive.org/details/algebraofmohamme00khuwuoft" :kind :translation :lang "ar, en"}
+         {:author "Girolamo Cardano" :work "Artis magnae, sive de regulis algebraicis, lib. unus (Nuremberg)" :year 1545 :url "https://archive.org/details/hieronymicardan00card" :kind :archive :lang "la"}
+         {:author "Rafael Bombelli" :work "L'Algebra (Bologna)" :year 1572 :url "https://archive.org/details/sucho-id-l-algebra-parte-maggiore-dellarimetica" :kind :archive :lang "it"}]
+ :links [{:to "descartes-fermat" :relation :anticipates :note "Descartes' Géométrie (1637) solves cubics by intersecting a parabola with a circle, and counts the roots of an equation by the signs of its coefficients."}
+         {:to "gauss" :relation :anticipates :note "Gauss' periods solve x^17 = 1 by a tower of quadratics; the square roots of negatives Bombelli tamed are the roots of unity on his circle."}
+         {:to "euclid-elements" :relation :uses :note "Al-Khwarizmi's figure is Elements II.4 and II.6: the square on a line cut at a point, and the gnomon that completes it."}]}

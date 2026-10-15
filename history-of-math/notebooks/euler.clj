@@ -38,15 +38,23 @@
   {:history/year 1748
    :history/title "Euler: the Basel problem, Koenigsberg, e^{ix}, and V - E + F = 2"
    :history/era "Enlightenment"
+   :history/fields #{:analysis :trigonometry :topology :graph-theory}
    :nextjournal.clerk/visibility {:code :hide :result :show}
    :nextjournal.clerk/toc true}
   (:require [alexandria.euler.graphs :as graphs]
             [alexandria.euler.opera-view :as view]
             [alexandria.euler.polyhedra :as polyhedra]
             [alexandria.euler.series :as series]
+            [alexandria.euler.widgets :as widgets]
             [clojure.string :as str]
             [history-of-math.page :as page]
-            [nextjournal.clerk :as clerk]))
+            [history-of-math.lens :as lens]
+            [history-of-math.widgets :as hom]
+            [nextjournal.clerk :as clerk]
+            [alexandria.euler.playgrounds :as playgrounds]))
+
+^{::clerk/visibility {:code :hide :result :hide}}
+(hom/install!)
 
 ^{::clerk/visibility {:result :hide}}
 (defn latin
@@ -104,6 +112,12 @@
 
 (view/basel)
 
+;; Now try it yourself: drag $N$ along the terms and $x$ along
+;; $\frac{\sin x}{x}$, change the exponent $s$, and watch the sums, the
+;; product over the roots and the integral test answer.
+
+(playgrounds/basel-playground)
+
 ;; Emmy checks the finite pattern: for the product of $N$ factors
 ;; $(1 - a_n u)$ with symbolic $a_n$, it takes the derivatives at $u = 0$
 ;; and simplifies the difference with the symmetric sums to 0, for each $N$
@@ -114,6 +128,21 @@
 ;; $\int_N^\infty dx/x^2 = 1/N$, and the badge checks it against that bound.
 
 (page/grade-badges (series/graded-basel) #{:grade/proved :grade/numeric})
+
+;; ### The partial sums, live
+;;
+;; How close is $1 + \frac14 + \cdots + \frac1{n^2}$ to $\frac{\pi^2}{6}$
+;; after $n$ terms? What is left is caught between two areas under
+;; $1/x^2$: the area beyond $n + 1$ and the area beyond $n$, that is
+;; between $\frac1{n+1}$ and $b = \frac1n$. The number of terms $n$ and the
+;; bound $b$ are tied controls: move either and the other follows. The
+;; blue staircase is the partial sums, the red line $\pi^2/6$, and the
+;; violet gap what is still missing; the numbers beside it come from the
+;; same raster kernel.
+
+(widgets/basel)
+
+(widgets/derivation :basel)
 
 ;; ### The same move, one coefficient on: $\sum 1/n^4$
 ;;
@@ -175,6 +204,12 @@
 ;; same two vertices.
 
 (view/koenigsberg)
+
+;; Now try it yourself: drag the regions, build or pull down bridges
+;; between any two of them, and watch Euler's count of letters and his
+;; rule decide whether the walk exists; when it does, it is drawn.
+
+(playgrounds/koenigsberg-playground)
 
 ;; ### Euler's argument, paragraph by paragraph
 ;;
@@ -243,6 +278,48 @@
 
 (latin :euler/exponential)
 
+;; ### Where $e$ comes from: chapter VII (§114–122)
+;;
+;; Chapter VII, *De quantitatibus exponentialibus ac logarithmis per series
+;; explicatis*, builds the exponential series from nothing but an
+;; infinitely small number. Euler begins (§114):
+;;
+;; > *Quia est $a^0 = 1$, atque crescente exponente ipsius $a$ simul valor
+;; > potestatis augetur, si quidem $a$ est numerus unitate maior; sequitur
+;; > si exponens infinite parum cyphram excedat, potestatem ipsam quoque
+;; > infinite parum unitatem esse superaturam.*
+;;
+;; "Since $a^0 = 1$, and the power grows as the exponent grows when $a$ is
+;; greater than one, it follows that if the exponent exceeds zero by an
+;; infinitely small amount, the power too will exceed one by an infinitely
+;; small amount" (our English). He writes $a^\omega = 1 + k\omega$, raises
+;; both sides to the infinitely large power $j = z/\omega$, expands by the
+;; binomial theorem, and gets $a^z = 1 + \frac{kz}{1} + \frac{k^2z^2}{1\cdot2}
+;; + \cdots$. In §122 he picks the base with $k = 1$, sums
+;; $1 + \frac11 + \frac1{1\cdot2} + \frac1{1\cdot2\cdot3} + \cdots$ to
+;; twenty-three places, $2{,}71828182845904523536028$, and names it:
+;; *ponamus autem brevitatis gratia pro numero hoc … constanter litteram
+;; $e$*, "for brevity let us always write the letter $e$ for this number".
+;; Step through the chapter; from §114 on, $k$ and the base $a$ are tied
+;; controls ($k = \log a$, $a = e^k$, both solved by Emmy below).
+
+(widgets/base-steps)
+
+(widgets/base-derivation)
+
+;; The same limit read the other way: $\left(1 + \frac1n\right)^n$ climbs
+;; to $e$ as $n$ grows. How fast? Emmy expands $n\log(1 + \frac1n)$ in
+;; $u = \frac1n$ and composes it with the exponential: the error is
+;; $\varepsilon = e\left(\frac u2 - \frac{11u^2}{24} + \cdots\right)$, about
+;; $e/2n$. The three quantities $n$, Euler's $\omega = 1/n$ and the error
+;; $\varepsilon$ are tied controls: move any one and the other two are solved,
+;; $\varepsilon \to n$ by the leading term, then Newton's steps with Emmy's
+;; derivative.
+
+(widgets/e-limit)
+
+(widgets/derivation :e)
+
 ;; Here is the argument as series. Euler had shown in chapter VII that
 ;;
 ;; $$e^z = 1 + z + \frac{z^2}{2!} + \frac{z^3}{3!} + \cdots.$$
@@ -271,6 +348,21 @@
 
 (page/grade-badges (series/graded-euler-formula))
 
+;; ### $e^{ix}$ on the circle, from every side
+;;
+;; The truncations prove the pattern; Emmy also proves the identity whole,
+;; in one line. Put $f(x) = e^{-ix}(\cos x + i\sin x)$. Its derivative
+;; simplifies to 0, so $f$ is constant, and $f(0) = 1$. Below, $x$,
+;; $\cos x$ and $\sin x$ are each a control: move the angle and the point
+;; runs round the circle; move $\cos x$ (or $\sin x$) and the angle is
+;; solved back by $\operatorname{atan2}$, the point staying on its own half
+;; of the circle. The coloured segments are Euler's terms
+;; $1, ix, \frac{(ix)^2}{2!}, \ldots$ laid end to end.
+
+(widgets/cis)
+
+(widgets/derivation :cis)
+
 ;; ## Solids: $V - E + F = 2$ (E230, E231; 1750, printed 1758)
 ;;
 ;; In a letter to Christian Goldbach of November 1750, Euler wrote that he
@@ -281,6 +373,18 @@
 ;; our vertices, $S$), *acies* (edges, $A$) and *hedrae* (faces, $H$).
 
 (latin :euler/polyhedra)
+
+;; Euler names the parts in E230 §6, and in his Latin the edges get a name
+;; for the first time:
+;;
+;; > *hos terminos, quoniam apud scriptores Stereometriae nullum nomen
+;; > proprium reperio, acies vocabo* (E230 §6, *Novi Commentarii* 4)
+;;
+;; "since I find no proper name for these boundaries among the writers on
+;; solid geometry, I shall call them *acies*" (our English). Step through
+;; §6–7 on the cube, one kind of boundary at a time; drag to turn it.
+
+(widgets/terms-steps)
 
 ;; Euler admits in E230 that he has no firm proof and offers induction over
 ;; the kinds of solid. In E231 (1751) he gives one by cutting off solid
@@ -302,6 +406,13 @@
 
 (view/polyhedra)
 
+;; Now try it yourself: on the map of the solid, drag the vertices, rub
+;; out edges or draw Cauchy's diagonals, take the outer face away, and
+;; watch $V - E + F$; pull a vertex across an edge or cut the map in two
+;; and see which hypothesis the count needs.
+
+(playgrounds/vef-playground)
+
 ;; The badges count $V$, $E$ and $F$ from the coordinates of each solid
 ;; alone: a face is a maximal set of vertices on a plane that leaves all
 ;; the others on one side, an edge two vertices shared by two faces. Then
@@ -315,6 +426,26 @@
           [(:name s) V E F (+ (- V E) F)])})
 
 (page/grade-badges (polyhedra/graded))
+
+;; ### Cutting off solid angles: E231
+;;
+;; Euler's own proof in E231 runs the other way from Cauchy's: it takes
+;; solid angles *away*. Cut a corner of degree $d$ off with a plane close
+;; to it. The corner's vertex goes; $d$ new vertices appear, one on each
+;; edge that met there; the $d$ edges are shortened, not lost, and $d$ new
+;; edges bound the new face. So $S$ grows by $d - 1$, $A$ by $d$, $H$ by
+;; 1, and $S - A + H$ does not move. Pick a solid below, cut off as many
+;; solid angles as you like, and move the depth of the cut. The counts are
+;; read off the cut solid as it stands; the drawing is one raster kernel
+;; per solid. (Euler cuts until a pyramid is left; the gap Cauchy's
+;; contemporaries found is that a deep cut can reach past a neighbouring
+;; vertex, which is why the depth stops short of the midpoints here.)
+
+(widgets/polyhedron)
+
+;; Emmy proves the bookkeeping for any degrees $d_1, \ldots, d_k$:
+
+(widgets/derivation :cut)
 
 ;; ## Where this goes
 ;;
@@ -336,3 +467,5 @@
 
 ^{::clerk/no-cache true}
 (page/prev-next "notebooks/euler.clj")
+
+(lens/section "euler")

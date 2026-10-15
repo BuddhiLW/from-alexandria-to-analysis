@@ -23,12 +23,19 @@
   {:history/year 1684
    :history/title "Leibniz, Nova Methodus pro Maximis et Minimis"
    :history/era "Calculus"
+   :history/fields #{:analysis}
    :nextjournal.clerk/toc true
    :nextjournal.clerk/visibility {:code :hide :result :show}}
-  (:require [alexandria.leibniz.calculus-view :as view]
+  (:require [alexandria.calculus.playground-widget :as play]
+            [alexandria.leibniz.triangle-widget :as triangle]
+            [history-of-math.widgets :as hom]
+            [alexandria.leibniz.calculus-view :as view]
             [clojure.string :as str]
             [history-of-math.page :as page]
             [nextjournal.clerk :as clerk]))
+
+^{::clerk/visibility {:code :hide :result :hide}}
+(hom/install!)
 
 ^{::clerk/visibility {:result :hide}}
 (defn badges
@@ -92,6 +99,12 @@
 
 (view/transmutation)
 
+;; Now try it yourself: change the curve, P and dx; follow the tangent and transmuted area.
+(play/playground :transmutation)
+
+;; The characteristic triangle also has tied dx, dy and slope controls.
+(triangle/widget)
+
 (badges (graded-where #(or (str/includes? % "triangle") (str/includes? % "transmutation")
                            (str/includes? % "z^2") (str/includes? % "rational") (str/includes? % "1/(1+z^2)"))))
 
@@ -115,6 +128,9 @@
 ;; $\pi/4$, and each misses it by less than the next term, $1/(2n+1)$.
 
 (view/quadrature)
+;; Now try it yourself: set n; watch the alternating error change sign.
+(play/playground :quadrature)
+
 
 (clerk/table
  {:head ["n" "S_n (exact)" "|pi/4 - S_n|" "bound 1/(2n+1)"]
@@ -142,6 +158,9 @@
                  (str/join "\n\n" (map-indexed (fn [i {:keys [claim why]}] (str (inc i) ". " claim " *(" why ")*")) steps)))))
 
 (view/nova-methodus)
+;; Now try it yourself: vary u, v, du and dv; the small corner is what d discards.
+(play/playground :product)
+
 
 ;; ## One value, two notations
 ;;

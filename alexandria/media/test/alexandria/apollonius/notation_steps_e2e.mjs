@@ -43,15 +43,15 @@ await figure.scrollIntoViewIfNeeded();
 await page.waitForTimeout(2000);
 
 const canvases = await page.locator("[data-figure=apollonius-notation] canvas").count();
-const items = await page.locator("li[data-step]").count();
+const items = await root.locator("li[data-step]").count();
 const durations = [7000, 5000, 5000, 6000, 6500, 3500, 5000, 9000];
 const hashes = [];
 const steps = [];
 for (let i = 1; i <= 8; i++) {
-  await page.locator(`li[data-step="${i}"]`).click();
+  await root.locator(`li[data-step="${i}"]`).click();
   await page.waitForTimeout(durations[i - 1] + 900);
   const shown = await root.getAttribute("data-notation-step");
-  const current = await page.locator(`li[data-step="${i}"]`).getAttribute("data-current");
+  const current = await root.locator(`li[data-step="${i}"]`).getAttribute("data-current");
   const buf = await figure.screenshot({ path: `${shots}/step-${i}.png` });
   hashes.push(createHash("sha1").update(buf).digest("hex").slice(0, 12));
   const readout = (await page.locator("[data-notation-step] [data-y], [data-notation-step] [data-x], [data-notation-step] [data-p], [data-notation-step] [data-d]").allInnerTexts()).join(" | ");

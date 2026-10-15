@@ -16,9 +16,11 @@
   {:history/year 1854
    :history/title "Riemann and Weierstrass: the integral, uniform convergence, and the monster"
    :history/era "Rigour"
+   :history/fields #{:analysis :trigonometry}
    :nextjournal.clerk/toc true
    :nextjournal.clerk/visibility {:code :hide :result :show}}
   (:require [alexandria.riemann.integral :as integral]
+            [alexandria.riemann.playground :as playground]
             [alexandria.riemann.integral-view :as integral-view]
             [alexandria.weierstrass.monster :as monster]
             [alexandria.weierstrass.monster-view :as monster-view]
@@ -120,6 +122,9 @@
 ;; the least. Every $S$ on the same cuts lies between them.
 
 (integral-view/integral-player)
+;; Now try it yourself: choose Riemann's tags and partition.
+(playground/integral)
+
 
 ;; ## Section 5: which functions have an integral?
 ;;
@@ -166,6 +171,9 @@
 
 (integral-view/pathological-player)
 
+;; Now try it yourself: inspect a jump of Riemann's sum.
+(playground/jumps)
+
 (badges (concat (grades-matching (integral/graded) #"pi\^2|\(x\)|S_8 is|S_8 at|S_12|jumps of")
                 (integral/numeric-checks)))
 
@@ -196,6 +204,9 @@
 ;; sums always overshoot near $\pi$; the geometric series settles inside.
 
 (monster-view/uniform-player)
+;; Now try it yourself: test uniform convergence against the epsilon tube.
+(playground/uniform)
+
 
 (badges (grades-matching (monster/graded) #"M-test|geometric series|Abel"))
 
@@ -230,6 +241,9 @@
 ;; bound $(ab)^m\big(\tfrac23 - \tfrac{\pi}{ab-1}\big)$.
 
 (monster-view/monster-player)
+;; Now try it yourself: zoom and move the secant.
+(playground/monster)
+
 
 (badges (grades-matching (monster/graded) #"cos A|first m terms|ab|x'|a odd|estimate"))
 

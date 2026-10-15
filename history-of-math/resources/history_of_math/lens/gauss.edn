@@ -1,0 +1,24 @@
+{:now [{:claim "Constructible polygons are a statement about field degrees"
+        :modern "The regular n-gon is constructible with ruler and compass exactly when Euler's phi(n) is a power of 2, i.e. n = 2^a times distinct Fermat primes; Gauss' periods are the fixed fields of the subgroups of (Z/nZ)*, the first worked example of Galois theory."
+        :tex "[\\mathbb{Q}(\\cos\\tfrac{2\\pi}{n}):\\mathbb{Q}] = \\tfrac{\\varphi(n)}{2} = 2^k"}
+       {:claim "Curvature is intrinsic"
+        :modern "Gaussian curvature depends only on the metric (the first fundamental form) and is invariant under local isometries; Riemann extended it to the curvature tensor of any dimension."
+        :tex "K = \\frac{R_{1212}}{EG - F^2}"}]
+ :fields [{:field :abstract-algebra :how "The 17-gon's tower of quadratics is the subgroup chain of a cyclic group of order 16, the template of Galois correspondence." :example "Only five Fermat primes are known: 3, 5, 17, 257, 65537."}
+          {:field :differential-geometry :how "Intrinsic curvature founds differential geometry: geodesics, parallel transport and the Gauss-Bonnet theorem." :example "The angle sum of a geodesic triangle exceeds pi by the curvature integrated over it."}
+          {:field :mechanics-physics :label "Physics" :how "General relativity measures gravity as the curvature of a metric, the Theorema egregium in four dimensions." :example "Light bending near the Sun, 1919."}
+          {:field :mechanics-physics :label "Engineering" :how "No map of the sphere keeps all distances, since K = 1/R^2 cannot be bent to 0; every projection trades one distortion for another." :example "Mercator keeps angles and inflates Greenland."}
+          {:field :logic-computing :label "Computing" :how "Discrete Gaussian curvature (angle defect at mesh vertices) drives mesh processing, parametrisation and surface flattening." :example "Flattening a 3D garment pattern into cloth panels."}]
+ :tangents [{:series :group-theory :hook "Gauss' periods are the subgroups of (Z/17Z)*; the same idea decides the solvability of the quintic."}
+            {:series :physics :hook "From the first fundamental form to Riemann's metric and Einstein's field equations."}
+            {:series :erlangen :hook "Isometries keep K: curvature as an invariant of a transformation group, Klein's programme in one example."}]
+ :texts [{:author "Carl Friedrich Gauss" :work "Disquisitiones arithmeticae (Leipzig 1801 scan)" :year 1801 :url "https://archive.org/details/disquisitionesa00gaus" :kind :archive :lang "la"}
+         {:author "Carl Friedrich Gauss" :work "Recherches arithmétiques, tr. A.-C.-M. Poullet-Delisle" :year 1807 :url "https://fr.wikisource.org/wiki/Recherches_arithm%C3%A9tiques" :kind :wikisource :lang "fr"}
+         {:author "Carl Friedrich Gauss" :work "Disquisitiones generales circa superficies curvas" :year 1828 :url "https://la.wikisource.org/wiki/Disquisitiones_generales_circa_superficies_curvas" :kind :wikisource :lang "la"}
+         {:author "Carl Friedrich Gauss" :work "General Investigations of Curved Surfaces, tr. Morehead and Hiltebeitel" :year 1902 :url "https://www.gutenberg.org/ebooks/36856" :kind :translation :lang "en"}
+         {:author "Carl Friedrich Gauss" :work "Werke (Göttingen digital collections)" :year "1863-1933" :url "https://gdz.sub.uni-goettingen.de/id/PPN235957348" :kind :archive :lang "la, de"}]
+ :links [{:to "euclid-elements" :relation :generalizes :note "Euclid's constructible polygons (IV.11, IV.16) extended to every Fermat prime."}
+         {:to "doubling-the-cube" :relation :anticipates :note "The degree argument behind art. 365 is the one Wantzel used in 1837 to rule out the Delian problem."}
+         {:to "euler" :relation :uses :note "Euler's primitive roots and his factor 641 of 2^32 + 1 frame art. 365."}
+         {:to "apollonius-conics" :relation :generalizes :note "From the curvature of a conic to the curvature of a surface."}
+         {:to "riemann-weierstrass" :relation :anticipates :note "Riemann, Gauss' student, took the first fundamental form to n dimensions in 1854."}]}

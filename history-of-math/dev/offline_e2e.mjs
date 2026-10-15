@@ -10,7 +10,11 @@
 import { createRequire } from "node:module";
 
 const [base = "http://127.0.0.1:8099/", ...rest] = process.argv.slice(2);
-const pages = rest.length ? rest : ["", "conics-playground/", "apollonius-conics/", "euclid-elements/"];
+// cauchy, descartes-fermat and lagrange once logged a bare minified "$g"/"Vg"
+// (an SCI "Could not resolve symbol" thrown by a playground form), so they
+// stay in the default list: any console error on them fails the run.
+const pages = rest.length ? rest : ["", "conics-playground/", "apollonius-conics/", "euclid-elements/",
+  "cauchy/", "descartes-fermat/", "lagrange/"];
 const require = createRequire((process.env.PLAYWRIGHT || process.cwd()) + "/");
 const { chromium } = require("playwright");
 const origin = new URL(base).origin;
@@ -39,7 +43,17 @@ for (const p of pages) {
   });
   page.on("requestfailed", (q) => r.failed.push(`${q.url()} ${q.failure()?.errorText}`));
   page.on("response", (s) => { if (s.status() >= 400) r.failed.push(`${s.status()} ${s.url()}`); });
-  page.on("console", (m) => { if (m.type() === "error") r.consoleErrors.push(m.text()); });
+  // m.text() of a thrown Error is only its minified constructor name ("$g");
+  // read the Error's message from the argument handles instead.
+  page.on("console", async (m) => {
+    if (m.type() !== "error") return;
+    const detail = [];
+    for (const a of m.args()) {
+      detail.push(await a.evaluate((x) => (x instanceof Error ? `${x.name}: ${x.message}` : String(x))).catch(() => ""));
+    }
+    const loc = m.location();
+    r.consoleErrors.push(`${detail.filter(Boolean).join(" ") || m.text()} @ ${loc.url}:${loc.lineNumber}`);
+  });
   page.on("pageerror", (e) => r.pageErrors.push(String(e)));
   await page.goto(url, { waitUntil: "networkidle" });
   await page.waitForTimeout(3000);

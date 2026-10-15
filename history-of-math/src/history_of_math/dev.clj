@@ -15,6 +15,9 @@
      notebooks/*.clj           Clerk re-evaluates and shows the saved
                                notebook (Clerk has one document: every open
                                tab follows it)
+     src/ .clj/.cljc           the series' own namespaces (page, links,
+                               timeline, strands, lens...): load-file, then
+                               re-show, as for alexandria
      alexandria .clj/.cljc     load-file into this JVM, then the notebook
                                last shown is re-evaluated without the cache
      alexandria .cljs/.cljc    the scene namespaces Clerk ships as source:
@@ -24,7 +27,8 @@
                                every open page reloads
 
    What needs a restart (halt! then serve!, or a new JVM): deps.edn,
-   package.json / node_modules, this namespace.
+   package.json / node_modules, this namespace (a load-file of it rebinds
+   its vars, but the running server keeps the old ones).
 
    Unlike the static build, Clerk's viewer.css is the Tailwind CDN script
    (nothing compiled per page)."
@@ -48,9 +52,10 @@
   {:host "127.0.0.1"
    :port 7777
    :browse false
-   ;; Clerk watches the notebooks; `watch-sources!` the alexandria roots
+   ;; Clerk watches the notebooks; `watch-sources!` the series' own src
+   ;; (page, links, timeline, strands, lens...) and the alexandria roots
    :watch-paths ["notebooks"]
-   :source-paths ["../alexandria/src" "../alexandria/media/src"]})
+   :source-paths ["src" "../alexandria/src" "../alexandria/media/src"]})
 
 (def out-dir
   "Where the dev bundle, its vendor scripts and the widget CSS are written,
@@ -88,17 +93,18 @@
              :build-hooks [(list `reload-browsers!)])))
 
 (defn copy-assets!
-  "Copy the vendor scripts and the widget stylesheets under `out-dir`, as
-   the static build does under its out-path. Returns the stylesheets' URLs."
+  "Copy the vendor scripts and the widget stylesheets (widgets/stylesheets)
+   under `out-dir`, as the static build does under its out-path. Returns the
+   stylesheets' URLs."
   []
   (doseq [[src name] build/vendor]
     (let [f (io/file out-dir "vendor" (str name ".js"))]
       (io/make-parents f)
       (io/copy (io/file "node_modules" src) f)))
-  (vec (for [[src published] widgets/css]
+  (vec (for [[src published] (widgets/stylesheets)]
          (let [f (io/file out-dir "css" published)]
            (io/make-parents f)
-           (io/copy (io/file "node_modules" src) f)
+           (with-open [in (io/input-stream src)] (io/copy in f))
            (fs-url (str out-dir "/css/" published))))))
 
 (defn watch-bundle!
@@ -116,19 +122,24 @@
 
 (defn notebook-paths
   "The notebooks/*.clj files: the series' first, in its order (by year),
-   then the rest (the hub, scratch notebooks) by name. Clerk's :paths-fn,
-   so it is read again on every request and a new file appears at once."
+   then the rest (the hub, scratch notebooks) by name, then the topic page
+   and the page of every work (notebooks/series/*.clj, served at
+   /notebooks/series/<stem>). Clerk's :paths-fn, so it is read again on
+   every request and a new file appears at once."
   []
-  (let [all (->> (.listFiles (io/file build/notebooks-dir))
-                 (filter #(str/ends-with? (.getName ^java.io.File %) ".clj"))
-                 (map #(str build/notebooks-dir "/" (.getName ^java.io.File %)))
-                 sort)
+  (let [clj-in (fn [dir] (->> (.listFiles (io/file dir))
+                              (filter #(str/ends-with? (.getName ^java.io.File %) ".clj"))
+                              (map #(str dir "/" (.getName ^java.io.File %)))
+                              sort))
+        all (clj-in build/notebooks-dir)
         series (keep (fn [p]
                        (let [nb (build/read-notebook {:path p :text (slurp p)})]
                          (when (and (:ok nb) (:ok (build/validate (:ok nb)))) (:ok nb))))
                      (remove #(= build/index-file (build/file-name %)) all))
         ordered (mapv :path (sort-by (juxt :year :id) series))]
-    (into ordered (remove (set ordered)) all)))
+    (-> ordered
+        (into (remove (set ordered)) all)
+        (into (clj-in (str build/notebooks-dir "/series"))))))
 
 ;; ---------------------------------------------------------------------------
 ;; Source changes outside notebooks/

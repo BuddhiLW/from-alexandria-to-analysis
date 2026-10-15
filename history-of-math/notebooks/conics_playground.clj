@@ -4,6 +4,7 @@
   {:history/year -200
    :history/title "Conics playground"
    :history/era "Greek geometry"
+   :history/fields #{:geometry}
    :nextjournal.clerk/visibility {:code :hide :result :show}}
   (:refer-clojure :exclude [+ - * / = zero? compare numerator denominator ref partial
                             infinite? abs])

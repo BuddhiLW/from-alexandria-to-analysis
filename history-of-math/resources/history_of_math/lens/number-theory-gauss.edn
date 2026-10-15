@@ -1,0 +1,25 @@
+{:now [{:claim "Congruence is arithmetic in the ring Z/n"
+        :modern "a ≡ b (mod n) says a and b have the same image in the quotient ring Z/nZ; addition there is the cyclic group of order n, the rotations of the regular n-gon."
+        :tex "a \\equiv b \\pmod n \\iff a + n\\mathbb Z = b + n\\mathbb Z"}
+       {:claim "Fermat and Euler are Lagrange's theorem"
+        :modern "The units of Z/m form a group of order φ(m); the order of any element divides the order of the group, so a^φ(m) = 1. The group is cyclic (a primitive root exists) exactly for m = 2, 4, p^k, 2p^k."
+        :tex "a^{\\varphi(m)} \\equiv 1 \\pmod m,\\qquad (\\mathbb Z/m)^\\times \\cong \\prod \\mathbb Z/d_i"}
+       {:claim "The Legendre symbol is a character"
+        :modern "(·/p) is the unique homomorphism of (Z/p)^× onto {±1}; reciprocity is the first of the reciprocity laws that class field theory and the Langlands programme generalise."
+        :tex "\\left(\\frac{p}{q}\\right)\\left(\\frac{q}{p}\\right) = (-1)^{\\frac{p-1}{2}\\frac{q-1}{2}}"}
+       {:claim "The prime number theorem"
+        :modern "π(x) ~ x/log x was proved in 1896 by Hadamard and de la Vallée Poussin from Riemann's zeta function; Li(x) is the better approximation, with an error governed by the zeros of ζ."
+        :tex "\\pi(x) = \\operatorname{Li}(x) + O\\!\\left(x\\,e^{-c\\sqrt{\\log x}}\\right)"}]
+ :fields [{:field :number-theory :label "Cryptography" :how "RSA and Diffie-Hellman compute powers in (Z/n)^× and rely on Euler's theorem and primitive roots." :example "RSA decrypts because m^(ed) ≡ m (mod n) when ed ≡ 1 (mod φ(n))."}
+          {:field :abstract-algebra :how "Z/n is the model of a quotient ring, its units the model of a finite abelian group; the structure theorem names every finite abelian group as a product of cyclic ones." :example "(Z/15)^× ≅ Z/2 × Z/4."}
+          {:field :logic-computing :label "Computing" :how "Modular arithmetic is the arithmetic of machine words, hash functions and checksums." :example "Fermat's test a^(n-1) ≡ 1 (mod n) screens primes in every cryptographic library."}
+          {:field :analysis :how "Dirichlet's L-functions and Riemann's zeta function turn counts of primes into analysis in the complex plane." :example "Primes in progressions: each residue class coprime to q gets 1/φ(q) of the primes."}]
+ :tangents [{:series :group-theory :hook "Z/n, (Z/p)^× and the structure theorem for finite abelian groups are the first examples of every group-theory course."}]
+ :texts [{:author "Carl Friedrich Gauss" :work "Disquisitiones arithmeticae, Leipzig" :year 1801 :url "https://la.wikisource.org/wiki/Disquisitiones_arithmeticae" :kind :wikisource :lang "la"}
+         {:author "Carl Friedrich Gauss" :work "Recherches arithmétiques, tr. A.-C.-M. Poullet-Delisle, Paris" :year 1807 :url "https://fr.wikisource.org/wiki/Recherches_arithm%C3%A9tiques" :kind :translation :lang "fr"}
+         {:author "Pierre de Fermat" :work "Varia opera mathematica, Toulouse (letter to Frénicle, 18 October 1640, p. 163)" :year 1679 :url "https://archive.org/details/variaoperamathem00ferm" :kind :archive :lang "fr"}
+         {:author "Bernhard Riemann" :work "Ueber die Anzahl der Primzahlen unter einer gegebenen Grösse" :year 1859 :url "https://de.wikisource.org/wiki/Ueber_die_Anzahl_der_Primzahlen_unter_einer_gegebenen_Gr%C3%B6sse" :kind :wikisource :lang "de"}]
+ :links [{:to "gauss" :relation :uses :note "Section VII of the same book: the 17-gon is built from the primitive root 3 of 17 and the cosets (periods) of its powers."}
+         {:to "euler" :relation :generalizes :note "Euler proved Fermat's theorem (1736) and extended it to any modulus with φ(m); Gauss names the primitive roots after him."}
+         {:to "riemann-weierstrass" :relation :anticipates :note "Riemann's 1859 paper counts primes with ζ(s), the analysis of the same Riemann."}
+         {:to "klein-erlangen" :relation :anticipates :note "Z/n acting on the n-gon is the simplest group action; Klein makes groups acting on spaces the definition of a geometry."}]}

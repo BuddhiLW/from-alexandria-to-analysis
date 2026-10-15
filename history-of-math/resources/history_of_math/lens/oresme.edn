@@ -1,0 +1,26 @@
+{:now [{:claim "The latitude of a form is the graph of a function"
+        :modern "Oresme's figure plots the intensity f(x) of a quality over its extension x; its quantity is the integral of f, and comparing qualities is comparing integrals."
+        :tex "Q=\\int_A^B f(x)\\,dx"}
+       {:claim "The mean degree theorem is the mean value of a linear function"
+        :modern "For uniform acceleration v(t) = v_0 + at, the distance is the integral of v, which equals t times the value of v at the midpoint: the trapezoid rule is exact on lines."
+        :tex "\\int_0^t (v_0+as)\\,ds = t\\,\\frac{v_0+v_1}{2}"}
+       {:claim "The harmonic series diverges, like the logarithm"
+        :modern "Oresme's grouping gives H(2^k) >= 1 + k/2; Euler sharpened it to H(N) = ln N + gamma + 1/(2N) + O(1/N^2). The same doubling trick is Cauchy's condensation test."
+        :tex "\\sum_{n\\le N}\\frac1n=\\ln N+\\gamma+\\frac{1}{2N}+O(N^{-2})"}]
+ :fields [{:field :mechanics-physics :label "Physics" :how "The velocity-time graph and the area under it are how kinematics is still taught." :example "Galileo's law of fall from rest is the mean speed theorem with v_0 = 0."}
+          {:field :geometry :how "Plotting a quantity against a line is the first step to coordinates." :example "Curtze (1870) saw Descartes' rectangular coordinates in Oresme's longitude and latitude."}
+          {:field :logic-computing :label "Computing" :how "Summing strips under a graph is numerical integration; the harmonic numbers count the average work of algorithms." :example "Quicksort's expected comparisons are 2(n+1)H(n) - 4n."}
+          {:field :probability :how "The harmonic series appears in the coupon collector's problem." :example "Collecting all n coupons takes n H(n) draws on average."}]
+ :tangents [{:series :physics :hook "From Oresme's figure to Galileo's inclined plane and Newton's fluxions: the area under velocity is distance."}
+            {:series :set-theory :hook "Divergence without bound: the first proof that a sum of ever smaller terms can be infinite."}]
+ :texts [{:author "Maximilian Curtze" :work "Die mathematischen Schriften des Nicole Oresme (Thorn)" :year 1870 :url "https://archive.org/details/bub_gb_gq_ehfZ3SqMC" :kind :archive :lang "de"}
+         {:author "Nicole Oresme (school of)" :work "Tractatus de latitudinibus formarum (Padua incunable)" :year 1486 :url "https://archive.org/details/sucho-id-incipit-putilis-tractatus-de-latitudinibus-formarum-secundum" :kind :archive :lang "la"}
+         {:author "Nicole Oresme" :work "Der Algorismus Proportionum (ed. Curtze)" :year 1868 :url "https://archive.org/details/AlgorismusProportionumCurtze" :kind :archive :lang "la"}
+         {:author "Nicolaus Oresmius" :work "Scriptor page: Latin works" :year 1350 :url "https://la.wikisource.org/wiki/Scriptor:Nicolaus_Oresmius" :kind :wikisource :lang "la"}
+         {:author "Nicole Oresme" :work "Author page" :year 1350 :url "https://en.wikisource.org/wiki/Author:Nicole_Oresme" :kind :wikisource :lang "en"}]
+ :links [{:to "archimedes" :relation :uses :note "The quantity of a figure measured by its area, as Archimedes measured the parabola."}
+         {:to "euclid-elements" :relation :uses :note "The midline of a triangle is half its base (Euclid VI.2): the step of the mean degree proof."}
+         {:to "galileo-two-new-sciences" :relation :anticipates :note "Galileo's Third Day, Theorem I is Oresme's figure applied to free fall."}
+         {:to "descartes-fermat" :relation :anticipates :note "Longitude and latitude become abscissa and ordinate."}
+         {:to "euler" :relation :anticipates :note "Euler finds H(N) - ln N tends to a constant, gamma."}
+         {:to "cauchy" :relation :anticipates :note "Oresme's grouping becomes Cauchy's condensation test."}]}

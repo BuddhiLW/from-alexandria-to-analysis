@@ -24,17 +24,23 @@
 ;; Kepler* (Cambridge, 1906, ch. XV), and from Newton's *Principia* in
 ;; Motte's translation. The figures and checks come from Alexandria's shelf
 ;; (`alexandria.kepler.orbit`).
-^{:nextjournal.clerk/visibility {:code :hide :result :hide}}
 (ns kepler-laws
   {:history/year 1609
    :history/title "Kepler, Astronomia Nova and Harmonices Mundi"
    :history/era "Scientific Revolution"
+   :history/fields #{:mechanics-physics :geometry}
    :nextjournal.clerk/visibility {:code :hide :result :show}
    :nextjournal.clerk/toc true}
   (:require [alexandria.kepler.orbit :as orbit]
             [alexandria.kepler.orbit-view :as view]
+            [alexandria.kepler.orbit-widget :as orbit-widget]
+            [alexandria.kepler.playground :as play]
             [history-of-math.page :as page]
+            [history-of-math.widgets :as hom]
             [nextjournal.clerk :as clerk]))
+
+^{::clerk/visibility {:code :hide :result :hide}}
+(hom/install!)
 
 ^{::clerk/visibility {:result :hide}}
 (defn quote-md [{:keys [text source]}]
@@ -109,7 +115,55 @@
 ;; an Emmy function compiled to WebAssembly. Each frame it solves Kepler's
 ;; equation for the moving time.
 
-(view/war-with-mars)
+(clerk/col (view/war-with-mars)
+ (clerk/html [:p "Now try it yourself: move Mars' perihelion and divide the year into equal times."])
+ (play/sector-playground))
+
+;; ## The orbit in your hands: the three laws tied together
+;;
+;; Kepler's numbers are not independent. The ellipse is Apollonius' conic,
+;; and seen from the Sun, its focus, it is the focal form that the
+;; [Apollonius notebook](../apollonius-conics/) derives from the cone:
+;;
+;; $$\rho = \frac{\ell}{1 - e\cos\theta}, \qquad \ell = a(1 - e^2),$$
+;;
+;; with $\rho$ the distance from the Sun, $\theta$ the angle at the Sun
+;; measured from the aphelion and $\ell$ the *semi-latus rectum*, half of
+;; Apollonius' parameter. The third law ties the period to the axis: $T^2 =
+;; a^3$, with $T$ in years and $a$ in Earth distances. So $a$, $T$, $e$ and
+;; $\ell$ are four controls on one orbit. Move any of them and the others
+;; are solved again:
+;;
+;; - move $a$ or $T$: $e$ holds, and $T = a\sqrt a$ or $a = T^{2/3}$, then
+;;   $\ell = a(1-e^2)$;
+;; - move $e$: $a$ holds (so does $T$), and $\ell$ follows;
+;; - move $\ell$: $e$ holds, and $a = \ell/(1-e^2)$, then $T$.
+;;
+;; The orbit is named as Apollonius named it: at $e = 0$ a circle, for
+;; $e < 1$ an ellipse, *ἔλλειψις*, "falling short".
+;;
+;; The coloured sectors are *integrated*, not drawn from a formula. The
+;; browser runs Newton's law of the inverse square, one Runge–Kutta (RK4)
+;; step at a time in a WebAssembly kernel, from perihelion with the speed
+;; the orbit needs. The swept area rides along as a fifth coordinate. One
+;; period is cut into $n$ equal times. Each sector is the Sun with the RK4
+;; points of one time, and the list beside the figure is the swept area of
+;; each: equal, to the last printed digit.
+
+(orbit-widget/widget)
+
+;; Emmy derives the ties on the page. The distance to the Sun is
+;; $a(1 - e\cos E)$; Emmy simplifies $\rho - e x$ to a constant, so the
+;; distance to the Sun is $e$ times the distance to a fixed line, the
+;; directrix. With $x = \rho\cos\theta$ that equation is linear in $\rho$,
+;; and Emmy's linear solver returns the focal form. The third law comes from
+;; Newton's period $T = 2\pi\sqrt{a^3/\mu}$ with $\mu = 4\pi^2$ in these
+;; units. Each tie is graded forward then back, the identity, *proved*; the
+;; equal areas and the return to perihelion are graded *numeric*, from the
+;; same RK4 that runs in the browser, here on the JVM by raster.
+
+(orbit-widget/derivation)
+
 
 ;; ## Solving Kepler's equation
 ;;
@@ -150,7 +204,9 @@
 ;; On logarithmic axes, $\log T^2$ against $\log a^3$, the law is a straight
 ;; line of slope 1:
 
-(view/harmonice)
+(clerk/col (view/harmonice)
+ (clerk/html [:p "Now try it yourself: choose a planet or drag a new one along the logarithmic law."])
+ (play/harmonic-playground))
 
 ;; ## Toward Newton
 

@@ -26,6 +26,7 @@
    {:stage :parabola :why "a square equal to a rectangle"
     :claim "If the square of A equals D times E, the point I is on a parabola: the one with diameter NP parallel to ZI and latus rectum D."
     :latin "Si Aq. æquatur D in E, punctum I est ad parabolen."
+    :french "Si a² = de, le point I est sur une parabole."
     :page "p. 96"}
    {:stage :circle :why "squares of both unknowns"
     :claim "If the square of B minus the square of A equals the square of E, the point I is on a circle given in position, when the angle NZI is right. Take NM equal to B; the circle about N with radius NM does it."
@@ -34,7 +35,8 @@
     :page "p. 98"}
    {:stage :ellipse :why "the squares in a given ratio"
     :claim "But if the square of B minus the square of A has a given ratio to the square of E, the point I is on an ellipse, with vertex M, diameter NM and centre N."
-    :latin "Bq. - Aq. ad Eq. habeat rationem datam, punctum I erit ad ellipsin."
+    :latin "Sed Bq. - Aq. ad Eq. habeat rationem datam, punctum I erit ad ellipsin. Fiat MN æqualis B, et per verticem M, diametrum NM, centrum N, describatur ellipsis."
+    :french "Mais soit (b² - a²) : e² dans un rapport donné, le point I sera sur une ellipse. Soit pris MN = b. Avec M comme sommet, NM comme diamètre, N comme centre, décrivez une ellipse."
     :page "pp. 99-100"}
    {:stage :descartes :why "the same idea, independently"
     :claim "Every equation of the first degree in A and E is a line, every one of the second degree a conic. Descartes' Book II says the same of x and y; Descartes' ellipse x^2 = ry - (r/q)y^2 is Fermat's ellipse with B = q/2."}]}}
