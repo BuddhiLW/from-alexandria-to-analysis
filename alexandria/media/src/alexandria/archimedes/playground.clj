@@ -143,30 +143,40 @@
                 partial (e/* first-area (e// (e/- 1 factor) 0.75))]
             [first-area partial (e/* first-area 4/3) (e/* first-area (e// factor 0.75))])))
 
+(defn quadrature-triangles
+  "The 63 generation triangles of the quadrature playground as a flat vector
+   of mafs polygons, each guarded by its generation. A vector, spliced into
+   the figure's children: a bare seq of forms in the figure would be
+   evaluated in the browser as a call whose head is its first polygon (SCI:
+   Invalid arity: 62)."
+  [a b depth y]
+  (let [colours [:blue :green :orange :red :violet :pink]]
+    (vec (for [generation (range 6) i (range (bit-shift-left 1 generation))
+               :let [count (bit-shift-left 1 generation)
+                     left (list '+ a (list '* (list '- b a) (/ i count)))
+                     right (list '+ a (list '* (list '- b a) (/ (inc i) count)))
+                     mid (list '/ (list '+ left right) 2)]]
+           (list 'when (list '<= generation depth)
+                 (mafs/polygon {:points [[left (y left)] [mid (y mid)] [right (y right)]]
+                                :color (colours generation) :fill-opacity 0.12}))))))
+
 (defn quadrature-figure [!p !a !b v]
   (let [a (ev/get !p :a) b (ev/get !p :b) depth (ev/get !p :depth)
         at (fn [i] (list 'aget v i))
-        y (fn [x] (list '- 1 (list '* x x)))
-        colours [:blue :green :orange :red :violet :pink]]
+        y (fn [x] (list '- 1 (list '* x x)))]
     [:div
-     (mafs/mafs {:view-box {:x [-1.7 1.7] :y [-0.2 1.5]} :height 370}
-       (mafs/cartesian)
-       (mafs/parametric {:xy (fn [x] [x (e/- 1 (e/square x))]) :t [-1.6 1.6] :color :blue})
-       (mafs/segment {:point1 [a (y a)] :point2 [b (y b)] :color :black :weight 3})
-       (for [generation (range 6) i (range (bit-shift-left 1 generation))
-             :let [count (bit-shift-left 1 generation)
-                   left (list '+ a (list '* (list '- b a) (/ i count)))
-                   right (list '+ a (list '* (list '- b a) (/ (inc i) count)))
-                   mid (list '/ (list '+ left right) 2)]]
-         (list 'when (list '<= generation depth)
-               (mafs/polygon {:points [[left (y left)] [mid (y mid)] [right (y right)]]
-                              :color (colours generation) :fill-opacity 0.12})))
-       (mafs/text "A" {:x a :y (y a)})
-       (mafs/text "C" {:x b :y (y b)})
-       (mafs/text "B" {:x (list '/ (list '+ a b) 2)
-                        :y (y (list '/ (list '+ a b) 2))})
-       (mafs/movable-point {:point [a (y a)], :color :red, :constrain '(fn [[x _]] [(max -1.5 (min 0.9 x)) (- 1 (* x x))]), :on-move (list 'fn '[[x _]] (list 'swap! !p 'assoc :a '(max -1.5 (min 0.9 x))))})
-       (mafs/movable-point {:point [b (y b)], :color :orange, :constrain '(fn [[x _]] [(max -0.9 (min 1.5 x)) (- 1 (* x x))]), :on-move (list 'fn '[[x _]] (list 'swap! !p 'assoc :b '(max -0.9 (min 1.5 x))))}))
+     (apply mafs/mafs {:view-box {:x [-1.7 1.7] :y [-0.2 1.5]} :height 370}
+            (concat
+             [(mafs/cartesian)
+              (mafs/parametric {:xy (fn [x] [x (e/- 1 (e/square x))]) :t [-1.6 1.6] :color :blue})
+              (mafs/segment {:point1 [a (y a)] :point2 [b (y b)] :color :black :weight 3})]
+             (quadrature-triangles a b depth y)
+             [(mafs/text "A" {:x a :y (y a)})
+              (mafs/text "C" {:x b :y (y b)})
+              (mafs/text "B" {:x (list '/ (list '+ a b) 2)
+                              :y (y (list '/ (list '+ a b) 2))})
+              (mafs/movable-point {:point [a (y a)], :color :red, :constrain '(fn [[x _]] [(max -1.5 (min 0.9 x)) (- 1 (* x x))]), :on-move (list 'fn '[[x _]] (list 'swap! !p 'assoc :a '(max -1.5 (min 0.9 x))))})
+              (mafs/movable-point {:point [b (y b)], :color :orange, :constrain '(fn [[x _]] [(max -0.9 (min 1.5 x)) (- 1 (* x x))]), :on-move (list 'fn '[[x _]] (list 'swap! !p 'assoc :b '(max -0.9 (min 1.5 x))))})]))
      [:p "First triangle T = " (tie/fmt (at 0)) "; partial sum S = " (tie/fmt (at 1))
       "; 4T/3 = " (tie/fmt (at 2)) "; remainder = " (tie/fmt (at 3)) "."]
      [:strong {:data-case-quadrature (list 'if (list '< (list '- b a) 0.05) "degenerate chord" "one quarter per generation")}

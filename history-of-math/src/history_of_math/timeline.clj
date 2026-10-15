@@ -69,14 +69,17 @@
   "The entries with :notebook and :built?, in order of year: an entry naming
    a notebook id is built when that notebook was discovered; an entry without
    one takes a discovered notebook of the same year whose title names its
-   figure."
+   figure, unless another entry names that notebook by id (so Euler's 1736
+   Mechanica does not take the notebook his 1736 Solutio names)."
   [{:keys [entries]} notebooks]
-  (let [by-id (into {} (map (juxt :id identity)) notebooks)]
+  (let [by-id (into {} (map (juxt :id identity)) notebooks)
+        claimed (set (keep :notebook entries))
+        free (remove #(contains? claimed (:id %)) notebooks)]
     (->> entries
          (mapv (fn [{:keys [notebook year figure] :as e}]
                  (let [nb (if notebook
                             (by-id notebook)
-                            (first (filter #(and (= year (:year %)) (names-figure? % figure)) notebooks)))]
+                            (first (filter #(and (= year (:year %)) (names-figure? % figure)) free)))]
                    (assoc e :notebook (or (:id nb) notebook) :built? (some? nb)))))
          (sort-by :year)
          vec)))
@@ -115,11 +118,14 @@
   (str (when circa "c. ") (if (neg? year) (str (- year) " BC") (str year))))
 
 (defn href
-  "Anchor attributes for notebook id from the hub, opened as its own page:
-   its directory in the static build, its Clerk route in serve mode
-   (history-of-math.links)."
-  [id]
-  (links/anchor (links/notebook-href :hub id)))
+  "Anchor attributes for notebook id from a page depth directories below
+   the apex (default 0, the apex), opened as its own page: its directory in
+   the static build, its Clerk route in serve mode (history-of-math.links)."
+  ([id] (href id 0))
+  ([id depth]
+   (links/anchor (if (links/serve?)
+                   (links/notebook-href :hub id)
+                   (str (links/up depth) id "/")))))
 
 ;; ---------------------------------------------------------------------------
 ;; The strip
@@ -178,19 +184,20 @@
 
 (defn table
   "Hiccup table of the joined entries: date, who, work, its strands, why it
-   matters."
-  [joined]
-  [:table {:style {:font-size "0.9em"}}
-   [:thead [:tr [:th "date"] [:th "who"] [:th "work"] [:th "strands"] [:th "what it did"]]]
-   (into [:tbody]
-         (for [{:keys [figure work significance built? notebook fields] :as e} joined]
-           [:tr
-            [:td {:style {:white-space "nowrap"}} (year-label e)]
-            [:td figure]
-            [:td (if built? [:a (href notebook) [:em work]] [:em work])
-             (when-not built? [:span {:style {:opacity 0.6}} " (planned)"])]
-            [:td {:class "strand-tags"} (str/join ", " (map strands/title (ordered-fields fields)))]
-            [:td significance]]))])
+   matters. depth: the page's depth below the apex (default 0)."
+  ([joined] (table joined 0))
+  ([joined depth]
+   [:table {:style {:font-size "0.9em"}}
+    [:thead [:tr [:th "date"] [:th "who"] [:th "work"] [:th "strands"] [:th "what it did"]]]
+    (into [:tbody]
+          (for [{:keys [figure work significance built? notebook fields] :as e} joined]
+            [:tr
+             [:td {:style {:white-space "nowrap"}} (year-label e)]
+             [:td figure]
+             [:td (if built? [:a (href notebook depth) [:em work]] [:em work])
+              (when-not built? [:span {:style {:opacity 0.6}} " (planned)"])]
+             [:td {:class "strand-tags"} (str/join ", " (map strands/title (ordered-fields fields)))]
+             [:td significance]]))]))
 
 (defn influence-edges
   "Resolved arcs for all installed lenses, from their :links to timeline nodes."
@@ -265,9 +272,22 @@
       :height (+ top (* row (count joined)) 30)
       :heights (into {} (for [id strands/ids] [id (+ top (* row (count (strand-rows id))) 30)]))})))
 
-(defn interactive [t joined]
-  (clerk/with-viewer
-    {:name 'history-of-math.timeline-view/render
-     :require-cljs true :transform-fn clerk/mark-presented
-     :render-fn 'history-of-math.timeline-view/render}
-    (interactive-data t joined)))
+(defn interactive
+  "The interactive timeline of joined entries with its strand selector and
+   ring map, the page of every work at once (<out>/all/). depth is the
+   page's depth below the apex: each built node gets its :href in the mode
+   of the links (history-of-math.links)."
+  ([t joined] (interactive t joined 0))
+  ([t joined depth]
+   (clerk/with-viewer
+     {:name 'history-of-math.timeline-view/render
+      :require-cljs true :transform-fn clerk/mark-presented
+      :render-fn 'history-of-math.timeline-view/render}
+     (update (interactive-data t joined) :nodes
+             (fn [ns] (mapv (fn [{:keys [id built?] :as n}]
+                              (cond-> n
+                                (and id built?)
+                                (assoc :href (if (links/serve?)
+                                               (links/notebook-href :hub id)
+                                               (str (links/up depth) id "/")))))
+                            ns))))))

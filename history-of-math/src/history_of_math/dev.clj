@@ -122,19 +122,24 @@
 
 (defn notebook-paths
   "The notebooks/*.clj files: the series' first, in its order (by year),
-   then the rest (the hub, scratch notebooks) by name. Clerk's :paths-fn,
-   so it is read again on every request and a new file appears at once."
+   then the rest (the hub, scratch notebooks) by name, then the topic page
+   and the page of every work (notebooks/series/*.clj, served at
+   /notebooks/series/<stem>). Clerk's :paths-fn, so it is read again on
+   every request and a new file appears at once."
   []
-  (let [all (->> (.listFiles (io/file build/notebooks-dir))
-                 (filter #(str/ends-with? (.getName ^java.io.File %) ".clj"))
-                 (map #(str build/notebooks-dir "/" (.getName ^java.io.File %)))
-                 sort)
+  (let [clj-in (fn [dir] (->> (.listFiles (io/file dir))
+                              (filter #(str/ends-with? (.getName ^java.io.File %) ".clj"))
+                              (map #(str dir "/" (.getName ^java.io.File %)))
+                              sort))
+        all (clj-in build/notebooks-dir)
         series (keep (fn [p]
                        (let [nb (build/read-notebook {:path p :text (slurp p)})]
                          (when (and (:ok nb) (:ok (build/validate (:ok nb)))) (:ok nb))))
                      (remove #(= build/index-file (build/file-name %)) all))
         ordered (mapv :path (sort-by (juxt :year :id) series))]
-    (into ordered (remove (set ordered)) all)))
+    (-> ordered
+        (into (remove (set ordered)) all)
+        (into (clj-in (str build/notebooks-dir "/series"))))))
 
 ;; ---------------------------------------------------------------------------
 ;; Source changes outside notebooks/

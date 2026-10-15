@@ -68,7 +68,31 @@
              :time "Time translation is broken, rotation is not: J stays constant, E drifts."
              :rotation "Rotation is broken, time translation is not: E stays constant, J swings.")]]))))
 
+(defn finite-samples?
+  "True when every sample of every run of `data` is a finite number in each
+   of :t :x :y :E :J, and every run is non-empty: the widget divides by the
+   time span and by the range of E and J, so one NaN or an empty run reaches
+   the SVG as NaN coordinates."
+  [{:keys [runs]}]
+  (boolean
+   (and (seq runs)
+        (every? (fn [[_ by-eps]]
+                  (and (seq by-eps)
+                       (every? (fn [[_ samples]]
+                                 (and (seq samples)
+                                      (every? (fn [s]
+                                                (every? #(let [v (get s %)]
+                                                           (and (number? v) (Double/isFinite (double v))))
+                                                        [:t :x :y :E :J]))
+                                              samples)))
+                               by-eps)))
+                runs))))
+
 (defn orbit-widget
-  "The orbit with its two charges and the symmetry toggle."
+  "The orbit with its two charges and the symmetry toggle. The viewer is
+   marked presented so Clerk hands the render-fn the whole value instead of
+   eliding it to a page of the vectors."
   []
-  (clerk/with-viewer {:render-fn render} (data)))
+  (let [d (data)]
+    (assert (finite-samples? d) "the orbit runs hold a non-finite or empty sample")
+    (clerk/with-viewer {:render-fn render :transform-fn clerk/mark-presented} d)))

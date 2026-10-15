@@ -120,8 +120,7 @@
 ;;
 ;; **Computing.** Turing's §6 describes a *universal machine* U, a single
 ;; machine that, given the standard description of any machine M, computes
-;; what M computes. Every interpreter is such a machine, including the
-;; Clojure runtimes of [Clojure on Zig and Rust](/clojure-on-zig-and-rust/).
+;; what M computes. Every interpreter is such a machine.
 
 
 ^{::clerk/no-cache true}

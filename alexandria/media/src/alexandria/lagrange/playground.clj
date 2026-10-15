@@ -10,7 +10,8 @@
             [alexandria.raster :as raster]
             [alexandria.lagrange.variations :as variations]
             [emmy.mechanics.lagrange :as L]
-            [alexandria.lagrange.mechanics :as mechanics]))
+            [alexandria.lagrange.mechanics :as mechanics]
+            [clojure.walk :as walk]))
 
 (def setups
   {:delta {:start {:q 1 :eta 0.5 :eps 0 :shape 0}
@@ -178,7 +179,11 @@
                                                        (reset! raf (js/requestAnimationFrame step)))]
                                           (reset! raf (js/requestAnimationFrame step)))]
           (list 'let ['rows run 'now '(nth rows @clock) 'theta '(nth now 1)
-                      'period '(alexandria.lagrange.playground/pendulum-measure rows)]
+                      'period '(let [crossings (keep (fn [[[t0 a] [t1 b]]]
+                                       (when (and (< a 0) (<= 0 b))
+                                         (+ t0 (* (- t1 t0) (/ (- a) (- b a))))))
+                                     (partition 2 1 (map (fn [[t theta & _]] [t theta]) rows)))]
+                (when (>= (count crossings) 2) (- (second crossings) (first crossings))))]
                 [:div
                  (mafs/mafs {:view-box {:x [-3.5 3.5] :y [-3.5 1]} :height 280}
                             (mafs/cartesian)
@@ -286,9 +291,9 @@
                (mafs/text "A" {:x 0 :y 0})
                (mafs/text "B" {:x x :y y})
                (draggable !p :x 3.14159 'first (fn [v] [v 2])
-                          '(fn [[px py]] [(max 0.3 (min 5 px)) (get @!p :y)]))
+                          (walk/postwalk-replace {'!p !p} '(fn [[px py]] [(max 0.3 (min 5 px)) (get @!p :y)])))
                (draggable !p :y 2 'second (fn [v] [3.14159 v])
-                          '(fn [[px py]] [(get @!p :x) (max 0.3 (min 4 py))])))))
+                          (walk/postwalk-replace {'!p !p} '(fn [[px py]] [(get @!p :x) (max 0.3 (min 4 py))]))))))
 
 (defn readout [id]
   (case id
@@ -329,15 +334,23 @@
     :brach (fn [x y g] (fn [t] [(e/* x t) (e/* y t)]))
     nil))
 
-(defn- case-form [id]
-  (case id
-    :delta '(if (< (js/Math.abs (- (get @!p :q) 1)) 0.005) "stationary extremal: δJ = 0 for every η" "non-extremal: δJ ≠ 0")
-    :virtual '(if (< (js/Math.abs (aget r 1)) 0.02) "equilibrium: Σ Fᵢ δrᵢ = 0" "not in equilibrium")
-    :pendulum '(if (> (aget r 0) (* (get @!p :m) (get @!p :g) (get @!p :l))) "rotation" "libration")
-    :double '(if (< (js/Math.abs (get @!p :a)) 0.4) "regular: nearby traces remain near" "chaotic: nearby traces diverge")
-    :kepler '(cond (< (aget r 0) 0.995) "ellipse" (> (aget r 0) 1.005) "hyperbola" :else "parabola")
-    :mean '(if (>= (get @!p :a) (get @!p :b)) "degenerate: a must be less than b" (if (< (get @!p :k) 0.001) "line: every c works" "parallel tangent exists"))
-    :brach '(if (> (get @!p :y) (get @!p :x)) "steep descent" "shallow descent")))
+(defn- bind-p
+  "A quoted browser form with the symbol !p replaced by the state atom. Left
+   bare, !p is a Clojure local the browser's SCI cannot resolve."
+  [form !p]
+  (walk/postwalk-replace {'!p !p} form))
+
+(defn- case-form [id !p]
+  (bind-p
+   (case id
+     :delta '(if (< (js/Math.abs (- (get @!p :q) 1)) 0.005) "stationary extremal: δJ = 0 for every η" "non-extremal: δJ ≠ 0")
+     :virtual '(if (< (js/Math.abs (aget r 1)) 0.02) "equilibrium: Σ Fᵢ δrᵢ = 0" "not in equilibrium")
+     :pendulum '(if (> (aget r 0) (* (get @!p :m) (get @!p :g) (get @!p :l))) "rotation" "libration")
+     :double '(if (< (js/Math.abs (get @!p :a)) 0.4) "regular: nearby traces remain near" "chaotic: nearby traces diverge")
+     :kepler '(cond (< (aget r 0) 0.995) "ellipse" (> (aget r 0) 1.005) "hyperbola" :else "parabola")
+     :mean '(if (>= (get @!p :a) (get @!p :b)) "degenerate: a must be less than b" (if (< (get @!p :k) 0.001) "line: every c works" "parallel tangent exists"))
+     :brach '(if (> (get @!p :y) (get @!p :x)) "steep descent" "shallow descent"))
+   !p))
 
 (defn- draggable [!p key init x->v v->point constrain]
   (let [v (gensym "drag")]
@@ -453,7 +466,7 @@
                         [:div {:style {:flex "1 1 260px"}}
                          (leva/sub-panel {:fill true :flat true :title-bar false}
                                          (leva/controls {:atom !p :schema (tie/schema ks range (zipmap ks (map name ks)))}))
-                         [:div {:data-case (name id) :style {:font-weight 700 :margin "0.5em 0"}} (case-form id)]
+                         [:div {:data-case (name id) :style {:font-weight 700 :margin "0.5em 0"}} (case-form id !p)]
                          (into [:div {:style {:font-family "monospace"}}]
                                (map-indexed (fn [i label] [:div label " = " (tie/fmt (list 'aget 'r i) 3)]) (readout-labels id)))]]
                        (into [:div [:strong "Try this: "]]

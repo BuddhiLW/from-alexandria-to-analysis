@@ -1,5 +1,5 @@
-// node dev/strands_e2e.mjs http://127.0.0.1:8099/ target/strands
-// The hub's strand selector: picking a strand shows only its timeline (every
+// node dev/strands_e2e.mjs http://127.0.0.1:8099/all/ target/strands
+// The page of every work (<out>/all/, never the apex), its strand selector: picking a strand shows only its timeline (every
 // entry on it, none off it), entries on several strands carry chips for the
 // others, bridges between strands are drawn, every one of the fourteen
 // strands has entries, the hub reads at phone width (390 px) without

@@ -1,0 +1,16 @@
+{:now [{:claim "A polyhedron has a content only if its faces can be oriented so that every edge is run in opposite senses"
+        :modern "A closed surface is orientable when its cells can be given a coherent orientation; the signed-volume (divergence theorem) integral of a region is defined exactly for oriented boundaries. Orientability is H_n(M;Z) ≅ Z for a closed connected n-manifold."
+        :tex "\\mathrm{vol}(P)=\\tfrac16\\sum_{F}\\det(a_F,b_F,c_F)"}
+       {:claim "A strip with a half twist has one side and one boundary curve"
+        :modern "The Möbius band is the non-orientable line bundle over the circle; the first Stiefel-Whitney class w_1 ∈ H^1(M;Z/2) is the character of the loops that reverse orientation, and the band is the one with w_1 ≠ 0 on its core."
+        :tex "w_1(\\gamma)=1\\in H^1(S^1;\\mathbb{Z}/2)"}
+       {:claim "The count of cells does not see the twist"
+        :modern "The Euler characteristic V - E + F is a homotopy invariant: the annulus and the Möbius band both deformation-retract to a circle, so χ = 0 for both; orientation is a separate invariant."
+        :tex "\\chi=V-E+F=0"}]
+ :fields [{:field :topology :how "Orientability and the Euler characteristic became the first two invariants in the classification of closed surfaces (Dyck 1888, Poincaré 1895): a closed surface is determined by them and the genus." :example "The Klein bottle (1882) is the closed surface made by gluing two Möbius bands along their boundary."}
+          {:field :geometry :how "Orientation is what lets differential forms be integrated; Stokes' theorem needs an oriented boundary, and the sign of a determinant is the orientation of a frame." :example "Signed area by the shoelace formula, signed volume by Möbius' pyramids."}
+          {:field :abstract-algebra :label "Algebra" :how "The orientation of a loop is a homomorphism from the fundamental group to {+1, -1}, a character in the sense of group theory." :example "π_1 of the Möbius band is Z; the character sends the generator to -1."}]
+ :tangents [{:series :erlangen :hook "Klein's programme asks what a group of transformations leaves unchanged; orientation is what the group of reflections changes and rotations keep." :link "/erlangen-program/"}]
+ :texts [{:author "August Ferdinand Möbius" :work "Gesammelte Werke, vol. 2 (Leipzig: Hirzel, 1886), pp. 473-512" :year 1886 :url "https://archive.org/details/gesammeltewerkeh02mbuoft" :kind :archive :lang "de"}
+         {:author "Johann Benedict Listing" :work "Vorstudien zur Topologie (Göttingen, 1848)" :year 1848 :url "https://archive.org/details/vorstudienzurto00listgoog" :kind :archive :lang "de"}]
+ :links [{:to "euler" :relation :generalizes :note "Euler's V - E + F = 2 holds for polyhedra without holes; Möbius' decahedron has χ = 1 and no orientation, so the formula needs both hypotheses."}]}

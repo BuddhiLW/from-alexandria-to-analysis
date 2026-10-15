@@ -10,7 +10,8 @@
 (deftest registry-and-schema
   (let [registry (lens/series)]
     (is (= :live (get-in registry [:erlangen :status])))
-    (is (= "/clojure-on-zig-and-rust/" (get-in registry [:two-runtimes :url])))
+    (is (= "https://presentation.buddhilw.com/set-theory/" (get-in registry [:set-theory :url])))
+    (is (not (contains? registry :two-runtimes)) "the Cloudflare-Access deck is not listed")
     (is (= :planned (get-in registry [:group-theory :status])))
     (doseq [id (lens/ids)]
       (testing id

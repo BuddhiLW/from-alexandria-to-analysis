@@ -58,25 +58,31 @@
          (for [[i line] (map-indexed vector lines)]
            ^{:key i} [:tspan {:x lx :dy (if (zero? i) 0 15)} line])]])]))
 
-(defn render [{:keys [nodes edges strands width height heights] :as data}]
+(defn render
+  "The timeline with its strand selector and bridge map. data may carry
+   :link {:prefix :suffix}: a notebook's href is prefix id / suffix (a
+   series page links ../../<id>/?series=<slug>); default <id>/."
+  [{:keys [nodes edges strands width height heights link] :as data}]
   (r/with-let [selected (r/atom nil)]
     (let [sel @selected
           strand-of (into {} (map (juxt :id identity)) strands)
           shown (if sel (filterv #(some #{sel} (:fields %)) nodes) nodes)
           row-y (fn [n] (if sel (get-in n [:rows sel]) (:y n)))
           by-id (into {} (keep (fn [n] (when (and (:id n) (:built? n)) [(:id n) n]))) shown)
-          h (if sel (get heights sel height) height)]
+          h (if sel (get heights sel height) height)
+          href (fn [id] (str (:prefix link) id "/" (:suffix link)))]
       [:section {:class "history-timeline" :data-strand (if sel (name sel) "all")}
        [:div {:class "timeline-fields" :style {:display "flex" :flex-wrap "wrap" :gap "0.5em" :margin "0.7em 0"}}
         [:button {:data-field "all" :aria-pressed (nil? sel) :on-click #(reset! selected nil)} "All strands"]
-        (for [{:keys [id title colour count]} strands]
+        (for [{:keys [id title colour count]} strands
+              :when (pos? count)]
           ^{:key (name id)}
           [:button {:data-field (name id) :aria-pressed (= sel id)
                     :style {:border-bottom (str "3px solid " colour)}
                     :on-click #(reset! selected (if (= sel id) nil id))}
            (str title " (" count ")")])]
        (when sel
-         [:p {:class "strand-scope" :style {:opacity 0.85}} [:strong (:title (strand-of sel))] " — " (:scope (strand-of sel))])
+         [:p {:class "strand-scope" :style {:opacity 0.85}} [:strong (:title (strand-of sel))] ": " (:scope (strand-of sel))])
        [strand-map data selected]
        [:svg {:class "timeline-svg" :view-box (str "0 0 " width " " h) :role "img"
               :aria-label "History of mathematics timeline and influence arcs"
@@ -111,5 +117,5 @@
                           [:tspan {:class "strand-chip" :data-strand (name f) :fill colour :font-size 10 :font-style "normal"}
                            (str "  ◆ " title)])]]
              (if built?
-               [:a {:href (str id "/") :data-ignore-anchor-click "true"} label]
+               [:a {:href (or (:href n) (href id)), :data-ignore-anchor-click "true"} label]
                label))])]])))

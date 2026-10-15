@@ -8,7 +8,8 @@
             [malli.core :as m]
             [malli.error :as me]
             [nextjournal.clerk :as clerk]
-            [history-of-math.strands :as strands]))
+            [history-of-math.strands :as strands]
+            [history-of-math.series :as series]))
 
 (def Field
   "A lens card's field: a strand id of strands.edn, the one vocabulary of
@@ -30,7 +31,16 @@
                      [:relation [:enum :anticipates :generalizes :proves :refutes :uses]]
                      [:note :string]]]]])
 
-(defn series [] (edn/read-string (slurp (io/resource "history_of_math/series.edn"))))
+(defn series
+  "Series id -> {:title :status :url} for every series of series.edn (the
+   one vocabulary of lens :tangents): a deck as registered, a notebook
+   series live at its page, relative to a notebook page."
+  []
+  (into {}
+        (for [{:keys [id kind slug] :as s} (:series (series/registry))]
+          [id (if (= :notebooks kind)
+                {:title (:title s) :status :live :url (str "../series/" slug "/")}
+                (select-keys s [:title :status :url]))])))
 (defn ids [] (->> (io/file "resources/history_of_math/lens") .listFiles
                   (filter #(str/ends-with? (.getName %) ".edn"))
                   (map #(str/replace (.getName %) #"\.edn$" "")) sort vec))

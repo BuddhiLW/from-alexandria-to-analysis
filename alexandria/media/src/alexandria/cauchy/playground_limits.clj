@@ -271,8 +271,11 @@
                                (mapcat (fn [[label f]] [(ds label) (kernel f)]) derivative-functions))))
               leva (leva/sub-panel {:fill true :titleBar {:drag false :title title}}
                                    (leva/controls {:atom !p :schema (schema id)}))
+              ;; the browser's SCI resolves every symbol of the form, dead
+              ;; branches included, and the derivative kernels are bound only
+              ;; in the derivative section: elsewhere DERIVATIVES is empty
               replacements {'!P !p 'ID id 'TITLE title 'PRESETS (presets id) 'START initial
-                            'LEVA leva 'KERNELS ks 'DERIVATIVES ds}
+                            'LEVA leva 'KERNELS ks 'DERIVATIVES (if (= id :derivative) ds {})}
               figure (walk/postwalk-replace replacements ((figures id)))]
           (list 'reagent.core/with-let bindings
                 (walk/postwalk-replace (assoc replacements 'FIGURE figure) page)))))))

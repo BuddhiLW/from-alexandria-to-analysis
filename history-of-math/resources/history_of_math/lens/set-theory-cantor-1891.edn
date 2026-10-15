@@ -1,0 +1,20 @@
+{:now [{:claim "No list of two-letter sequences is complete: the flipped diagonal is in none of the rows"
+        :modern "There is no surjection from the natural numbers onto the set of functions from N to {0, 1}; equivalently the set 2^N is uncountable."
+        :tex "\\neg\\,\\exists f:\\mathbb{N}\\twoheadrightarrow\\{0,1\\}^{\\mathbb{N}}"}
+       {:claim "For every set L there is a set of stronger power (the powers have no maximum)"
+        :modern "Cantor's theorem: for every set A there is no surjection from A onto its power set P(A), hence |A| < |P(A)|; the witness is D = {x in A : x not in f(x)}, valid for infinite A as well, in ZF without choice."
+        :tex "|A| < |\\mathcal{P}(A)|,\\qquad D=\\{x\\in A : x\\notin f(x)\\}"}
+       {:claim "The powers are the actually infinite cardinal numbers"
+        :modern "Beth numbers: beth_0 = |N|, beth_{n+1} = 2^{beth_n}, an unbounded increasing sequence of infinite cardinals; whether beth_1 is aleph_1 is the continuum hypothesis, independent of ZFC (Goedel 1940, Cohen 1963)."
+        :tex "\\beth_{n+1}=2^{\\beth_n}"}]
+ :fields [{:field :set-theory :how "The theorem gives the ladder of infinite cardinals and the power-set axiom its point; it is the first theorem of every set-theory course." :example "|N| < |P(N)| < |P(P(N))| < ..., and the continuum 2^aleph_0 = |R|."}
+          {:field :logic-computing :label "Computing" :how "The diagonal is the proof pattern of the halting problem and of Goedel's incompleteness theorem; Lawvere (1969) stated all of them as one fixed-point argument." :example "Turing 1936: no program decides whether every program halts, by flipping the diagonal of the table 'program i halts on input j'."}
+          {:field :logic-computing :label "Paradox" :how "Russell's paradox (1901) is D for f(x) = x on the collection of all sets, which is why there is no set of all sets." :example "{x : x not in x} is not a set."}
+          {:field :analysis :how "Uncountability of the reals by a diagonal on decimal expansions, and the existence of transcendental numbers without constructing one." :example "Almost every real number is transcendental: the algebraic numbers are countable."}]
+ :tangents [{:series :set-theory :hook "The set-theory course, after Pinter's A Book of Set Theory, takes Cantor's theorem in its chapters on cardinal numbers." :link "/set-theory/"}
+            {:series :proof-and-machine :hook "The same flip of a diagonal builds Goedel's unprovable sentence and Turing's non-halting machine."}]
+ :texts [{:author "Georg Cantor" :work "Ueber eine elementare Frage der Mannigfaltigkeitslehre, Jahresbericht der Deutschen Mathematiker-Vereinigung 1 (1890/91) 75-78" :year 1892 :url "https://archive.org/details/jahresberichtder1218deut" :kind :archive :lang "de"}
+         {:author "Georg Cantor" :work "Ueber eine Eigenschaft des Inbegriffs aller reellen algebraischen Zahlen, Journal fuer die reine und angewandte Mathematik 77, 258-262" :year 1874 :url "https://archive.org/details/crelle-77-1874" :kind :archive :lang "de"}
+         {:author "Philip E. B. Jourdain (tr.)" :work "Contributions to the Founding of the Theory of Transfinite Numbers by Georg Cantor (Chicago: Open Court, 1915)" :year 1915 :url "https://archive.org/details/contributionstof00cantuoft" :kind :translation :lang "en"}]
+ :links [{:to "dedekind-cantor" :relation :generalizes :note "1874 shows that the reals are not a list by nested intervals; 1891 gives a proof with no intervals and no order, and then a theorem about every set."}
+         {:to "goedel-turing" :relation :anticipates :note "Goedel's sentence and Turing's machine D are built by the same flipped diagonal."}]}

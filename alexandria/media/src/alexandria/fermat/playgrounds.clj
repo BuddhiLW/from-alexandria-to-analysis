@@ -1,9 +1,16 @@
 (ns alexandria.fermat.playgrounds
   (:require [emmy.env :as e] [emmy.leva :as leva] [emmy.mafs :as mafs]
-            [emmy.viewer :as ev] [emmy.viewer.compile :as vc] [emmy.viewer.raster]))
+            [emmy.viewer :as ev] [emmy.viewer.compile :as vc] [emmy.viewer.raster]
+            [clojure.walk :as walk]))
 
 (defn- kernel [f xs] (vc/compiled-fn f xs [0] {:simplify? false}))
 (defn- fmt [x] (list 'let ['v x] '(if (js/isFinite v) (.toFixed v 3) "undefined")))
+(defn- bind
+  "A quoted browser form with the symbol !s replaced by the state atom. Left
+   bare, !s is a Clojure local the browser's SCI cannot resolve."
+  [form !s]
+  (walk/postwalk-replace {'!s !s} form))
+
 (defn- button [!s title values]
   [:button {:type "button" :style {:margin "0.25em" :padding "0.35em" :cursor "pointer"}
             :on-click (list 'fn [] (list 'reset! !s values))} title])
@@ -59,8 +66,8 @@
                   (mafs/circle {:center ['v 0] :radius '(js/Math.sqrt (aget r 8)) :color "#7B5EA7"})
                   (mafs/segment {:point1 ['v 0] :point2 ['d '(aget r 0)] :color "#2E8B57"})
                   (mafs/movable-point {:point ['d '(aget r 0)] :color "#C0392B"
-                    :constrain '(fn [[x _]] (let [x (max 0.05 (min 3 x))]
-                                 [x (js/Math.sqrt (max 0 (+ (* (:p @!s) x) (* (:c @!s) x x) (* (:h @!s) x x x))))]))
+                    :constrain (bind '(fn [[x _]] (let [x (max 0.05 (min 3 x))]
+                                 [x (js/Math.sqrt (max 0 (+ (* (:p @!s) x) (* (:c @!s) x x) (* (:h @!s) x x x))))])) !s)
                     :on-move (list 'fn '[[x _]] (list 'swap! !s 'assoc :d 'x))})
                   (mafs/movable-point {:point ['v 0] :color "#7B5EA7"
                     :constrain '(fn [[x _]] [(max -1 (min 4 x)) 0])
@@ -127,18 +134,18 @@
         (list 'reagent.core/with-let [ksym k]
           (list 'let ['r (list ksym '(array 0) (list 'array (ev/get !s :kind) (ev/get !s :B) (ev/get !s :a) (ev/get !s :ex)))
                     'a (ev/get !s :a) 'ex (ev/get !s :ex)
-                    'corner '(= (int (ev/get !s :kind)) 3)
+                    'corner (list '= (list 'int (ev/get !s :kind)) 3)
                     'B (ev/get !s :B)]
           (frame "fermat-adequality"
             (mafs/mafs {:view-box {:x [-2 5] :y [-3 7]} :height 390}
               (mafs/cartesian) (mafs/of-x {:y curve :domain [-2 5] :color "#1F6FB4"})
               (mafs/segment {:point1 ['a '(aget r 0)] :point2 ['(+ a ex) '(aget r 1)] :color "#E67E22"})
               (mafs/movable-point {:point ['a '(aget r 0)] :color "#C0392B"
-                :constrain '(fn [[x _]] (let [x (max -2 (min 5 x))]
+                :constrain (bind '(fn [[x _]] (let [x (max -2 (min 5 x))]
                                       [x ((fn [kind B x] (case (int kind)
                                            0 (- (* B x) (* x x)) 1 (- (* B x) (* x x x))
                                            2 (+ (* x x) (* B x)) (js/Math.abs (- x B))))
-                                           (:kind @!s) (:B @!s) x)]))
+                                           (:kind @!s) (:B @!s) x)])) !s)
                 :on-move (list 'fn '[[x _]] (list 'swap! !s 'assoc :a 'x))})
               (mafs/text "A" {:x 'a :y '(aget r 0) :attach "nw"}))
             [:div (leva/sub-panel {:fill true :flat true :title-bar false}
@@ -152,9 +159,9 @@
              [:div "[f(A+E) − f(A)]/E = " [:span {:data-quotient true} (fmt '(aget r 2))]]
              [:div "E → 0: " [:span {:data-limit true} (fmt '(aget r 3))]
               "; difference = " (fmt '(aget r 4))]
-             [:div "adequality gives A = " '(case (int (:kind @!s))
+             [:div "adequality gives A = " (bind '(case (int (:kind @!s))
                  0 (.toFixed (/ B 2) 3) 1 (.toFixed (js/Math.sqrt (/ B 3)) 3)
-                 2 (.toFixed (/ (- B) 2) 3) "B (corner: striking E is invalid)")]
+                 2 (.toFixed (/ (- B) 2) 3) "B (corner: striking E is invalid)") !s)]
              [:div {:data-hypothesis true :style {:color '(if corner "#C0392B" "#2E8B57")}}
               '(if corner "Differentiability hypothesis broken at the corner"
                  "Smooth polynomial: striking E is valid after division")]

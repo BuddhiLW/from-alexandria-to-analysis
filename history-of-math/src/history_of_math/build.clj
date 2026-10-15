@@ -193,6 +193,41 @@
       (build-one {:paths [path] :out-path (str out-path "/" id)}))
     (:ok res)))
 
+(def series-template
+  "The notebook every series page is built from, outside the discovered
+   notebooks/*.clj (a subdirectory is never discovered)."
+  "notebooks/series/series_page.clj")
+
+(defonce ^{:doc "The slug of the series page being built: the template
+  reads it. A root value, as Clerk evaluates on whatever thread it likes."}
+  !series-slug
+  (atom nil))
+
+(defn series-out
+  "The directory of the page of series slug under out-path."
+  [out-path slug]
+  (str out-path "/series/" slug))
+
+(defn build-series!
+  "Build the timeline page of each notebook series of the registry
+   (history-of-math.series) from template into out-path/series/<slug>/, and
+   the page of every work (`all-template`, next to template) into
+   out-path/all/ when it exists. Returns the slugs built."
+  [template out-path build-one]
+  (let [reg ((requiring-resolve 'history-of-math.series/registry))
+        slugs (map :slug ((requiring-resolve 'history-of-math.series/notebook-series) reg))
+        all (io/file (.getParentFile (io/file template)) "all.clj")]
+    (try
+      (doseq [slug slugs]
+        (println "series" slug "<-" template)
+        (reset! !series-slug slug)
+        (build-one {:paths [template] :out-path (series-out out-path slug)}))
+      (finally (reset! !series-slug nil)))
+    (when (.exists all)
+      (println "all <-" (str all))
+      (build-one {:paths [(str all)] :out-path (str out-path "/all")}))
+    (vec slugs)))
+
 ;; ---------------------------------------------------------------------------
 ;; Boundary: the browser bundle
 
@@ -203,9 +238,12 @@
 
 (defn root-prefix
   "The path from the page built into page-out back to out-path: \"\" for
-   the hub, \"../\" for a notebook at out-path/<id>."
+   the hub, \"../\" for a notebook at out-path/<id>, \"../../\" for a
+   series page at out-path/series/<slug>."
   [out-path page-out]
-  (if (= out-path page-out) "" "../"))
+  (let [segs (fn [p] (remove #(or (= "" %) (= "." %)) (str/split (str p) #"/")))
+        depth (- (count (segs page-out)) (count (segs out-path)))]
+    (apply str (repeat (max 0 depth) "../"))))
 
 (def vendor
   "The scripts Clerk's render loads at runtime through d3-require, as
@@ -345,28 +383,65 @@
         (.write o (.array head))
         (.write o bytes)))))
 
+(defn ns-requires
+  "The namespace symbols that the ns form opening text requires."
+  [text]
+  (let [form (edamame/parse-next (edamame/reader text) reader-opts)]
+    (when (and (seq? form) (= 'ns (first form)))
+      (for [clause (rest form)
+            :when (and (seq? clause) (= :require (first clause)))
+            spec (rest clause)
+            :let [sym (if (sequential? spec) (first spec) spec)]
+            :when (symbol? sym)]
+        sym))))
+
+(defn preload!
+  "Require, before Clerk analyses any notebook, every namespace the
+   notebooks of port require. Clerk's analyzer macroexpands the library
+   source files a notebook depends on, and macroexpanding defprotocol
+   defines its interface again in the shared class cache; a defrecord
+   compiled after that implements the new interface, not the one the
+   protocol var holds (\"No implementation of :unit of protocol Group for
+   UnitsMod\" when the graph notebook is analysed before number theory
+   loads structure.groups). Loaded first, every record is compiled
+   against the original interface."
+  [port]
+  (doseq [{:keys [text]} (files port)
+          sym (ns-requires text)]
+    (require sym)))
+
 (defn build!
-  "Build the hub into out-path/index.html and each notebook of dir into
-   out-path/<id>/index.html with Clerk. Every page loads the bundle of
-   cljs-namespaces (default `cljs-namespaces`), released once into
+  "Build the apex into out-path/index.html, each notebook of dir into
+   out-path/<id>/index.html and each notebook series into
+   out-path/series/<slug>/index.html with Clerk. Every page loads the bundle
+   of cljs-namespaces (default `cljs-namespaces`), released once into
    out-path/_data, and every script from out-path: the `vendor` scripts,
    Clerk's `viewer-css` compiled once, the `favicon`. Pass
    :cljs-namespaces [] for Clerk's CDN viewer (and its CDN scripts).
-   :only, a collection of notebook ids, builds just those (and the hub)."
+   :only, a collection of notebook ids, builds just those (and the apex and
+   the series pages). The namespaces the notebooks require are loaded first
+   (`preload!`)."
   [{:keys [out-path dir only] :or {out-path "public/history-of-math" dir notebooks-dir} :as opts}]
   (let [index (str dir "/" index-file)
+        template (str dir "/series/series_page.clj")
         nss (get opts :cljs-namespaces cljs-namespaces)
         clerk-build! (requiring-resolve 'nextjournal.clerk/build!)
         port (if (seq only)
                (filterv #(contains? (set (map str only)) (notebook-id (:path %)))
                         (files (directory dir)))
-               (directory dir))]
+               (directory dir))
+        index (when (.exists (io/file index)) index)
+        series! (fn [build-one]
+                  (when (.exists (io/file template))
+                    (build-series! template out-path build-one)))]
+    (preload! port)
     (if (seq nss)
-      (let [built (build-with port
-                              (when (.exists (io/file index)) index)
-                              out-path
-                              (with-bundle (release-bundle! nss out-path) out-path clerk-build!))]
+      (let [build-one (with-bundle (release-bundle! nss out-path) out-path clerk-build!)
+            built (build-with port index out-path build-one)]
+        (series! build-one)
         (compile-viewer-css! out-path)
         (write-favicon! out-path)
         built)
-      (build-with port (when (.exists (io/file index)) index) out-path clerk-build!))))
+      (let [built (build-with port index out-path clerk-build!)]
+        (series! clerk-build!)
+        built))))

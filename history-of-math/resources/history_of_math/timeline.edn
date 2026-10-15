@@ -203,7 +203,7 @@
   ;; topology
   {:year 1654 :figure "Pascal" :work "Traité du triangle arithmétique" :fields #{:graph-theory :probability :number-theory} :era :new-sciences
    :significance "The arithmetic triangle's entries count combinations and divide the stakes of an interrupted game."}
-  {:year 1736 :figure "Euler" :work "Solutio problematis ad geometriam situs pertinentis" :fields #{:graph-theory :topology} :era :calculus
+  {:year 1736 :figure "Euler" :work "Solutio problematis ad geometriam situs pertinentis" :fields #{:graph-theory :topology} :era :calculus :notebook "graph-theory-bridges-to-colours"
    :significance "No walk crosses Königsberg's seven bridges once each, decided by the parity of the bridges at each landmass."}
   {:year 1752 :figure "Euler" :work "Elementa doctrinae solidorum" :fields #{:topology :geometry :graph-theory} :era :calculus :notebook "euler"
    :significance "For every convex polyhedron, vertices minus edges plus faces equals two."}
@@ -211,7 +211,7 @@
    :significance "The word topology coined for the study of properties unchanged by continuous deformation."}
   {:year 1851 :figure "Riemann" :work "Grundlagen für eine allgemeine Theorie der Functionen einer veränderlichen complexen Grösse" :fields #{:topology :analysis} :era :rigour
    :significance "A many-valued function lives on a surface spread over the plane, and the surface's connectivity governs the function."}
-  {:year 1865 :figure "Möbius" :work "Über die Bestimmung des Inhaltes eines Polyëders" :fields #{:topology :geometry} :era :structures
+  {:year 1865 :figure "Möbius" :work "Über die Bestimmung des Inhaltes eines Polyëders" :fields #{:topology :geometry} :era :structures :notebook "topology-moebius-band-1865"
    :significance "A surface with one side, the Möbius band, on which volume and orientation cannot be assigned consistently."}
   {:year 1871 :figure "Betti" :work "Sopra gli spazi di un numero qualunque di dimensioni" :fields #{:topology} :era :structures
    :significance "Numbers that count independent cycles of each dimension of a space, its connectivity in every dimension."}
@@ -283,13 +283,13 @@
   ;; graph theory and combinatorics
   {:year 1666 :figure "Leibniz" :work "Dissertatio de arte combinatoria" :fields #{:graph-theory :logic-computing} :era :new-sciences
    :significance "Combinations and permutations counted, and complex concepts proposed as combinations of simple ones."}
-  {:year 1847 :figure "Kirchhoff" :work "Über die Auflösung der Gleichungen, auf welche man bei der Untersuchung der linearen Vertheilung galvanischer Ströme geführt wird" :fields #{:graph-theory :mechanics-physics} :era :structures
+  {:year 1847 :figure "Kirchhoff" :work "Über die Auflösung der Gleichungen, auf welche man bei der Untersuchung der linearen Vertheilung galvanischer Ströme geführt wird" :fields #{:graph-theory :mechanics-physics} :era :structures :notebook "graph-theory-bridges-to-colours"
    :significance "The currents of an electrical network solved through its spanning trees, counted by a determinant."}
-  {:year 1857 :figure "Cayley" :work "On the theory of the analytical forms called trees" :fields #{:graph-theory} :era :structures
+  {:year 1857 :figure "Cayley" :work "On the theory of the analytical forms called trees" :fields #{:graph-theory} :era :structures :notebook "graph-theory-bridges-to-colours"
    :significance "Trees counted to enumerate the iterated derivatives of the calculus, later the isomers of chemistry."}
-  {:year 1857 :figure "Hamilton" :work "The Icosian game" :fields #{:graph-theory :abstract-algebra} :era :structures
+  {:year 1857 :figure "Hamilton" :work "The Icosian game" :fields #{:graph-theory :abstract-algebra} :era :structures :notebook "graph-theory-bridges-to-colours"
    :significance "A closed tour of the dodecahedron's vertices through each exactly once, played from Hamilton's icosian calculus."}
-  {:year 1879 :figure "Kempe" :work "On the geographical problem of the four colours" :fields #{:graph-theory :topology} :era :structures
+  {:year 1879 :figure "Kempe" :work "On the geographical problem of the four colours" :fields #{:graph-theory :topology} :era :structures :notebook "graph-theory-bridges-to-colours"
    :significance "A proof that four colours suffice for any map, by swapping colours along chains, accepted for eleven years."}
   {:year 1890 :figure "Heawood" :work "Map-colour theorem" :fields #{:graph-theory :topology} :era :structures
    :significance "Kempe's proof broken, five colours proved to suffice on the plane, and the number needed on surfaces of higher genus bounded."}
@@ -299,7 +299,7 @@
    :significance "The transfinite ordinal numbers, counted past every finite number by generating and limiting principles."}
   {:year 1888 :figure "Dedekind" :work "Was sind und was sollen die Zahlen?" :fields #{:set-theory :logic-computing :number-theory} :era :rigour
    :significance "The natural numbers built from sets and maps, with a set defined as infinite when it is equivalent to a proper part of itself."}
-  {:year 1891 :figure "Cantor" :work "Über eine elementare Frage der Mannigfaltigkeitslehre" :fields #{:set-theory :logic-computing} :era :rigour
+  {:year 1891 :figure "Cantor" :work "Über eine elementare Frage der Mannigfaltigkeitslehre" :fields #{:set-theory :logic-computing} :era :rigour :notebook "set-theory-cantor-1891"
    :significance "The diagonal argument: no list exhausts the infinite sequences of two symbols, and every set has more subsets than elements."}
   {:year 1895 :figure "Cantor" :work "Beiträge zur Begründung der transfiniten Mengenlehre" :fields #{:set-theory} :era :rigour
    :significance "Cardinal and ordinal numbers with their arithmetic, the alephs, and order types of ordered sets."}
