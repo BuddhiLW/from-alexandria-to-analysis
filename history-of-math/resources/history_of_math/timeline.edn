@@ -183,7 +183,7 @@
    :significance "An interrupted game's stakes divided by the chances each player had of winning: expectation by counting and by recursion."}
   {:year 1657 :figure "Huygens" :work "De ratiociniis in ludo aleae" :fields #{:probability} :era :new-sciences
    :significance "The first printed treatise on chance, built on the value of an expectation."}
-  {:year 1713 :figure "Jacob Bernoulli" :work "Ars conjectandi" :fields #{:probability :graph-theory} :era :calculus
+  {:year 1713 :figure "Jacob Bernoulli" :work "Ars conjectandi" :fields #{:probability :graph-theory} :era :calculus :notebook "probability-bernoulli-1713"
    :significance "The law of large numbers: the observed frequency approaches the probability as the trials multiply."}
   {:year 1738 :figure "de Moivre" :work "The Doctrine of Chances (2nd ed., with the 1733 approximation)" :fields #{:probability :analysis} :era :calculus
    :significance "The binomial distribution approximated by the bell curve e^(−x²), the first central limit theorem."}
@@ -225,7 +225,7 @@
    :significance "The syllogism: valid inference classified by form alone, whatever the terms stand for."}
   {:year 1703 :figure "Leibniz" :work "Explication de l'arithmétique binaire" :fields #{:logic-computing :number-theory} :era :calculus
    :significance "Numbers written with 0 and 1 only, the arithmetic in which a machine can calculate by switching."}
-  {:year 1854 :figure "Boole" :work "An Investigation of the Laws of Thought" :fields #{:logic-computing :abstract-algebra} :era :structures
+  {:year 1854 :figure "Boole" :work "An Investigation of the Laws of Thought" :fields #{:logic-computing :abstract-algebra} :era :structures :notebook "logic-boole-1854"
    :significance "Logical reasoning written as algebra on classes, with x² = x as its law."}
   {:year 1879 :figure "Frege" :work "Begriffsschrift" :fields #{:logic-computing} :era :structures
    :significance "A formal language with quantifiers in which every step of a proof is checkable by rule."}

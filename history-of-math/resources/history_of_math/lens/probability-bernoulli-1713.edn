@@ -1,0 +1,16 @@
+{:now [{:claim "As the number of trials grows, the observed frequency lies within any given tolerance of the probability with probability tending to 1"
+        :modern "The weak law of large numbers for Bernoulli trials: for every eps > 0, P(|S_n/n - p| <= eps) -> 1. Bernoulli's proof compares the largest binomial term with the terms at the edge of the band; the exact probability is the sum of the binomial terms in the band, and the rate is exponential (Hoeffding)."
+        :tex "P\\left(\\left|\\tfrac{S_n}{n}-p\\right|\\le\\varepsilon\\right)\\to 1"}
+       {:claim "For p = 30/50 and tolerance 1/50, 25550 trials make the band more than a thousand times as likely as its complement"
+        :modern "Bernoulli's n is a sufficient number, far from the least: the exact sum shows the odds of 1000 : 1 already at fewer trials, and Chebyshev's inequality gives the bound 1 - p(1-p)/(n eps^2) for any distribution with a variance."
+        :tex "1-\\tfrac{p(1-p)}{n\\varepsilon^{2}}\\le P\\left(\\left|\\tfrac{S_n}{n}-p\\right|\\le\\varepsilon\\right)"}
+       {:claim "The number of fertile cases in n trials has the binomial terms as its masses"
+        :modern "A finite probability space is a measure of total mass 1; the number of successes in n independent trials is the push-forward of the n-fold product measure of one trial, with masses C(n,k) p^k (1-p)^(n-k), which sum to 1."
+        :tex "\\Pr(S_n=k)=\\binom{n}{k}p^{k}(1-p)^{n-k}"}]
+ :fields [{:field :probability :how "The first theorem that ties a frequency to a probability; De Moivre (1733) and Laplace (1812) sharpened its rate with the normal curve, Borel and Cantelli (1909, 1917) turned it into the strong law on infinite sequences." :example "Polling, insurance and the Monte Carlo method all rest on S_n/n being near p."}
+          {:field :measure-theory :label "Measure theory" :how "A probability space is a measure of total mass 1; the strong law needs a measure on infinite sequences of trials, which is the step Lebesgue's measure and Kolmogorov's axioms make." :example "The same protocol (outcomes, measure of an event, expectation) holds for a finite set and for Lebesgue measure on an interval."}
+          {:field :graph-theory :label "Graph theory" :how "The combinatorics of Part II (permutations, combinations) that Bernoulli uses counts paths in the lattice of trials, the binomial triangle of Pascal." :example "The number of paths to the term C(n,k) in Pascal's triangle."}]
+ :tangents []
+ :texts [{:author "Jacob Bernoulli" :work "Ars conjectandi, opus posthumum (Basel: Thurneysen, 1713), Pars IV" :year 1713 :url "https://archive.org/details/jacobibernoulli00bern" :kind :archive :lang "la"}
+         {:author "Pascal; Huygens" :work "Traité du triangle arithmétique (1665); De ratiociniis in ludo aleae (1657)" :year 1665 :url "https://archive.org/details/jacobibernoulli00bern" :kind :archive :lang "la"}]
+ :links [{:to "probability-points-1654" :relation :generalizes :note "Pascal and Fermat's fair splits are binomial sums for p = 1/2; Bernoulli's Part I reprints Huygens' tract, and Part IV asks what such sums do as n grows."}]}

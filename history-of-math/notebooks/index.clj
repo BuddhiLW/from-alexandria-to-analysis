@@ -51,11 +51,14 @@
 
 (clerk/html (apex/cards (:registry site) (:notebooks site) (:joined site)))
 
-;; ## Slides and courses
+;; ## Index
 ;;
-;; Published beside the notebooks.
+;; Every topic with its whole timeline in reading order. A work with a
+;; notebook is a link to it; a work without one is marked planned. The
+;; slides and courses published beside the notebooks close the list.
 
-(clerk/html (apex/decks (:registry site)))
+
+(clerk/html (apex/index (:registry site) (:notebooks site) (:joined site)))
 
 ;; ## Closing
 ;;
