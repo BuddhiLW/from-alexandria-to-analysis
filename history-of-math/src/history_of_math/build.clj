@@ -261,6 +261,39 @@
 
 (def favicon "favicon.ico")
 
+(def logo-files
+  "Pedro's compass, protractor and ruler mark, as [classpath-resource
+   published-path-under-out-path]: logo.svg (the plain mark, black on
+   transparent) and favicon.svg (the same mark, drawn light under
+   prefers-color-scheme: dark so the tab icon reads on dark browser
+   chrome). The resources are copies of ~/PP/logo/logo.svg; logo.png is the
+   raster the ICO fallback is drawn from."
+  [["history_of_math/logo/logo.svg" "logo/logo.svg"]
+   ["history_of_math/logo/favicon.svg" "logo/favicon.svg"]])
+
+(def site-title "Mathematics from its sources")
+
+(defn site-header
+  "The HTML of the header every page carries above Clerk's app (the apex,
+   each series page and each notebook): the logo and the site's name,
+   linking to the apex. prefix is the path from the page back to out-path
+   (`root-prefix`). It sits outside #clerk, so Clerk's render never
+   replaces it; data-ignore-anchor-click makes the link a page load.
+   Styled, light and dark, by history_of_math/site.css."
+  [prefix]
+  (str "<header class=\"hom-site-header\">"
+       "<a class=\"hom-site-home\" href=\"" (if (= "" prefix) "./" prefix)
+       "\" data-ignore-anchor-click=\"true\">"
+       "<img class=\"hom-site-logo\" src=\"" prefix "logo/logo.svg\" alt=\"\" width=\"36\" height=\"40\">"
+       "<span class=\"hom-site-name\">" site-title "</span></a></header>"))
+
+(defn with-site-header
+  "html (a page as nextjournal.clerk.view/->html returns it) with
+   `site-header` put first in its body, before Clerk's #clerk div."
+  [html prefix]
+  (str/replace-first html "<div id=\"clerk\">"
+                     (str (site-header prefix) "<div id=\"clerk\">")))
+
 (defn release-bundle!
   "Release-compile nss with shadow-cljs (history-of-math.bundle, npm deps from
    ./package.json) and store under out-path the bundle, the widget CSS
@@ -295,6 +328,31 @@
                       (fn [& xs] (concat (map (fn [attrs] [:link attrs]) @!head-links)
                                          (apply include xs)))))))
 
+(def ^:private !site-prefix
+  "The path from the page being built back to out-path while a page is
+   built (nil otherwise: no header is added)."
+  (atom nil))
+
+(defonce ^:private site-header-hook
+  (delay
+    (alter-var-root (requiring-resolve 'nextjournal.clerk.view/->html)
+                    (fn [->html]
+                      (fn [& xs]
+                        (let [html (apply ->html xs)]
+                          (if-let [prefix @!site-prefix]
+                            (with-site-header html prefix)
+                            html)))))))
+
+(defn copy-logo!
+  "Copy `logo-files` from the classpath under out-path."
+  [out-path]
+  (doseq [[src published] logo-files]
+    (let [f (io/file out-path published)]
+      (io/make-parents f)
+      (with-open [in (io/input-stream (or (io/resource src)
+                                          (throw (ex-info (str "no resource " src) {:src src}))))]
+        (io/copy in f)))))
+
 (defn- with-resource-url
   "Call f with Clerk's resource k (as /css/viewer.css) set to url, then
    restore it."
@@ -307,23 +365,29 @@
 
 (defn with-bundle
   "build-one wrapped so each page loads `bundle` (as release-bundle!
-   returns it), the `viewer-css` stylesheet and the `favicon` by paths
-   relative to that page, instead of Clerk's CDN viewer and the Tailwind
-   CDN script. One bundle, released once, serves the hub and every
-   notebook."
+   returns it), the `viewer-css` stylesheet and the favicons (Pedro's logo
+   as SVG, the `favicon` ICO as fallback) by paths relative to that page,
+   instead of Clerk's CDN viewer and the Tailwind CDN script, and carries
+   `site-header` (the logo and the site's name) above Clerk's app. One
+   bundle, released once, serves the hub and every notebook; the header is
+   added here, once, for every page."
   [bundle out-path build-one]
   (let [with-viewer-js (requiring-resolve 'mentat.clerk-utils.build/with-viewer-js)
         set-css! (requiring-resolve 'mentat.clerk-utils.css/set-css!)]
     ((requiring-resolve 'history-of-math.widgets/register-bundle!))
     @head-links-hook
+    @site-header-hook
     (fn [{page-out :out-path :as opts}]
       (let [prefix (root-prefix out-path page-out)]
         (apply set-css! (map #(str prefix %) (:css bundle)))
-        (reset! !head-links [{:rel "icon" :href (str prefix favicon)}])
+        (reset! !head-links [{:rel "icon" :type "image/svg+xml" :href (str prefix "logo/favicon.svg")}
+                             {:rel "icon" :sizes "32x32" :href (str prefix favicon)}])
+        (reset! !site-prefix prefix)
         (try
           (with-resource-url "/css/viewer.css" (str prefix viewer-css)
             #(with-viewer-js (str prefix (:js bundle)) (fn [] (build-one opts))))
-          (finally (reset! !head-links [])))))))
+          (finally (reset! !head-links [])
+                   (reset! !site-prefix nil)))))))
 
 (defn compile-viewer-css!
   "Compile Clerk's viewer.css (its stylesheets/viewer.css and
@@ -357,18 +421,31 @@
       (println "viewer.css <-" (str/trim (str err))))))
 
 (defn write-favicon!
-  "Write out-path/favicon: a 32x32 PNG (an ellipse) in an ICO container."
+  "Write out-path/favicon, the fallback for browsers without SVG icons:
+   Pedro's logo (the classpath raster history_of_math/logo/logo.png, black
+   on white) drawn at 32x32 as a PNG in an ICO container. Darkness becomes
+   coverage of the series' dark blue, white becomes transparent."
   [out-path]
   (System/setProperty "java.awt.headless" "true")
-  (let [img (java.awt.image.BufferedImage. 32 32 java.awt.image.BufferedImage/TYPE_INT_ARGB)
+  (let [src (javax.imageio.ImageIO/read (io/resource "history_of_math/logo/logo.png"))
+        w (.getWidth src)
+        h (.getHeight src)
+        n 32
+        s (/ (double n) (max w h))
+        img (java.awt.image.BufferedImage. n n java.awt.image.BufferedImage/TYPE_INT_ARGB)
         g (.createGraphics img)
         png (java.io.ByteArrayOutputStream.)]
-    (.setRenderingHint g java.awt.RenderingHints/KEY_ANTIALIASING
-                       java.awt.RenderingHints/VALUE_ANTIALIAS_ON)
-    (.setColor g (java.awt.Color. 0x1f 0x3a 0x5f))
-    (.setStroke g (java.awt.BasicStroke. 3.0))
-    (.draw g (java.awt.geom.Ellipse2D$Double. 3 8 26 16))
+    (.setRenderingHint g java.awt.RenderingHints/KEY_INTERPOLATION
+                       java.awt.RenderingHints/VALUE_INTERPOLATION_BICUBIC)
+    (.setColor g java.awt.Color/WHITE)
+    (.fillRect g 0 0 n n)
+    (.drawImage g src
+                (int (Math/round (/ (- n (* s w)) 2.0))) (int (Math/round (/ (- n (* s h)) 2.0)))
+                (int (Math/round (* s w))) (int (Math/round (* s h))) nil)
     (.dispose g)
+    (doseq [x (range n) y (range n)]
+      (let [cover (- 255 (bit-and (.getRGB img x y) 0xff))]
+        (.setRGB img x y (unchecked-int (bit-or (bit-shift-left cover 24) 0x1f3a5f)))))
     (javax.imageio.ImageIO/write img "png" png)
     (let [bytes (.toByteArray png)
           head (doto (java.nio.ByteBuffer/allocate 22)
@@ -416,7 +493,8 @@
    out-path/series/<slug>/index.html with Clerk. Every page loads the bundle
    of cljs-namespaces (default `cljs-namespaces`), released once into
    out-path/_data, and every script from out-path: the `vendor` scripts,
-   Clerk's `viewer-css` compiled once, the `favicon`. Pass
+   Clerk's `viewer-css` compiled once, the favicons (`logo-files` and the
+   `favicon` ICO), and carries the `site-header` with the logo. Pass
    :cljs-namespaces [] for Clerk's CDN viewer (and its CDN scripts).
    :only, a collection of notebook ids, builds just those (and the apex and
    the series pages). The namespaces the notebooks require are loaded first
@@ -440,6 +518,7 @@
             built (build-with port index out-path build-one)]
         (series! build-one)
         (compile-viewer-css! out-path)
+        (copy-logo! out-path)
         (write-favicon! out-path)
         built)
       (let [built (build-with port index out-path clerk-build!)]

@@ -1,0 +1,42 @@
+/* The site header every page of the series carries above Clerk's app
+   (history-of-math.build/site-header): Pedro's compass, protractor and ruler
+   mark and the site's name, linking to the apex.
+
+   The mark is black on transparent (logo/logo.svg). On Clerk's dark pages
+   (html.dark, Clerk's own toggle) it is inverted to near-white, so it reads
+   on bg-gray-900 as well as on white. */
+
+.hom-site-header {
+  display: flex;
+  align-items: center;
+  max-width: 48rem;
+  margin: 0 auto;
+  padding: 0.9rem 1.5rem 0.6rem;
+  border-bottom: 1px solid rgba(100, 116, 139, 0.25);
+  font-family: "Fira Sans", -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+.hom-site-home {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7rem;
+  color: #1e293b;
+  text-decoration: none;
+}
+
+.hom-site-home:hover .hom-site-name { text-decoration: underline; }
+
+.hom-site-logo {
+  display: block;
+  width: 36px;
+  height: 40px;
+}
+
+.hom-site-name {
+  font-size: 1.05rem;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+}
+
+html.dark .hom-site-home { color: #e2e8f0; }
+html.dark .hom-site-logo { filter: invert(0.92); }

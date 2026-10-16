@@ -74,8 +74,11 @@
    published after `css` so they refine it. mafs.css makes every Mafs text
    label click-through: a label drawn over a MovablePoint took the
    mousedown and Mafs panned the view instead of moving the point, in any
-   playground that drew a letter after its handle."
-  [["history_of_math/mafs.css" "mafs-series.css"]])
+   playground that drew a letter after its handle. site.css styles the
+   header with Pedro's logo (history-of-math.build/site-header) on Clerk's
+   light and dark pages."
+  [["history_of_math/mafs.css" "mafs-series.css"]
+   ["history_of_math/site.css" "site.css"]])
 
 (defn stylesheets
   "Every widget stylesheet a page loads, in order, as [source
