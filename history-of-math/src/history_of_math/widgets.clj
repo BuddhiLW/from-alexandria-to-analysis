@@ -49,7 +49,7 @@
   '#{alexandria.medium.anim alexandria.medium.figure alexandria.medium.html-labels alexandria.medium.math
      alexandria.medium.plane alexandria.medium.player alexandria.medium.scene
      alexandria.medium.svg alexandria.medium.timeline alexandria.palette
-     history-of-math.timeline-view history-of-math.series-view})
+     history-of-math.timeline-view history-of-math.series-view history-of-math.topics-view})
 
 (defn register-bundle!
   "Tell Clerk that the namespaces of `bundled-cljs` are already in the

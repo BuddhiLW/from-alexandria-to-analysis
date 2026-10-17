@@ -68,9 +68,12 @@
       [:span {:class "series-first-planned" :style {:opacity 0.7}} "No notebook yet"])]])
 
 (defn cards
-  "The apex's series cards, full width, one per row."
+  "The apex's series cards, full width, one per row, under the link to the
+   page that connects every topic (<out>/series/)."
   [reg notebooks joined]
-  (into [:section {:class "series-index" :style {:display "block" :max-width "100%"}}]
+  (into [:section {:class "series-index" :style {:display "block" :max-width "100%"}}
+         [:p {:class "topics-hub-line" :style {:margin "0 0 1em"}}
+          [:a (assoc (anchor (links/topics-href 0)) :class "topics-hub-link") "See how the topics connect"]]]
         (for [s (series/notebook-series reg)]
           (series-card s (series/summary s notebooks joined)))))
 

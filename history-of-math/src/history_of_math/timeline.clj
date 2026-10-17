@@ -37,7 +37,7 @@
    [:significance [:string {:min 1}]]
    [:era keyword?]
    ;; the strands (history-of-math.strands) whose timelines the work is on
-   [:fields strands/Fields]
+   [:fields {:optional true} strands/Fields]
    [:notebook {:optional true} [:re #"^[a-z0-9][a-z0-9-]*$"]]])
 
 (def Timeline
@@ -133,40 +133,58 @@
 (defn- era-colour [pal eras era]
   (get pal (:role (first (filter #(= era (:id %)) eras))) (:ink pal)))
 
+(def default-scale
+  "The time axis of the series: the ancient world (-320 to 400) and the
+   modern (1300 to 1920) each a linear stretch, a short break between, and
+   the years labelled on the axis. A series with other dates passes its own
+   to `strip` as :scale."
+  {:ancient [-320 400] :modern [1300 1920]
+   :ticks [[-300 "300 BC"] [0 "0"] [300 "300"] [1400 "1400"] [1600 "1600"] [1800 "1800"] [1900 "1900"]]})
+
 (defn- x-scale
-  "Page x of a year: the ancient world (to 200 AD) and the modern (from
-   1300) each get a linear stretch, the gap between them a short break."
-  [year {:keys [x0 x-break x1]}]
-  (if (<= year 400)
-    (+ x0 (* (- x-break 20 x0) (/ (- year -320) (- 400 -320))))
-    (+ x-break 20 (* (- x1 x-break 20) (/ (- year 1300) (- 1920 1300))))))
+  "Page x of a year: the ancient stretch and the modern stretch of scale
+   each get a linear part of the strip, the gap between them a short break."
+  [year {:keys [x0 x-break x1]} {[a0 a1] :ancient [m0 m1] :modern}]
+  (if (<= year a1)
+    (+ x0 (* (- x-break 20 x0) (/ (- year a0) (- a1 a0))))
+    (+ x-break 20 (* (- x1 x-break 20) (/ (- year m0) (- m1 m0))))))
 
 (defn strip
   "Hiccup SVG of the joined entries on a time axis, one row of labels per
-   entry, coloured by era; built notebooks are links, planned ones muted."
+   entry, coloured by era; built notebooks are links, planned ones muted.
+   opts: :palette (default :series), :width, :scale (default
+   `default-scale`), :legend-step (px per era in the legend; the legend
+   wraps to more rows when the eras do not fit), and :decorate, a fn of
+   (entry x y) to hiccup drawn after the entry's row mark (a series marks
+   more than the era there, e.g. which arts a work belongs to)."
   ([t joined] (strip t joined {}))
-  ([{:keys [eras]} joined {:keys [palette width] :or {palette :series width 960}}]
+  ([{:keys [eras]} joined {:keys [palette width scale legend-step decorate]
+                           :or {palette :series width 960 scale default-scale legend-step 180}}]
    (let [pal (palette/resolve-palette palette)
          dims {:x0 40 :x-break 300 :x1 (- width 40)}
+         per-row (max 1 (quot (- width 40) legend-step))
+         legend-rows (quot (+ (count eras) per-row -1) per-row)
          row 22
-         top 70
-         height (+ top (* row (count joined)) 30)
-         axis-y 40]
+         axis-y (+ 40 (* 18 (dec legend-rows)))
+         top (+ axis-y 30)
+         height (+ top (* row (count joined)) 30)]
      (into
       [:svg {:viewBox (str "0 0 " width " " height) :width width
              :style {:max-width "100%" :height "auto" :background (:background pal)
                      :font-family "ui-serif, Georgia, serif"}}
        [:line {:x1 (:x0 dims) :y1 axis-y :x2 (:x1 dims) :y2 axis-y :stroke (:muted pal) :stroke-width 1.5}]
        [:text {:x (:x-break dims) :y (- axis-y 8) :fill (:muted pal) :font-size 12 :text-anchor "middle"} "⋯"]
-       [:g (for [[y lbl] [[-300 "300 BC"] [0 "0"] [300 "300"] [1400 "1400"] [1600 "1600"] [1800 "1800"] [1900 "1900"]]]
-             [:text {:x (x-scale y dims) :y (- axis-y 10) :fill (:muted pal) :font-size 11 :text-anchor "middle"} lbl])]
-       [:g (for [[i {:keys [id title]}] (map-indexed vector eras)]
-             [:g [:rect {:x (+ 40 (* i 180)) :y 6 :width 12 :height 12 :fill (era-colour pal eras id)}]
-              [:text {:x (+ 58 (* i 180)) :y 16 :fill (:ink pal) :font-size 11} title]])]]
+       [:g (for [[y lbl] (:ticks scale)]
+             [:text {:x (x-scale y dims scale) :y (- axis-y 10) :fill (:muted pal) :font-size 11 :text-anchor "middle"} lbl])]
+       [:g (for [[i {:keys [id title]}] (map-indexed vector eras)
+                 :let [lx (+ 40 (* (mod i per-row) legend-step))
+                       ly (+ 6 (* 18 (quot i per-row)))]]
+             [:g [:rect {:x lx :y ly :width 12 :height 12 :fill (era-colour pal eras id)}]
+              [:text {:x (+ lx 18) :y (+ ly 10) :fill (:ink pal) :font-size 11} title]])]]
       (map-indexed
        (fn [i {:keys [year figure work era built? notebook] :as e}]
          (let [c (era-colour pal eras era)
-               x (x-scale year dims)
+               x (x-scale year dims scale)
                y (+ top (* i row))
                right? (> x (/ width 2))
                label [:text {:x (if right? (- x 10) (+ x 10)) :y (+ y 4) :font-size 13
@@ -179,25 +197,34 @@
             [:line {:x1 x :y1 axis-y :x2 x :y2 y :stroke c :stroke-width 1 :stroke-opacity 0.35}]
             [:circle {:cx x :cy axis-y :r 4 :fill c}]
             [:circle {:cx x :cy y :r 5 :fill (if built? c "none") :stroke c :stroke-width 1.5}]
+            (when decorate (decorate e x y))
             (if built? [:a (href notebook) label] label)]))
        joined)))))
 
 (defn table
   "Hiccup table of the joined entries: date, who, work, its strands, why it
-   matters. depth: the page's depth below the apex (default 0)."
-  ([joined] (table joined 0))
-  ([joined depth]
+   matters. depth: the page's depth below the apex (default 0). extra,
+   optional, is [[header (fn [entry] hiccup)] ...]: columns put after the
+   strands (a series lists more than the era there). The two-argument form
+   takes either: a number is the depth, anything else the extra columns."
+  ([joined] (table joined 0 []))
+  ([joined depth-or-extra]
+   (if (number? depth-or-extra)
+     (table joined depth-or-extra [])
+     (table joined 0 depth-or-extra)))
+  ([joined depth extra]
    [:table {:style {:font-size "0.9em"}}
-    [:thead [:tr [:th "date"] [:th "who"] [:th "work"] [:th "strands"] [:th "what it did"]]]
+    [:thead (into [:tr [:th "date"] [:th "who"] [:th "work"] [:th "strands"]]
+                  (concat (for [[h _] extra] [:th h]) [[:th "what it did"]]))]
     (into [:tbody]
           (for [{:keys [figure work significance built? notebook fields] :as e} joined]
-            [:tr
-             [:td {:style {:white-space "nowrap"}} (year-label e)]
-             [:td figure]
-             [:td (if built? [:a (href notebook depth) [:em work]] [:em work])
-              (when-not built? [:span {:style {:opacity 0.6}} " (planned)"])]
-             [:td {:class "strand-tags"} (str/join ", " (map strands/title (ordered-fields fields)))]
-             [:td significance]]))]))
+            (into [:tr
+                   [:td {:style {:white-space "nowrap"}} (year-label e)]
+                   [:td figure]
+                   [:td (if built? [:a (href notebook depth) [:em work]] [:em work])
+                    (when-not built? [:span {:style {:opacity 0.6}} " (planned)"])]
+                   [:td {:class "strand-tags"} (str/join ", " (map strands/title (ordered-fields fields)))]]
+                  (concat (for [[_ f] extra] [:td (f e)]) [[:td significance]]))))]))
 
 (defn influence-edges
   "Resolved arcs for all installed lenses, from their :links to timeline nodes."

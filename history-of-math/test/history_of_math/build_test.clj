@@ -98,7 +98,7 @@
 
 (deftest build-fails-loudly-naming-the-file-and-builds-nothing
   (let [calls (atom [])]
-    (is (thrown-with-msg? clojure.lang.ExceptionInfo #"nb/oresme.clj: notebook metadata missing :history/year, :history/title, :history/era, :history/fields"
+    (is (thrown-with-msg? clojure.lang.ExceptionInfo #"nb/oresme.clj: notebook metadata missing :history/year, :history/title, :history/era$"
                           (build/build-with (conj fixture (nb "nb/oresme.clj" {:history/fields nil})) "nb/index.clj" "out"
                                             #(swap! calls conj %))))
     (is (empty? @calls))))

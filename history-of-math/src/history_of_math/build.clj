@@ -110,7 +110,7 @@
    [:year int?]
    [:title [:string {:min 1}]]
    [:era [:string {:min 1}]]
-   [:fields strands/Fields]])
+   [:fields {:optional true} [:maybe strands/Fields]]])
 
 (def ^:private key-of {:year :history/year :title :history/title :era :history/era
                        :fields :history/fields})
@@ -122,7 +122,7 @@
   (if (m/validate Notebook nb)
     (r/ok nb)
     (let [explain (me/humanize (m/explain Notebook nb))
-          missing (vec (for [k [:year :title :era :fields] :when (nil? (get nb k))] (key-of k)))]
+          missing (vec (for [k [:year :title :era] :when (nil? (get nb k))] (key-of k)))]
       (r/err {:history/error :notebook/metadata
               :path (:path nb)
               :missing missing
@@ -203,6 +203,19 @@
   !series-slug
   (atom nil))
 
+(defonce ^{:doc "HTML put in a <noscript> before Clerk's app while a page is
+  built (the plain list of the topics page), nil otherwise. A root value,
+  as `!series-slug`."}
+  !noscript
+  (atom nil))
+
+(defn with-noscript
+  "html with <noscript>content</noscript> put before Clerk's #clerk div, so
+   a browser without JavaScript still reads content."
+  [html content]
+  (str/replace-first html "<div id=\"clerk\">"
+                     (str "<noscript><div class=\"hom-noscript\">" content "</div></noscript><div id=\"clerk\">")))
+
 (defn series-out
   "The directory of the page of series slug under out-path."
   [out-path slug]
@@ -210,19 +223,29 @@
 
 (defn build-series!
   "Build the timeline page of each notebook series of the registry
-   (history-of-math.series) from template into out-path/series/<slug>/, and
-   the page of every work (`all-template`, next to template) into
-   out-path/all/ when it exists. Returns the slugs built."
+   (history-of-math.series) from template into out-path/series/<slug>/, the
+   page that connects every topic (`topics-template`, next to template)
+   into out-path/series/ with the plain list of every topic in its
+   <noscript>, and the page of every work (`all-template`, next to
+   template) into out-path/all/, each when it exists. Returns the slugs
+   built."
   [template out-path build-one]
   (let [reg ((requiring-resolve 'history-of-math.series/registry))
         slugs (map :slug ((requiring-resolve 'history-of-math.series/notebook-series) reg))
-        all (io/file (.getParentFile (io/file template)) "all.clj")]
+        dir (.getParentFile (io/file template))
+        topics (io/file dir "topics.clj")
+        all (io/file dir "all.clj")]
     (try
       (doseq [slug slugs]
         (println "series" slug "<-" template)
         (reset! !series-slug slug)
         (build-one {:paths [template] :out-path (series-out out-path slug)}))
       (finally (reset! !series-slug nil)))
+    (when (.exists topics)
+      (println "topics <-" (str topics))
+      (reset! !noscript ((requiring-resolve 'history-of-math.topics/noscript-html)))
+      (try (build-one {:paths [(str topics)] :out-path (str out-path "/series")})
+           (finally (reset! !noscript nil))))
     (when (.exists all)
       (println "all <-" (str all))
       (build-one {:paths [(str all)] :out-path (str out-path "/all")}))
@@ -338,10 +361,10 @@
     (alter-var-root (requiring-resolve 'nextjournal.clerk.view/->html)
                     (fn [->html]
                       (fn [& xs]
-                        (let [html (apply ->html xs)]
-                          (if-let [prefix @!site-prefix]
-                            (with-site-header html prefix)
-                            html)))))))
+                        (let [html (apply ->html xs)
+                              html (if-let [prefix @!site-prefix] (with-site-header html prefix) html)]
+                          ;; after the header, so the list sits right above Clerk's app
+                          (if-let [content @!noscript] (with-noscript html content) html)))))))
 
 (defn copy-logo!
   "Copy `logo-files` from the classpath under out-path."
