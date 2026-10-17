@@ -5,7 +5,7 @@ hand-authored here. Coordinates use millimetres; Blender's gravity uses metres
 per second squared after setting unit scale 0.001.
 
 Regenerate the full watertight printable STL (28 MB, kept in target/, not git)
-from the repository root in two commands, one runtime at a time:
+from the worktree root in two commands, one runtime at a time:
   cd alexandria && clojure -J-Xmx2g -Sdeps '{:deps {org.clojure/data.json {:mvn/version "2.5.2"}}}' -M -e '(require (quote alexandria.design) (quote clojure.data.json)) (spit "../target/design.json" (clojure.data.json/write-str (alexandria.design/make-design)))' && cd ..
   flatpak run --filesystem="$PWD" org.blender.Blender -b --factory-startup --python "$PWD/alexandria/media/scripts/brachistochrone_blender.py" -- "$PWD/target/design.json" "$PWD/target/design" --export
 The --export flag voxel-unions and verifies the print mesh, and also exports

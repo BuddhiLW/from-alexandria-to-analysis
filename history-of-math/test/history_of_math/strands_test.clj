@@ -105,9 +105,8 @@
       (testing (str figure " " year)
         (is (seq fields))
         (is (every? (set strands/ids) fields))))
-    (is (not (r/ok? (timeline/validate
-                     (update-in t [:entries 0] dissoc :fields))))
-        "an entry without :fields is invalid")
+    (is (r/ok? (timeline/validate (update-in t [:entries 0] dissoc :fields)))
+        "the schema leaves :fields to the series (trivium names arts); this test holds this series to it")
     (is (not (r/ok? (timeline/validate
                      (assoc-in t [:entries 0 :fields] #{:physics}))))
         "an entry on an unknown strand is invalid")))
@@ -121,7 +120,8 @@
           err (:error (build/discover [bad]))]
       (is (contains? (:invalid err) :history/fields) "an unknown strand on a notebook is invalid"))
     (let [bare {:path "nb/x.clj" :text "(ns x {:history/year 1 :history/title \"X\" :history/era \"E\"})"}]
-      (is (= [:history/fields] (:missing (:error (build/discover [bare]))))))))
+      (is (r/ok? (build/discover [bare]))
+          "the build leaves :history/fields to the series (trivium names arts); this test holds this series to it"))))
 
 (deftest lens-fields-speak-the-strand-vocabulary
   (doseq [id (lens/ids)

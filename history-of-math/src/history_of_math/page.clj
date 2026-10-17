@@ -42,13 +42,16 @@
 
 (defn grade-badges
   "Badges of [{:label :grade}] as alexandria.grade graded them; ok are the
-   grades that pass (default proved only)."
+   grades that pass (default proved only); by names the checker (default
+   \"Emmy\"; a series whose checks run elsewhere names its own engine)."
   ([graded] (grade-badges graded #{:grade/proved}))
-  ([graded ok]
+  ([graded ok] (grade-badges graded ok "Emmy"))
+  ([graded ok by]
    (clerk/html
     (into [:div]
           (for [{:keys [label grade]} graded]
-            [:div (badge-hiccup (contains? ok grade) (str label " (" (name grade) " by Emmy)"))])))))
+            [:div {:data-grade (name grade)}
+             (badge-hiccup (contains? ok grade) (str label " (" (name grade) " by " by ")"))])))))
 
 (defn- page-link
   "Anchor attributes for notebook id (the hub for nil) from a notebook page,

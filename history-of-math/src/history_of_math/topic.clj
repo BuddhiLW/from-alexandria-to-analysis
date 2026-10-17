@@ -160,11 +160,15 @@
 ;; Boundary
 
 (defn page
-  "The hiccup of topic s: the way back to the apex, its title and scope,
-   its timeline, the topics it connects to."
+  "The hiccup of topic s: the way back to the apex and to the page that
+   connects every topic (with s selected), its title and scope, its
+   timeline, the topics it connects to."
   [t s entries cs]
   [:article {:class "topic-page" :data-series (:slug s)}
-   [:p [:a (assoc (apex/anchor (links/apex-href 2)) :class "topic-apex") "All topics"]]
+   [:p [:a (assoc (apex/anchor (links/apex-href 2)) :class "topic-apex") "All topics"]
+    " · "
+    [:a (assoc (apex/anchor (str (links/topics-href 2) "?series=" (:slug s))) :class "topics-hub-link")
+     "How the topics connect"]]
    [:h1 (:title s)]
    [:p {:class "series-scope"} (:scope s)]
    [:p {:style {:opacity 0.8 :font-size "0.92em"}}

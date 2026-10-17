@@ -8,7 +8,7 @@
 ;;               with its own page at <out>/series/<slug>/
 ;;     :id       the series id
 ;;     :slug     its directory under series/
-;;     :title    proposals pending maintainer review (2026-10-12); change them here only
+;;     :title    proposals pending Pedro (2026-10-12); change them here only
 ;;     :scope    one sentence: what the series follows
 ;;     :strands  the strands (strands.edn) it draws from: its timeline is
 ;;               every timeline entry on one of them

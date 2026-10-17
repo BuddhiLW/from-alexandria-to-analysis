@@ -40,3 +40,62 @@
 
 html.dark .hom-site-home { color: #e2e8f0; }
 html.dark .hom-site-logo { filter: invert(0.92); }
+
+/* The page that connects every topic (<out>/series/, history-of-math.topics):
+   the picker, the panel of the selection, the plain list of every topic,
+   and the same list in the page's <noscript>. Light and dark, by Clerk's
+   html.dark. */
+
+.topics-hub select,
+.topics-pick,
+.topics-bridges {
+  font: inherit;
+  font-size: 0.9em;
+  color: inherit;
+  background: rgba(127, 179, 213, 0.12);
+  border: 1px solid rgba(100, 116, 139, 0.45);
+  border-radius: 6px;
+  padding: 0.15em 0.55em;
+  margin: 0.15em 0.1em;
+  cursor: pointer;
+  max-width: 100%;
+}
+
+.topics-bridges { margin-left: 0.5em; font-size: 0.8em; }
+
+.topics-pick:hover, .topics-bridges:hover { border-color: #e7a85c; }
+
+.topics-panel {
+  margin: 1em 0;
+  padding: 0.8em 1em;
+  border: 1px solid rgba(100, 116, 139, 0.35);
+  border-radius: 10px;
+}
+
+.topics-panel h3 { margin: 0 0 0.4em; }
+
+.topics-works { padding-left: 1.6em; }
+
+.topics-planned { opacity: 0.6; }
+
+.topics-also, .topics-facts { font-size: 0.9em; opacity: 0.85; }
+
+.topics-topic h3 { margin: 1.2em 0 0.2em; }
+
+html.dark .topics-hub select { background: #1e293b; color: #e2e8f0; }
+
+.hom-noscript {
+  max-width: 48rem;
+  margin: 0 auto;
+  padding: 1rem 1.5rem;
+  font-family: "Fira Sans", -apple-system, BlinkMacSystemFont, sans-serif;
+  line-height: 1.5;
+  color: #1e293b;
+}
+
+.hom-noscript a { color: #2563eb; }
+
+@media (prefers-color-scheme: dark) {
+  .hom-noscript { color: #e2e8f0; }
+  .hom-noscript a { color: #93c5fd; }
+}

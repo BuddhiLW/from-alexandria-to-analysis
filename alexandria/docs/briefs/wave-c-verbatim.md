@@ -1,9 +1,9 @@
 # Wave C: follow the originals verbatim
 
-Planned 2026-10-05. Start these as the second batch (Apollonius, Descartes-Fermat, Euler, Cauchy) lands.
+Planned 2026-10-05. Spawn these as the wave B lings (Apollonius, Descartes-Fermat, Euler, Cauchy) finish.
 
-Each era gets the same shape as the second batch: its own branch `illus-<era>` off `alexandria`. The
-spec is illustrate-brief.md, common-brief.md and raster-brief.md, plus this directive:
+Each era gets the same shape as wave B: a worktree `alex/illus-<era>` off `alexandria` (once alex/land
+has landed). The brief is illustrate-brief.md, common-brief.md and raster-brief.md, plus this directive:
 
 > Follow the author's work VERBATIM. Walk the original in its own order. State each proposition in the
 > words of the public-domain translation, with the original quoted short. Reproduce the author's own
@@ -24,7 +24,7 @@ spec is illustrate-brief.md, common-brief.md and raster-brief.md, plus this dire
   (ellipse about a focus gives the inverse square). Motte 1729 English.
 - **lagrange**: Mecanique analitique 1788 part II sect. IV (the general equations). Theorie des fonctions
   analytiques 1797 (the derivative as the coefficient of the series).
-- **riemann-weierstrass**, **dedekind-cantor**: as in the earlier plan, now walking the originals in the
+- **riemann-weierstrass**, **dedekind-cantor**: as in the wave 3 plan, now walking the originals in the
   corpus.
 - **euclid**: Books II, V (with eudoxus), VI, and XII.2 in more depth.
 - **archimedes**: Measurement of a Circle prop. 3 (his 3 10/71 < pi < 3 1/7 computation, every root
@@ -41,5 +41,5 @@ spec is illustrate-brief.md, common-brief.md and raster-brief.md, plus this dire
 
 ## Order
 
-Work on at most 4 eras at once. Land the second batch first.
-Sources: prefer the proofread Wikisource texts in the corpus over the OCR texts.
+Spawn at most 4 at once, because the machine is shared with other coordinators. Land wave B first.
+Sources: prefer the Wikisource proofread texts that hom-commons adds to the corpus over the OCR texts.

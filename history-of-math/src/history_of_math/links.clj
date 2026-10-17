@@ -71,6 +71,12 @@
   [depth]
   (if (serve?) "/notebooks/series/all" (str (up depth) "all/")))
 
+(defn topics-href
+  "The href of the page that connects every topic: <out>/series/ in the
+   static build, its notebook under Clerk serve."
+  [depth]
+  (if (serve?) "/notebooks/series/topics" (str (up depth) "series/")))
+
 (defn anchor
   "Anchor attributes for href: a real page load, not Clerk's router."
   [href]
